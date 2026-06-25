@@ -1,0 +1,2327 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>3.2 신뢰구간에 대한 이해 – 통계적 사고와 사회</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/03-03-bootstrap.html" rel="next">
+<link href="../chapters/03-01-sampling-distribution.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-de63f62b328812d8e578a4d74e282472.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-3355e44214f8815af4d3cdb2eb254b3a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating fullcontent quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/03.html">3장. 신뢰구간</a></li><li class="breadcrumb-item"><a href="../chapters/03-02-confidence-intervals.html"><span class="chapter-title">3.2 신뢰구간에 대한 이해</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">통계적 사고와 사회</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">통계적 사고와 사회</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">강의 소개</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-01-intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.1. 강의 소개</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-02-thinking.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.2. 통계적 사고란 무엇인가?</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-03-examples.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.3. 통계적 사고 예제</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-04-montyhall.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.4. 몬티 홀 게임</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-05-ppdac.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.5. PPDAC 사이클</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-06-mortality.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.6. 산모 사망률</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-07-cholera.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.7. 콜레라와 존 스노우</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../chapters/01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1장. 데이터 수집</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-01-data-structure.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">1.1 데이터의 구조</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-02-sampling.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">1.2 모집단에서 표본 추출</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-03-causality.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">1.3 실험연구와 관측연구</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../chapters/02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2장. 데이터 기술하기</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-01-categorical.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.1 범주형 변수</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-02-quantitative-center.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.2 양적 변수 한 개: 모양과 중심</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-03-quantitative-variation.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.3 양적 변수 한 개: 변동</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-04-outliers-boxplot.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.4 이상값과 상자그림</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-05-scatterplot-correlation.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.5 양적 변수 두 개: 산점도와 상관관계</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-06-regression.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.6 양적 변수 두 개: 선형회귀</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-07-multivariate.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.7 데이터 시각화와 다중 변수</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../chapters/03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3장. 신뢰구간</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-01-sampling-distribution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3.1 표집 분포</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-02-confidence-intervals.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">3.2 신뢰구간에 대한 이해</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-03-bootstrap.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3.3 부트스트랩 신뢰구간</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-04-percentile-bootstrap.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3.4 백분위수에 의한 부트스트랩 신뢰구간</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../chapters/04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4장. 가설검증</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-01-hypothesis-testing.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4.1 가설검증 소개</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-02-p-values.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4.2 p-값</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-03-significance.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4.3 통계적 유의성 판단</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-04-supplement.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4.4 가설검증의 오류</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-05-inference-summary.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4.5 통계적 추론 정리</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">참고자료</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-01-lotto.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">6/45 로또</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-02-numbergame.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">반응시간 게임</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">위젯</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../widgets/spreadsheet.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">스프레드시트</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../widgets/distribution-calculator.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">분포 계산기</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../widgets/r-calculator.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">R 계산기</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../widgets/jupyterlite.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">R/Python 실습</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">데이터</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/AllCountries.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">AllCountries.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/temp.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">April14Temps.csv (temp.csv)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/BaseballSalaries2015.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">BaseballSalaries2015.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/BodyFat.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">BodyFat.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/BodyTemp50.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">BodyTemp50.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/CarDepreciation.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">CarDepreciation.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/CommuteAtlanta.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">CommuteAtlanta.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/CommuteStLouis.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">CommuteStLouis.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/CricketChirps.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">CricketChirps.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/DDS.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">DDS.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/ElectionMargin.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">ElectionMargin.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/ExerciseHours.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">ExerciseHours.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/FloridaLakes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">FloridaLakes.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HappyPlanetIndex.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HappyPlanetIndex.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HeightData.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HeightData.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HollywoodMovies.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HollywoodMovies.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HollywoodMovies2011.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HollywoodMovies2011.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HoneybeeWaggle.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HoneybeeWaggle.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HouseStarts.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HouseStarts.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/Life.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Life.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/LightatNight.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">LightatNight.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/MalevolentUniformsNFL.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">MalevolentUniformsNFL.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/Mammal2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Mammal2.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/MustangPrice.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">MustangPrice.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/NutritionStudy.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">NutritionStudy.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/RestaurantTips.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">RestaurantTips.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/RetailSales.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">RetailSales.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/StudentSurvey.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">StudentSurvey.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/USStates.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">USStates.csv</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+ <span class="menu-text">데이터 표(본문 임베드)</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/StudentSurvey.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">StudentSurvey.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/AllCountries.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">AllCountries.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/Life.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Life.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/Mammal2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Mammal2.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/temp.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">temp.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/ElectionMargin.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">ElectionMargin.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/HoneybeeWaggle.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HoneybeeWaggle.csv</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/03.html">3장. 신뢰구간</a></li><li class="breadcrumb-item"><a href="../chapters/03-02-confidence-intervals.html"><span class="chapter-title">3.2 신뢰구간에 대한 이해</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-3-2" class="quarto-section-identifier"><span class="chapter-title">3.2 신뢰구간에 대한 이해</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<!-- Page 95 -->
+<div class="card">
+<p>표본 통계량으로 모수를 추정할 수 있지만 표본에 따라 통계량이 변한다. 이러한 변동을 고려하여 최적의 추정치 하나보다는 그럴듯한 모수 값들의 범위를 제시하는 것이 더 좋을 수 있다. 최적 추정치 또는 그럴듯한 값들의 범위 중에서 어느 것을 사용하더라도 제일 먼저 할 일은 추정할 모수가 정확히 무엇인지 확인하는 것이다.</p>
+<p>1장에서 변수는 범주형 변수와 양적 변수로 나뉘어지고, 2장에서는 요약 통계량과 그래프를 사용하여 변수 하나의 특성 또는 변수 둘 사이의 관계를 탐색하는 방법을 배웠다. 이들과 관련된 모수를 이 장에서 다룰 것이다. 아래 표는 상황 별로 모수와 표본 통계량을 요약한 것이다.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>변수</th>
+<th>추정</th>
+<th>모수</th>
+<th>통계량</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>범주형 변수 하나</td>
+<td>비율</td>
+<td><span class="math inline">\(p\)</span></td>
+<td><span class="math inline">\(\hat{p}\)</span></td>
+</tr>
+<tr class="even">
+<td>양적 변수 하나</td>
+<td>평균</td>
+<td><span class="math inline">\(\mu\)</span></td>
+<td><span class="math inline">\(\bar{x}\)</span></td>
+</tr>
+<tr class="odd">
+<td>범주형 변수 두 개</td>
+<td>비율 차이</td>
+<td><span class="math inline">\(p_1 - p_2\)</span></td>
+<td><span class="math inline">\(\hat{p}_1 - \hat{p}_2\)</span></td>
+</tr>
+<tr class="even">
+<td>범주형 변수 하나와 양적 변수 하나</td>
+<td>평균 차이</td>
+<td><span class="math inline">\(\mu_1 - \mu_2\)</span></td>
+<td><span class="math inline">\(\bar{x}_1 - \bar{x}_2\)</span></td>
+</tr>
+<tr class="odd">
+<td>양적 변수 둘</td>
+<td>상관관계</td>
+<td><span class="math inline">\(\rho\)</span></td>
+<td><span class="math inline">\(r\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<section id="구간-추정-오차-한계" class="level3">
+<h3 class="anchored" data-anchor-id="구간-추정-오차-한계">구간 추정: 오차 한계</h3>
+<div class="card">
+<p>표본에서 계산한 표본 통계량의 값으로 모수를 추정한다. 하지만 통계량이 표본마다 변하므로 때로는 추정치 하나로 충분하지 않다. 따라서 추정치가 얼마나 정확한지 측정할 필요가 있다. 통계량이 표본에 따라 얼마나 변하는지 알면 추정치의 오차 한계(margin of error) 또는 오차 범위를 계산할 수 있다. 이를 이용하여 그럴듯한 모수 값들의 범위인 구간(interval)을 만들 수 있다.</p>
+</div>
+<div class="card">
+<p><span id="ex-3-12" class="qlabel">예제 3.12.</span> 미국의 한 조사 업체가 <span class="math inline">\(18\)</span>세 이상의 <span class="math inline">\(1484\)</span>명에게 TV가 필수품인지 물었다. <span class="math inline">\(42\%\)</span>의 응답자가 필수품이라고 대답하였고 표집 오차 한계는 <span class="math inline">\(\pm 3\)</span>%P이다. 이 정보를 가지고 <span class="math inline">\(18\)</span>세 이상의 전체 미국인 중에서 TV가 필수품이라고 생각하는 사람의 비율에 대한 그럴듯한 값들의 구간을 제시하라.</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p>모집단의 비율을 추정하는 것이므로 기호는 <span class="math inline">\(p\)</span>를 사용한다. 표본에서 TV가 필수품이라고 생각하는 사람들의 비율 <span class="math inline">\(\hat{p} = 0.42\)</span>이다. 오차 한계가 <span class="math inline">\(\pm 3\)</span>%P라는 말은 아마도 전체 미국인 중에서 TV가 필수품이라고 생각하는 사람의 비율은 추정치의 <span class="math inline">\(3\%\)</span>이내에 있음을 의미한다. 따라서 그럴듯한 모비율 값들의 구간은 <span class="math inline">\(0.42 \pm 0.03\)</span>이다. <span class="math inline">\(0.42 - 0.03 = 0.39\)</span> 이고 <span class="math inline">\(0.42 + 0.03 = 0.45\)</span> 이다. 구간은 <span class="math inline">\(0.39\)</span>에서 <span class="math inline">\(0.45\)</span> 또는 <span class="math inline">\(39\%\)</span>에서 <span class="math inline">\(45\%\)</span>이다. 간단히 (<span class="math inline">\(0.39\)</span>, <span class="math inline">\(0.45\)</span>)로 표기하기도 한다.</p>
+<p><span class="math inline">\(18\)</span>세 이상의 미국인은 약 <span class="math inline">\(2\)</span>억<span class="math inline">\(4\)</span>천만 명인데 조사는 단지 <span class="math inline">\(1484\)</span>명만 하였다. 극히 일부를 조사하였는데 추정치가 모비율과 기껏해야 <span class="math inline">\(\pm 0.03\)</span> 밖에 차이가 나지 않는다는 사실이 놀랍지 않은가? 이것이 바로 통계학의 힘이다.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<p><span id="ex-3-13" class="qlabel">예제 3.13.</span> 선거 여론조사 결과 특정 후보를 지지하는 비율 <span class="math inline">\(\hat{p}\)</span>은 <span class="math inline">\(0.54\)</span>라고 하자. 실제 지지율 <span class="math inline">\(p\)</span>는 <span class="math inline">\(\hat{p}\)</span>과 얼마나 가까운지 알고 싶다. 다음 각각의 경우에 후보자의 당선을 얼마나 확신할 수 있는가를 논하라.</p>
+<p><span class="qsub">(1)</span> 오차 한계가 <span class="math inline">\(0.02\)</span></p>
+<p><span class="qsub">(2)</span> 오차 한계가 <span class="math inline">\(0.10\)</span></p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p><span class="qsub">(1)</span> 오차 한계가 <span class="math inline">\(0.02\)</span>이면 그럴듯한 <span class="math inline">\(p\)</span>값들의 구간은 <span class="math inline">\(0.54 \pm 0.02\)</span> 이다. 실제 지지율은 <span class="math inline">\(0.52\)</span>에서 <span class="math inline">\(0.56\)</span> 사이에 있다. 그럴듯한 값들이 모두 <span class="math inline">\(0.5\)</span>보다 크므로 후보자가 당선될 가능성이 상당히 높다고 확신할 수 있다.</p>
+<p><span class="qsub">(2)</span> 오차 한계가 <span class="math inline">\(0.10\)</span>이면 구간은 <span class="math inline">\(0.54 \pm 0.10\)</span> 이다. 실제 지지율은 <span class="math inline">\(0.44\)</span>에서 <span class="math inline">\(0.64\)</span> 사이에 있다. <span class="math inline">\(0.5\)</span>보다 작은 값들을 포함하므로 선거 결과에 대하여 확실하게 말할 수 없다.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 1.</span> 다음 중 구간 추정에 대한 설명으로 옳지 않은 것은? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 구간 추정은 표본에서 계산한 통계량의 변동을 고려하여 모수를 추정하는 방법이다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 구간 추정은 정확한 모수를 제공한다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 구간 추정에서는 추정치의 오차 범위를 포함한 구간을 제공한다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 구간 추정을 통해 추정치의 정확성에 대한 신뢰 구간을 얻을 수 있다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 2.</span> 다음 중 오차 한계가 <span class="math inline">\(\pm 3\)</span>%일 때, <span class="math inline">\(42\%\)</span>의 응답자가 필수품이라고 대답한 경우 그럴듯한 모비율 값들의 구간은 무엇인가? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> (<span class="math inline">\(0.42\)</span>, <span class="math inline">\(0.45\)</span>)</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> (<span class="math inline">\(0.39\)</span>, <span class="math inline">\(0.45\)</span>)</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> (<span class="math inline">\(0.39\)</span>, <span class="math inline">\(0.42\)</span>)</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> (<span class="math inline">\(0.40\)</span>, <span class="math inline">\(0.45\)</span>)</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="4">
+<p><span class="qlabel">확인문제 3.</span> 다음 중 <strong>오차 한계</strong>에 대한 설명으로 옳지 않은 것은? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 오차 한계는 표본에서 추정한 값이 모집단 모수와 얼마나 차이가 날 수 있는지를 나타낸다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 오차 한계가 작을수록 표본의 정확도는 높다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 오차 한계는 구간 추정에서만 사용된다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 오차 한계는 표본 크기가 커질수록 커진다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<!-- Page 96 -->
+</section>
+<section id="신뢰구간" class="level3">
+<h3 class="anchored" data-anchor-id="신뢰구간">신뢰구간</h3>
+<div class="card">
+<p>모수라고 생각할만한 값들의 범위로 모수를 추정하는 것을 구간 추정이라고 한다. 표본 정보로 계산하는 이 구간을 신뢰구간(confidence interval)이라 부른다. 신뢰구간이 모수를 포함할 확률은 사전에 결정된다. 모수는 고정된 값이라 변하지 않지만 표본은 변하기 쉽다. 모든 표본의 신뢰구간이 모수를 포함하도록 하려면 구간을 넓게 해야 한다. 하지만 구간이 너무 넓으면 쓸모가 없다. 예를 들어보자. 후보자의 지지율을 구간 추정하고 싶다. 어떻게 하면 신뢰구간이 항상 모수를 포함할까? 간단히 (<span class="math inline">\(0\)</span>, <span class="math inline">\(1\)</span>)로 하면 된다. 후보자가 당선될 확률이 <span class="math inline">\(0\%\)</span>에서 <span class="math inline">\(100\%\)</span>이면 항상 모수를 포함한다. 맞는 말이지만 이런 정보가 유용한가?</p>
+<p>신뢰구간이 넓으면 모수를 포함할 확률은 높지만 쓸모가 없다. 신뢰구간이 너무 좁아도 문제다. 모수를 포함할 확률이 작아서 신뢰할 수 없다. 그러면 신뢰구간을 어떻게 만들어야 할까? 일부 표본에서는 신뢰구간이 모수를 포함하지 못하더라도 대다수 표본에서 신뢰구간이 모수를 포함하면 된다.</p>
+<p>대칭이고 종 모양인 분포에서 대략 <span class="math inline">\(95\%\)</span>의 데이터는 중심에서 <span class="math inline">\(2\)</span>배의 표준편차 거리 안에 있다고 <a href="../chapters/02-03-quantitative-variation.html#sec-2-3">2.3절</a>에서 배웠다. 표본 통계량의 표집분포가 대칭이고 종 모양이라면 대략 <span class="math inline">\(95\%\)</span>의 표본 통계량은 표집분포의 중심인 모수에서 <span class="math inline">\(2\)</span>배의 표준오차를 벗어나지 않는다. 구간 <span class="math inline">\(\text{통계량} \pm 2 \times SE\)</span>는 모든 표본 중 대략 <span class="math inline">\(95\%\)</span>는 모수를 포함할 것이다. 여기서 SE는 표준오차(표집분포의 표준편차)이다.</p>
+<p>우리가 표준오차를 추정할 수 있고 표집분포가 대략 대칭이고 종 모양이라면 이런 방식으로 근사적인 <span class="math inline">\(95\%\)</span> 신뢰구간을 만든다.</p>
+</div>
+<div class="card">
+<p><img src="../images/img_110.PNG" class="img-fluid"></p>
+</div>
+<div class="card">
+<p><span id="ex-3-14" class="qlabel">예제 3.14.</span> <span class="math inline">\(2015\)</span>년 미국 메이저 리그 야구 전체 선수 중에서 무작위로 뽑은 <span class="math inline">\(30\)</span>명의 연봉 자료가 위에 있다. 표본평균 <span class="math inline">\(\bar{x}=4.55\)</span>, 표준편차 <span class="math inline">\(s=6.81\)</span>이다. <a href="../chapters/03-01-sampling-distribution.html#ex-3-7">예제 3.7</a>에서 표본 크기 <span class="math inline">\(n=30\)</span>인 표본 평균의 표준오차는 <span class="math inline">\(0.99\)</span>로 추정하였다.</p>
+<p><span class="qsub">(1)</span> 표본 정보와 표준오차 추정치 <span class="math inline">\(0.99\)</span>를 사용하여 전체 야구 선수의 평균 연봉에 대한 <span class="math inline">\(95\%\)</span> 신뢰구간을 구하라. 최적 추정치와 오차한계는 무엇인가? 추정할 모수를 올바른 기호로 표현하라.</p>
+<p><span class="qsub">(2)</span> 모수 <span class="math inline">\(\mu=4.215\)</span>임을 알고 있다. 이 표본으로 만든 신뢰구간은 모수를 포함하는가?</p>
+<p><span class="qsub">(3)</span> 표준편차 <span class="math inline">\(6.81\)</span>은 표준오차 <span class="math inline">\(0.99\)</span>와 매우 다르다. 이 둘의 차이점을 설명하라.</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p><span class="qsub">(1)</span> 모집단은 <span class="math inline">\(2015\)</span>년 메이저 리그의 모든 야구 선수이다. 모든 야구 선수의 평균 연봉은 <span class="math inline">\(\mu\)</span>로 표기한다. <span class="math inline">\(\mu\)</span>의 <span class="math inline">\(95\%\)</span> 신뢰구간은</p>
+<p><span class="math display">\[\begin{aligned}
+\text{통계량} \pm 2 \times SE &amp;= \bar{x} \pm 2 \times SE \\
+&amp;= 4.55 \pm 2 \times 0.99 \\
+&amp;= 4.55 \pm 1.98 = (2.57, 6.53)
+\end{aligned}\]</span></p>
+<p>야구 선수의 평균 연봉에 대한 <span class="math inline">\(95\%\)</span>의 신뢰구간은 <span class="math inline">\(2.57\)</span>에서 <span class="math inline">\(6.53\)</span>이다. 최적 추정치는 <span class="math inline">\(4.55\)</span>이고, 오차 한계는 <span class="math inline">\(1.98\)</span>이다.</p>
+<p><span class="qsub">(2)</span> 이 표본의 경우에는 모평균 <span class="math inline">\(4.215\)</span>가 신뢰구간 (<span class="math inline">\(2.57\)</span>, <span class="math inline">\(6.53\)</span>) 안에 포함된다.</p>
+<p><span class="qsub">(3)</span> 표준편차 <span class="math inline">\(6.81\)</span>은 표본에서 <span class="math inline">\(30\)</span>개 연봉 데이터의 표준편차이다. 위 표를 보면 연봉 데이터는 상당히 넓은 범위에 퍼져 있다. 한 번에 <span class="math inline">\(30\)</span>명의 연봉을 표본으로 뽑아 평균을 계산한다. 이것을 반복하여 얻은 표본 평균의 표준편차는 <span class="math inline">\(0.99\)</span>이다. 이 평균값은 개별 연봉보다 훨씬 더 좁은 범위에 퍼져 있다.</p>
+<p>오차 한계, 표준오차, 표본 표준편차는 모두 다른 개념이다. 따라서 이들을 정확하게 구분할줄 알아야 한다. 오차 한계는 신뢰구간을 구할 때 통계량에서 더하고 빼는 양이다. 표준오차는 같은 크기의 표본을 반복하여 뽑았을 때 표본 통계량의 표준편차이다. 표본 표준편차는 표본에서 개별 값에 대한 표준편차이다.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="3">
+<p><span class="qlabel">확인문제 1.</span> 다음 중 <strong>신뢰구간</strong>에 대한 설명으로 옳지 않은 것은? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 신뢰구간은 모수를 포함할 확률이 사전에 결정된다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 신뢰구간은 추정치 하나보다는 범위를 제시하는 것이 더 유용할 수 있다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 신뢰구간이 너무 넓으면 그 정보는 유용하다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 신뢰구간이 너무 좁으면 그 정보는 신뢰할 수 없다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="1">
+<p><span class="qlabel">확인문제 2.</span> 다음 중 <strong>오차 한계</strong>에 대한 설명으로 옳은 것은? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 오차 한계는 표본에서 추정한 값이 모집단 모수와 얼마나 차이가 날 수 있는지를 나타낸다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 오차 한계는 표본 표준편차로 구할 수 있다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 오차 한계는 신뢰구간을 구할 때 모수의 값을 더하고 빼는 양이다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 오차 한계는 신뢰구간의 중심을 나타내는 값이다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 3.</span> 다음 표본 정보로 <strong><span class="math inline">\(95\%\)</span> 신뢰구간</strong>을 구할 때, <strong>오차 한계</strong>는 얼마인가?</p>
+<ul>
+<li>표본 평균: <span class="math inline">\(4.55\)</span></li>
+<li>표준오차: <span class="math inline">\(0.99\)</span> <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></li>
+</ul>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(0.99\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(1.98\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(2.57\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(1.0\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<!-- Page 97 -->
+</section>
+<section id="신뢰구간에서-신뢰는-무엇을-의미하는가" class="level3">
+<h3 class="anchored" data-anchor-id="신뢰구간에서-신뢰는-무엇을-의미하는가">신뢰구간에서 신뢰는 무엇을 의미하는가?</h3>
+<div class="card">
+<p><a href="../chapters/03-01-sampling-distribution.html#sec-3-1">3.1절</a>에서 학사 학위를 가진 미국 성인의 비율은 <span class="math inline">\(0.275\)</span>라고 하였다. 아래 앱에서 모비율은 <span class="math inline">\(0.275\)</span>, 표본 크기는 <span class="math inline">\(200\)</span>으로 설정한다. 표본 추출을 <span class="math inline">\(1000\)</span>번 반복하면 표준편차는 대략 <span class="math inline">\(0.03\)</span>이다.</p>
+<iframe src="../sims/sampling_dist_prop.html" width="100%" height="750" style="border:1px solid #e7ebf2; border-radius:10px;" loading="lazy">
+</iframe>
+</div>
+<div class="card">
+<p><span id="ex-3-15" class="qlabel">예제 3.15.</span> 아래 <span class="math inline">\(3\)</span>가지 표본 비율 모두 모집단에서 나올만한 값이다. 표집분포의 표준오차는 대략 <span class="math inline">\(0.03\)</span>이다. <span class="math inline">\(95\%\)</span> 신뢰구간을 만들고 모비율 <span class="math inline">\(0.275\)</span>를 포함하는지 검사하라.</p>
+<p><span class="qsub">(1)</span> <span class="math inline">\(\hat{p} = 0.26\)</span></p>
+<p><span class="qsub">(2)</span> <span class="math inline">\(\hat{p} = 0.32\)</span></p>
+<p><span class="qsub">(3)</span> <span class="math inline">\(\hat{p} = 0.20\)</span></p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p>표본 비율 <span class="math inline">\(\hat{p}\)</span>이 모비율의 최적 추정치이다. 표집분포는 대칭이고 종 모양이므로 <span class="math inline">\(95\%\)</span> 신뢰구간은 <span class="math inline">\(\hat{p} \pm 2 \cdot SE\)</span>이다.</p>
+<p><span class="qsub">(1)</span> <span class="math inline">\(\hat{p}\)</span>이 <span class="math inline">\(0.26\)</span>이면 구간은 <span class="math inline">\(0.26 \pm 2 \cdot 0.03 = (0.20, 0.32)\)</span>이다. 표집분포 그래프를 보면 표본 비율 <span class="math inline">\(0.26\)</span>은 중심에서 매우 가까운 곳에 있다. 신뢰구간 (<span class="math inline">\(0.20\)</span>, <span class="math inline">\(0.32\)</span>)은 모비율 <span class="math inline">\(0.275\)</span>를 포함한다.</p>
+<p><span class="qsub">(2)</span> <span class="math inline">\(\hat{p}\)</span>이 <span class="math inline">\(0.32\)</span>이면 구간은 <span class="math inline">\(0.32 \pm 2 \cdot 0.03 = (0.26, 0.38)\)</span>이다. 표집분포 그래프를 보면 표본 비율 <span class="math inline">\(0.32\)</span>는 중심에서 조금 멀지만 그렇다고 아주 먼 꼬리에 있지는 않다. 신뢰구간 (<span class="math inline">\(0.26\)</span>, <span class="math inline">\(0.38\)</span>)은 모비율 <span class="math inline">\(0.275\)</span>를 포함한다.</p>
+<p><span class="qsub">(3)</span> <span class="math inline">\(\hat{p}\)</span>이 <span class="math inline">\(0.20\)</span>이면 구간은 <span class="math inline">\(0.20 \pm 2 \cdot 0.03 = (0.14, 0.26)\)</span>이다. 표집분포 그래프를 보면 표본 비율 <span class="math inline">\(0.20\)</span>은 중심에서 가깝지 않은 왼쪽 꼬리에 있다. 표본 비율 <span class="math inline">\(0.20\)</span>은 표집분포의 중심에서 <span class="math inline">\(2\)</span>배의 표준오차 범위를 벗어났다. 신뢰구간 (<span class="math inline">\(0.14\)</span>, <span class="math inline">\(0.26\)</span>)은 모비율 <span class="math inline">\(0.275\)</span>를 포함하지 않는다.</p>
+<p>위 예제에서 신뢰구간 <span class="math inline">\(2\)</span>개는 모수를 포함했지만 표본 비율 <span class="math inline">\(0.20\)</span>에서 계산한 신뢰구간은 모수를 포함하지 않았다. <span class="math inline">\(95\%\)</span> 신뢰구간을 반복하여 많이 만든다고 하자. 그러면 이들 중에서 약 <span class="math inline">\(95\%\)</span>는 모수를 포함하겠지만 나머지 <span class="math inline">\(5\%\)</span>는 모수를 포함하지 못할 것이다.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="1">
+<p><span class="qlabel">확인문제 1.</span> 다음 중 <strong><span class="math inline">\(95\%\)</span> 신뢰구간</strong>에 대한 설명으로 옳은 것은? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(95\%\)</span> 신뢰구간은 표본을 여러 번 추출했을 때 <span class="math inline">\(95\%\)</span>의 신뢰구간이 모수를 포함한다고 할 수 있다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 신뢰구간은 모수를 정확하게 포함한다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 신뢰구간이 좁을수록 정확한 추정이 가능하다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 신뢰구간은 항상 모수를 포함하지 않는다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz q" data-answer="2">
+<p><span class="qlabel">확인문제 2.</span> 다음 표본 비율에 대해 계산된 <strong><span class="math inline">\(95\%\)</span> 신뢰구간</strong>이 모비율 <span class="math inline">\(p=0.275\)</span>를 포함하면 <span class="math inline">\(1\)</span>, 포함하지 못하면 <span class="math inline">\(2\)</span>로 표기하시오.</p>
+<p>표준오차 <span class="math inline">\(SE=0.03\)</span>일 때, 신뢰구간을 구하시오.</p>
+<p><span class="qsub">(1)</span> <span class="math inline">\(\hat{p} = 0.30\)</span><br>
+<span class="qsub">(2)</span> <span class="math inline">\(\hat{p} = 0.28\)</span><br>
+<span class="qsub">(3)</span> <span class="math inline">\(\hat{p} = 0.32\)</span></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>정답 확인
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span class="qsub">(1)</span> <span class="math inline">\(1\)</span> <span class="qsub">(2)</span> <span class="math inline">\(1\)</span> <span class="qsub">(3)</span> <span class="math inline">\(1\)</span></p>
+</div>
+</div>
+</div>
+<p><span class="qlabel">확인문제 3.</span> <strong>신뢰구간</strong>을 구할 때, 표본 비율이 <span class="math inline">\(\hat{p} = 0.20\)</span>일 때 신뢰구간은 다음과 같다. 이 신뢰구간이 <strong>모비율 <span class="math inline">\(p = 0.275\)</span></strong>를 포함하는지 확인하시오.</p>
+<p>표본 비율 <span class="math inline">\(\hat{p} = 0.20\)</span> 표준오차 <span class="math inline">\(SE = 0.03\)</span> <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 신뢰구간은 <span class="math inline">\((0.14, 0.26)\)</span>이고 모비율 <span class="math inline">\(0.275\)</span>를 포함한다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 신뢰구간은 <span class="math inline">\((0.14, 0.26)\)</span>이고 모비율 <span class="math inline">\(0.275\)</span>를 포함하지 않는다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 신뢰구간은 <span class="math inline">\((0.18, 0.22)\)</span>이고 모비율 <span class="math inline">\(0.275\)</span>를 포함한다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 신뢰구간은 <span class="math inline">\((0.17, 0.23)\)</span>이고 모비율 <span class="math inline">\(0.275\)</span>를 포함하지 않는다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<!-- Page 98 -->
+<div class="card">
+<p>아래 앱에서 모비율 <span class="math inline">\(p=0.275\)</span>, 표본 크기 <span class="math inline">\(n=200\)</span>으로 설정한다. 표본 추출 버튼을 클릭하여 표본을 추출하고 표본 비율을 계산한다. 표본 비율에서 <span class="math inline">\(2\)</span>배의 표준오차 거리 안에 모비율이 있으면 파란색이고 밖에 있으면 빨간색이다.</p>
+<p>표본을 뽑아 <span class="math inline">\(95\%\)</span> 신뢰구간이 모비율을 포함하는지를 평가하는 모의실험을 많이 한다면, 중앙의 약 <span class="math inline">\(95\%\)</span> 표본은 모비율을 포함하지만, 양쪽 꼬리의 약 <span class="math inline">\(5\%\)</span> 표본은 모비율을 포함하지 못한다. 이 구간이 모수를 포함한다는 것을 <span class="math inline">\(95\%\)</span> 신뢰할 수 있으므로 <span class="math inline">\(95\%\)</span> 신뢰구간이라 부른다.</p>
+<p>보통 우리는 표본 하나만 가지고 있으므로 실제 모수 값은 모른다. 모수를 모르므로 표본에서 만든 <span class="math inline">\(95\%\)</span> 신뢰구간이 모수를 포함하는지도 모른다. 그러면 <span class="math inline">\(95\%\)</span>는 무엇을 의미하는가? <span class="math inline">\(95\%\)</span>는 모수가 구간 안에 있다는 확신의 정도를 나타낸다. <span class="math inline">\(95\%\)</span>와 같은 수치를 신뢰 수준(confidence level)이라 부른다.</p>
+<iframe src="../sims/ci_coverage.html" width="100%" height="800" style="border:1px solid #e7ebf2; border-radius:10px;" loading="lazy">
+</iframe>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 1.</span> <span class="math inline">\(95\%\)</span> 신뢰구간을 만들 때, 표본에서 계산된 신뢰구간이 모수 값을 포함하는 확률은 무엇을 의미하는가? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 표본이 포함하는 모수의 정확한 값을 의미한다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 이 방법으로 구간을 여러 번 만들면, 그중 <span class="math inline">\(95\%\)</span>가 모수를 포함한다</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 표본 비율이 <span class="math inline">\(95\%\)</span> 정확하다는 의미이다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 표본의 정확도를 <span class="math inline">\(95\%\)</span>로 확신한다는 의미이다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 2.</span> 다음 중 <strong><span class="math inline">\(95\%\)</span> 신뢰구간</strong>에 대한 설명으로 옳지 않은 것은? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 신뢰구간을 여러 번 만들 때 <span class="math inline">\(95\%\)</span>가 모수를 포함한다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 모수가 신뢰구간 안에 있을 확률이 <span class="math inline">\(95\%\)</span>이다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(95\%\)</span> 신뢰구간은 표본을 여러 번 추출할 때 <span class="math inline">\(95\%\)</span>가 모수를 포함한다고 할 수 있다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(95\%\)</span> 신뢰구간을 통해 모수를 추정할 수 있다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="1">
+<p><span class="qlabel">확인문제 3.</span> 모비율 <span class="math inline">\(p = 0.275\)</span>일 때, 표본 크기 <span class="math inline">\(n = 200\)</span>을 설정하고 표본을 뽑아 <span class="math inline">\(95\%\)</span> 신뢰구간이 모비율을 포함하는지 확인할 때, 신뢰구간을 계산하는 방법은 무엇인가? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(\hat{p} \pm 2 \times SE\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(\hat{p} \pm 1 \times SE\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(\hat{p} \pm 3 \times SE\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(\hat{p} \pm SE\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<!-- Page 99 -->
+<div class="card">
+<p><span id="ex-3-16" class="qlabel">예제 3.16.</span> 체질량 지수(BMI)는 체중(kg)을 키(m)의 제곱으로 나눈 값이다. <span class="math inline">\(2010\)</span>년 미국에 사는 성인 약 <span class="math inline">\(45\)</span>만 명의 무작위 표본에서 체질량 지수의 표본 평균 <span class="math inline">\(\bar{x}=27.655\)</span>, 표준오차 <span class="math inline">\(SE=0.009\)</span>이다.</p>
+<p><span class="qsub">(1)</span> 미국 전체 성인의 평균 체질량 지수의 <span class="math inline">\(95\%\)</span> 신뢰구간을 구하라. 이 경우에 신뢰구간은 무엇을 의미하는가?</p>
+<p><span class="qsub">(2)</span> 체질량 지수가 <span class="math inline">\(25\)</span> 이상이면 과체중으로 분류한다. 미국 전체 성인의 평균 체질량 지수는 과체중인가?</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p><span class="qsub">(1)</span> 미국 전체 성인의 평균 체질량 지수를 <span class="math inline">\(\mu\)</span>라고 표기하자. <span class="math inline">\(95\%\)</span> 신뢰구간은 다음과 같다.</p>
+<p><span class="math display">\[\begin{aligned}
+\text{통계량} \pm 2 \times SE &amp;= \bar{x} \pm 2 \times SE \\
+&amp;= 27.655 \pm 2 \times 0.009 \\
+&amp;= 27.655 \pm 0.018 = (27.637, 27.673)
+\end{aligned}\]</span></p>
+<p><span class="math inline">\(\mu\)</span>의 <span class="math inline">\(95\%\)</span> 신뢰구간은 (<span class="math inline">\(27.637\)</span>, <span class="math inline">\(27.673\)</span>) 이다. <span class="math inline">\(2010\)</span>년 미국 성인 전체의 평균 체질량 지수는 <span class="math inline">\(27.637\)</span>에서 <span class="math inline">\(27.673\)</span> 사이에 있음을 <span class="math inline">\(95\%\)</span> 확신한다.</p>
+<p><span class="qsub">(2)</span> 신뢰구간 전체가 <span class="math inline">\(25\)</span>보다 크므로 미국 전체 성인의 평균 체질량 지수는 과체중임을 확신한다.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<p>위 예제에서 신뢰구간의 폭은 매우 좁은데 왜 그럴까? 표본의 크기(<span class="math inline">\(n=451,075\)</span>)가 매우 크기 때문이다. 표본의 크기가 클수록 표본 통계량의 변동은 작아지고 표준오차도 같이 작아진다.</p>
+</div>
+<div class="card">
+<p><span id="ex-3-17" class="qlabel">예제 3.17.</span> 지난 <span class="math inline">\(30\)</span>일 동안 운동을 한 성인과 그렇지 않은 성인의 평균 체질량 지수 차이 <span class="math inline">\(\bar{x}_E - \bar{x}_N = -1.915\)</span>, 표준오차는 <span class="math inline">\(0.016\)</span>이다. 전체 미국인 중에서 운동한 성인과 그렇지 않은 성인의 평균 체질량 지수 차이에 대한 <span class="math inline">\(95\%\)</span> 신뢰구간을 구하라. 이 경우에 신뢰구간이 무엇을 의미하는지 설명하라. 운동 여부에 따라서 평균 체질량 지수는 차이가 없다고 할 수 있는가?</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p>평균 차이 추정이므로 적절한 기호는 <span class="math inline">\(\mu_E - \mu_N\)</span>이다. <span class="math inline">\(\mu_E - \mu_N\)</span>은 <span class="math inline">\(2010\)</span>년 미국인 중에서 지난 <span class="math inline">\(30\)</span>일 동안 운동을 했던 모든 성인의 평균 체질량 지수에서 운동을 안했던 모든 성인의 평균 체질량 지수를 뺀 값이다. <span class="math inline">\(\mu_E - \mu_N\)</span>에 대한 <span class="math inline">\(95\%\)</span> 신뢰구간은</p>
+<p><span class="math display">\[\begin{aligned}
+\text{통계량} \pm 2 \times SE &amp;= (\bar{x}_E - \bar{x}_N) \pm 2 \times SE \\
+&amp;= -1.915 \pm 2 \times 0.016 \\
+&amp;= -1.915 \pm 0.032 = (-1.947, -1.883)
+\end{aligned}\]</span></p>
+<p>운동을 했던 성인의 평균 체질량 지수가 운동을 하지 않았던 성인의 평균 체질량 지수보다 <span class="math inline">\(1.883\)</span>에서 <span class="math inline">\(1.947\)</span> 정도 작다는 것을 <span class="math inline">\(95\%\)</span> 확신한다. 이 구간이 <span class="math inline">\(0\)</span>을 포함하지 않으므로 운동 여부에 따라 평균 체질량 지수는 차이가 있음을 확신한다.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<p><span id="ex-3-18" class="qlabel">예제 3.18.</span> 질병관리 본부는 체질량 지수가 <span class="math inline">\(30\)</span> 이상이면 비만으로 분류한다. <span class="math inline">\(2010\)</span>년 미국의 모든 성인의 비만율 <span class="math inline">\(p_{2010}\)</span>의 <span class="math inline">\(95\%\)</span> 신뢰구간은 (<span class="math inline">\(0.276\)</span>, <span class="math inline">\(0.278\)</span>)이다. <span class="math inline">\(2000\)</span>년 조사에서 성인의 비만율 <span class="math inline">\(p_{2000}\)</span>의 <span class="math inline">\(95\%\)</span> 신뢰구간은 (<span class="math inline">\(0.195\)</span>, <span class="math inline">\(0.199\)</span>)이다.</p>
+<p><span class="qsub">(1)</span> 두 개의 신뢰구간은 무엇을 의미하는가?</p>
+<p><span class="qsub">(2)</span> <span class="math inline">\(2000\)</span>년 조사의 표본 크기가 <span class="math inline">\(2010\)</span>년보다 작다고 생각하는가? 이유는 무엇인가?</p>
+<p><span class="qsub">(3)</span> 비율 차이 <span class="math inline">\(p_{2010} - p_{2000}\)</span>에 대한 <span class="math inline">\(95\%\)</span> 신뢰구간은 (<span class="math inline">\(0.049\)</span>, <span class="math inline">\(0.111\)</span>)이다. 이 구간은 무엇을 의미하는가?</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p><span class="qsub">(1)</span> <span class="math inline">\(2010\)</span>년 미국의 모든 성인 중 비만율은 <span class="math inline">\(0.276\)</span>에서 <span class="math inline">\(0.278\)</span> 사이라고 <span class="math inline">\(95\%\)</span> 확신한다. 또한 <span class="math inline">\(2000\)</span>년 미국의 모든 성인 중 비만율은 <span class="math inline">\(0.195\)</span>에서 <span class="math inline">\(0.199\)</span> 사이라고 <span class="math inline">\(95\%\)</span> 확신한다.</p>
+<p><span class="qsub">(2)</span> <span class="math inline">\(2000\)</span>년 조사의 표본 크기가 <span class="math inline">\(2010\)</span>년보다 더 작다. <span class="math inline">\(2000\)</span>년의 신뢰구간의 오차한계가 <span class="math inline">\(2010\)</span>년보다 더 크기 때문이다. 오차한계가 크면 표준오차가 크다는 뜻이고 이는 표본 크기가 작다는 것을 의미한다. 사실 <span class="math inline">\(2000\)</span>년 조사에서 표본 크기는 <span class="math inline">\(184{,}450\)</span>이었다.</p>
+<p><span class="qsub">(3)</span> <span class="math inline">\(2000\)</span>년에서 <span class="math inline">\(2010\)</span>년 사이 <span class="math inline">\(10\)</span>년 동안 비만율은 <span class="math inline">\(0.049\)</span>에서 <span class="math inline">\(0.111\)</span> 정도 증가했다고 <span class="math inline">\(95\%\)</span> 확신한다.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 1.</span> <span class="math inline">\(2010\)</span>년 미국 성인의 평균 체질량 지수에 대한 <span class="math inline">\(95\%\)</span> 신뢰구간을 구했을 때, 신뢰구간이 무엇을 의미하는가? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 표본 평균이 포함된 범위를 의미한다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 같은 방법으로 표본을 여러 번 뽑아 신뢰구간을 계산하면, 그중 약 <span class="math inline">\(95\%\)</span>의 신뢰구간이 모수를 포함한다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 신뢰구간이 <span class="math inline">\(95\%\)</span>의 표본을 포함한다는 의미이다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 표본 통계량이 <span class="math inline">\(95\%\)</span> 신뢰를 갖고 있다는 의미이다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 2.</span> <span class="math inline">\(2010\)</span>년 미국 성인의 평균 체질량 지수에 대한 <span class="math inline">\(95\%\)</span> 신뢰구간이 (<span class="math inline">\(27.637\)</span>, <span class="math inline">\(27.673\)</span>)로 구해졌을 때, 신뢰구간의 해석은 무엇인가? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(95\%\)</span> 신뢰구간이 평균 체질량 지수를 포함한다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(95\%\)</span> 신뢰구간은 모수를 포함할 확률은 <span class="math inline">\(0\)</span> 또는 <span class="math inline">\(1\)</span>이다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(95\%\)</span> 신뢰구간이 실제 모수 값을 나타낸다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(95\%\)</span> 신뢰구간이 모수를 포함할 확률이 <span class="math inline">\(5\%\)</span>이다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 3.</span> 운동을 한 성인과 그렇지 않은 성인의 평균 체질량 지수 차이에 대한 <span class="math inline">\(95\%\)</span> 신뢰구간을 구했을 때, 이 구간이 <span class="math inline">\((-1.947, -1.883)\)</span>로 나왔다면, 신뢰구간의 의미는 무엇인가? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 운동을 한 성인의 평균 체질량 지수가 운동을 하지 않은 성인의 평균 체질량 지수보다 <span class="math inline">\(0\)</span>보다 클 확률이 <span class="math inline">\(95\%\)</span>이다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 운동을 한 성인의 평균 체질량 지수가 운동을 하지 않은 성인의 평균 체질량 지수보다 <span class="math inline">\(1.883\)</span>에서 <span class="math inline">\(1.947\)</span> 정도 작다고 확신할 수 있다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 운동 여부에 따른 체질량 지수 차이가 <span class="math inline">\(0\)</span>을 포함하고 있다고 확신할 수 있다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 운동 여부에 따라 체질량 지수 차이가 <span class="math inline">\(1.883\)</span>에서 <span class="math inline">\(1.947\)</span> 정도 증가했다고 확신할 수 있다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<!-- Page 100 -->
+</section>
+<section id="신뢰구간에-대한-오해" class="level3">
+<h3 class="anchored" data-anchor-id="신뢰구간에-대한-오해">신뢰구간에 대한 오해</h3>
+<div class="card">
+<p><strong>오해 <span class="math inline">\(1\)</span></strong>: <span class="math inline">\(95\%\)</span> 신뢰구간은 모집단 전체 데이터 중 <span class="math inline">\(95\%\)</span>를 포함한다.</p>
+<p>이렇게 오해하기 쉽다. 앞의 예제에서 미국 성인 전체의 평균 체질량 지수의 <span class="math inline">\(95\%\)</span> 신뢰구간은 (<span class="math inline">\(27.637\)</span>, <span class="math inline">\(27.673\)</span>) 이다. 미국 전체 성인의 <span class="math inline">\(95\%\)</span> 체질량 지수가 매우 좁은&nbsp;구간인&nbsp;(<span class="math inline">\(27.637\)</span>, <span class="math inline">\(27.673\)</span>)&nbsp;안에 있다면 누가 믿겠는가? 신뢰구간은 모수의 포함 여부에 관심이 있다. 모집단의 개별&nbsp;데이터가 얼마나 포함되는지는&nbsp;신뢰구간으로 말할 수 없다.</p>
+<p><strong>오해 <span class="math inline">\(2\)</span></strong>: <span class="math inline">\(95\%\)</span> 신뢰구간 안에 표본 평균이 포함된다는 것을 <span class="math inline">\(95\%\)</span> 확신한다.</p>
+<p>이것도 잘못된 표현이다. 올바른 표현은 “모평균이 <span class="math inline">\(95\%\)</span> 신뢰구간 안에 있다는 것을 <span class="math inline">\(95\%\)</span> 확신한다”이다. 표본 평균이 신뢰구간 안에 있다는 것은&nbsp;<span class="math inline">\(100\%\)</span> 확신할 수 있다. <span class="math inline">\(95\%\)</span> 신뢰구간은 표본 평균에 <span class="math inline">\(2\)</span>배의 표준오차를 더하고 빼서 만들기 때문에 표본 평균은 항상&nbsp;신뢰구간 안에&nbsp;포함된다. 신뢰구간은 표본 통계량이 아닌 모수에 대한 정보를 주는 것이다.</p>
+<p><strong>오해 <span class="math inline">\(3\)</span></strong>: 모수가 특정의 <span class="math inline">\(95\%\)</span> 신뢰구간 안에 포함될 확률은 <span class="math inline">\(0.95\)</span>이다.</p>
+<p>거짓이다. 표본에 따라 변하는 것은 통계량이지 모수가 아니다. 평균 체질량 지수의 신뢰구간&nbsp;(<span class="math inline">\(27.637\)</span>, <span class="math inline">\(27.673\)</span>) 안에 평균 체질량 지수의 참값은 포함되느냐 아니면 포함되지 않느냐 중에 하나이다. 실제 모평균 값이 변하여 <span class="math inline">\(95\%\)</span>의 확률로 신뢰구간 안에 포함되는 것이 아니다. 따라서 구간 안에 모수의 포함 여부를 확률로 말하지 않고 “<span class="math inline">\(95\%\)</span> 신뢰한다” 또는 “<span class="math inline">\(95\%\)</span> 확신한다”라고 표현한다. 특정 신뢰구간의&nbsp;성공&nbsp;여부는 알 수 없다. 신뢰구간을 만드는 방식은 <span class="math inline">\(100\)</span>번 시행하면 <span class="math inline">\(95\)</span>번 정도는 제대로 작동하지만 <span class="math inline">\(5\)</span>번 정도는 실패한다.</p>
+</div>
+<div class="card">
+<p><span id="q-3-2" class="qlabel">질문 3.2.</span> 어느 통계학 수업에서 한 회사의 초콜릿 과자의 과자 하나당 평균 초콜릿 칩 수를 추정하려고 한다. 무작위 표본을 수집하여 과자 하나당 평균 초콜릿 칩 수의 <span class="math inline">\(95\%\)</span> 신뢰구간을 구해보니 (<span class="math inline">\(18.6\)</span>, <span class="math inline">\(21.3\)</span>)이 나왔다. 다음 각각은 맞는 주장인가 아니면 틀린 주장인가? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="quiz q qinline" data-answer="1">
+<p><span class="qsub">(1)</span> 신뢰구간 (<span class="math inline">\(18.6\)</span>, <span class="math inline">\(21.3\)</span>)은 과자 하나당 초콜릿 칩 수의 실제 평균을 포함한다고 <span class="math inline">\(95\%\)</span> 신뢰한다.</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 맞다</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 틀리다</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q qinline" data-answer="2">
+<p><span class="qsub">(2)</span> 각 과자에는 대략 <span class="math inline">\(18.6\)</span>~<span class="math inline">\(21.3\)</span>개의 초콜릿 칩이 들어 있다고 <span class="math inline">\(95\%\)</span> 신뢰한다.</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 맞다</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 틀리다</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q qinline" data-answer="2">
+<p><span class="qsub">(3)</span> <span class="math inline">\(95\%\)</span>의 과자에는 <span class="math inline">\(18.6\)</span>~<span class="math inline">\(21.3\)</span>개의 초콜릿 칩이 있다.</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 맞다</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 틀리다</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="3">
+<p><span class="qlabel">확인문제 1.</span> 다음 중 신뢰구간에 대한 잘못된 해석은? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(95\%\)</span> 신뢰구간은 모집단의 모수가 포함될 것으로 기대되는 구간이다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(95\%\)</span> 신뢰구간은 모집단 전체 데이터의 <span class="math inline">\(95\%\)</span>를 포함한다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 신뢰구간은 표본 통계량이 아닌 모수에 대한 정보를 제공한다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 신뢰구간은 표본마다 달라질 수 있다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="1">
+<p><span class="qlabel">확인문제 2.</span> 다음 중 <span class="math inline">\(95\%\)</span> 신뢰구간에 대한 올바른 해석은? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 특정한 신뢰구간이 모평균을 포함할 확률은 <span class="math inline">\(0.95\)</span>이다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 신뢰구간은 표본을 여러 번 추출했을 때, <span class="math inline">\(95\%\)</span>의 경우 모평균을 포함할 것으로 기대된다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(95\%\)</span> 신뢰구간이 항상 모평균을 포함해야 한다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 신뢰구간을 만들면 표본 평균이 그 안에 포함될 확률은 <span class="math inline">\(95\%\)</span>이다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 3.</span> 다음 중 신뢰구간과 관련하여 옳지 않은 설명은? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(95\%\)</span> 신뢰구간이란 동일한 방법으로 신뢰구간을 여러 번 만들 경우, <span class="math inline">\(95\%\)</span> 정도는 모수를 포함할 것으로 기대된다는 의미이다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(95\%\)</span> 신뢰구간을 계산하면 표본 평균이 그 안에 포함될 확률은 <span class="math inline">\(95\%\)</span>이다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 특정 신뢰구간이 모수를 포함하는지 여부는 <span class="math inline">\(0\)</span> 또는 <span class="math inline">\(1\)</span>이다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 신뢰구간의 성공 여부는 개별적으로 알 수 없고, 전체적인 과정에서 <span class="math inline">\(95\%\)</span>가 포함될 것으로 기대된다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<!-- Page 101 -->
+</section>
+<section id="실제-신뢰구간은-어떻게-만드는가" class="level3">
+<h3 class="anchored" data-anchor-id="실제-신뢰구간은-어떻게-만드는가">실제 신뢰구간은 어떻게 만드는가?</h3>
+<div class="card">
+<p>우리는 지금까지 신뢰구간이 무엇을 의미하는지 또 표준오차를 알 때 신뢰구간을 만드는 방법을 배웠다. 우리가 가진 것은 표본 하나뿐인데 표준오차를 알 수 있겠는가? 신뢰수준이 <span class="math inline">\(95\%\)</span>가 아닌 신뢰구간은 어떻게 만드는가? 표집분포를 만들 수 있다면 표본 통계량의 변동이 얼마인지 알 수 있다. 현실은 표본 하나만 있고 표집분포는 없다. 모수의 참값도 모르고 표집분포를 만들기 위하여 표본을 수천 번 반복해서 뽑을 여유도 없다. 지금까지 언급한 모든 것이 현실에서 가능하지 않다면 추정치의 정확도를 어떻게 평가할까?</p>
+<p>표본 통계량의 변동을 알기 전에 모수의 참값을 알아야 하고 모집단에서 표본을 수천 번 뽑을 수 있어야 한다. 이 방법은 표본 통계량으로 모수를 추정할 때 도움을 주지 못한다. 현실에서 우리가 가진 표본은 표집분포를 구성하는 수많은 표본 중의 하나일 뿐이다. 무작위로 뽑은 표본이&nbsp;표집분포의 어느 곳에 있을지 누가 아는가?</p>
+<p>놀랍게도 표본 하나만 가지고도 표본 통계량의&nbsp;변동을 알아낼 방법이 있다. 어떻게 이것이 가능한지 다음 절에서 배울 것이다.</p>
+</div>
+<div class="card">
+<div class="quiz" data-answer="3">
+<p><span class="qlabel">확인문제 1.</span> 다음 중 신뢰구간을 만들기 위해 필요한 조건이 아닌 것은 무엇인가? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 표본 통계량의 변동을 알 수 있는 방법이 있어야 한다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 표본을 수천 번 반복해서 뽑을 수 있어야 한다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 모수의 참값을 알아야 한다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 표본 하나만 가지고 신뢰구간을 만들 수 있다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="1">
+<p><span class="qlabel">확인문제 2.</span> 다음 중 실제 신뢰구간을 만들 수 있는 방법으로 가장 적합한 것은 무엇인가? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 표본 통계량의 변동을 추정하여 신뢰구간을 만들 수 있다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 모수의 참값을 알아야만 신뢰구간을 만들 수 있다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 표집분포를 만들어야만 신뢰구간을 만들 수 있다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 표본을 수천 번 반복해서 뽑은 후 신뢰구간을 계산할 수 있다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 3.</span> “표본 하나만 가지고도 표본 통계량의 변동을 알아낼 방법이 있다.” 이 문장의 의미는 무엇인가? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 표본 하나만으로도 신뢰구간을 정확하게 계산할 수 있다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 표본 하나에서 계산된 통계량의 변동을 추정할 수 있는 방법이 있다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 표본 하나만으로 표집분포를 만들 수 있다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 표본 하나만으로 모수의 정확한 값을 알 수 있다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<!-- Page 102 -->
+</section>
+<section id="학습-내용-정리" class="level3">
+<h3 class="anchored" data-anchor-id="학습-내용-정리">학습 내용 정리</h3>
+<div class="card">
+<p>다음 사항을 이해하거나 해결하는 능력이 있어야 한다.</p>
+<ul>
+<li>추정할&nbsp;모수와 모수의 최적 추정치로 사용할 표본&nbsp;통계량은 무엇인지 알고 있다.</li>
+<li>표본&nbsp;통계량과&nbsp;오차한계가 주어지면&nbsp;신뢰구간을 만들 수 있다.</li>
+<li>신뢰구간은&nbsp;그럴듯한&nbsp;모수 값들을 구간으로 표현한 것이다.</li>
+<li>표본 통계량과&nbsp;표준오차의 추정치로 신뢰구간을 만들 수 있다.</li>
+<li>신뢰구간이&nbsp;모수에 대하여 무엇을 말하는지 기술할 수 있다.</li>
+</ul>
+</div>
+<section id="오차한계를-사용한-그럴듯한-모수-값의-범위" class="level4">
+<h4 class="anchored" data-anchor-id="오차한계를-사용한-그럴듯한-모수-값의-범위">오차한계를 사용한 그럴듯한 모수 값의 범위</h4>
+<div class="card">
+<p>모수의 최적 추정치는 표본&nbsp;통계량이다. 그럴듯한 모수 값의 범위는 “<span class="math inline">\(\text{통계량} \pm \text{오차한계}\)</span>”이다. 오차한계(margin of error)는 모수의 추정치로서 표본 통계량의&nbsp;정밀도이다.</p>
+</div>
+</section>
+<section id="신뢰구간-1" class="level4">
+<h4 class="anchored" data-anchor-id="신뢰구간-1">신뢰구간</h4>
+<div class="card">
+<p>가능한 모든 표본으로 신뢰구간(confidence interval)을 만든다면 특정 비율의 신뢰구간만&nbsp;모수를 포함한다. 모수가 포함되는 비율이&nbsp;신뢰수준(confidence level)이다.</p>
+</div>
+</section>
+<section id="표준오차를-사용한-95-신뢰구간" class="level4">
+<h4 class="anchored" data-anchor-id="표준오차를-사용한-95-신뢰구간">표준오차를 사용한 95% 신뢰구간</h4>
+<div class="card">
+<p>표준오차 SE를 추정할 수 있고 표집분포가 비교적&nbsp;대칭이고 종 모양이라면 <span class="math inline">\(95\%\)</span> 신뢰구간은 “<span class="math inline">\(\text{통계량} \pm 2 \times SE\)</span>”이다.</p>
+</div>
+</section>
+<section id="신뢰수준-의미" class="level4">
+<h4 class="anchored" data-anchor-id="신뢰수준-의미">신뢰수준 의미</h4>
+<div class="card">
+<p>구간 안에&nbsp;모수가 포함됨을 얼마나&nbsp;확신하는지를 숫자로 표현한 것이 신뢰수준(confidence level)이다. 예를 들면, <span class="math inline">\(95\%\)</span> 신뢰구간에서 <span class="math inline">\(95\%\)</span>의 의미는 이 구간이 모수를&nbsp;포함한다는 것을&nbsp;<span class="math inline">\(95\%\)</span> 확신한다는 뜻이다.</p>
+</div>
+<div class="card">
+<div class="quiz" data-answer="3">
+<p><span class="qlabel">확인문제 1.</span> 다음 중 신뢰구간을 만들 때 오차한계의 역할에 대한 설명으로 옳은 것은 무엇인가? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 오차한계는 표본 통계량의 정확도를 나타내는 값이다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 오차한계는 모수의 추정치가 <span class="math inline">\(100\%\)</span> 정확하다는 것을 보장한다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 오차한계는 표본 통계량의 변동을 계산하여 신뢰구간을 확정하는 데 사용된다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 오차한계는 신뢰구간의 범위를 확정짓지 않으며, 항상 <span class="math inline">\(0\)</span>에 가까운 값을 가진다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="3">
+<p><span class="qlabel">확인문제 2.</span> <span class="math inline">\(95\%\)</span> 신뢰구간에서 <span class="math inline">\(95\%\)</span>의 의미는 무엇을 나타내는가? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 신뢰구간이 모수를 정확하게 포함한다는 것을 확신하는 비율이다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 신뢰구간이 표본을 정확히 포함한다는 것을 확신하는 비율이다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 신뢰구간이 모수에 대해 <span class="math inline">\(95\%\)</span> 확신한다는 의미이다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(95\%\)</span>의 신뢰구간이 포함된 모든 표본 통계량이 모수와 일치한다고 믿을 수 있다는 의미이다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 3.</span> 다음 중 표준오차(SE)를 사용하여 <span class="math inline">\(95\%\)</span> 신뢰구간을 만드는 방법으로 옳은 것은 무엇인가? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 신뢰구간 = <span class="math inline">\(\text{통계량} \pm 1 \times SE\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 신뢰구간 = <span class="math inline">\(\text{통계량} \pm 2 \times SE\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 신뢰구간 = <span class="math inline">\(\text{통계량} \pm 3 \times SE\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 신뢰구간 = <span class="math inline">\(\text{통계량} \pm SE\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<!-- Page 103 -->
+<div class="card">
+<p><span id="hw-3-4" class="qlabel">과제 3.4.</span></p>
+<p>청소년의 뇌는 성인이나 어린이의 뇌와는 매우 다르다는 것이 연구 결과로 속속 밝혀지고 있다. 청소년은 특히 공포와 관련된 기억을 성인이나 어린이와 비교할 때 잘 잊지 못한다고 한다. 한 연구에서 참가자는 첫 단계에서 공포와 연관된 특정 소리를 학습한다. 두 번째 단계에서 참가자는 첫 단계에서 들었던 소리를 공포와 관련 없이 듣는다. 소리와 관련된 공포를 얼마나 잊었는지 생리학적인 수치로 측정한다. 수치가 클수록 소리와 관련된 공포를 많이 잊은 것이다. 성인과 청소년 사이에 평균 점수 차이를 추정하려고 한다. 성인의 평균 점수는 0.225, 청소년의 평균 점수는 0.059이다. 추정치의 표준오차는 0.091이다.</p>
+<div class="quiz qgrid q" data-answer="3" style="--qcols:3">
+<p><span class="qsub">(1)</span> 추정할 모수에 대한 올바른 기호는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(\mu\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(\bar{x}\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(\mu_1-\mu_2\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(\bar{x}_1-\bar{x}_2\)</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> <span class="math inline">\(p_1-p_2\)</span></p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> <span class="math inline">\(\hat{p}_1-\hat{p}_2\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="4" style="--qcols:3">
+<p><span class="qsub">(2)</span> 최적 추정치에 대한 올바른 기호는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(\mu\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(\bar{x}\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(\mu_1-\mu_2\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(\bar{x}_1-\bar{x}_2\)</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> <span class="math inline">\(p_1-p_2\)</span></p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> <span class="math inline">\(\hat{p}_1-\hat{p}_2\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="3" style="--qcols:5">
+<p><span class="qsub">(3)</span> 올바른 최적 추정치 값은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(0.225\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(0.059\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(0.166\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(0.091\)</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> <span class="math inline">\(0.284\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="1" style="--qcols:6">
+<p><span class="qsub">(4)-</span><span class="subb">a</span> 추정량에 대한 95% 신뢰구간의 하한은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(-0.016\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(0.073\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(0.164\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(0.346\)</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> <span class="math inline">\(0.348\)</span></p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> <span class="math inline">\(0.437\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="5" style="--qcols:6">
+<p><span class="qsub">(4)-</span><span class="subb">b</span> 추정량에 대한 95% 신뢰구간의 상한은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(-0.016\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(0.073\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(0.164\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(0.346\)</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> <span class="math inline">\(0.348\)</span></p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> <span class="math inline">\(0.437\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="2" style="--qcols:2">
+<p><span class="qsub">(5)</span> 이 연구는 실험연구인가, 관측연구인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 실험연구</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 관측연구</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<p><span id="hw-3-5" class="qlabel">과제 3.5.</span></p>
+<p><img src="../images/img_111.PNG" class="img-fluid"></p>
+<p>미국 성인 중에서 무작위로 2625명을 뽑아 사람마다 진실한 사랑은 오직 하나라는 것에 동의하냐고 물었다. 성별로 응답을 정리한 표는 위에 있다. 표본에서 질문에 동의한 남녀의 비율 차이에 대한 표준오차는 0.018이다.</p>
+<div class="quiz qgrid q" data-answer="3" style="--qcols:5">
+<p><span class="qsub">(1)-</span><span class="subb">a</span> 동의한 남녀 비율 차이의 95% 신뢰구간 하한은? (소수 3자리)</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(-0.140\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(-0.041\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(0.014\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(0.041\)</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> <span class="math inline">\(0.058\)</span></p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> <span class="math inline">\(0.086\)</span></p>
+</div>
+<div class="opt" data-v="7">
+<p><span class="circ">7</span> <span class="math inline">\(0.140\)</span></p>
+</div>
+<div class="opt" data-v="8">
+<p><span class="circ">8</span> <span class="math inline">\(0.257\)</span></p>
+</div>
+<div class="opt" data-v="9">
+<p><span class="circ">9</span> <span class="math inline">\(0.307\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="6" style="--qcols:5">
+<p><span class="qsub">(1)-</span><span class="subb">b</span> 동의한 남녀 비율 차이의 95% 신뢰구간 상한은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(-0.140\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(-0.041\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(0.014\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(0.041\)</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> <span class="math inline">\(0.058\)</span></p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> <span class="math inline">\(0.086\)</span></p>
+</div>
+<div class="opt" data-v="7">
+<p><span class="circ">7</span> <span class="math inline">\(0.140\)</span></p>
+</div>
+<div class="opt" data-v="8">
+<p><span class="circ">8</span> <span class="math inline">\(0.257\)</span></p>
+</div>
+<div class="opt" data-v="9">
+<p><span class="circ">9</span> <span class="math inline">\(0.307\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q" data-answer="2">
+<p><span class="qsub">(2)</span> 이 신뢰구간은 무엇을 말하는가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 남녀별 차이가 없다</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 남자가 여자보다 동의 비율이 더 높다</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 여자가 남자보다 동의 비율이 더 높다</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<p><span id="hw-3-6" class="qlabel">과제 3.6.</span></p>
+<p><span class="math inline">\(2016\)</span>년 미국 대선에서 여론조사 기관은 후보자에 대한 지지율과 오차한계를 발표하였다. 여론조사 결과 발표 당시에 대선 투표가 있다면 무엇을 말할 수 있는지 다음 보기에서 골라라.</p>
+<div class="quiz q" data-answer="3">
+<p><span class="qsub">(1)</span> A <span class="math inline">\(54\%\)</span>, B <span class="math inline">\(46\%\)</span>, 오차한계 <span class="math inline">\(\pm 5\%\)</span> — 무엇을 말할 수 있는가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 후보자 A의 당선이 확실하다</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 후보자 B의 당선이 확실하다</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 누가 당선될지 확신할 수 없다</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q" data-answer="1">
+<p><span class="qsub">(2)</span> A <span class="math inline">\(52\%\)</span>, B <span class="math inline">\(48\%\)</span>, 오차한계 <span class="math inline">\(\pm 1\%\)</span> — 무엇을 말할 수 있는가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 후보자 A의 당선이 확실하다</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 후보자 B의 당선이 확실하다</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 누가 당선될지 확신할 수 없다</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q" data-answer="1">
+<p><span class="qsub">(3)</span> A <span class="math inline">\(53\%\)</span>, B <span class="math inline">\(47\%\)</span>, 오차한계 <span class="math inline">\(\pm 2\%\)</span> — 무엇을 말할 수 있는가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 후보자 A의 당선이 확실하다</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 후보자 B의 당선이 확실하다</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 누가 당선될지 확신할 수 없다</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q" data-answer="3">
+<p><span class="qsub">(4)</span> A <span class="math inline">\(58\%\)</span>, B <span class="math inline">\(42\%\)</span>, 오차한계 <span class="math inline">\(\pm 10\%\)</span> — 무엇을 말할 수 있는가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 후보자 A의 당선이 확실하다</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 후보자 B의 당선이 확실하다</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 누가 당선될지 확신할 수 없다</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<p><span id="hw-3-7" class="qlabel">과제 3.7.</span></p>
+<p>미국의 한 대학에서 무작위로 100명의 학생을 뽑아 분당 맥박수를 측정하였다. 평균 맥박수의 95% 신뢰구간은 (65.5, 71.8)이다. 이 신뢰구간에 대한 각각의 진술이 올바르면 T, 올바르지 않으면 F로 표기하라.</p>
+<div class="quiz qgrid q" data-answer="2" style="--qcols:2">
+<p><span class="qsub">(1)</span> 모든 학생의 분당 맥박수는 65.5~71.8 사이라고 95% 확신한다.</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 참(T)</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 거짓(F)</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="2" style="--qcols:2">
+<p><span class="qsub">(2)</span> 표본 100명 학생의 분당 평균 맥박수는 65.5~71.8 사이라고 95% 확신한다.</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 참(T)</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 거짓(F)</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="1" style="--qcols:2">
+<p><span class="qsub">(3)</span> 이 대학 전체 학생의 분당 평균 맥박수 신뢰구간이 (65.5, 71.8)임을 95% 확신한다.</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 참(T)</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 거짓(F)</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="2" style="--qcols:2">
+<p><span class="qsub">(4)</span> 이 대학에서 95% 학생의 분당 맥박수는 65.5~71.8 사이에 있다.</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 참(T)</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 거짓(F)</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="2" style="--qcols:2">
+<p><span class="qsub">(5)</span> 전체 미국 대학생의 분당 평균 맥박수는 65.5~71.8 사이라고 95% 확신한다.</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 참(T)</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 거짓(F)</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="2" style="--qcols:2">
+<p><span class="qsub">(6)</span> 이 대학 학생들의 평균 맥박수의 95%는 65.5~71.8 사이에 있다.</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 참(T)</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 거짓(F)</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="2" style="--qcols:2">
+<p><span class="qsub">(7)</span> 표본 100명 무작위 표본을 반복해 뽑으면 95%는 평균 맥박수가 65.5~71.8 사이일 것이다.</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 참(T)</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 거짓(F)</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<!-- 소유권자: 프로브 (빌드팀) | 사용자: 프로브 / Date: 2026-06-23 -->
+<!-- 인터랙티브 퀴즈 채점 (self-host, 외부의존 0). 시안 넥서스-최종통합시안-★★★★★ 의 <script> 이식.
+     _quarto.yml format.html.include-after-body 로 전 페이지 주입. .quiz[data-answer][data-explain] 마크업과 짝. -->
+<script>
+document.querySelectorAll('.quiz').forEach(function(q){
+  var ans = q.getAttribute('data-answer'), fb = q.querySelector('.quiz-feedback');
+  q.querySelectorAll('.opt').forEach(function(opt){
+    opt.addEventListener('click', function(){
+      q.querySelectorAll('.opt').forEach(function(o){ o.classList.remove('correct','wrong'); });
+      if (opt.getAttribute('data-v') === ans) {
+        opt.classList.add('correct');
+        fb.className = 'quiz-feedback ok';
+        fb.textContent = '정답입니다! ' + (q.getAttribute('data-explain') || '');
+      } else {
+        opt.classList.add('wrong');
+        fb.className = 'quiz-feedback no';
+        fb.textContent = '다시 생각해 보세요.';
+      }
+    });
+  });
+});
+</script>
+<!-- 소유권자: 빌드팀 | 작성 대행: 넥서스(컨트롤타워) — 프로브 부재로 대표 지시 직접 진행 / Date: 2026-06-23 -->
+<!-- 예제 풀이 블러 리빌 (self-host, 외부의존 0). 시안 넥서스-예제블러리빌-★★★★★.
+     _quarto.yml format.html.include-after-body 로 전 페이지 주입. .card.sol-card 마크업과 짝.
+     풀이 카드 클릭 시 .on 추가 → 블러 해제. -->
+<script>
+document.querySelectorAll('.sol-card').forEach(function(c){
+  c.addEventListener('click', function(){ c.classList.add('on'); });
+});
+</script>
+<!-- 소유권자: 빌드팀 | 작성: 넥서스(컨트롤타워) / Date: 2026-06-23 -->
+<!-- 주관식 정답 확인 토글 (self-host, 외부의존 0). 옵저버 정석 .ansbtn/.ansbox 와 짝.
+     _quarto.yml include-after-body 로 전 페이지 주입. -->
+<script>
+document.querySelectorAll('.ansbtn').forEach(function(b){
+  b.addEventListener('click', function(){
+    var box = b.nextElementSibling;
+    if (!box || !box.classList.contains('ansbox')) return;
+    var on = box.classList.toggle('show');
+    b.textContent = on ? '정답 숨기기 ▴' : '정답 확인 ▾';
+  });
+});
+</script>
+<!-- 소유권자: 넥서스(컨트롤타워) | 사용자: 넥서스 / Date: 2026-06-25 -->
+<!-- 데이터뷰 iframe을 콘텐츠 높이에 자동 맞춤 → 표마다 정확한 높이(여백/스크롤 제거).
+     file:// 에선 contentDocument 접근이 차단되므로 자식이 자기 높이를 postMessage로 보내는 방식이 1순위.
+     http 에선 contentDocument 폴링도 병행. self-host, 외부의존 0. -->
+<script>
+(function(){
+  function setH(f, h){ if(h > 0){ f.scrolling = 'no'; f.style.height = (h + 4) + 'px'; } }
+  // 1순위: 자식이 postMessage 로 보낸 높이 (file:// 포함 동작)
+  window.addEventListener('message', function(e){
+    if(e.data && e.data.type === 'dvHeight' && e.data.h > 0){
+      document.querySelectorAll('iframe[src*="data-views/"]').forEach(function(f){
+        if(f.contentWindow === e.source) setH(f, e.data.h);
+      });
+    }
+  });
+  // 2순위: same-origin(http) 직접 읽기 (file:// 에선 catch 되어 무시)
+  function fit(f){
+    try{
+      var d = f.contentDocument || f.contentWindow.document;
+      if(d && d.body) setH(f, Math.max(d.documentElement.scrollHeight, d.body.scrollHeight, d.body.offsetHeight));
+    }catch(e){}
+  }
+  function init(){
+    document.querySelectorAll('iframe[src*="data-views/"]').forEach(function(f){
+      f.scrolling = 'no';
+      f.addEventListener('load', function(){ fit(f); [300,800].forEach(function(t){ setTimeout(function(){fit(f);}, t); }); });
+      [200,600,1200,2200].forEach(function(t){ setTimeout(function(){fit(f);}, t); });
+    });
+  }
+  if(document.readyState === 'complete') init();
+  else window.addEventListener('load', init);
+})();
+</script>
+<!-- 엑셀 코드블록(pre.xlcode) 복사버튼 — self-host, 외부의존 0 (질럿, 2026-06-23) -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('pre.xlcode').forEach(function (pre) {
+    if (pre.dataset.xlcopy) return;
+    pre.dataset.xlcopy = '1';
+    var code = pre.textContent;            // ★ 버튼 추가 전 캡처 = 태그 없는 순수 수식
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'xlcopy';
+    btn.textContent = '복사';
+    btn.addEventListener('click', function () {
+      navigator.clipboard.writeText(code).then(function () {
+        btn.textContent = '복사됨';
+        setTimeout(function () { btn.textContent = '복사'; }, 1500);
+      });
+    });
+    pre.appendChild(btn);
+  });
+});
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/03-01-sampling-distribution.html" class="pagination-link" aria-label="3.1 표집 분포">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">3.1 표집 분포</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/03-03-bootstrap.html" class="pagination-link" aria-label="3.3 부트스트랩 신뢰구간">
+        <span class="nav-page-text"><span class="chapter-title">3.3 부트스트랩 신뢰구간</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

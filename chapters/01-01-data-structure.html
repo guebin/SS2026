@@ -1,0 +1,2373 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>1.1 데이터의 구조 – 통계적 사고와 사회</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/01-02-sampling.html" rel="next">
+<link href="../chapters/01.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-de63f62b328812d8e578a4d74e282472.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-3355e44214f8815af4d3cdb2eb254b3a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating fullcontent quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/01.html">1장. 데이터 수집</a></li><li class="breadcrumb-item"><a href="../chapters/01-01-data-structure.html"><span class="chapter-title">1.1 데이터의 구조</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">통계적 사고와 사회</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">통계적 사고와 사회</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">강의 소개</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-01-intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.1. 강의 소개</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-02-thinking.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.2. 통계적 사고란 무엇인가?</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-03-examples.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.3. 통계적 사고 예제</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-04-montyhall.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.4. 몬티 홀 게임</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-05-ppdac.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.5. PPDAC 사이클</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-06-mortality.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.6. 산모 사망률</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-07-cholera.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.7. 콜레라와 존 스노우</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../chapters/01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1장. 데이터 수집</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-01-data-structure.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">1.1 데이터의 구조</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-02-sampling.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">1.2 모집단에서 표본 추출</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-03-causality.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">1.3 실험연구와 관측연구</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../chapters/02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2장. 데이터 기술하기</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-01-categorical.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.1 범주형 변수</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-02-quantitative-center.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.2 양적 변수 한 개: 모양과 중심</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-03-quantitative-variation.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.3 양적 변수 한 개: 변동</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-04-outliers-boxplot.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.4 이상값과 상자그림</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-05-scatterplot-correlation.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.5 양적 변수 두 개: 산점도와 상관관계</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-06-regression.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.6 양적 변수 두 개: 선형회귀</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-07-multivariate.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.7 데이터 시각화와 다중 변수</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../chapters/03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3장. 신뢰구간</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-01-sampling-distribution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3.1 표집 분포</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-02-confidence-intervals.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3.2 신뢰구간에 대한 이해</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-03-bootstrap.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3.3 부트스트랩 신뢰구간</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-04-percentile-bootstrap.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3.4 백분위수에 의한 부트스트랩 신뢰구간</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../chapters/04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4장. 가설검증</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-01-hypothesis-testing.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4.1 가설검증 소개</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-02-p-values.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4.2 p-값</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-03-significance.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4.3 통계적 유의성 판단</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-04-supplement.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4.4 가설검증의 오류</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-05-inference-summary.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4.5 통계적 추론 정리</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">참고자료</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-01-lotto.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">6/45 로또</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-02-numbergame.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">반응시간 게임</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">위젯</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../widgets/spreadsheet.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">스프레드시트</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../widgets/distribution-calculator.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">분포 계산기</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../widgets/r-calculator.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">R 계산기</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../widgets/jupyterlite.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">R/Python 실습</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">데이터</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/AllCountries.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">AllCountries.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/temp.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">April14Temps.csv (temp.csv)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/BaseballSalaries2015.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">BaseballSalaries2015.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/BodyFat.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">BodyFat.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/BodyTemp50.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">BodyTemp50.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/CarDepreciation.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">CarDepreciation.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/CommuteAtlanta.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">CommuteAtlanta.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/CommuteStLouis.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">CommuteStLouis.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/CricketChirps.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">CricketChirps.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/DDS.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">DDS.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/ElectionMargin.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">ElectionMargin.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/ExerciseHours.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">ExerciseHours.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/FloridaLakes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">FloridaLakes.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HappyPlanetIndex.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HappyPlanetIndex.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HeightData.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HeightData.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HollywoodMovies.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HollywoodMovies.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HollywoodMovies2011.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HollywoodMovies2011.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HoneybeeWaggle.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HoneybeeWaggle.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HouseStarts.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HouseStarts.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/Life.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Life.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/LightatNight.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">LightatNight.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/MalevolentUniformsNFL.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">MalevolentUniformsNFL.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/Mammal2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Mammal2.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/MustangPrice.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">MustangPrice.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/NutritionStudy.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">NutritionStudy.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/RestaurantTips.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">RestaurantTips.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/RetailSales.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">RetailSales.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/StudentSurvey.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">StudentSurvey.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/USStates.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">USStates.csv</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+ <span class="menu-text">데이터 표(본문 임베드)</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/StudentSurvey.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">StudentSurvey.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/AllCountries.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">AllCountries.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/Life.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Life.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/Mammal2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Mammal2.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/temp.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">temp.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/ElectionMargin.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">ElectionMargin.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/HoneybeeWaggle.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HoneybeeWaggle.csv</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/01.html">1장. 데이터 수집</a></li><li class="breadcrumb-item"><a href="../chapters/01-01-data-structure.html"><span class="chapter-title">1.1 데이터의 구조</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-1-1" class="quarto-section-identifier"><span class="chapter-title">1.1 데이터의 구조</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<!-- Page 9 -->
+<div class="card">
+<p>컴퓨터 네트워크와 모바일&nbsp;기기의 급격한 발전으로 매년 발생하는 데이터의 양은 기하급수적으로 증가하고 있다. 데이터를 분석하여 유용한 정보로 가공할 수 있는 능력은 전공을 불문하고 모든 분야에서 점점 중요해지고 있다. 장래 희망이나 직업 선택은 물론 일상생활에서 필요한&nbsp;의사결정을 하기 위해서도 통계 지식이 필요한 세상이다. 효과적인 데이터 수집과 분석을 통하여 좀더 나은 의사결정을 할 수 있음을 이 수업에서 배우게 될 것이다.</p>
+<p>통계학은 데이터를 수집하여 기술하고&nbsp;분석하는 과학이다(Statistics is the science of collecting, describing, and analyzing data). 이번 장에서 데이터를 효과적으로 수집하는 방법을 배울 것이다. 다음 장에서는 수집한 데이터를 기술하는 방법을 소개할 것이다. 그 후에는 데이터를 분석하여 효과적인&nbsp;결론을 유도하고 숨겨진 진실을 찾는 방법을 다룰 것이다.</p>
+</div>
+<div class="card">
+<p><span id="data-1-1" class="qlabel">데이터 1.1.</span> <strong>대학생 설문조사</strong></p>
+<p>한 대학에서 몇 년간 “통계학” 교양과목을 수강한 학생을 대상으로 설문조사를 하였다. 일부 항목에 대한 몇몇 학생의 조사 결과는 다음 표와 같다. 전체 학생 <span class="math inline">\(362\)</span>명의 <span class="math inline">\(17\)</span>개&nbsp;변수에 대한 데이터는 <a href="http://www.lock5stat.com/datapage2e.html">여기</a>에서 얻을 수 있다(파일 이름은 StudentSurvey).</p>
+<iframe src="../data-views/StudentSurvey.html" width="100%" height="900" loading="lazy" style="border:1px solid #e3e7ec;border-radius:10px;">
+</iframe>
+</div>
+<section id="케이스와-변수" class="level3">
+<h3 class="anchored" data-anchor-id="케이스와-변수">케이스와 변수</h3>
+<div class="card">
+<p>정보 조사 대상인 사람이나 사물을 케이스(case)라고 한다.&nbsp;StudentSurvey 데이터에서 케이스는 설문에 응답한 학생이다. 위 표에서 각 행은 모두 다른 학생 즉, 케이스이다.</p>
+<p>각 케이스가 가지는 특성을&nbsp;변수(variable)라고 한다. 위 표에서 각 열은 서로 다른 변수이다. 데이터 테이블에서 변수는 열, 케이스는 행으로 표시한다.</p>
+<p>어떤 데이터이든 처음에 할 일은 각 변수는 무엇을 측정한 것이고 변숫값은 어떻게 코딩되어 있는지 이해하는 것이다. 위 데이터 테이블에서 첫번째 ID 변수는 설문조사에 응한 개인을 식별하는 숫자이다(ID를 분석하는 것이 의미 있을까?). 다른 변수들의 의미를 알아보자.</p>
+<ul>
+<li><strong>Gender</strong>: 성별(M은 남성, F는 여성)</li>
+<li><strong>Smoke</strong>: 흡연 여부(yes, no)</li>
+<li><strong>Award</strong>: 학생이 선호하는 수상(아카데미상, 올림픽 금메달, 노벨상)</li>
+<li><strong>Exercise</strong>: 주당 운동 시간</li>
+<li><strong>TV</strong>: 주당 텔레비젼 시청 시간</li>
+<li><strong>GPA</strong>: 평균 학점(<span class="math inline">\(4\)</span>점 만점)</li>
+<li><strong>Pulse</strong>: 조사 당시 분당 맥박수</li>
+<li><strong>Birth</strong>: 출생 순서(<span class="math inline">\(1\)</span>은 첫째, <span class="math inline">\(2\)</span>는 둘째 등)</li>
+</ul>
+<p>데이터 테이블은 <strong>케이스</strong>(case)에 관한 정보를 모은 것이다. 각 케이스의 정보를 데이터 테이블에서 행(row)으로 표시한다.</p>
+<p><strong>변수</strong>(variable)는 각 케이스에 대한 어떤 특성이다. 변수는 데이터 테이블에서 열(column)로 표시한다.</p>
+</div>
+<div class="card">
+<p><span id="ex-1-1" class="qlabel">예제 1.1.</span> ID가 <span class="math inline">\(1\)</span>인 학생의 각 변숫값은 무엇을 뜻하는지 설명하라.</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p>학생 <span class="math inline">\(1\)</span>은&nbsp;남성이며 담배를 피우지 않는다. 아카데미상, 노벨상&nbsp;보다는 올림픽 금메달을 원한다. 주당&nbsp;<span class="math inline">\(10\)</span>시간을 운동하고 텔레비젼 시청은 주당 <span class="math inline">\(1\)</span>시간이다. 평균 학점은 <span class="math inline">\(3.13\)</span>이고 조사 당시 분당&nbsp;맥박수는 <span class="math inline">\(54\)</span>회이다. 출생&nbsp;순서는 네번 째이다.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="3">
+<p><span class="qlabel">확인문제 1.</span> 다음 중 “케이스(case)”의 정의로 가장 적절한 것은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 데이터를 분석하기 위한 통계적 기법</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 연구에서 측정하는 변수들의 목록</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 조사 대상이 되는 개별적인 사람이나 사물</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 데이터를 저장하는 파일의 형식</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 2.</span> 다음 중 “변수(variable)”에 해당하는 것은 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 설문조사에 응답한 학생 한 명</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 학생의 성별, 평균 학점, 주당 운동 시간 등의 정보</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 데이터가 저장된 파일의 ID 번호</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 설문에 참여한 전체 학생 수</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 3.</span> 다음 중 “ID” 변수를 데이터 분석에 활용하기 어려운 이유로 가장 적절한 것은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 모든 케이스에 대해 고유한 값이기 때문이다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> ID는 학생의 특정한 특성을 측정하는 변수가 아니기 때문이다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> ID 값은 분석하기에 너무 복잡하기 때문이다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> ID는 데이터 테이블의 첫 번째 열에 위치하기 때문이다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<!-- Page 10 -->
+</section>
+<section id="범주형-변수와-양적-변수" class="level3">
+<h3 class="anchored" data-anchor-id="범주형-변수와-양적-변수">범주형 변수와 양적 변수</h3>
+<div class="card">
+<p>데이터를 어떻게 기술하고 분석하는 것이 가장 좋은가를 결정하려면 변수가 범주형(categorical)인지 양적(quantitative)인지 구분할 줄 알아야 한다.</p>
+<p><strong>범주형 변수</strong>(categorical variable)는 케이스를 그룹(group)으로 나눈다. 각 케이스는 둘 이상의 범주 중에서 반드시 어떤 하나의&nbsp;범주에 속해야 한다.</p>
+<p><strong>양적 변수</strong>(quantitative variable)는 각 케이스를&nbsp;수치로 측정한 값이다. 양적 변수에 대해서는 더하거나 평균 계산과 같은 수치 연산을 할 수 있다.</p>
+<p>범주형 변수의 값을 숫자로 코딩했다고 양적 변수가 되는 것은 아님을 명심해야 한다. 예를 들어, 남성은 <span class="math inline">\(1\)</span>, 여성은 <span class="math inline">\(2\)</span>로 코딩된 “성별” 변수는&nbsp;범주형&nbsp;변수이다. 범주형 변수에 대한 주요 관심은 평균보다는 각 범주의 빈도(frequency) 또는 비율(proportion)이다.</p>
+<p>양적 변수를 범주형 변수로 변환하는 것이 유용할 때도 있다. 예를 들어, 숫자로 표현된 “가계 수입”을&nbsp; <span class="math inline">\(3\)</span>개의 범주(“low”, “medium”, “high”)로 표기한다면 범주형&nbsp;변수가 된다.</p>
+</div>
+<div class="card">
+<p><span id="ex-1-2" class="qlabel">예제 1.2.</span> 대학생 설문조사에서 각 변수가 범주형인지 양적인지 구분하라.</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p>ID는 변수가 아니므로 양적인지 범주형인지 구분할 필요도 없다. 대부분의 데이터 테이블에는 케이스&nbsp;참조용인 ID 또는 이름이 있는데 항상 분석에서 제외해야 한다.</p>
+<ul>
+<li>Gender 변수는&nbsp;범주형이다. 학생을 남성 또는 여성으로 분류한다.</li>
+<li>Smoke 변수는 범주형이다. 학생을 흡연자와 비흡연자로 나눈다.</li>
+<li>Award 변수는&nbsp;범주형이다. 학생은 아카데미상, 올림픽 금메달, 노벨상 중에서 어떤 상을 선호하는가로 나뉜다.</li>
+<li>Exercise, TV, GPA는 모두 양적&nbsp;변수이다. 각 학생의 수치적 특성을 측정하기 때문이다. 주당 평균 운동시간처럼&nbsp;평균을 계산하는 것이 의미 있다.</li>
+<li>Birth는 양적, 범주형 모두 가능하다. 평균 출생 순서에 관심이 있다면 양적&nbsp;변수이다. 출생 순서 별로 케이스가 얼마나 많은지 관심이 있다면&nbsp;범주형&nbsp;변수가 된다.</li>
+</ul>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 1.</span> 다음 중 범주형 변수(categorical variable)에 해당하는 것은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 학생의 평균 학점(GPA)</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 학생이 선호하는 상(Award: 아카데미상, 올림픽 금메달, 노벨상)</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 학생의 주당 운동 시간(Exercise)</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 학생의 분당 맥박수(Pulse)</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="3">
+<p><span class="qlabel">확인문제 2.</span> 다음 중 양적 변수(quantitative variable)에 해당하는 것은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 학생의 흡연 여부(Smoke: Yes/No)</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 학생의 성별(Gender: 남성/여성)</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 학생의 주당 텔레비전 시청 시간(TV)</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 학생이 출생한 계절(Birth Season: 봄/여름/가을/겨울)</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 3.</span> 다음 중 변수를 범주형으로 변환하는 예시로 가장 적절한 것은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 학생의 평균 학점을 <span class="math inline">\(4\)</span>점 만점으로 변환한다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 학생의 출생 순서를 첫째, 둘째, 셋째 이상으로 나눈다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 학생의 운동 시간을 분 단위로 세분화한다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 학생의 성별을 숫자로 코딩하여 <span class="math inline">\(1\)</span>은 남성, <span class="math inline">\(2\)</span>는 여성으로 변환한다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<!-- Page 11 -->
+</section>
+<section id="변수와-변수-사이의-관계-조사" class="level3">
+<h3 class="anchored" data-anchor-id="변수와-변수-사이의-관계-조사">변수와 변수 사이의 관계 조사</h3>
+<div class="card">
+<p>변수 하나에 대하여 기술하고 분석하는 방법을 소개한 다음, 둘 또는 그 이상의 변수들 사이의 관계를 다룰 것이다. 예를 들어, 대학생 설문조사에서 다음과 같이 변수 하나에 대한&nbsp;질문을 할 수 있다.</p>
+<ul>
+<li>담배를 피우는 학생들의 비율은 무엇인가?</li>
+<li>주당 평균 운동 시간은 몇 시간인가?</li>
+<li>맥박수가 특이하게 높거나 낮은 학생이 있는가?</li>
+<li>학생은 장래에 어떤 상을 받기를 가장 많이 원하는가?</li>
+<li>설문에 응답한 학생들의&nbsp;평균&nbsp;학점과 이 대학의&nbsp;전체&nbsp;학생의 평균 학점을 비교한 결과는 무엇인가?</li>
+</ul>
+<p>유용하거나 흥미로운 질문은 변수들 사이의 관계로부터 나오는 경우가 많다. 예를 들어, 대학생 설문조사에서 다음과 같은 변수들 사이의 관계에 대한 질문을 할 수 있다.</p>
+<ul>
+<li>남성과 여성, 누가 담배를 더 많이 피울까?</li>
+<li>장래에 올림픽 금메달을 따기 원하는 학생 그룹이 다른 그룹보다 운동을 더 많이 하는 경향이 있을까? TV 시청 시간이 많을수록 아카데미상을 더 선호할까?</li>
+<li>남성과 여성 중 누가 TV를 더 많이 시청할까?</li>
+<li>운동을 많이 하는 학생일수록 맥박수가 더 낮은 경향이 있을까?</li>
+<li>첫째로 태어난 학생들의 평균 학점이 더 높을까?</li>
+</ul>
+<p>위에서 제기한 질문은 각각&nbsp;범주형&nbsp;변수 두 개,&nbsp;양적&nbsp;변수 두 개, 양적 변수와 범주형 변수 사이의&nbsp;관계에 관한 것이다. <span class="math inline">\(3\)</span>가지 각각의 상황 별로 변수 사이의 관계를 분석하는 통계적 기법을 뒤에서 하나씩 소개할 것이다.</p>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 1.</span> 다음 중 **양적 변수(quantitative variable)**에 해당하는 것은 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 성별 (남/여)</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 주당 운동 시간</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 좋아하는 영화 장르</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 장래 희망 상(노벨상, 아카데미상 등)</p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> 흡연 여부 (예/아니오)</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 2.</span> “운동을 많이 하는 학생일수록 맥박수가 더 낮은 경향이 있을까?”라는 질문은 어떤 변수 관계를 조사하는 것인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 범주형 변수 <span class="math inline">\(2\)</span>개 간 관계</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 양적 변수 <span class="math inline">\(2\)</span>개 간 관계</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 범주형과 양적 변수 간 관계</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 시간에 따른 추세 분석</p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> 모집단과 표본 비교</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="1">
+<p><span class="qlabel">확인문제 3.</span> 다음 중 범주형 변수 두 개 간의 관계를 조사하는 질문은 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 남성과 여성 중 누가 담배를 더 많이 피울까?</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> TV 시청 시간이 많을수록 아카데미상을 더 선호할까?</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 운동을 많이 하는 학생일수록 맥박수가 더 낮은 경향이 있을까?</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 설문에 응답한 학생의 평균 학점과 전체 평균 학점은 차이가 있을까?</p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> 주당 평균 운동 시간은 몇 시간인가?</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<!-- Page 12 -->
+<div class="card">
+<p><span id="data-1-2" class="qlabel">데이터 1.2.</span> <strong>전세계 국가</strong></p>
+<p><span class="math inline">\(2008\)</span>년 세계은행에서 공표한 <span class="math inline">\(213\)</span>개 국가에 관한 데이터가 <a href="http://www.lock5stat.com/datapage1e.html">AllCountries</a> 이다.</p>
+<iframe src="../data-views/AllCountries.html" width="100%" height="900" loading="lazy" style="border:1px solid #e3e7ec;border-radius:10px;">
+</iframe>
+</div>
+<div class="card">
+<p><span id="ex-1-3" class="qlabel">예제 1.3.</span> AllCountries 데이터에는 국가 별 인터넷 접속률 정보가 있다.</p>
+<p><span class="qsub">(1)</span> <span class="math inline">\(2008\)</span>년 아이슬란드의 인터넷&nbsp;접속률은 <span class="math inline">\(90\%\)</span>로 세계에서 가장 높다. 아이슬란드 데이터에서 케이스는 무엇인가? 어떤 변수가 사용되었는가? 이 변수는&nbsp;범주형인가 아니면 양적인가?</p>
+<p><span class="qsub">(2)</span> AllCountries 데이터에는 모든 국가의 인터넷 접속률이 있다. 케이스는 무엇인가?&nbsp;어떤 변수가 사용되었는가? 이 변수는 범주형인가 아니면&nbsp;양적인가?</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p><span class="qsub">(1)</span> 아이슬랜드에서 인터넷 접속률을 조사할 때, 케이스는 아이슬란드에 사는 사람이다. 관련 변수는 개인의 인터넷 접속 여부이다. 접속 여부는 yes/no이므로 이 변수는&nbsp;범주형이다.</p>
+<p><span class="qsub">(2)</span> AllCountries 데이터에서 케이스는 국가이다. 변수는 인터넷 접속률이다. 각 국가의 인터넷 접속률은 수치이므로 이 변수는&nbsp;양적이다.</p>
+<p><img src="../images/img_24.JPG" class="img-fluid"></p>
+<p>앞의 예제에서 다룬 것처럼 케이스는 무엇인지 변수는 양적인지 아니면 범주형인지 구분할 줄 알아야 올바른 통계분석 기법을 적용할 수 있다.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<p><span id="ex-1-4" class="qlabel">예제 1.4.</span> 뒷 장에서 AllCountries 데이터를 가지고 다음 질문 중에 몇 개를 다룰 것이다. 각 질문이 변수 하나에 관한 것인지 아니면 변수들 사이의 관계에 관한 것인지 구분하라. 또한 변수들은 양적인지 아니면 범주형인지 구분하라.</p>
+<p><span class="qsub">(1)</span> <span class="math inline">\(1\)</span>년 동안 국가의 평균 에너지 사용량은 얼마인가?</p>
+<p><span class="qsub">(2)</span> 영토가 넓은 나라는 시골 인구가 더 많은 경향이 있는가?</p>
+<p><span class="qsub">(3)</span> 국방과 건강에 대한 정부 지출이 관계가 있다면 무엇인가?</p>
+<p><span class="qsub">(4)</span> 출생률은 선진국과 개발도상국 중에 어디가 더 높을까?</p>
+<p><span class="qsub">(5)</span> 어느 나라의 노인&nbsp;비율이 가장 높을까?</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p><span class="qsub">(1)</span> 에너지 사용량은 하나의&nbsp;양적&nbsp;변수이다.</p>
+<p><span class="qsub">(2)</span> 영토와 시골 인구 비율은 모두&nbsp;양적&nbsp;변수이다. 두 양적&nbsp;변수 사이의 관계에 대한 질문이다.</p>
+<p><span class="qsub">(3)</span> 국방과 건강에 대한 정부 지출은 모두 양적&nbsp;변수이다.&nbsp;두 양적 변수 사이의&nbsp;관계에 대한 질문이다.</p>
+<p><span class="qsub">(4)</span> 출생률은 양적 변수이다. 선진국이냐 아니면 개발도상국이냐는 범주형&nbsp;질문이다. 양적 변수와&nbsp;범주형&nbsp;변수 사이의 관계에 대한 질문이다.</p>
+<p><span class="qsub">(5)</span> 케이스가 국가이므로 노인 비율은 하나의&nbsp;양적&nbsp;변수이다.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 1.</span> AllCountries 데이터에서 “인터넷 접속률” 변수가 양적 변수인지 범주형 변수인지 올바르게 판단한 것은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 인터넷 접속 여부는 Yes/No로 구분되므로 범주형 변수이다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 인터넷 접속률은 국가별 비율(%)로 표현되므로 양적 변수이다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 인터넷 접속률은 국가별로 다르므로 범주형 변수이다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 인터넷 접속률은 국가의 특성을 나타내므로 분석에 사용할 수 없다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="1">
+<p><span class="qlabel">확인문제 2.</span> 다음 중 두 개의 양적 변수 간의 관계를 분석하는 질문으로 적절한 것은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 국방비와 건강 지출 사이에는 어떤 관계가 있는가?</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 출생률은 선진국과 개발도상국 중 어디에서 더 높은가?</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 인터넷 사용률을 ‘높음/중간/낮음’으로 구분했을 때, 각 집단의 출생률에 차이가 있는가?</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 어느 나라의 노인 비율이 가장 높은가?</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="1">
+<p><span class="qlabel">확인문제 3.</span> 다음 질문 중에서 하나의 변수만을 고려하는 단변량(univariate) 분석에 해당하는 것은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 국가의 평균 에너지 사용량은 얼마인가?</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 국방비 지출과 건강 지출 간의 관계는 무엇인가?</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 개발도상국과 선진국에서 출생률 차이가 있는가?</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 시골 인구 비율과 영토 크기 사이에는 관계가 있는가?</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<!-- Page 13 -->
+</section>
+<section id="질문에-답하기-위한-데이터" class="level3">
+<h3 class="anchored" data-anchor-id="질문에-답하기-위한-데이터">질문에 답하기 위한 데이터</h3>
+<div class="card">
+<p>StudentSurvey, AllCountries 데이터는 모두 많은 정보를 갖고 있다. 이 정보를 사용하여 학생과 국가에 대하여 더 많은 것을 알아낼 수 있다. 생산되는 데이터의 종류와 양이 많아질수록 데이터에서 빠르고 정확하게 유용한 정보를 뽑아내는 요구도 크게 증가하고 있다.</p>
+<p>하지만 순서가 반대인 경우도 자주 있다. 먼저&nbsp;질문을 하고 이 질문에 답하기 위하여 데이터를 수집하는 것이다.</p>
+</div>
+<div class="card">
+<p><span id="ex-1-5" class="qlabel">예제 1.5.</span> 빨리 달리게 하는 유전자가 있는가?</p>
+<p>ACTN3 유전자는 빠르게 달리게 하는 근육과 연관된 단백질이다. 이 단백질을 생성할 수 없는&nbsp;ACTN3&nbsp;변이 유전자를 가진 사람도 있다. 빨리 달리는 능력과&nbsp;ACTN3 유전자 사이에&nbsp;관계가 있는지 알아보기 위하여 유전학자는 세 그룹을 비교하였다. 세 그룹은 각각 세계 정상급 단거리&nbsp;선수, 세계 정상급 마라톤&nbsp;선수, 일반인이다. 단거리 선수 그룹에서 <span class="math inline">\(6\%\)</span>, 마라톤 선수 그룹에서 <span class="math inline">\(24\%\)</span>, 일반인 그룹에서 <span class="math inline">\(18\%\)</span>가 이 변이 유전자를 보유하고 있었다. 이 연구는 단거리 선수는 다른 그룹보다 변이&nbsp;유전자를 더 적게 보유하는 경향이 있음을 보였다.</p>
+<p><span class="qsub">(1)</span> 이 연구에서 케이스와 변수는 무엇인가? 각 변수는 양적인지 아니면 범주형인지 구분하라.</p>
+<p><span class="qsub">(2)</span> 데이터 테이블은 어떤 형태인가? 예를 들어보라.</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p><span class="qsub">(1)</span> 케이스는 이 연구에 참여한&nbsp;사람이다. 변수 하나는 개인이 변이 유전자를 갖고 있느냐(yes), 아니냐(no) 이다. 따라서 이 변수는&nbsp;범주형이다. 두 번째 변수는 개인이 속한 그룹이다. <span class="math inline">\(3\)</span>가지 가능한 그룹이 있으므로 이 변수도&nbsp;범주형이다. 여기서 연구자의 관심은 두 범주형 변수 사이의&nbsp;관계에 있다.</p>
+<p><span class="qsub">(2)</span> 데이터 테이블에는 변수 두&nbsp;개에 대한 값이 있어야 한다.&nbsp;식별을 위한 열이 있다면 다음과 같이 데이터 테이블을 구성한다.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>이름</th>
+<th>변이 유전자</th>
+<th>그룹</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Allan</td>
+<td>Yes</td>
+<td>마라톤</td>
+</tr>
+<tr class="even">
+<td>Beth</td>
+<td>No</td>
+<td>단거리</td>
+</tr>
+<tr class="odd">
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<p><span id="ex-1-6" class="qlabel">예제 1.6.</span> 하바네로는 무엇인가?</p>
+<p><img src="../images/img_25.jpg" class="img-fluid"></p>
+<p>하바네로 고추는 할라피뇨보다 약 <span class="math inline">\(500\)</span>배 매운 고추로 엄청나게 매운 음식을 만드는데 사용된다. 칼스 주니어 프랜차이즈 레스토랑의 부사장은 하바네로&nbsp;버거를 메뉴에 추가하려고 한다. 광고에 앞서 먼저 해결해야 할 이슈는 사람들이 하바네로가 무엇인지 아느냐이다. 부사장은 레스토랑의 고객을 조사하여 다음 세가지를 알려고 한다.</p>
+<ul>
+<li>고객 중 몇 퍼센트가 하바네로가 무엇인지 알고 있는가?</li>
+<li>하바네로 버거를 메뉴에 추가한다면 시험삼아 먹어볼 고객은 몇 퍼센트인가?</li>
+<li>이러한 비율들이 지역&nbsp;별로 다른가?</li>
+</ul>
+<p><span class="qsub">(1)</span> 수집한 데이터에서 케이스는 무엇인가?</p>
+<p><span class="qsub">(2)</span> 데이터에 포함되어야만 하는 세 개의 변수는 무엇인가?</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p><span class="qsub">(1)</span> 케이스는 설문에 응답한 개별&nbsp;고객이다.</p>
+<p><span class="qsub">(2)</span> 세 변수는 다음과 같다.</p>
+<ul>
+<li>Know = yes/no, 하바네로를 고객이&nbsp;인지하는지 여부</li>
+<li>Try = yes/no, 하바네로&nbsp;버거를 시험삼아 먹어볼 것인지 여부</li>
+<li>Region =&nbsp;고객이 사는 지역</li>
+</ul>
+<p>세 개 모두&nbsp;범주형&nbsp;변수이다.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 1.</span> ACTN3 유전자 연구에서 사용된 변수 중 올바르게 분류된 것은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 변이 유전자 보유 여부(Yes/No) - 양적 변수</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 운동 선수 그룹(단거리, 마라톤, 일반인) - 범주형 변수</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 실험 참가자의 신장(cm) - 범주형 변수</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 실험 참가자의 체중(kg) - 범주형 변수</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="1">
+<p><span class="qlabel">확인문제 2.</span> 하바네로 버거 소비자 조사에서 수집된 데이터의 케이스(case)로 올바른 것은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 설문에 응답한 개별 고객</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 각 지역의 평균 하바네로 인지도</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 레스토랑에서 판매된 하바네로 버거 개수</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 하바네로 버거를 먹은 고객의 비율</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="3">
+<p><span class="qlabel">확인문제 3.</span> 하바네로 버거 조사에서 수집한 변수들이 올바르게 분류된 것은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> Know(하바네로 인지도), Try(먹어볼 의향) - 양적 변수</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> Region(고객이 사는 지역) - 양적 변수</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> Know(하바네로 인지도), Try(먹어볼 의향), Region(거주 지역) - 모두 범주형 변수</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> Try(먹어볼 의향), Region(거주 지역) - 양적 변수</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<!-- Page 14 -->
+<div class="card">
+<p><span id="data-1-3" class="qlabel">데이터 1.3.</span> <strong>펭귄 식별</strong></p>
+<p>펭귄을 식별하기 위한 금속 꼬리표는 펭귄을 해롭게 할까? 펭귄을 식별하기 위하여 두 종류의 인식표를 사용한다. 하나는&nbsp;펭귄의 발에&nbsp;금속&nbsp;태그를, 다른 하나는 전자&nbsp;태그를 부착하는 것이다. 두 종류의 태그 모두 펭귄을 해롭게 하는 것으로 보이지 않는다. 하지만 과학자의 관심은 모든 펭귄을 연구하는 것이므로 금속 태그가 펭귄을 해롭게 하는 지를 알고 싶었다. 펭귄 <span class="math inline">\(100\)</span>마리에&nbsp;무작위로 금속 태그 또는 전자 태그를 부착한 후에 <span class="math inline">\(10\)</span>년을 관찰했다. 얻은 정보는 펭귄 새끼 수,&nbsp;생존&nbsp;여부, 먹이 활동 시간이다.</p>
+</div>
+<div class="card">
+<p><img src="../images/img_26.JPG" class="img-fluid"></p>
+</div>
+<div class="card">
+<p><span id="ex-1-7" class="qlabel">예제 1.7.</span> 펭귄 식별 연구에서</p>
+<p><span class="qsub">(1)</span> 케이스는 무엇인가? 변수는 무엇인가? 각 변수가 양적인지 범주형인지 구분하라.</p>
+<p><span class="qsub">(2)</span> 데이터로부터 과학자가 얻고싶어 하는 정보는 무엇인가? 흥미로운 질문을 하나 해보라.</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p><span class="qsub">(1)</span> 케이스는 태그를 부착한 펭귄이다. 변수는 태그 종류(범주형), 새끼 수(양적), 생존 여부(범주형), 먹이 활동 시간(양적) 이다.</p>
+<p><span class="qsub">(2)</span> 과학자가 알고싶어 하는 것은 태그 종류와 다른 변수들 사이에&nbsp;관계가 있느냐이다. 예를 들면 금속&nbsp;태그를 부착한 펭귄 그룹과 전자&nbsp;태그를 부착한 펭귄 그룹 사이에 생존율&nbsp;차이가 있는가에 관심이 있다.</p>
+<p>위 예제에서 우리의 관심은 변수 하나가 다른 변수를 설명하거나 또는 예측할 때 도움을 주는지 알고 싶다. 이러한 상황에서 태그 종류를 <strong>설명변수</strong>(explanatory variable)라고 부르고 다른 변수는 <strong>반응변수</strong>(response variable)라고 부른다.</p>
+<p>이름을 쉽게 기억하는 방법은&nbsp;설명변수는 반응변수를 설명하는데 도움을 주고,&nbsp;반응변수는 설명변수에 반응한다는 것이다.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<p><span id="ex-1-8" class="qlabel">예제 1.8.</span> 앞의 <a href="#ex-1-4">예제 1.4</a>에서 AllCountries 데이터에서 변수들 사이의 관계에 대한 세 가지 질문을 다루었다. 설명변수와 반응변수가 있다면 찾아보라.</p>
+<p><span class="qsub">(1)</span> 영토가 더 넓은 나라는 시골 인구가 더 많은 경향이 있는가?</p>
+<p><span class="qsub">(2)</span> 출생률은 선진국과 개발도상국 중에서 어디가 더 높을까?</p>
+<p><span class="qsub">(3)</span> 국방과 건강에 대한 정부 지출이 관계가 있다면 무엇인가?</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p><span class="qsub">(1)</span> 국가의 영토가 시골 지역의 비율에 영향을 끼친다고 생각된다. 따라서 영토는 설명변수, 시골 인구 비율은&nbsp;반응변수이다.</p>
+<p><span class="qsub">(2)</span> 선진국이냐 개발도상국이냐가 출생률에 영향을 끼친다고 생각된다. 따라서 설명변수는 국가가 선진국이냐 개발도상국이냐, 반응변수는&nbsp;출생률이다.</p>
+<p><span class="qsub">(3)</span> 국방에 대한 정부 지출과 건강에 대한 정부 지출에서 어느 하나가 다른 하나를 설명한다고 생각하기 어렵다. 이런 경우에는 두 개의 변수 사이의 관계에서 설명변수와 반응변수를&nbsp;지정할 수 없다.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="3">
+<p><span class="qlabel">확인문제 1.</span> 펭귄 식별 연구에서 변수의 유형을 올바르게 분류한 것은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 태그 종류(금속/전자) - 양적 변수</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 펭귄의 새끼 수 - 범주형 변수</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 생존 여부(생존/사망) - 범주형 변수</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 먹이 활동 시간 - 범주형 변수</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 2.</span> 다음 중 설명변수(Explanatory Variable)와 반응변수(Response Variable)의 관계가 올바르게 설정된 것은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 출생률 → 국가의 경제 수준(선진국/개발도상국)</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 태그 종류 → 펭귄의 생존율</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 건강 지출 → 국방비 지출</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 시골 인구 비율 → 영토 크기</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 3.</span> 설명변수와 반응변수를 설정하기 어려운 경우에 해당하는 질문은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 금속 태그를 부착한 펭귄과 전자 태그를 부착한 펭귄의 생존율 차이가 있는가?</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 국방비 지출과 건강 지출 사이에 관계가 있는가?</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 국가의 경제 수준(선진국/개발도상국)에 따라 출생률이 다른가?</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 국가의 영토 크기에 따라 시골 인구 비율이 다른가?</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<!-- Page 15 -->
+</section>
+<section id="폭넓은-질문에-대답하기-위한-다른-방법" class="level3">
+<h3 class="anchored" data-anchor-id="폭넓은-질문에-대답하기-위한-다른-방법">폭넓은 질문에 대답하기 위한 다른 방법</h3>
+<div class="card">
+<p>종의 한 구성원이 방출하여 다른 구성원이 영향을 받는 화학적 신호를 페르몬이라고 한다. 데이터에 기반한 여러 연구가 몇몇 동물이 페르몬을 방출한다는 증거를 제시했다.</p>
+<p>인간이 잠재의식 속에서 페르몬으로 의사소통하는 지는 현재 논쟁&nbsp;중에 있다. 인간도 페르몬을 방출하는 지를 알려면 데이터를 어떻게&nbsp;수집해야 할까? 이 질문은 너무 광범위하므로 질문을 좁혀보자. 예를 들어, 여성의&nbsp;눈물에는 남성의 행동에 영향을 끼치는 페르몬이 있는가?</p>
+<p>몇몇 연구는 울고 있는 여성의 눈물에서 남성의 성적 흥미를 떨어뜨리는 향기가 난다고 주장한다. 그러나 이 효과가 사회적인 영향이 아니고 페르몬에 의한 잠재의식적인&nbsp;영향이라고 결론내리려면 데이터&nbsp;수집을 매우 조심스럽게 해야 한다. 이 질문에 답하기 위한 데이터 수집은 다음 세 가지 연구에서 모두 다르다.</p>
+<ul>
+<li><p>첫 번째 연구에서, <span class="math inline">\(20\)</span>대의 <span class="math inline">\(24\)</span>명의 남성은 윗 입술에 패드를 붙였다. 패드에는 슬픈 영화를 본 여성의 눈물&nbsp;또는 이 여성의 얼굴에서 흘러내린&nbsp;소금물&nbsp;중에 하나가 묻어 있다. 둘 중에 어느 것도 냄새는 없다. 윗 입술에 눈물을 묻힌 남성 그룹이 소금물을 묻힌 남성 그룹보다 여성의 얼굴이 덜 섹시하게 보인다고 평가했다.</p></li>
+<li><p>두 번째 연구에서, <span class="math inline">\(50\)</span>명의 남성이&nbsp;여성의 눈물을 냄새 맡은 후 테스토스테론 수준이 소금물 냄새를 맡은 후보다 더 많이 감소했다.</p></li>
+<li><p><span class="math inline">\(16\)</span>명의 남성에 대한 세 번째 연구에서, 여성의 눈물을 냄새 맡은&nbsp;남성 그룹에서 에로틱한 영화에 강하게 반응하는 영역의 뇌세포 활동이 현저하게&nbsp;감소했지만, 소금물을 냄새 맡은 남성 그룹은 같은 크기를 보이지 않았다.</p></li>
+</ul>
+</div>
+<div class="card">
+<p><span id="ex-1-9" class="qlabel">예제 1.9.</span> 여성의 눈물에 관한 세 연구에서 설명변수와 반응변수가 무엇인지 기술하라.</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p>세 가지 연구에서 설명변수는 눈물 또는 소금물 중에 어느 것이 사용되었느냐이다. 첫 번째 연구에서 반응변수는 여성의 얼굴이 얼마나 섹시하게 보이는지 평가한 것이다. 두 번째는 테시토스테론 수준이고, 세 번째는 뇌세포 활동이다.</p>
+<p>세 가지 연구 모두 질문에 답하기 위하여 매우 조심스럽게 데이터를 수집하는 방법을 기술한다. 실제 현상을 이해하는데 도움을 줄 수 있게 데이터를 수집하는 방법을 다음 절에서도 계속 소개할 것이다.</p>
+<p>우리는 지금까지 몇몇 데이터, 연구, 과학적인 질문 등을 다루었는데 이들은 대학생, 국가, 달리기&nbsp;유전자, 하바네로&nbsp;버거, 펭귄, 페르몬에 관한 것이었다. 소개한 여러가지 문제 중에서 특별히 흥미가 가는 것이 있는가? 여기서 다룬 모든 문제는 나머지 장에서도 계속 다룰 것이다.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="3">
+<p><span class="qlabel">확인문제 1.</span> 여성의 눈물과 남성의 반응을 조사한 세 가지 연구에서 공통적인 설명변수(Explanatory Variable)는 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 남성 참가자의 연령</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 여성의 얼굴을 평가한 점수</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 남성이 냄새를 맡은 물질(눈물 또는 소금물)</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 테스토스테론 수치 변화</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 2.</span> 세 번째 연구에서 반응변수(Response Variable)로 올바른 것은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 남성이 맡은 냄새의 종류(눈물 또는 소금물)</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 남성의 뇌세포 활동 수준</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 실험에 참여한 남성의 수</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 연구에서 사용한 에로틱한 영화의 종류</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="3">
+<p><span class="qlabel">확인문제 3.</span> 다음 중 설명변수와 반응변수의 관계가 올바르게 설정된 것은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 테스토스테론 수치 → 남성이 맡은 냄새의 종류</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 여성의 얼굴 평가 점수 → 남성이 맡은 냄새의 종류</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 남성이 맡은 냄새의 종류 → 뇌세포 활동 수준</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 연구에 참여한 남성의 수 → 남성이 맡은 냄새의 종류</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<!-- Page 16 -->
+</section>
+<section id="학습-내용-정리" class="level3">
+<h3 class="anchored" data-anchor-id="학습-내용-정리">학습 내용 정리</h3>
+<div class="card">
+<p>다음 사항을 이해하거나 해결하는 능력이 있어야 한다.</p>
+<ul>
+<li>데이터는 케이스와&nbsp;변수로 구성되어 있다.</li>
+<li>변수가&nbsp;양적인지 범주형인지 구분한다.</li>
+<li>적절한 경우에는 설명변수와&nbsp;반응변수가 각각 무엇인지 인식한다.</li>
+<li>문제를 해결하기 위하여&nbsp;데이터가 어떻게 사용되는지 기술한다.</li>
+<li>통계학이 흥미로운 많은&nbsp;문제의 답에 도움을 준다는 것을 인지한다.</li>
+</ul>
+</div>
+<section id="케이스와-변수-1" class="level4">
+<h4 class="anchored" data-anchor-id="케이스와-변수-1">케이스와 변수</h4>
+<div class="card">
+<p>데이터 테이블은&nbsp;케이스(case)에 관한 정보를 모은 것이다. 각 케이스의 정보를 데이터 테이블에서&nbsp;행(row)으로 표시한다.</p>
+<p>변수(variable)는 각 케이스에 대한 어떤&nbsp;특성이다. 변수는 데이터 테이블에서&nbsp;열(column)로 표시한다.</p>
+</div>
+</section>
+<section id="범주형-변수와-양적-변수-1" class="level4">
+<h4 class="anchored" data-anchor-id="범주형-변수와-양적-변수-1">범주형 변수와 양적 변수</h4>
+<div class="card">
+<p>범주형 변수(categorical variable)는&nbsp;케이스를&nbsp;그룹(group)으로 나눈다. 각 케이스는 둘 이상의 범주(category) 중에서 반드시 어떤 하나의&nbsp;범주에 속해야 한다.</p>
+<p>양적 변수(quantitative variable)는 각 케이스를&nbsp;수치로 측정한 값이다. 양적 변수에 대해서는 더하거나 평균 계산과 같은 수치&nbsp;연산을 할 수 있다.</p>
+</div>
+</section>
+<section id="설명-변수와-반응-변수" class="level4">
+<h4 class="anchored" data-anchor-id="설명-변수와-반응-변수">설명 변수와 반응 변수</h4>
+<div class="card">
+<p>변수 A를 가지고 변수 B를&nbsp;설명하거나&nbsp;예측할 때, 변수&nbsp;A를 설명 변수(explanatory variable), 변수&nbsp;B를 반응 변수(response&nbsp;variable)라고 한다.</p>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 1.</span> 데이터 테이블에서 “케이스(case)”가 의미하는 것은 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 데이터를 저장하는 파일의 형식</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 데이터에서 관찰하거나 조사하는 대상</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 데이터의 특정 변수를 나타내는 값</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 데이터 분석에 사용되는 통계적 기법</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="1">
+<p><span class="qlabel">확인문제 2.</span> 다음 중 양적 변수(quantitative variable)에 해당하는 것은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 학생의 학점(GPA)</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 학생의 전공(통계학, 경제학, 공학 등)</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 학생의 성별(남성, 여성)</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 학생이 선호하는 스포츠(축구, 농구, 야구)</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="1">
+<p><span class="qlabel">확인문제 3.</span> 다음 중 설명변수(Explanatory Variable)와 반응변수(Response Variable)의 관계가 올바르게 설정된 것은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 학생의 운동 시간 → 학생의 체중 변화</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 국가의 평균 수명 → <span class="math inline">\(1\)</span>인당 GDP</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 학생의 흡연 여부 → 학생의 출생 순서</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 연구에 참여한 학생 수 → 학생의 시험 점수</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<!-- Page 17 -->
+<div class="card">
+<p><span id="hw-1-1" class="qlabel">과제 1.1.</span> 각 상황에서 케이스와 변수를 아래 보기에서 고르고, 변수가 범주형이면 c, 양적이면 q로 답하시오.</p>
+<div class="quiz q" data-answer="4" data-explain="">
+<p><span class="qsub">(1)</span> 세계 각 국가의 문해율이 <span class="math inline">\(75\%\)</span>가 넘는지를 기록한다. — 케이스는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 질문을 받은 사람</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 재활용 법 지지 여부</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 문해율이 <span class="math inline">\(75\%\)</span> 넘는지 여부</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 국가 명</p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> 주식 명</p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> 가격 변동율</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q" data-answer="3" data-explain="">
+<p><span class="qsub">(2)</span> 위 상황의 변수는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 질문을 받은 사람</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 재활용 법 지지 여부</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 문해율이 <span class="math inline">\(75\%\)</span> 넘는지 여부</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 국가 명</p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> 주식 명</p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> 가격 변동율</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q qinline" data-answer="1" data-explain="">
+<p><span class="qsub">(3)</span> 위 변수의 종류는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 범주형 (c)</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 양적 (q)</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q" data-answer="1" data-explain="">
+<p><span class="qsub">(4)</span> 도시에 사는 사람에게 새로운 재활용 법을 지지하는지 물었다. — 케이스는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 질문을 받은 사람</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 재활용 법 지지 여부</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 문해율이 <span class="math inline">\(75\%\)</span> 넘는지 여부</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 국가 명</p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> 주식 명</p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> 가격 변동율</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q" data-answer="2" data-explain="">
+<p><span class="qsub">(5)</span> 위 상황의 변수는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 질문을 받은 사람</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 재활용 법 지지 여부</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 문해율이 <span class="math inline">\(75\%\)</span> 넘는지 여부</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 국가 명</p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> 주식 명</p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> 가격 변동율</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q qinline" data-answer="1" data-explain="">
+<p><span class="qsub">(6)</span> 위 변수의 종류는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 범주형 (c)</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 양적 (q)</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q" data-answer="5" data-explain="">
+<p><span class="qsub">(7)</span> 증권 시장에서 유통되는 <span class="math inline">\(100\)</span>개 주식의 가격 변동율을 조사한다. — 케이스는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 질문을 받은 사람</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 재활용 법 지지 여부</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 문해율이 <span class="math inline">\(75\%\)</span> 넘는지 여부</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 국가 명</p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> 주식 명</p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> 가격 변동율</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q" data-answer="6" data-explain="">
+<p><span class="qsub">(8)</span> 위 상황의 변수는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 질문을 받은 사람</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 재활용 법 지지 여부</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 문해율이 <span class="math inline">\(75\%\)</span> 넘는지 여부</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 국가 명</p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> 주식 명</p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> 가격 변동율</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q qinline" data-answer="2" data-explain="">
+<p><span class="qsub">(9)</span> 위 변수의 종류는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 범주형 (c)</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 양적 (q)</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<p><span id="hw-1-2" class="qlabel">과제 1.2.</span> 두 변수 사이의 관계에서 설명변수는 1, 반응변수는 2로 표기하시오.</p>
+<div class="quiz q qinline" data-answer="2">
+<p><span class="qsub">(1)</span> 마라톤 세계 기록과 연도 — 마라톤 세계 기록은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 설명변수</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 반응변수</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q qinline" data-answer="1">
+<p><span class="qsub">(2)</span> 위 상황에서 연도는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 설명변수</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 반응변수</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q qinline" data-answer="2">
+<p><span class="qsub">(3)</span> 폐 용량과 흡연 경력 — 폐 용량은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 설명변수</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 반응변수</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q qinline" data-answer="1">
+<p><span class="qsub">(4)</span> 위 상황에서 흡연 경력은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 설명변수</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 반응변수</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q qinline" data-answer="1">
+<p><span class="qsub">(5)</span> 사용한 비료 양과 작물 수확량 — 사용한 비료 양은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 설명변수</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 반응변수</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q qinline" data-answer="2">
+<p><span class="qsub">(6)</span> 위 상황에서 작물 수확량은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 설명변수</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 반응변수</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q qinline" data-answer="2">
+<p><span class="qsub">(7)</span> 혈중 알코올 농도와 마신 술의 양 — 혈중 알코올 농도는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 설명변수</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 반응변수</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q qinline" data-answer="1">
+<p><span class="qsub">(8)</span> 위 상황에서 마신 술의 양은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 설명변수</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 반응변수</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<p><span id="hw-1-3" class="qlabel">과제 1.3.</span> 부모의 경험이 미래의 자식에게 영향을 끼칠까? 한 연구는 부모의 생활 습관이 정자나 난자를 변하게 할 수 있다고 주장한다. 수컷 쥐를 두 그룹으로 나누어 하나는 <span class="math inline">\(43\%\)</span>의 칼로리를 지방에서 얻는 고지방(표준 미국인의 식습관) 먹이를 주고, 다른 그룹에는 건강식 먹이를 주었다. 고지방 먹이를 섭취한 수컷 쥐 그룹에서 건강식의 수컷 쥐 그룹보다 신진대사 장애가 더 많이 발생했다. 과학자를 놀라게 한 것은 고지방 그룹의 암컷 새끼에게서 건강식 그룹의 암컷 새끼보다 신진대사 장애가 더 많이 발생했다는 사실이다. 암컷 새끼 쥐와 어머니 쥐는 고지방 먹이를 먹지 않았고 아버지 쥐는 새끼 쥐와 어떤 접촉도 없었다. 아버지 쥐의 고지방 식단이 암컷 새끼 쥐에게 부정적인 영향을 끼치는 것으로 나타났다. 이 연구에서 두 개의 주요 변수는 무엇인가? 각 변수는 범주형인가 아니면 양적인가? 설명변수와 반응변수는 각각 무엇인가? 다음 보기에서 고르시오.</p>
+<div class="quiz q" data-answer="1">
+<p><span class="qsub">(1)</span> 설명변수는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 아버지 쥐의 식이 요법</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 아버지 쥐의 신진대사 장애</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 어머니 쥐의 식이 요법</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 어머니 쥐의 신진대사 장애</p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> 암컷 새끼 쥐의 식이 요법</p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> 암컷 새끼 쥐의 신진대사 장애유무</p>
+</div>
+<div class="opt" data-v="7">
+<p><span class="circ">7</span> 양적 변수</p>
+</div>
+<div class="opt" data-v="8">
+<p><span class="circ">8</span> 범주형 변수</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q" data-answer="6">
+<p><span class="qsub">(2)</span> 반응변수는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 아버지 쥐의 식이 요법</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 아버지 쥐의 신진대사 장애</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 어머니 쥐의 식이 요법</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 어머니 쥐의 신진대사 장애</p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> 암컷 새끼 쥐의 식이 요법</p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> 암컷 새끼 쥐의 신진대사 장애유무</p>
+</div>
+<div class="opt" data-v="7">
+<p><span class="circ">7</span> 양적 변수</p>
+</div>
+<div class="opt" data-v="8">
+<p><span class="circ">8</span> 범주형 변수</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q" data-answer="8">
+<p><span class="qsub">(3)</span> 설명변수의 타입은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 아버지 쥐의 식이 요법</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 아버지 쥐의 신진대사 장애</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 어머니 쥐의 식이 요법</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 어머니 쥐의 신진대사 장애</p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> 암컷 새끼 쥐의 식이 요법</p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> 암컷 새끼 쥐의 신진대사 장애유무</p>
+</div>
+<div class="opt" data-v="7">
+<p><span class="circ">7</span> 양적 변수</p>
+</div>
+<div class="opt" data-v="8">
+<p><span class="circ">8</span> 범주형 변수</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q" data-answer="8">
+<p><span class="qsub">(4)</span> 반응변수의 타입은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 아버지 쥐의 식이 요법</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 아버지 쥐의 신진대사 장애</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 어머니 쥐의 식이 요법</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 어머니 쥐의 신진대사 장애</p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> 암컷 새끼 쥐의 식이 요법</p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> 암컷 새끼 쥐의 신진대사 장애유무</p>
+</div>
+<div class="opt" data-v="7">
+<p><span class="circ">7</span> 양적 변수</p>
+</div>
+<div class="opt" data-v="8">
+<p><span class="circ">8</span> 범주형 변수</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<!-- 소유권자: 프로브 (빌드팀) | 사용자: 프로브 / Date: 2026-06-23 -->
+<!-- 인터랙티브 퀴즈 채점 (self-host, 외부의존 0). 시안 넥서스-최종통합시안-★★★★★ 의 <script> 이식.
+     _quarto.yml format.html.include-after-body 로 전 페이지 주입. .quiz[data-answer][data-explain] 마크업과 짝. -->
+<script>
+document.querySelectorAll('.quiz').forEach(function(q){
+  var ans = q.getAttribute('data-answer'), fb = q.querySelector('.quiz-feedback');
+  q.querySelectorAll('.opt').forEach(function(opt){
+    opt.addEventListener('click', function(){
+      q.querySelectorAll('.opt').forEach(function(o){ o.classList.remove('correct','wrong'); });
+      if (opt.getAttribute('data-v') === ans) {
+        opt.classList.add('correct');
+        fb.className = 'quiz-feedback ok';
+        fb.textContent = '정답입니다! ' + (q.getAttribute('data-explain') || '');
+      } else {
+        opt.classList.add('wrong');
+        fb.className = 'quiz-feedback no';
+        fb.textContent = '다시 생각해 보세요.';
+      }
+    });
+  });
+});
+</script>
+<!-- 소유권자: 빌드팀 | 작성 대행: 넥서스(컨트롤타워) — 프로브 부재로 대표 지시 직접 진행 / Date: 2026-06-23 -->
+<!-- 예제 풀이 블러 리빌 (self-host, 외부의존 0). 시안 넥서스-예제블러리빌-★★★★★.
+     _quarto.yml format.html.include-after-body 로 전 페이지 주입. .card.sol-card 마크업과 짝.
+     풀이 카드 클릭 시 .on 추가 → 블러 해제. -->
+<script>
+document.querySelectorAll('.sol-card').forEach(function(c){
+  c.addEventListener('click', function(){ c.classList.add('on'); });
+});
+</script>
+<!-- 소유권자: 빌드팀 | 작성: 넥서스(컨트롤타워) / Date: 2026-06-23 -->
+<!-- 주관식 정답 확인 토글 (self-host, 외부의존 0). 옵저버 정석 .ansbtn/.ansbox 와 짝.
+     _quarto.yml include-after-body 로 전 페이지 주입. -->
+<script>
+document.querySelectorAll('.ansbtn').forEach(function(b){
+  b.addEventListener('click', function(){
+    var box = b.nextElementSibling;
+    if (!box || !box.classList.contains('ansbox')) return;
+    var on = box.classList.toggle('show');
+    b.textContent = on ? '정답 숨기기 ▴' : '정답 확인 ▾';
+  });
+});
+</script>
+<!-- 소유권자: 넥서스(컨트롤타워) | 사용자: 넥서스 / Date: 2026-06-25 -->
+<!-- 데이터뷰 iframe을 콘텐츠 높이에 자동 맞춤 → 표마다 정확한 높이(여백/스크롤 제거).
+     file:// 에선 contentDocument 접근이 차단되므로 자식이 자기 높이를 postMessage로 보내는 방식이 1순위.
+     http 에선 contentDocument 폴링도 병행. self-host, 외부의존 0. -->
+<script>
+(function(){
+  function setH(f, h){ if(h > 0){ f.scrolling = 'no'; f.style.height = (h + 4) + 'px'; } }
+  // 1순위: 자식이 postMessage 로 보낸 높이 (file:// 포함 동작)
+  window.addEventListener('message', function(e){
+    if(e.data && e.data.type === 'dvHeight' && e.data.h > 0){
+      document.querySelectorAll('iframe[src*="data-views/"]').forEach(function(f){
+        if(f.contentWindow === e.source) setH(f, e.data.h);
+      });
+    }
+  });
+  // 2순위: same-origin(http) 직접 읽기 (file:// 에선 catch 되어 무시)
+  function fit(f){
+    try{
+      var d = f.contentDocument || f.contentWindow.document;
+      if(d && d.body) setH(f, Math.max(d.documentElement.scrollHeight, d.body.scrollHeight, d.body.offsetHeight));
+    }catch(e){}
+  }
+  function init(){
+    document.querySelectorAll('iframe[src*="data-views/"]').forEach(function(f){
+      f.scrolling = 'no';
+      f.addEventListener('load', function(){ fit(f); [300,800].forEach(function(t){ setTimeout(function(){fit(f);}, t); }); });
+      [200,600,1200,2200].forEach(function(t){ setTimeout(function(){fit(f);}, t); });
+    });
+  }
+  if(document.readyState === 'complete') init();
+  else window.addEventListener('load', init);
+})();
+</script>
+<!-- 엑셀 코드블록(pre.xlcode) 복사버튼 — self-host, 외부의존 0 (질럿, 2026-06-23) -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('pre.xlcode').forEach(function (pre) {
+    if (pre.dataset.xlcopy) return;
+    pre.dataset.xlcopy = '1';
+    var code = pre.textContent;            // ★ 버튼 추가 전 캡처 = 태그 없는 순수 수식
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'xlcopy';
+    btn.textContent = '복사';
+    btn.addEventListener('click', function () {
+      navigator.clipboard.writeText(code).then(function () {
+        btn.textContent = '복사됨';
+        setTimeout(function () { btn.textContent = '복사'; }, 1500);
+      });
+    });
+    pre.appendChild(btn);
+  });
+});
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/01.html" class="pagination-link" aria-label="1장. 데이터 수집">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">1장. 데이터 수집</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/01-02-sampling.html" class="pagination-link" aria-label="1.2 모집단에서 표본 추출">
+        <span class="nav-page-text"><span class="chapter-title">1.2 모집단에서 표본 추출</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>HollywoodMovies2011.csv – 통계적 사고와 사회</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../datasets/HoneybeeWaggle.html" rel="next">
+<link href="../datasets/HollywoodMovies.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-de63f62b328812d8e578a4d74e282472.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-3355e44214f8815af4d3cdb2eb254b3a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../datasets/AllCountries.html">데이터</a></li><li class="breadcrumb-item"><a href="../datasets/HollywoodMovies2011.html"><span class="chapter-title">HollywoodMovies2011.csv</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">통계적 사고와 사회</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">통계적 사고와 사회</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">강의 소개</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-01-intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.1. 강의 소개</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-02-thinking.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.2. 통계적 사고란 무엇인가?</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-03-examples.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.3. 통계적 사고 예제</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-04-montyhall.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.4. 몬티 홀 게임</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-05-ppdac.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.5. PPDAC 사이클</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-06-mortality.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.6. 산모 사망률</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-07-cholera.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.7. 콜레라와 존 스노우</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../chapters/01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1장. 데이터 수집</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-01-data-structure.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">1.1 데이터의 구조</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-02-sampling.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">1.2 모집단에서 표본 추출</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-03-causality.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">1.3 실험연구와 관측연구</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../chapters/02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2장. 데이터 기술하기</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-01-categorical.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.1 범주형 변수</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-02-quantitative-center.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.2 양적 변수 한 개: 모양과 중심</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-03-quantitative-variation.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.3 양적 변수 한 개: 변동</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-04-outliers-boxplot.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.4 이상값과 상자그림</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-05-scatterplot-correlation.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.5 양적 변수 두 개: 산점도와 상관관계</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-06-regression.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.6 양적 변수 두 개: 선형회귀</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-07-multivariate.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.7 데이터 시각화와 다중 변수</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../chapters/03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3장. 신뢰구간</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-01-sampling-distribution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3.1 표집 분포</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-02-confidence-intervals.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3.2 신뢰구간에 대한 이해</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-03-bootstrap.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3.3 부트스트랩 신뢰구간</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-04-percentile-bootstrap.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3.4 백분위수에 의한 부트스트랩 신뢰구간</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../chapters/04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4장. 가설검증</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-01-hypothesis-testing.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4.1 가설검증 소개</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-02-p-values.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4.2 p-값</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-03-significance.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4.3 통계적 유의성 판단</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-04-supplement.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4.4 가설검증의 오류</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-05-inference-summary.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4.5 통계적 추론 정리</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">참고자료</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-01-lotto.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">6/45 로또</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-02-numbergame.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">반응시간 게임</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">위젯</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../widgets/spreadsheet.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">스프레드시트</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../widgets/distribution-calculator.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">분포 계산기</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../widgets/r-calculator.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">R 계산기</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../widgets/jupyterlite.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">R/Python 실습</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">데이터</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/AllCountries.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">AllCountries.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/temp.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">April14Temps.csv (temp.csv)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/BaseballSalaries2015.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">BaseballSalaries2015.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/BodyFat.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">BodyFat.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/BodyTemp50.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">BodyTemp50.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/CarDepreciation.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">CarDepreciation.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/CommuteAtlanta.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">CommuteAtlanta.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/CommuteStLouis.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">CommuteStLouis.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/CricketChirps.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">CricketChirps.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/DDS.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">DDS.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/ElectionMargin.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">ElectionMargin.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/ExerciseHours.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">ExerciseHours.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/FloridaLakes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">FloridaLakes.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HappyPlanetIndex.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HappyPlanetIndex.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HeightData.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HeightData.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HollywoodMovies.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HollywoodMovies.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HollywoodMovies2011.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">HollywoodMovies2011.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HoneybeeWaggle.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HoneybeeWaggle.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HouseStarts.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HouseStarts.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/Life.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Life.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/LightatNight.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">LightatNight.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/MalevolentUniformsNFL.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">MalevolentUniformsNFL.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/Mammal2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Mammal2.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/MustangPrice.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">MustangPrice.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/NutritionStudy.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">NutritionStudy.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/RestaurantTips.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">RestaurantTips.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/RetailSales.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">RetailSales.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/StudentSurvey.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">StudentSurvey.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/USStates.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">USStates.csv</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+ <span class="menu-text">데이터 표(본문 임베드)</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/StudentSurvey.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">StudentSurvey.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/AllCountries.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">AllCountries.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/Life.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Life.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/Mammal2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Mammal2.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/temp.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">temp.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/ElectionMargin.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">ElectionMargin.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/HoneybeeWaggle.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HoneybeeWaggle.csv</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page-right" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../datasets/AllCountries.html">데이터</a></li><li class="breadcrumb-item"><a href="../datasets/HollywoodMovies2011.html"><span class="chapter-title">HollywoodMovies2011.csv</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-title">HollywoodMovies2011.csv</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-right">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<script type="text/plain" id="csvdata">
+Movie,LeadStudio,RottenTomatoes,AudienceScore,Story,Genre,TheatersOpenWeek,BOAverageOpenWeek,DomesticGross,ForeignGross,WorldGross,Budget,Profitability,OpeningWeekend
+Insidious,Sony,67,65,Monster Force,Horror,2408,5511,54.01,43.00,97.009,1.5,64.67266667,13.27
+Paranormal Activity 3,Independent,68,58,Monster Force,Horror,3321,15829,103.66,98.24,201.897,5,40.3794,52.57
+Bad Teacher,Independent,44,38,Comedy,Comedy,3049,10365,100.29,115.90,216.196,20,10.8098,31.60
+Harry Potter and the Deathly Hallows Part 2,Warner Bros,96,92,Rivalry,Fantasy,4375,38672,381.01,947.10,1328.111,125,10.624888,169.19
+Bridesmaids,Relativity Media,90,77,Rivalry,Comedy,2918,8995,169.11,119.28,288.382,32.5,8.873292308,26.25
+Midnight in Paris,Sony,93,84,Love,Romance,944,6177,56.18,83.00,139.177,17,8.186882353,5.83
+The Help,DreamWorks Pictures,75,91,Maturation,Drama,2534,10278,169.22,30.10,199.324,25,7.97296,26.04
+The Hangover Part II,Legendary Pictures,35,58,Comedy,Comedy,3615,23775,254.46,327.00,581.464,80,7.2683,85.95
+Another Earth,Independent,63,74,Temptation,Fantasy,,,1.32,,1.321,0.2,6.605,0.08
+Limitless,Virgin,69,73,Wretched Excess,Thriller,2756,6860,79.25,82.60,161.849,27,5.994407407,18.91
+Horrible Bosses,Warner Bros,69,72,Revenge,Comedy,3040,9310,117.54,92.10,209.638,35,5.989657143,28.30
+No Strings Attached,Spyglass Entertainment,49,57,Comedy,Comedy,3018,6512,70.60,77.10,147.7,25,5.908,19.70
+Twilight: Breaking Dawn,Independent,26,68,Love,Romance,4061,34012,260.80,374.00,634.8,110,5.770909091,138.12
+Transformers: Dark of the Moon,DreamWorks Pictures,35,67,Quest,Action,4088,23937,352.39,770.81,1123.195,195,5.759974359,97.85
+Gnomeo and Juliet,Disney,56,52,Love,Animation,2994,8469,99.97,94.00,193.967,36,5.387972222,25.36
+Rio,20th Century Fox,71,73,Quest,Animation,3826,10252,143.62,341.02,484.634,90,5.384822222,39.23
+Super 8 ,Paramount,82,78,Monster Force,Horror,3379,10492,127.00,132.71,259.713,50,5.19426,35.45
+Rise of the Planet of the Apes,20th Century Fox,83,87,Revenge,Action,3648,15024,176.70,304.52,481.226,93,5.174473118,54.81
+Apollo 18,Weinstein Company,23,31,Monster Force,Horror,3328,2615,17.69,7.88,25.562,5,5.1124,8.70
+The Smurfs,Sony Pictures Animation,23,50,Fish Out Of Water,Animation,3395,10489,142.61,419.54,562.158,110,5.110527273,35.61
+Fast Five,Universal,78,83,Escape,Action,3644,23655,209.83,416.30,626.13,125,5.00904,
+Our Idiot Brother,The Weinstein Company,68,79,Comedy,Comedy,2555,2744,24.82,,24.816,5,4.9632,
+50/50,Independent,93,93,Discovery,Comedy,2458,3517,34.90,1.62,36.511,8,4.563875,8.64
+Drive,Independent,93,79,Rivalry,Thriller,2886,3929,34.68,32.33,67.007,15,4.467133333,11.34
+Beginners,Independent,84,80,Love,Comedy,,,5.79,8.39,14.182,3.2,4.431875,0.14
+Kung Fu Panda 2,DreamWorks Animation,82,80,Rivalry,Animation,3925,12142,165.25,497.78,663.024,150,4.42016,47.66
+Unknown,Independent,55,57,The Riddle,Thriller,3043,7183,63.69,67.10,130.786,30,4.359533333,21.86
+The Ides of March,Columbia,85,76,Transformation,Thriller,2199,4761,40.49,13.70,54.194,12.5,4.33552,10.47
+Friends With Benefits,Warner Bros,71,68,Temptation,Romance,2926,6364,55.80,93.74,149.541,35,4.2726,18.62
+"Pirates of the Caribbean:
+On Stranger Tides",Disney,34,61,Quest,Action,4155,21697,241.07,802.80,1043.871,250,4.175484,90.15
+Final Destination 5,New Line Cinema,61,56,Monster Force,Horror,3155,5715,42.59,115.30,157.887,40,3.947175,18.03
+Source Code,Summit Entertainment,92,81,The Riddle,Thriller,2961,5002,54.71,68.57,123.278,32,3.8524375,14.81
+Mission Impossible,Paramount,93,86,Pursuit,Action,3448,8672,197.80,336.70,534.5,145,3.686206897,29.55
+One Day,Independent,37,54,Love,Romance,1719,2955,13.84,41.40,55.241,15,3.682733333,5.08
+Sanctum,Relativity Media,30,39,Quest,Action,2787,3390,23.20,85.40,108.6,30,3.62,9.40
+Sherlock Holmes 2,Warner Bros,60,79,Pursuit,Action,3703,10704,179.04,261.00,440.04,125,3.52032,39.63
+Johnny English Reborn,Relativity Media,38,55,Comedy,Comedy,1552,2470,8.31,149.63,157.939,45,3.509755556,3.83
+Diary of a Wimpy Kid 2: Rodrick Rules,20th Century Fox,47,63,Comedy,Comedy,3167,7500,52.70,19.72,72.416,21,3.448380952,23.75
+Mr. Popper's Penguins,20th Century Fox,47,54,Discovery,Comedy,3339,5524,68.22,119.14,187.355,55,3.406454545,18.45
+In Time,Regency Enterprises,38,55,The Riddle,Thriller,3122,3860,36.49,90.90,127.393,40,3.184825,12.05
+Water For Elephants,20th Century Fox,60,72,Love,Drama,2817,5979,58.71,58.39,117.094,38,3.081421053,16.84
+Battle: Los Angeles,Relativity Media,35,50,Monster Force,Action,3417,10411,83.55,128.27,211.818,70,3.025971429,35.57
+Thor,Disney,77,80,Monster Force,Action,3955,16618,181.03,267.48,448.512,150,2.99008,65.72
+Hop,Relativity Media,26,50,Fish Out Of Water,Animation,3579,10490,108.09,75.87,183.953,63,2.919888889,37.54
+"Crazy, Stupid, Love",Warner Bros,78,81,Discovery,Romance,3020,6326,84.34,58.50,142.841,50,2.85682,19.10
+Cars 2,Pixar,38,56,Fish Out Of Water,Animation,4115,16072,191.45,360.40,551.85,200,2.75925,66.14
+Spy Kids: All The Time in the World,Weinstein Company,22,40,Quest,Action,3295,3534,38.54,35.54,74.08,27,2.743703704,11.64
+Just Go With It,Happy Madison,19,63,Comedy,Romance,3548,8601,103.03,111.92,214.945,80,2.6868125,30.51
+Captain America: The First Avenger,Disney,78,75,Metamorphosis,Action,3715,17512,176.65,191.75,368.404,140,2.631457143,65.06
+The Rite,Warner Bros,20,43,Monster Force,Horror,2985,4955,33.00,63.00,96,37,2.594594595,14.80
+Footloose,Spyglass Entertainment,71,71,Transformation,Drama,3549,4383,51.16,10.90,62.053,24,2.585541667,15.56
+The Adjustment Bureau,Independent,72,67,Sacrifice,Thriller,2840,7450,62.50,65.37,127.868,50.2,2.547171315,21.16
+Margin Call,Independent,86,73,Sacrifice,Thriller,,,4.94,3.93,8.869,3.5,2.534,0.56
+The Roommate,Independent,4,29,Monster Force,Horror,2534,5921,37.30,3.19,40.492,16,2.53075,15.00
+Soul Surfer,Sony,46,79,Underdog,Drama,2214,4789,43.85,0.41,44.267,18,2.459277778,10.60
+Real Steel,DreamWorks Pictures,58,81,Underdog,Action,3440,7942,83.61,186.20,269.811,110,2.452827273,27.32
+Paul,Relativity,72,70,Comedy,Comedy,2802,4655,37.41,60.57,97.983,40,2.449575,13.04
+Immortals,Relativity Media,36,59,Revenge,Action,3112,10349,80.49,102.00,182.485,75,2.433133333,32.21
+Scream 4,Weinstein Company,58,57,Monster Force,Horror,3305,5656,38.18,58.96,97.137,40,2.428425,18.69
+I Am Number Four,Paramount,32,57,Maturation,Thriller,3154,6167,55.10,89.40,144.5,60,2.408333333,19.45
+Dolphin Tale,Independent,84,81,Quest,Drama,3507,5461,71.08,16.86,87.947,37,2.376945946,19.15
+Abduction,Vertigo Entertainment,4,46,Maturation,Action,3118,3504,28.07,54.00,82.069,35,2.344828571,10.93
+Hall Pass,Warner Bros,35,44,Temptation,Comedy,2950,4588,45.06,38.10,83.16,36,2.31,13.54
+Season Of The Witch,Relativity ,10,32,Monster Force,Action,2816,3769,24.80,66.80,91.6,40,2.29,10.60
+The Debt,Universal,76,70,Pursuit,Thriller,1826,5427,31.18,14.25,45.429,20,2.27145,9.91
+Contagion,Warner Bros,84,63,The Riddle,Thriller,3222,6935,75.64,59.80,135.443,60,2.257383333,22.40
+X-Men: First Class,Disney,87,88,Monster Force,Action,3641,15134,146.41,207.22,353.623,160,2.21014375,55.10
+Puss In Boots,DreamWorks,83,76,Quest,Animation,3952,8623,142.09,142.30,284.386,130,2.187584615,34.08
+Zookeeper,Happy Madison Productions,14,42,Comedy,Comedy,3482,5763,80.36,89.94,170.301,80,2.1287625,20.07
+Hanna,Universal,71,67,Quest,Action,2535,4880,40.26,23.52,63.781,30,2.126033333,12.37
+Red Riding Hood,Warner Bros,11,41,Monster Force,Horror,3030,4622,37.66,51.50,89.162,42,2.122904762,14.01
+Moneyball,Columbia,95,89,Underdog,Drama,2993,6516,74.21,27.90,102.109,50,2.04218,19.50
+Monte Carlo,20th Century Fox,38,50,Love,Romance,2473,3014,23.18,16.48,39.664,20,1.9832,7.45
+The Green Hornet,Columbia,44,47,Rivalry,Action,3584,9335,98.80,129.00,227.8,120,1.898333333,33.50
+The Lincoln Lawyer,Lionsgate,84,82,Fish Out Of Water,Drama,2707,4879,58.01,17.00,75.009,40,1.875225,13.21
+Rango,Paramount,88,69,Fish Out Of Water,Animation,3917,9722,123.26,121.90,245.154,135,1.815955556,38.08
+A Very Harold and Kumar Christmas,Lionsgate,72,71,Comedy,Comedy,2875,4506,34.04,,34.044,19,1.791789474,12.95
+The Three Musketeers,Independent,24,48,Rivalry,Action,3017,2875,20.25,111.90,132.147,75,1.76196,8.67
+Larry Crowne,Universal,34,46,Discovery,Drama,2973,4405,35.61,16.80,52.408,30,1.746933333,13.10
+Something Borrowed,Independent,,,Love,Romance,2904,4802,39.05,21.14,60.183,35,1.719514286,13.95
+The Tree Of Life,Independent,84,61,Discovery,Drama,4,93230,13.30,41.00,54.303,32,1.69696875,0.37
+Beastly,CBS Films,19,50,Metamorphosis,Romance,1952,5047,27.87,0.97,28.833,17,1.696058824,9.85
+Tower Heist,Relativity,68,61,Revenge,Comedy,3367,7135,74.50,47.00,121.504,75,1.620053333,24.03
+The Muppets,Disney,97,87,Quest,Comedy,3440,8500,66.63,5.80,72.426,45,1.609466667,29.24
+Shark Night 3D,Relativity,16,25,Escape,Horror,2806,2995,18.88,19.83,38.702,25,1.54808,8.40
+Colombiana,Sony,28,55,Revenge,Action,2614,3982,36.67,24.30,60.965,40,1.524125,10.41
+What's Your Number,20th Century Fox,24,50,Transformation,Comedy,3002,1806,14.01,16.42,30.426,20,1.5213,5.42
+30 Minutes or Less,Independent,43,48,Comedy,Comedy,2888,4616,37.05,3.49,40.546,28,1.448071429,13.33
+The Change Up,Relativity Media,24,53,Metamorphosis,Comedy,2913,4645,37.08,33.75,70.833,52,1.362173077,13.53
+Priest,Sony,17,37,Monster Force,Action,2864,5221,29.14,49.17,78.308,60,1.305133333,14.95
+The Mechanic,Independent,53,52,Revenge,Action,2703,4226,29.20,22.00,51.2,40,1.28,11.40
+Don't Be Afraid Of The Dark,Miramax Films,59,37,Monster Force,Horror,2760,3089,24.05,7.50,31.546,25,1.26184,8.53
+Fright Night,DreamWorks,75,68,Rivalry,Horror,3114,2477,18.30,18.80,37.102,30,1.236733333,7.71
+The Descendants,20th Century Fox,89,88,Discovery,Drama,29,41038,24.54,,24.541,20,1.22705,4.38
+Arthur,Warner Bros,26,49,Sacrifice,Comedy,3276,3731,33.04,12.70,45.735,40,1.143375,12.22
+Winnie The Pooh,Disney,91,79,Quest,Animation,2405,3267,26.69,6.46,33.152,30,1.105066667,7.86
+Green Lantern,Warner Bros,27,48,Metamorphosis,Action,3816,13935,116.60,103.25,219.851,200,1.099255,53.17
+Sucker Punch,Legendary Pictures,23,48,Quest,Action,3033,6284,36.39,53.40,89.792,82,1.09502439,19.06
+The Eagle,Universal,39,43,Quest,Action,2296,3782,19.49,7.63,27.121,25,1.08484,8.68
+Cowboys and Aliens,Universal,44,50,Monster Force,Action,3750,9715,100.24,74.58,174.821,163,1.072521472,36.43
+Jack and Jill,Happy Madison,4,59,Comedy,Comedy,3438,7273,68.91,15.00,83.911,79,1.062164557,25.00
+J.Edgar,Warner Bros,42,84,Wretched Excess,Drama,1910,5873,35.06,,35.057,35,1.001628571,11.22
+The Dilemma,Spyglass Entertainment,23,31,Comedy,Comedy,2940,6060,48.50,21.20,69.7,70,0.995714286,17.80
+Warrior,Lionsgate,83,93,Rivalry,Action,1869,2805,13.66,9.40,23.057,25,0.92228,5.24
+My Week with Marilyn,The Weinstein Company,83,84,Love,Drama,247,7174,5.31,2.95,8.258,10,0.8258,1.75
+Happy Feet 2,Village Roadshow Pictures,41,59,Journey and Return,Animation,3606,5889,57.31,49.20,106.507,135,0.788940741,21.24
+Dream House,Morgan Creek Productions,7,38,The Riddle,Horror,2661,3055,21.30,17.20,38.502,50,0.77004,8.13
+Killer Elite,Independent,25,48,Rivalry,Action,2986,3132,25.12,27.84,52.961,70,0.756585714,9.35
+The Thing,Universal,36,52,Monster Force,Horror,2996,2835,16.93,10.50,27.428,38,0.721789474,8.49
+Cedar Rapids,20th Century Fox,86,61,Maturation,Comedy,,,6.86,,6.861,10,0.6861,0.30
+Drive Angry,Independent,45,38,Rescue,Action,2290,2265,10.72,18.21,28.931,45,0.642911111,5.19
+Arthur Christmas,Aardman Animations,92,82,Journey and Return,Animation,3376,3537,33.70,57.50,91.203,150,0.60802,12.07
+The Conspirator,Independent,56,65,Underdog,Drama,707,4960,11.54,2.67,14.211,25,0.56844,3.51
+Everything Must Go,Reliance Entertainment,74,53,Discovery,Drama,,,2.71,,2.711,5,0.5422,0.79
+Conan the Barbarian,Lionsgate,22,34,Quest,Action,3015,3324,21.30,27.50,48.795,90,0.542166667,10.02
+Your Highness,Universal,26,36,Comedy,Comedy,2769,3380,21.60,3.26,24.856,49.9,0.498116232,9.36
+The Rum Diary,Independent,50,48,Discovery,Drama,2273,2259,13.07,8.48,21.552,45,0.478933333,5.14
+Anonymous,Relativity Media,46,66,Tragedy,Drama,265,3856,4.46,9.73,14.19,30,0.473,1.02
+A Dangerous Method,Independent,79,89,Love,Drama,,,0.54,8.44,8.972895,20,0.44864475,0.17
+The Company Men,Weinstein Company,66,55,Discovery,Drama,106,6111,4.40,0.40,4.8,15,0.32,0.64
+Take Shelter,Independent,92,85,Sacrifice,Drama,,,1.57,,1.573,5,0.3146,0.05
+The Beaver,Summit Entertainment,62,57,Transformation,Drama,22,4890,0.97,5.40,6.37,21,0.303333333,0.11
+Take Me Home Tonight,Relativity,28,46,Discovery,Comedy,2003,1730,6.93,,6.928,25,0.27712,3.46
+Red State,Independent,57,59,Escape,Horror,,,1.10,,1.104,4,0.276,
+Mars Needs Moms,Disney,36,43,Rescue,Animation,3117,2218,21.39,17.60,38.992,150,0.259946667,6.91
+Dylan Dog: Dead of Night,Independent,6,28,Monster Force,Horror,,,1.19,3.45,4.633,20,0.23165,0.75
+The Big Year,Independent,38,62,Transformation,Comedy,2150,1513,7.17,0.24,7.41,41,0.180731707,3.25
+Vanishing on 7th Street,Independent,52,62,Monster Force,Horror,,,0.02,1.05,1.067,10,0.1067,0.00
+Trespass,Independent,11,24,Escape,Thriller,,,0.02,3.10,3.124,35,0.089257143,0.02
+Hesher,Independent,54,68,Wretched Excess,Drama,,,0.38,,0.382,7,0.054571429,0.13
+Machine Gun Preacher,Lionsgate,29,71,Transformation,Action,,,0.54,0.57,1.103,30,0.036766667,0.05
+Waiting For Forever,Independent,6,53,Love,Romance,3,2972,0.03,,0.025,5,0.005,0.01
+The Son Of No One,Independent,18,61,Discovery,Thriller,,,0.03,,0.03,15,0.002,0.02
+Hugo,Paramount,93,84,,Adventure,1277,8899,,,,,,11.36
+Jane Eyre,Universal,85,77,Love,Romance,,,11.24,18.91,30.147,,,0.18
+Never Back Down 2: The Beatdown,Sony,,44,Rivalry,Action,,,,,,3,0,8.60
+</script>
+<iframe id="ssframe" src="../sims/spreadsheet.html" width="100%" style="height:calc(100vh - 120px); min-height:480px; border:1px solid #e3e7ec; border-radius:10px;" loading="lazy"></iframe>
+<script>
+(function(){
+  var csv = document.getElementById('csvdata').textContent.replace(/^\n/, '');
+  var ifr = document.getElementById('ssframe');
+  var done = false, n = 0;
+  function send(){ if(done) return; try{ ifr.contentWindow.postMessage({type:'loadCSV', csv:csv}, '*'); }catch(e){} }
+  window.addEventListener('message', function(e){
+    if(e.data==='sheetLoaded') done=true; else if(e.data==='sheetReady') send();
+  });
+  ifr.addEventListener('load', send);
+  var t = setInterval(function(){ send(); if(done || ++n>30) clearInterval(t); }, 400);
+})();
+</script>
+
+
+
+</main> <!-- /main -->
+<!-- 소유권자: 프로브 (빌드팀) | 사용자: 프로브 / Date: 2026-06-23 -->
+<!-- 인터랙티브 퀴즈 채점 (self-host, 외부의존 0). 시안 넥서스-최종통합시안-★★★★★ 의 <script> 이식.
+     _quarto.yml format.html.include-after-body 로 전 페이지 주입. .quiz[data-answer][data-explain] 마크업과 짝. -->
+<script>
+document.querySelectorAll('.quiz').forEach(function(q){
+  var ans = q.getAttribute('data-answer'), fb = q.querySelector('.quiz-feedback');
+  q.querySelectorAll('.opt').forEach(function(opt){
+    opt.addEventListener('click', function(){
+      q.querySelectorAll('.opt').forEach(function(o){ o.classList.remove('correct','wrong'); });
+      if (opt.getAttribute('data-v') === ans) {
+        opt.classList.add('correct');
+        fb.className = 'quiz-feedback ok';
+        fb.textContent = '정답입니다! ' + (q.getAttribute('data-explain') || '');
+      } else {
+        opt.classList.add('wrong');
+        fb.className = 'quiz-feedback no';
+        fb.textContent = '다시 생각해 보세요.';
+      }
+    });
+  });
+});
+</script>
+<!-- 소유권자: 빌드팀 | 작성 대행: 넥서스(컨트롤타워) — 프로브 부재로 대표 지시 직접 진행 / Date: 2026-06-23 -->
+<!-- 예제 풀이 블러 리빌 (self-host, 외부의존 0). 시안 넥서스-예제블러리빌-★★★★★.
+     _quarto.yml format.html.include-after-body 로 전 페이지 주입. .card.sol-card 마크업과 짝.
+     풀이 카드 클릭 시 .on 추가 → 블러 해제. -->
+<script>
+document.querySelectorAll('.sol-card').forEach(function(c){
+  c.addEventListener('click', function(){ c.classList.add('on'); });
+});
+</script>
+<!-- 소유권자: 빌드팀 | 작성: 넥서스(컨트롤타워) / Date: 2026-06-23 -->
+<!-- 주관식 정답 확인 토글 (self-host, 외부의존 0). 옵저버 정석 .ansbtn/.ansbox 와 짝.
+     _quarto.yml include-after-body 로 전 페이지 주입. -->
+<script>
+document.querySelectorAll('.ansbtn').forEach(function(b){
+  b.addEventListener('click', function(){
+    var box = b.nextElementSibling;
+    if (!box || !box.classList.contains('ansbox')) return;
+    var on = box.classList.toggle('show');
+    b.textContent = on ? '정답 숨기기 ▴' : '정답 확인 ▾';
+  });
+});
+</script>
+<!-- 소유권자: 넥서스(컨트롤타워) | 사용자: 넥서스 / Date: 2026-06-25 -->
+<!-- 데이터뷰 iframe을 콘텐츠 높이에 자동 맞춤 → 표마다 정확한 높이(여백/스크롤 제거).
+     file:// 에선 contentDocument 접근이 차단되므로 자식이 자기 높이를 postMessage로 보내는 방식이 1순위.
+     http 에선 contentDocument 폴링도 병행. self-host, 외부의존 0. -->
+<script>
+(function(){
+  function setH(f, h){ if(h > 0){ f.scrolling = 'no'; f.style.height = (h + 4) + 'px'; } }
+  // 1순위: 자식이 postMessage 로 보낸 높이 (file:// 포함 동작)
+  window.addEventListener('message', function(e){
+    if(e.data && e.data.type === 'dvHeight' && e.data.h > 0){
+      document.querySelectorAll('iframe[src*="data-views/"]').forEach(function(f){
+        if(f.contentWindow === e.source) setH(f, e.data.h);
+      });
+    }
+  });
+  // 2순위: same-origin(http) 직접 읽기 (file:// 에선 catch 되어 무시)
+  function fit(f){
+    try{
+      var d = f.contentDocument || f.contentWindow.document;
+      if(d && d.body) setH(f, Math.max(d.documentElement.scrollHeight, d.body.scrollHeight, d.body.offsetHeight));
+    }catch(e){}
+  }
+  function init(){
+    document.querySelectorAll('iframe[src*="data-views/"]').forEach(function(f){
+      f.scrolling = 'no';
+      f.addEventListener('load', function(){ fit(f); [300,800].forEach(function(t){ setTimeout(function(){fit(f);}, t); }); });
+      [200,600,1200,2200].forEach(function(t){ setTimeout(function(){fit(f);}, t); });
+    });
+  }
+  if(document.readyState === 'complete') init();
+  else window.addEventListener('load', init);
+})();
+</script>
+<!-- 엑셀 코드블록(pre.xlcode) 복사버튼 — self-host, 외부의존 0 (질럿, 2026-06-23) -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('pre.xlcode').forEach(function (pre) {
+    if (pre.dataset.xlcopy) return;
+    pre.dataset.xlcopy = '1';
+    var code = pre.textContent;            // ★ 버튼 추가 전 캡처 = 태그 없는 순수 수식
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'xlcopy';
+    btn.textContent = '복사';
+    btn.addEventListener('click', function () {
+      navigator.clipboard.writeText(code).then(function () {
+        btn.textContent = '복사됨';
+        setTimeout(function () { btn.textContent = '복사'; }, 1500);
+      });
+    });
+    pre.appendChild(btn);
+  });
+});
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation column-page-right">
+  <div class="nav-page nav-page-previous">
+      <a href="../datasets/HollywoodMovies.html" class="pagination-link" aria-label="HollywoodMovies.csv">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">HollywoodMovies.csv</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../datasets/HoneybeeWaggle.html" class="pagination-link" aria-label="HoneybeeWaggle.csv">
+        <span class="nav-page-text"><span class="chapter-title">HoneybeeWaggle.csv</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

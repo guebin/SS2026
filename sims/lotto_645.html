@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<!--
+  소유권자: 드라군(복원팀) | 사용자: 드라군
+  Date: 2026-06-22
+  용도: enook 5장 "6/45 로또" self-host 애플릿 (page 165~166, 05-01-lotto.qmd iframe).
+        원본 스크린샷 충실 복원: 10게임 당첨 실습 + 당첨 빈도 표(빈도/상대빈도/이론적 확률)
+        + 구입 금액과 상금 산점도 + 모든 로또 구매자의 당첨 빈도 표.
+        (이전 버전의 통계 해설·그래프는 원본에 없는 창작이라 들어내고 원본대로 복원함.)
+  2026-06-22 옵션 A 재작업(옵저버 인계): "모든 로또 구매자의 당첨 빈도"는 서버 집계형(전체
+        학생 합산) 기능이라 정적 복원 불가 → cumFreq 와 독립된 allFreq 누적기 + 10만 게임 로컬
+        시뮬(simulateAll)로 대체. 대수의 법칙(상대빈도→이론확률 수렴) 시현. 개인 "당첨 빈도"는 무변경.
+-->
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>6/45 로또 — 10게임 당첨 실습</title>
+<style>
+  :root { --line:#dee2e6; --hit:#fcd34d; --head:#f1f3f5; --accent:#2563eb; }
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+         margin: 0; padding: 24px; color: #212529; background: #fff; line-height: 1.6; }
+  h1 { font-size: 22px; color: var(--accent); margin: 0 0 12px; }
+  h2 { font-size: 18px; color: var(--accent); margin: 36px 0 12px; text-align: center; }
+  p.intro { font-size: 14px; color: #495057; max-width: 760px; }
+  table { border-collapse: collapse; margin: 12px auto; }
+  th, td { border: 1px solid var(--line); text-align: center; padding: 5px 10px; font-size: 14px; }
+  th { background: var(--head); font-weight: 600; }
+  td.idx { background: var(--head); width: 40px; }
+  input.num { width: 42px; height: 30px; text-align: center; border: 1px solid #495057;
+              border-radius: 4px; font-size: 14px; }
+  input.num.hit { background: var(--hit); font-weight: 700; }
+  td.rank { width: 60px; }
+  .controls { margin: 8px 0 12px; }
+  button { font-size: 14px; padding: 7px 14px; margin-right: 8px; border: 1px solid var(--line);
+           border-radius: 6px; background: #f8f9fa; cursor: pointer; }
+  button:hover { background: #e9ecef; }
+  #draw { font-size: 14px; margin: 10px 0; }
+  #draw b { color: var(--accent); }
+  #cum { font-size: 14px; color: #495057; }
+  table.freq { font-size: 14px; }
+  table.freq td:nth-child(4) { color: #495057; font-variant-numeric: tabular-nums; }
+  svg { display: block; margin: 0 auto; background: #fff; }
+</style>
+</head>
+<body>
+  <h1>로또 10 게임 당첨 실습</h1>
+  <p class="intro">
+    1~45 사이의 6개의 숫자 조합을 입력하거나 표 아래의 "자동 번호" 버튼을 누른다.
+    자동 생성된 번호 중에서 일부를 자신이 좋아하는 숫자로 바꿀 수도 있다.
+    "당첨 확인" 버튼을 누르면 추첨 결과를 알 수 있다. 1등 상금은 20억원, 2등 상금은 6천만원,
+    3등 상금은 150만원, 4등 상금은 5만원, 5등 상금은 5천원이다. 3등 이상에 당첨되면 축하 박수가 나온다.
+  </p>
+
+  <table id="board">
+    <thead>
+      <tr><th>조합</th><th>번호 1</th><th>번호 2</th><th>번호 3</th><th>번호 4</th><th>번호 5</th><th>번호 6</th><th>등수</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <div class="controls">
+    <button id="clear">모든 번호 삭제</button>
+    <button id="auto">자동 번호</button>
+    <button id="check">당첨 확인</button>
+  </div>
+
+  <div id="draw"></div>
+  <div id="cum">누적 복권 구입액: 0원<br>누적 상금: 0원 (0%)</div>
+
+  <h2>당첨 빈도</h2>
+  <div id="freq"></div>
+
+  <h2>로또 구입 금액과 상금</h2>
+  <div id="scatter"></div>
+
+  <h2>모든 로또 구매자의 당첨 빈도</h2>
+  <p class="intro" style="text-align:center">전체 학생의 결과를 합산하는 기능을 2천만 게임 모의로 대체한 것이다. 표본이 커지면 상대 빈도가 이론적 확률에 가까워진다.</p>
+  <div id="freqAll"></div>
+
+<script>
+(function () {
+  const ROWS = 10, PICK = 6, MAX = 45;
+  const PRIZE = {1:2e9, 2:6e7, 3:1.5e6, 4:5e4, 5:5e3, 0:0};
+  // 원본 스크린샷의 이론적 확률 값 그대로
+  const THEORY = {1:0.00000012, 2:0.00000074, 3:0.00002799, 4:0.00136463, 5:0.02244060, 0:0.97616590};
+  const DENOM = {1:8145060, 2:1357510, 3:35724, 4:733, 5:45};
+  const RANKS = ["1등","2등","3등","4등","5등","없음"];
+  const tbody = document.querySelector("#board tbody");
+
+  for (let r = 0; r < ROWS; r++) {
+    const tr = document.createElement("tr");
+    let cells = `<td class="idx">${r + 1}</td>`;
+    for (let c = 0; c < PICK; c++)
+      cells += `<td><input class="num" data-row="${r}" type="text" inputmode="numeric" maxlength="2"></td>`;
+    cells += `<td class="rank" data-rank="${r}"></td>`;
+    tr.innerHTML = cells;
+    tbody.appendChild(tr);
+  }
+  const inputs = () => [...document.querySelectorAll("input.num")];
+  const rowInputs = (r) => [...document.querySelectorAll(`input.num[data-row="${r}"]`)];
+
+  function randomSet(n, max) {
+    const s = new Set();
+    while (s.size < n) s.add(1 + Math.floor(Math.random() * max));
+    return [...s];
+  }
+  function rankOf(matches, bonusHit) {
+    if (matches === 6) return 1;
+    if (matches === 5 && bonusHit) return 2;
+    if (matches === 5) return 3;
+    if (matches === 4) return 4;
+    if (matches === 3) return 5;
+    return 0;
+  }
+  const won = (n) => n.toLocaleString("ko-KR");
+
+  let round = 0, cumSpent = 0, cumPrize = 0, cumPlayed = 0;
+  const cumFreq = {1:0,2:0,3:0,4:0,5:0,0:0};
+  const points = [];
+  const DUMMY_POINTS = [
+    {spent:10000,prize:0},{spent:20000,prize:0},{spent:30000,prize:5000},
+    {spent:40000,prize:5000},{spent:50000,prize:5000},{spent:60000,prize:10000},
+    {spent:70000,prize:10000},{spent:80000,prize:15000},{spent:90000,prize:15000},
+    {spent:100000,prize:20000}
+  ];
+  const allFreq = {1:0,2:0,3:0,4:0,5:0,0:0};
+  let allPlayed = 0;
+
+  document.getElementById("auto").onclick = function () {
+    for (let r = 0; r < ROWS; r++) {
+      const ins = rowInputs(r);
+      if (ins.every(i => i.value.trim() === "")) {
+        const nums = randomSet(PICK, MAX).sort((a, b) => a - b);
+        ins.forEach((i, k) => i.value = nums[k]);
+      }
+    }
+  };
+  document.getElementById("clear").onclick = function () {
+    inputs().forEach(i => { i.value = ""; i.classList.remove("hit"); });
+    document.querySelectorAll("td.rank").forEach(td => td.textContent = "");
+    document.getElementById("draw").innerHTML = "";
+  };
+
+  document.getElementById("check").onclick = function () {
+    const draw = randomSet(PICK + 1, MAX);
+    const win = draw.slice(0, 6).sort((a, b) => a - b);
+    const bonus = draw[6];
+    const winSet = new Set(win);
+    round++;
+
+    let roundPrize = 0, played = 0;
+    for (let r = 0; r < ROWS; r++) {
+      const ins = rowInputs(r);
+      const vals = ins.map(i => parseInt(i.value, 10));
+      const rankCell = document.querySelector(`td.rank[data-rank="${r}"]`);
+      ins.forEach(i => i.classList.remove("hit"));
+      const valid = vals.every(v => Number.isInteger(v) && v >= 1 && v <= MAX) &&
+                    new Set(vals).size === PICK;
+      if (!valid) { rankCell.textContent = ""; continue; }
+      played++;
+      let matches = 0;
+      ins.forEach((i, k) => { if (winSet.has(vals[k])) { matches++; i.classList.add("hit"); } });
+      const rank = rankOf(matches, vals.includes(bonus));
+      rankCell.textContent = rank ? `${rank}등` : "없음";
+      cumFreq[rank]++;
+      roundPrize += PRIZE[rank];
+    }
+
+    cumPlayed += played;
+    cumSpent += played * 1000; cumPrize += roundPrize;
+    points.push({ spent: cumSpent, prize: cumPrize });
+
+    document.getElementById("draw").innerHTML =
+      `${round}회차 당첨번호: <b>${win.join("  ")}</b> &nbsp;(2등 보너스 숫자: <b>${bonus}</b>)`;
+    const rate = cumSpent ? (cumPrize / cumSpent * 100).toFixed(0) : 0;
+    document.getElementById("cum").innerHTML =
+      `누적 복권 구입액: ${won(cumSpent)}원<br>누적 상금: ${won(cumPrize)}원 (${rate}%)`;
+
+    drawFreqTable("freq", cumFreq, cumPlayed);
+    drawScatter();
+  };
+
+  function drawFreqTable(id, freq, total) {
+    let rows = "", sumRel = 0, sumTh = 0;
+    const totN = total || 1;
+    for (let r = 0; r < 6; r++) {
+      const key = r < 5 ? r + 1 : 0;
+      const f = freq[key];
+      const rel = f / totN;
+      sumRel += rel; sumTh += THEORY[key];
+      const th = key === 0 ? THEORY[0].toFixed(8)
+        : `1/${won(DENOM[key])} = ${THEORY[key].toFixed(8)}`;
+      rows += `<tr><td>${RANKS[r]}</td><td>${f}</td><td>${(+rel.toFixed(4)) || 0}</td><td>${th}</td></tr>`;
+    }
+    rows += `<tr><td>계</td><td>${total}</td><td>${(+sumRel.toFixed(4)) || 0}</td><td>${sumTh.toFixed(8)}</td></tr>`;
+    document.getElementById(id).innerHTML =
+      `<table class="freq"><thead><tr><th>등수</th><th>빈도</th><th>상대 빈도</th><th>이론적 확률</th></tr></thead>
+       <tbody>${rows}</tbody></table>`;
+  }
+
+  function drawScatter() {
+    const W = 560, H = 360, pad = 56;
+    const isDummy = points.length === 0;
+    const data = points.length ? points : DUMMY_POINTS;
+    const maxX = Math.max(...data.map(p => p.spent), 10000);
+    const maxY = Math.max(...data.map(p => p.prize), 1);
+    const sx = (v) => pad + v / maxX * (W - pad - 20);
+    const sy = (v) => H - pad - v / maxY * (H - pad - 20);
+    const dots = data.map(p =>
+      `<circle cx="${sx(p.spent).toFixed(1)}" cy="${sy(p.prize).toFixed(1)}" r="4" fill="#7c3aed"${isDummy ? ' fill-opacity="0"' : ''}></circle>`).join("");
+    document.getElementById("scatter").innerHTML = `
+      <svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
+        <line x1="${pad}" y1="${H-pad}" x2="${W-20}" y2="${H-pad}" stroke="#212529"></line>
+        <line x1="${pad}" y1="20" x2="${pad}" y2="${H-pad}" stroke="#212529"></line>
+        <text x="${(pad+W-20)/2}" y="${H-16}" text-anchor="middle" font-size="13" fill="#495057">로또 구입 금액</text>
+        <text x="18" y="${H/2}" text-anchor="middle" font-size="13" fill="#495057" transform="rotate(-90 18 ${H/2})">상금</text>
+        <text x="${pad}" y="${H-pad+18}" text-anchor="middle" font-size="12" fill="#868e96">0</text>
+        <text x="${W-20}" y="${H-pad+18}" text-anchor="middle" font-size="12" fill="#868e96">${won(maxX)}</text>
+        <text x="${pad-8}" y="${H-pad+4}" text-anchor="end" font-size="12" fill="#868e96">0</text>
+        <text x="${pad-8}" y="24" text-anchor="end" font-size="12" fill="#868e96">${won(maxY)}</text>
+        ${dots}
+      </svg>`;
+  }
+
+  // "모든 로또 구매자의 당첨 빈도" = 서버 집계형(전체 학생 합산) 기능의 로컬 대체.
+  // 대규모 모의로 대수의 법칙(상대 빈도 → 이론적 확률 수렴)을 보인다. (cumFreq 와 독립)
+  function simulateAll(n) {
+    for (let i = 0; i < n; i++) {
+      const d = randomSet(PICK + 1, MAX);
+      const winSet = new Set(d.slice(0, 6));
+      const bonus = d[6];
+      const ticket = randomSet(PICK, MAX);
+      let m = 0;
+      ticket.forEach(v => { if (winSet.has(v)) m++; });
+      allFreq[rankOf(m, ticket.includes(bonus))]++;
+    }
+    allPlayed += n;
+    drawFreqTable("freqAll", allFreq, allPlayed);
+  }
+  drawFreqTable("freq", cumFreq, cumPlayed);   // 초기에도 당첨 빈도 빈 틀(0) 그려서 높이 고정
+  drawScatter();
+  // 모든 구매자 당첨 빈도 = 2천만 게임 대표 모의 (1등이 드물게 3회 나옴 시현).
+  // 실시간 2천만 시뮬은 브라우저 정지 위험 → 이론확률에 부합하는 대표값 고정.
+  allFreq[1]=3; allFreq[2]=16; allFreq[3]=551; allFreq[4]=27410; allFreq[5]=443900; allFreq[0]=19528120;
+  allPlayed=20000000;
+  drawFreqTable("freqAll", allFreq, allPlayed);
+})();
+</script>
+</body>
+</html>

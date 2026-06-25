@@ -1,0 +1,2179 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>1.2 모집단에서 표본 추출 – 통계적 사고와 사회</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/01-03-causality.html" rel="next">
+<link href="../chapters/01-01-data-structure.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-de63f62b328812d8e578a4d74e282472.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-3355e44214f8815af4d3cdb2eb254b3a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating fullcontent quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/01.html">1장. 데이터 수집</a></li><li class="breadcrumb-item"><a href="../chapters/01-02-sampling.html"><span class="chapter-title">1.2 모집단에서 표본 추출</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">통계적 사고와 사회</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">통계적 사고와 사회</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">강의 소개</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-01-intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.1. 강의 소개</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-02-thinking.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.2. 통계적 사고란 무엇인가?</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-03-examples.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.3. 통계적 사고 예제</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-04-montyhall.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.4. 몬티 홀 게임</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-05-ppdac.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.5. PPDAC 사이클</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-06-mortality.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.6. 산모 사망률</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-07-cholera.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.7. 콜레라와 존 스노우</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../chapters/01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1장. 데이터 수집</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-01-data-structure.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">1.1 데이터의 구조</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-02-sampling.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">1.2 모집단에서 표본 추출</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-03-causality.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">1.3 실험연구와 관측연구</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../chapters/02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2장. 데이터 기술하기</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-01-categorical.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.1 범주형 변수</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-02-quantitative-center.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.2 양적 변수 한 개: 모양과 중심</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-03-quantitative-variation.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.3 양적 변수 한 개: 변동</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-04-outliers-boxplot.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.4 이상값과 상자그림</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-05-scatterplot-correlation.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.5 양적 변수 두 개: 산점도와 상관관계</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-06-regression.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.6 양적 변수 두 개: 선형회귀</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-07-multivariate.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.7 데이터 시각화와 다중 변수</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../chapters/03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3장. 신뢰구간</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-01-sampling-distribution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3.1 표집 분포</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-02-confidence-intervals.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3.2 신뢰구간에 대한 이해</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-03-bootstrap.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3.3 부트스트랩 신뢰구간</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-04-percentile-bootstrap.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3.4 백분위수에 의한 부트스트랩 신뢰구간</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../chapters/04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4장. 가설검증</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-01-hypothesis-testing.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4.1 가설검증 소개</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-02-p-values.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4.2 p-값</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-03-significance.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4.3 통계적 유의성 판단</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-04-supplement.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4.4 가설검증의 오류</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-05-inference-summary.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4.5 통계적 추론 정리</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">참고자료</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-01-lotto.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">6/45 로또</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-02-numbergame.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">반응시간 게임</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">위젯</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../widgets/spreadsheet.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">스프레드시트</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../widgets/distribution-calculator.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">분포 계산기</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../widgets/r-calculator.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">R 계산기</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../widgets/jupyterlite.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">R/Python 실습</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">데이터</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/AllCountries.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">AllCountries.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/temp.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">April14Temps.csv (temp.csv)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/BaseballSalaries2015.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">BaseballSalaries2015.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/BodyFat.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">BodyFat.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/BodyTemp50.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">BodyTemp50.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/CarDepreciation.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">CarDepreciation.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/CommuteAtlanta.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">CommuteAtlanta.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/CommuteStLouis.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">CommuteStLouis.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/CricketChirps.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">CricketChirps.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/DDS.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">DDS.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/ElectionMargin.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">ElectionMargin.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/ExerciseHours.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">ExerciseHours.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/FloridaLakes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">FloridaLakes.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HappyPlanetIndex.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HappyPlanetIndex.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HeightData.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HeightData.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HollywoodMovies.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HollywoodMovies.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HollywoodMovies2011.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HollywoodMovies2011.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HoneybeeWaggle.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HoneybeeWaggle.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HouseStarts.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HouseStarts.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/Life.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Life.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/LightatNight.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">LightatNight.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/MalevolentUniformsNFL.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">MalevolentUniformsNFL.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/Mammal2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Mammal2.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/MustangPrice.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">MustangPrice.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/NutritionStudy.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">NutritionStudy.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/RestaurantTips.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">RestaurantTips.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/RetailSales.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">RetailSales.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/StudentSurvey.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">StudentSurvey.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/USStates.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">USStates.csv</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+ <span class="menu-text">데이터 표(본문 임베드)</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/StudentSurvey.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">StudentSurvey.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/AllCountries.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">AllCountries.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/Life.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Life.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/Mammal2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Mammal2.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/temp.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">temp.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/ElectionMargin.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">ElectionMargin.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/HoneybeeWaggle.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HoneybeeWaggle.csv</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/01.html">1장. 데이터 수집</a></li><li class="breadcrumb-item"><a href="../chapters/01-02-sampling.html"><span class="chapter-title">1.2 모집단에서 표본 추출</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-1-2" class="quarto-section-identifier"><span class="chapter-title">1.2 모집단에서 표본 추출</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<!-- Page 18 -->
+<div class="card">
+<p>이 교재는 데이터를 분석하는 방법을 주로 다룰 것이지만 데이터를 어떻게 수집하느냐도 매우 중요하다. 데이터 수집이 잘 되었을 때는 예리한 통찰력이나 유용한 발견을 할 수 있지만, 데이터 수집이 잘못되면 엉뚱한 결과를 주기 때문이다.</p>
+<p>데이터 수집의 잘잘못을 가릴 수 있는&nbsp;능력은 데이터에 기반한 주장을 만들거나&nbsp;이해할 때 대단히 중요하다. 이 장의 나머지 부분은 데이터를 수집할 때 고려해야 할 몇 가지 중요한 주제를 설명한다.</p>
+</div>
+<section id="모집단과-표본" class="level3">
+<h3 class="anchored" data-anchor-id="모집단과-표본">모집단과 표본</h3>
+<div class="card">
+<p>앞 절에서 전 세계의 국가를 대상으로 조사한 AllCountries 데이터를 소개하였다. 각 국가에 관한 데이터는 전체 국민을 대상으로 조사한 결과이다.&nbsp;관심의 대상인 모든 개인 또는 개체의 집합을&nbsp;모집단(population)이라고 한다. 모집단 전체를 조사하는 것은&nbsp;센서스(census)라고 한다.</p>
+<p>모집단에 속한 개체를 일일이 모두 조사하는 것이 일반적으로 가능하지 않다. 공중 화장실을 이용한 후에 몇 퍼센트나 손을 씻는지 추정하고 싶을 때, 모든 사람을 조사하는 것은 가능하지 않다. 암 치료를 위한 신약의 효과를 모든 환자를 대상으로&nbsp;실험할 수 없다. 새로운 광고에 사람들이 얼마나 반응하는 지를 알기 위하여 모든 사람에게 광고를 보여주고&nbsp;반응을 측정할 수 없다. 많은 경우에 우리가 할 수 있는 것은 아주 큰 모집단에서 일부 표본을 뽑아서 모집단에 대한 정보를 얻는 것이다.</p>
+</div>
+<div class="card">
+<p><span id="ex-1-10" class="qlabel">예제 1.10.</span> 미국인 중에서 몇 퍼센트의 사람이 공중 화장실을 이용한 후에 손을 씻는지 추정하기 위하여, 연구자는 화장실에서 머리를 빗는 척하면서 <span class="math inline">\(6000\)</span>명을 관찰했다. 화장실을 사용한 후에 손을 씻고 나간 사람의 비율은 <span class="math inline">\(85\%\)</span>이었다. 이 연구에서 표본은 무엇인가? 모집단은 어떻게 정의하는게 합리적인가?</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p>표본은 공중 화장실에서 연구자가 관찰한 사람 <span class="math inline">\(6000\)</span>명이다. 모집단은 미국에 사는 모든 사람이다. 모집단에 대한 다른 정의는 공중 화장실을 이용하는 모든 미국인 또는 연구가 실시된 도시에 살면서 공중 화장실을 이용하는 미국인이다.</p>
+<p>또한 생각해볼 다른 문제는 공중 화장실에 혼자&nbsp;있을 때의 행동과 다른 사람과 같이 있을 때의 행동이 다를 수도 있다는 점이다. 이것이 맞다면 모집단을 공중 화장실에 누군가와 같이 있을 때의 사람으로&nbsp;제한해야 한다.</p>
+<p>관습적으로 표본&nbsp;크기는 문자&nbsp;<span class="math inline">\(n\)</span>으로 표기한다. 위 예제에서 <span class="math inline">\(n = 6000\)</span> 이다. 표본 크기는 모집단의 크기보다 매우 작은&nbsp;경우가 많다.</p>
+<p>보통은&nbsp;모집단&nbsp;전체에 대한 데이터가 존재하지 않는다. 그러므로 표본이 가지고 있는 정보를 활용하여&nbsp;모집단에 대하여 신뢰할 수 있는 주장을 어떻게 할 수 있느냐가 중요하다. 이것을 <strong>통계적 추론</strong>(statistical inference)이라고 부른다.</p>
+<p>이 교재에서 다루는 여러가지 데이터 분석은 통계적 추론에 관한 것이다. 하지만 모집단에서&nbsp;표본을 어떻게 얻었느냐에 따라 통계적 추론의 유효성도 달라질 수 있으므로 표본 추출의 중요성을 무시하면 안된다.</p>
+<p><img src="../images/img_27.JPG" class="img-fluid"></p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="1">
+<p><span class="qlabel">확인문제 1.</span> “모집단(population)”의 정의로 가장 적절한 것은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 연구자가 관심을 가지는 전체 대상 집단</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 연구에서 조사한 표본 데이터</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 통계적 분석을 위한 수학적 모델</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 실험에 참여한 피험자의 수</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 2.</span> 공중 화장실을 이용한 후 손을 씻는 사람들의 비율을 조사하기 위해 연구자가 <span class="math inline">\(6000\)</span>명을 관찰했다. 이 연구에서 표본(sample)은 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 미국에 거주하는 모든 사람</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 연구자가 관찰한 <span class="math inline">\(6000\)</span>명</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 미국에서 공중 화장실을 이용하는 모든 사람</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 연구자가 관심을 가진 전체 모집단</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="1">
+<p><span class="qlabel">확인문제 3.</span> 표본 추출이 중요한 이유로 가장 적절한 것은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 모집단 전체를 조사할 수 없기 때문에 일부를 조사하여 모집단에 대한 추론을 하기 위해</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 연구 비용을 줄이고 빠르게 결론을 도출하기 위해</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 연구 결과를 연구자의 가설에 맞추기 위해</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 표본을 활용하면 모집단을 완벽하게 파악할 수 있기 때문에</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<!-- Page 19 -->
+</section>
+<section id="표집-편향sampling-bias" class="level3">
+<h3 class="anchored" data-anchor-id="표집-편향sampling-bias">표집 편향(sampling bias)</h3>
+<div class="card">
+<p><img src="../images/img_28.jpg" class="img-fluid"></p>
+</div>
+<div class="card">
+<p><span id="ex-1-11" class="qlabel">예제 1.11.</span> <span class="math inline">\(1948\)</span> 년 미국 대통령 선거 다음 날, 시카고 트리뷴 신문의 헤드라인은 “듀이가 트루먼을 이겼다”이다. 하지만 트루먼이 듀이를 이기고 <span class="math inline">\(33\)</span>번째 미국 대통령이 되었다. 이 신문은 모든 투표 결과가 나오기 전에 인쇄되었고 헤드라인은 전화로 조사한 여론 조사의 결과이었다.</p>
+<p><span class="qsub">(1)</span> 표본과 모집단은 각각 무엇인가?</p>
+<p><span class="qsub">(2)</span> 표본을 가지고 모집단의 무엇을 추정하길 원했는가?</p>
+<p><span class="qsub">(3)</span> 당신은 여론조사 결과가 왜 잘못&nbsp;나왔다고 생각하는가?</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p><span class="qsub">(1)</span> 표본은 여론조사에 참여한 모든 사람이다. 모집단은 대통령 선거에서&nbsp;투표한 모든 미국인이다.</p>
+<p><span class="qsub">(2)</span> 여론조사를 통하여 각 후보가 얻은 표의&nbsp;비율을 추정하길 원했다.</p>
+<p><span class="qsub">(3)</span> 전화 여론조사가 실패한 한가지 이유는 <span class="math inline">\(1948\)</span>년에 전화를 가진 사람이 전체 미국 투표자를&nbsp;대표하지 못했기 때문이다. 전화를 가진 사람은 부유한 경우가 많았고 이들은 듀이를 선호하는 경향이 있었다. 반면에&nbsp;전화가 없는 사람은 트루먼을 선호하는 경향이 있었다.</p>
+<p>위 예제는 전화를 가지고 있는 사람만 표본으로 추출하여 표본이 한 쪽으로 치우친&nbsp;표집&nbsp;편향(sampling bias)을 설명한다.</p>
+<p><strong>표집 편향</strong>은 표본을 추출하는 방식이&nbsp;모집단과 다르게 표본을 어느 한 쪽으로 치우치게 만들 때 발생한다.&nbsp;표집 편향이 발생하면 표본에서 얻은 결과를&nbsp;모집단으로 일반화 할 때 신뢰할 수 없게 된다.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<p><span id="ex-1-12" class="qlabel">예제 1.12.</span> 비행기 여행을 마친 후에 탑승객이 항공사로부터 만족도를 조사하는 이메일을 받았다. 항공사는 이메일 응답으로 얻은 데이터를 분석한다.</p>
+<p><span class="qsub">(1)</span> 표본은 무엇이고 항공사가 관심을 가지는 모집단은 무엇인가?</p>
+<p><span class="qsub">(2)</span> 당신은 이 조사 결과가 고객 만족도를 올바르게 반영할 것이라고 생각하는가?</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p><span class="qsub">(1)</span> 표본은 이메일 조사에 응답한 사람이다. 모집단은 이 비행기를 이용한 모든 고객이다.</p>
+<p><span class="qsub">(2)</span> 조사 결과는 고객의 만족도를 정확히 반영하지 못할 것이다. 비행기를 이용했을 때 특별한&nbsp;경험이 없다면 조사에 응하지 않을 것이지만 특별히 좋거나 나쁜 경험이 있다면 조사에 더 많이 응답할 것이기 때문이다.</p>
+<p>비행기 만족도 조사처럼 자원자(volunteer)로 구성된 여론조사에서는 표집 편향이 종종 발생한다. 표본에 참여하는 자원자는 모집단과 달리 극단적인 의견을 가진 경우가 많기 때문이다.</p>
+<p>표집 편향을 피하기 위하여 모집단을&nbsp;대표하는 표본을 얻을 수 있도록 노력해야 한다. <strong>대표 표본(representative sample)은 표본의 크기가 작더라도 모집단과&nbsp;유사하다</strong>. <span class="math inline">\(1948\)</span>년 전화 조사는 전화를 보유할만큼 부유한 사람들만 조사하여 표본이 모집단보다 부유한 쪽으로 치우쳐 대표 표본이 아니었다. 표본이 모집단을 대표할수록, 표본을 사용한 모집단&nbsp;추론이 좀더 가치 있어진다.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<p><span id="ex-1-13" class="qlabel">예제 1.13.</span> 어느 피트니스 관련 웹사이트가 “개인 트레이너를 고용한 적이 있는가”를 조사하였다. 웹사이트 방문자는 “예/아니오”를 선택한다. 응답자의 <span class="math inline">\(27\%\)</span>가 예라고 답하였다. <span class="math inline">\(27\%\)</span>의 사람이 개인 트레이너를 고용한 적이 있다고 일반화 할 수 있을까?</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p>없다. 이 웹사이트를 방문하여 조사에 응한 사람이 개인 트레이너를 고용했던 일반인보다 더 많을 것이다. 따라서 이 표본은 모든 사람을 대표하는 표본이 아니므로 표본 결과를 가지고 모든 사람에게 일반화 할 수 없다.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 1.</span> <span class="math inline">\(1948\)</span>년 미국 대통령 선거에서 시카고 트리뷴 신문이 “듀이가 트루먼을 이겼다”라는 잘못된 헤드라인을 낸 주요 원인은 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 모든 투표 결과가 발표되기 전에 신문을 인쇄했기 때문이다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 여론조사가 전화를 소유한 사람들만 대상으로 했기 때문이다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 선거 당일 기상 조건이 투표율에 영향을 미쳤기 때문이다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 듀이의 선거 캠페인이 트루먼보다 더 강력했기 때문이다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 2.</span> 비행기 만족도 조사가 표집 편향(sampling bias) 문제를 가질 가능성이 높은 이유는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 설문이 모든 승객에게 전송되지 않기 때문이다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 응답자는 만족도가 극단적으로 높거나 낮은 경우가 많기 때문이다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 응답자가 조사에 응할지 여부를 무작위로 결정하기 때문이다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 비행기 회사가 설문 결과를 조작할 가능성이 있기 때문이다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="3">
+<p><span class="qlabel">확인문제 3.</span> 다음 중 표집 편향(sampling bias)이 발생할 가능성이 가장 높은 사례는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 미국 성인 <span class="math inline">\(1,000\)</span>명을 무작위로 표본 추출하여 건강 상태를 조사함.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 한 대학교 학생 중 <span class="math inline">\(500\)</span>명을 무작위로 선택하여 기숙사 만족도를 조사함.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 피트니스 웹사이트에서 방문자에게 “개인 트레이너를 고용한 적이 있는가?”를 설문함.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 모든 국가의 국민을 대표하도록 국가별 인구 비율에 맞춰 표본을 선정함.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<!-- Page 20 -->
+</section>
+<section id="단순-무작위-표본simple-random-sample" class="level3">
+<h3 class="anchored" data-anchor-id="단순-무작위-표본simple-random-sample">단순 무작위 표본(simple random sample)</h3>
+<div class="card">
+<p>모집단에 대한 추론이 타당하려면 대표 표본이 필수적이다. 그러면 어떻게 표본을 뽑아야 하는가? 무작위&nbsp;추출이 답이다. 예를 들면, 모집단에 속한 모든 케이스의 이름을 종이&nbsp;쪽지에 적어서 모자 안에 넣은 다음 잘 섞은 후 종이 쪽지를 꺼내면 무작위 표본이 된다.</p>
+<p>모집단에서 크기&nbsp;<span class="math inline">\(n\)</span>의 모든 그룹이 표본이 될&nbsp;가능성이 같을 때 이를 <strong>단순 무작위 표본</strong>(simple random sample)이라고 말한다. 결과적으로 모집단의 모든 원소가 뽑힐 가능성이 같다. 단순 무작위 표본으로 표집&nbsp;편향을 피할 수 있다.</p>
+<p>다양한 분야에서 통계학을 사용하는 이유 중의 일부는 다음과 같은 놀라운 사실에 기초한다. “<strong>단순 무작위 표본은 모집단을 잘&nbsp;대표하는 표본인 경우가 많다</strong>.” 우리나라의 인구는 <span class="math inline">\(5\)</span>천만이 넘고, 미국의 인구는 <span class="math inline">\(3\)</span>억명이 넘는다. 센서스는 전체 인구를 조사하지만, 몇몇 흥미 있는 질문은 표본&nbsp;크기가 <span class="math inline">\(1,000\)</span>개 정도이면 충분하다. 이렇게 작은 표본으로 <span class="math inline">\(3\)</span>억명의 모집단에 대하여 효과적인 추론을 할 수 있다는게 놀랍지 않은가!</p>
+</div>
+<div class="card">
+<p><span id="ex-1-14" class="qlabel">예제 1.14.</span> <span class="math inline">\(2008\)</span> 년 미국의 대통령 선거 직전에 갤럽은 무작위로 <span class="math inline">\(2,847\)</span>명의 표본을 뽑았다. 그들 중에서 <span class="math inline">\(52\%\)</span>는 오바마를 지지했고, <span class="math inline">\(42\%\)</span>는 맥케인을 지지했다. 이 결과를 선거에서 각 후보의 지지율을 추정하기 위하여 <span class="math inline">\(1\)</span>억3천만 명의 전체 유권자로 일반화 할 수 있을까?</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p>일반화 할 수 있다. 투표자를 무작위로 뽑았기 때문에 표본 결과를 모집단으로 일반화 할 수 있다. 실제 선거에서 <span class="math inline">\(53\%\)</span>는 오바마에게 투표했고, <span class="math inline">\(46\%\)</span>는 맥케인에게 투표하였다. 물론 표본 데이터가 모집단 데이터와 완전히 일치하지는 않는다(3장에서 표본 결과가 모집단 결과와 얼마나 비슷할까에 관하여 배울 것이다). 극히 일부의 표본만으로 상당히 정확한 추측을 얻을 수 있다는 사실이 놀라운 것이다.</p>
+<p><img src="../images/img_29.jpg" class="img-fluid"></p>
+<p>수프가 어떤 맛인지 알기 위하여 수프 한 그릇을 전부 먹을 필요가 있을까? 수프를 충분히 잘 저었다면 한 수푼 맛보는 것으로 충분하다. 이것이&nbsp;표본&nbsp;추출의 기본 아이디어이다. 수프 냄비(모집단)에서 조금만 떠서(표본&nbsp;추출) 맛을 보아도 전체에 대한 것을 알 수 있다. 하지만 수프가 잘 섞여져 있지 않다면(소금을 넣은 후 잘 섞지 않는다면) 조금 맛 보는 것으로 전체를 알 수는 없다.&nbsp; 수프를 잘 섞어 표본을 무작위로 만들면 우리가 맛보는 작은 표본이 전체 수프를 대표한다.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 1.</span> 단순 무작위 표본(Simple Random Sample)의 정의로 가장 적절한 것은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 연구자가 임의로 선택한 모집단의 일부</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 모집단에서 크기 <span class="math inline">\(n\)</span>의 모든 그룹이 같은 확률로 선택되는 표본</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 모집단 내에서 특정 기준에 따라 선택된 표본</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 연구자가 실험에 적합한 특성을 가진 대상을 선별하여 구성한 표본</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="3">
+<p><span class="qlabel">확인문제 2.</span> 단순 무작위 표본을 사용하는 이유로 가장 적절한 것은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 표본을 쉽게 모집하기 위해</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 연구자의 의도를 반영한 데이터를 얻기 위해</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 모집단을 대표하는 공정한 표본을 얻기 위해</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 실험 비용을 최소화하기 위해</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="1">
+<p><span class="qlabel">확인문제 3.</span> <span class="math inline">\(2008\)</span>년 미국 대선 직전 갤럽이 무작위로 <span class="math inline">\(2,847\)</span>명을 조사한 결과, <span class="math inline">\(52\%\)</span>가 오바마를 지지한다고 응답했다. 이 표본을 전체 유권자(<span class="math inline">\(1\)</span>억 <span class="math inline">\(3\)</span>천만 명)로 일반화할 수 있는 주요 이유는 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 표본의 크기가 충분히 커서 모집단을 대표할 가능성이 높기 때문이다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 조사 대상이 선거에서 반드시 투표할 사람이었기 때문이다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 표본의 지지율이 모집단의 실제 지지율과 항상 일치하기 때문이다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 여론조사가 후보의 실제 득표율을 정확히 예측할 수 있기 때문이다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<!-- Page 21 -->
+</section>
+<section id="무작위-표본을-만들-능력이-있는가" class="level3">
+<h3 class="anchored" data-anchor-id="무작위-표본을-만들-능력이-있는가">무작위 표본을 만들 능력이 있는가?</h3>
+<div class="card">
+<p>동전 던지기(coin tossing) 실험은 공중에 동전을 던져서 동전의 어느 면이 나타나는 지를 관찰하는 실험이다. 대부분 축구&nbsp;경기에서 어느 팀이 먼저 공격할 지를 결정할 때 사용한다. 동전 던지기의 결과는 초기&nbsp;조건이 결정한다. 초기 조건을 정확히 제어한다면 원하는 결과를 만들어 낼 수 있다. 이런 능력을 가진 사람을 본 적이 있는가?</p>
+<p>동전 던지기를 <span class="math inline">\(200\)</span>번 반복하여 무작위&nbsp;표본을 뽑는다고 생각하자.&nbsp;이 실험으로 데이터를 얻으려면 대략 <span class="math inline">\(20\)</span>분이 넘게 걸린다. 굳이 번거롭게 실험을 하지 않고 생각만으로&nbsp;무작위&nbsp;표본을 만들 수 있을까? 많은 사람들이 자신은 그런 능력이 있다고 생각한다. 실제 무작위 표본을 만들 수 있는 능력이 있는지 알아보자.</p>
+<ol type="1">
+<li>동전 던지기 실험을 실제로 <span class="math inline">\(200\)</span>번 한 것처럼 데이터를 만든다.</li>
+<li>무작위로 만들어진 표본이라고 할 수 있는지 테스트 한다.</li>
+<li>모의실험을 통하여 무작위 표본의 특성을 알아본다.</li>
+</ol>
+</div>
+<div class="card">
+<div class="quiz" data-answer="1">
+<p>이런 시도를 <span class="math inline">\(10\)</span>번 한다면 무작위 테스트에 몇 번 정도 통과할 자신이 있습니까?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(9\)</span>번 이상 😆</p>
+</div>
+<div class="opt" data-v="1">
+<p><span class="circ">2</span> <span class="math inline">\(5\)</span>번 정도 🙂</p>
+</div>
+<div class="opt" data-v="1">
+<p><span class="circ">3</span> <span class="math inline">\(1\)</span>번 이하 😟</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<iframe src="../sims/coin_toss.html" width="100%" height="660" style="border:1px solid #e7ebf2; border-radius:10px;" loading="lazy">
+</iframe>
+<p>같은 값이 연속해서 <span class="math inline">\(n\)</span>번 나왔을 때 이것을 길이가 <span class="math inline">\(n\)</span>인 런(run)이라고 한다.</p>
+</div>
+<div class="card">
+<p><img src="../images/img_30.JPG" class="img-fluid"></p>
+</div>
+<div class="card">
+<p>데이터가&nbsp;위와 같다면 런은 총&nbsp;<span class="math inline">\(4\)</span>개 이고 각 런의 길이는 <span class="math inline">\(2\)</span>, <span class="math inline">\(1\)</span>,&nbsp;<span class="math inline">\(3\)</span>, <span class="math inline">\(4\)</span>이다. 런의&nbsp;길이와&nbsp;빈도를 분석하여 무작위&nbsp;표본인지 아닌 지를 어떻게 판단하는지 알아보자.</p>
+<iframe src="../sims/run_test.html" width="100%" height="850" style="border:1px solid #e7ebf2; border-radius:10px;" loading="lazy">
+</iframe>
+<p><code>모의실험x1</code>을 눌러 런의 최대&nbsp;길이와 길이가 <span class="math inline">\(6\)</span>&nbsp;이상인 런의 개수를 구한다. 또한 런의 길이 별 빈도와 기대&nbsp;빈도(무작위인 경우)를 나란히 막대 그래프로 그린다. <span class="math inline">\(200\)</span>번 동전 던지기 데이터를 무작위로 만들 때 이론적으로 길이가&nbsp;<span class="math inline">\(6\)</span>&nbsp;이상인 런은 <span class="math inline">\(3\)</span>개 기대할 수 있다. 최대 런의 길이가 <span class="math inline">\(5\)</span>&nbsp;이하라면&nbsp;무작위로 만들어진 데이터가 아니라고 의심하는 것은 합리적일까? 모의실험으로 알아보자.</p>
+<p>모의실험은 실제 실험을 컴퓨터로 흉내내는 것이다. 모의실험을 한 번 할 때마다 런의&nbsp;최대&nbsp;길이를 구한다. 이 값들을 모아 막대 그래프를 그리고 런의 최대 길이가 <span class="math inline">\(5\)</span>&nbsp;이하인 경우가 몇 퍼센트인지 계산한다. <span class="math inline">\(100\)</span>번 이상 모의실험을 반복하면 이 비율이 약 <span class="math inline">\(5\%\)</span>임을 알 수 있다. 무작위 표본이라도 런의 최대 길이는 <span class="math inline">\(5\)</span> 이하 나올 수 있지만 그 비율은 <span class="math inline">\(5\%\)</span> 정도 밖에 되지 않는다. 이와 관련된 주제는 뒤에서 다시 자세히 다룰 것이다.</p>
+<p>마음속으로 동전 던지기 데이터를 만들 때 길이가 <span class="math inline">\(6\)</span>&nbsp;이상인 데이터를 만들지 않는 이유는 무엇일까? 런의 길이가&nbsp;<span class="math inline">\(6\)</span>&nbsp;이상인 데이터는 발생할&nbsp;확률이 매우 적다고 생각하기 때문이다. 하지만 발생하기 어려운 사건도 반복을 많이 할수록 일어날 가능성이 높아진다.</p>
+</div>
+<div class="card">
+<p><span id="prob-1-1" class="qlabel">문제 1.1.</span> 동전 던지기 실험을 통하여 무작위 표본에 대하여 배운 것은 무엇입니까? 어떤 점이 흥미롭고 어떤 점이 어렵게 느껴집니까? 소감을 <span class="math inline">\(300\)</span>자 이상 쓰시오.</p>
+</div>
+<div class="card">
+<div class="quiz" data-answer="3">
+<p><span class="qlabel">확인문제 1.</span> “무작위(random)” 표본을 만들 때 주의해야 할 점으로 가장 적절한 것은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 데이터의 특정 패턴을 피하기 위해 일부러 규칙을 만든다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 짧은 반복보다는 긴 반복이 더 자연스럽게 보이도록 조작한다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 인간의 직관이 아니라 수학적 방법을 이용해야 한다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 동일한 값이 연속해서 나오지 않도록 한다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="4">
+<p><span class="qlabel">확인문제 2.</span> 동전 던지기 결과에서 “런(run)”이 의미하는 것은 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 동전 던지기의 전체 횟수</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 앞면과 뒷면이 동일한 빈도로 나타나는 것</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 특정한 패턴이 반복되지 않는 것</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 같은 면(앞면 또는 뒷면)이 연속해서 나타난 구간</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="4">
+<p><span class="qlabel">확인문제 3.</span> 컴퓨터 모의실험(simulation)이 무작위성을 검증하는 데 유용한 이유는 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 실험을 반복할 필요 없이 한 번의 실행으로 무작위성을 확인할 수 있기 때문이다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 사람이 만든 무작위 데이터와 실제 무작위 데이터를 비교할 수 있기 때문이다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 실제 동전 던지기보다 더 정확한 결과를 제공하기 때문이다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 무작위 데이터의 통계적 특성을 분석하여 인간이 만든 데이터와 비교할 수 있기 때문이다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<!-- Page 22 -->
+<div class="card">
+<p>앞에서 동전 던지기를 실제로 하지 않고 마음 속으로 만들어낸 데이터는 무작위&nbsp;테스트를 통과하기 어렵다는 것을 알았다. 그러면 모집단 전체를&nbsp;눈으로 보고 표본을 뽑으면 모집단을 대표하는 표본을 뽑을 수 있을까? 다음 실험으로 알아보자.</p>
+</div>
+<div class="card">
+<p><span id="ex-1-15" class="qlabel">예제 1.15.</span> 아래 그림에 원이 <span class="math inline">\(100\)</span>개 있다. 원 <span class="math inline">\(100\)</span>개의 평균 면적을 표본 <span class="math inline">\(5\)</span>개를 뽑아 표본 평균으로 추정하려고 한다. 다음 질문에 답한 후에 표본 <span class="math inline">\(5\)</span>개의 평균 면적이 모집단의 평균 면적과 최대한 가깝도록 <span class="math inline">\(5\)</span>개를 신중하게 선택하라. 원을 클릭하면 표본으로 뽑힌다.</p>
+<p>모집단 평균은 <span class="math inline">\(1\)</span>~<span class="math inline">\(12\)</span> 사이에 있다. 당신이 뽑은 <span class="math inline">\(5\)</span>개의 표본 평균과 모집단 평균의 차이는 어느 정도일 것이라고 예측합니까?</p>
+<div class="choices">
+<p><span class="cnum">1</span> <span class="math inline">\(1\)</span> 이하</p>
+<p><span class="cnum">2</span> <span class="math inline">\(1\)</span>~<span class="math inline">\(2\)</span></p>
+<p><span class="cnum">3</span> <span class="math inline">\(2\)</span>~<span class="math inline">\(3\)</span></p>
+<p><span class="cnum">4</span> <span class="math inline">\(3\)</span> 이상</p>
+</div>
+</div>
+<div class="card">
+<iframe src="../sims/circles.html" width="100%" height="1250" style="border:1px solid #e7ebf2; border-radius:10px;" loading="lazy">
+</iframe>
+</div>
+<div class="card">
+<p><span id="prob-1-2" class="qlabel">문제 1.2.</span> <span class="math inline">\(100\)</span> 개 원의 평균 면적은 <span class="math inline">\(3.82\)</span>이다. 모집단 전체를 눈으로 보고 모집단을 대표할 만한 표본을 <span class="math inline">\(5\)</span>개 뽑았다. 자신이 뽑은 표본의 평균은 모집단의 평균 <span class="math inline">\(3.82\)</span>와 얼마나 가까운가?</p>
+<p>모든 학생들이 뽑은 표본 평균의 히스토그램이 위에 있다. 모집단 평균과 학생들의 표본 평균값 들을 비교한 결과는 다음 중 무엇인가?</p>
+<div class="choices">
+<p><span class="cnum">1</span> 표본 평균 값들이 모집단 평균 좌우에 거의 대칭적으로 나뉘어져 있다.</p>
+<p><span class="cnum">2</span> 표본 평균 값들이 모집단 평균&nbsp;보다 작은 쪽에 더 많이 몰려 있다.</p>
+<p><span class="cnum">3</span> 표본 평균 값들이 모집단 평균&nbsp;보다 큰 쪽에 더 많이 몰려 있다.</p>
+</div>
+</div>
+<!-- Page 23 -->
+</section>
+<section id="편의표본-convenience-sample" class="level3">
+<h3 class="anchored" data-anchor-id="편의표본-convenience-sample">편의표본 (convenience sample)</h3>
+<div class="card">
+<p>통계학에서 무작위&nbsp;표본은 ‘되는대로’, ‘마구잡이로’, ‘마음대로’ 표본을 뽑은 것이 절대 아니다. 로또 복권을 추첨하는 것과 같은 기계 또는 컴퓨터를 이용해야 무작위 표본을 뽑을 수 있다(인터넷에서 ‘로또&nbsp;추첨’ 동영상 참조). 로또 복권에서 당첨번호 추첨은 완전히 무작위로 보인다. 당첨번호를 예측하는 방법이 있을까?</p>
+<p>무작위 표본이 이상적이기는 하지만 다음과 같은 이유로 현실에서 가능하지 않을 수 있다.</p>
+<ul>
+<li>전체 모집단의 목록이 존재하지 않는다.</li>
+<li>목록은 있지만 모집단의 어떤 구성원은 조사가 불가능하다.</li>
+<li>시간과 비용이 너무 많이 든다.</li>
+</ul>
+<p>무작위 표본 대신에 쉽게 얻을 수 있는 표본을 사용하기도 한다. 이러한 표본을 <strong>편의표본</strong>(convenience sample)이라고 한다. 편의표본으로 모집단을 추론할 때&nbsp;편향이 발생하기 쉬우므로 매우 조심해야 한다.</p>
+</div>
+<div class="card">
+<p><span id="ex-1-16" class="qlabel">예제 1.16.</span> 시카고 트리뷴 신문은 <span class="math inline">\(1948\)</span>년 미국 대통령 선거 결과를 좀더 정확하게 예측하기 위하여 무엇을 해야만 했나? 하지만 신문이 이것을 하지 못했던 이유는 무엇이라고 생각하는가?</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p><span class="math inline">\(1948\)</span>년 대통령 선거 결과를 좀더 정확하게 예측하기 위해서는 투표했던 모든 유권자 집단에서 무작위 표본을 뽑아 누구에게 투표했는 지를 물었어야 했다. 하지만 무작위 표본을 뽑지 못했던 이유로 다음 두 가지를 생각할 수 있다.</p>
+<ul>
+<li>무작위 표본을 뽑고 싶었으나 투표했던 모든 유권자의 목록이 없었다.</li>
+<li>무작위 표본을 조사하려면 미국 전역을 돌아다녀야 하는데 시간과&nbsp;비용이 너무 많이 든다.</li>
+</ul>
+<p>전화를 가진 사람만을 조사했던 이유는 비용이 적게 들고 편리했기 때문일 것이다.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<p><span id="ex-1-17" class="qlabel">예제 1.17.</span> 미국에서 채식주의자는 몇 퍼센트일까? 이를 조사하려면 전체 미국인으로부터 무작위 표본을 뽑아야 하는데 이는 극히 어렵거나 불가능한 일이다. 추정을 정확하게 하려면 모집단과 질문을 어떻게 바꾸어야 하나?</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p>한 가지 방법은 미국 전체가 아니고 보스톤과 같이 어느 한 지역으로 축소하여 채식주의자 비율을 조사하는 것이다. 보스톤의 유선 전화번호부에서 무작위 표본을 뽑아 전화를 걸어 채식주의자인지 물어본다. 이러한 경우에 모집단은 유선 전화를 가진 보스톤 시민이다. 유선 전화 없이 무선 전화만을 사용하는 사람은 모집단에 포함되지 않는다는 것에 유의해야 한다.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="1">
+<p><span class="qlabel">확인문제 1.</span> 편의표본(convenience sample)의 주요 문제점은 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 모집단을 무작위로 대표하지 못할 가능성이 크다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 데이터를 수집하는 데 시간이 너무 오래 걸린다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 모든 모집단의 개체가 조사에 포함될 가능성이 높다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 연구자가 원하는 결과를 쉽게 얻을 수 있다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="1">
+<p><span class="qlabel">확인문제 2.</span> <span class="math inline">\(1948\)</span>년 미국 대통령 선거에서 시카고 트리뷴 신문이 여론조사를 잘못 수행한 이유로 가장 적절한 것은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 무작위 표본이 아니라 전화를 가진 사람들만 조사했기 때문이다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 투표 당일 날씨가 나빴기 때문이다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 표본의 크기가 너무 작았기 때문이다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 트루먼 후보의 선거 캠페인이 예상보다 효과적이었기 때문이다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="1">
+<p><span class="qlabel">확인문제 3.</span> 미국에서 채식주의자의 비율을 조사하려 할 때, 편의표본을 사용하면 생길 수 있는 대표적인 문제는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 조사 대상이 미국 전체를 대표하지 못할 수 있다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 채식주의자가 아닌 사람들이 설문을 거부할 가능성이 높다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 조사 과정에서 응답자의 건강 상태를 정확하게 측정할 수 없다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 채식주의자의 비율이 지역별로 동일하다고 가정해야 한다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<!-- Page 24 -->
+</section>
+<section id="표집-편향이-발생하는-다른-요인" class="level3">
+<h3 class="anchored" data-anchor-id="표집-편향이-발생하는-다른-요인">표집 편향이 발생하는 다른 요인</h3>
+<div class="card">
+<p>데이터를 수집하는 방법이 잘못되어 표본이 모집단을 대표하지 못할 때&nbsp;편향(bias)이 발생한다.&nbsp;표집 편향 말고 다른 편향이 데이터를 수집할 때 발생할 수 있다. 특히 사람을 대상으로 데이터를 조사할 때 무작위 표본이더라도 결과를 왜곡시키는 편향이 존재하기도 한다.</p>
+<p>표본으로 뽑힌 사람이 조사에 참여하지 않을 때 편향이 발생할 수 있다. 질문에 응답하는 사람과 거절하는 사람이 다르게 답한다면 결과는&nbsp;편향되기 마련이다.</p>
+</div>
+<div class="card">
+<p><img src="../images/img_31.JPG" class="img-fluid"></p>
+</div>
+<div class="card">
+<p><span id="ex-1-18" class="qlabel">예제 1.18.</span> <span class="math inline">\(1997\)</span> 년 영국의 도시 소머셋(Somerset)에서 건강과 관련된 생활습관을 조사한 연구가 있었다. 소머셋에 거주하는 <span class="math inline">\(6009\)</span>명의 무작위 표본을 뽑아 설문지를 우편으로 보냈다. 그들중 <span class="math inline">\(57.6\%\)</span>가 응답한 설문지를 반송하였다. 운동, 흡연 등 건강과 관련된 데이터가 제대로 조사되었다고 생각하는가?</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p>제대로 조사되지 않았을 것이다. 설문에 응답한 사람들은 평소에 건강에 관심을 갖고 좀더 건강한 생활습관을 가진 사람들일 수도 있다.</p>
+<p>연구자는 응답하지 않았던 사람들 중에서 무작위 표본을 뽑아&nbsp;전화로 조사하였다. 기대했던대로 무응답자의 건강과 관련된 생활습관은 응답자와 많이 달랐다. 보통 이상의 격렬한 운동을 하지 않고 있다는 비율이 응답자 그룹에서는 <span class="math inline">\(35.9\%\)</span>이지만&nbsp;무응답자&nbsp;그룹에서는 <span class="math inline">\(2\)</span>배인 <span class="math inline">\(69.6\%\)</span>로 나왔다.</p>
+<p>질문을 어떻게 표현하느냐에 따라&nbsp;편향이 발생하기도 한다. <span class="math inline">\(1941\)</span>년 한 연구자가 사람들에게 같은 질문을 두 가지 다른 방식으로 물었다. “미국은 민주주의에 반하는 대중 연설을 허락해야 하는가”라는 질문에 <span class="math inline">\(21\%\)</span>는 허락해야 한다고 답했다. 반면에 “미국은 민주주의에 반하는 대중 연설을&nbsp;금지해야 하는가”라는 질문에 <span class="math inline">\(39\%\)</span>는 금지되지 않아야 한다고 답했다. 설문 표현을 조금 바꾸었을 뿐인데&nbsp; 비율은 거의 두 배 차이가 났다.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 1.</span> 무응답 편향(nonresponse bias)이 발생하는 주요 원인은 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 조사 대상자가 많아질수록 무작위성이 증가하기 때문이다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 응답자와 응답하지 않은 사람이 다르게 답할 가능성이 높기 때문이다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 무작위 표본이 아닌 편의표본을 사용했기 때문이다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 모집단 전체를 조사하지 않았기 때문이다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="1">
+<p><span class="qlabel">확인문제 2.</span> <span class="math inline">\(1997\)</span>년 영국 소머셋에서 진행된 건강 관련 설문조사에서 응답률이 <span class="math inline">\(57.6\%\)</span>였다. 이 조사에서 나타날 수 있는 주요 문제는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 설문에 응답한 사람들이 건강에 더 관심이 있는 사람들이라서 결과가 편향될 수 있다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 설문조사의 표본 크기가 너무 크기 때문이다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 연구자가 사전에 조사 대상자들을 선별했기 때문이다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 조사에 참여한 사람들만의 생활습관이 대표성을 가지기 때문이다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 3.</span> 설문 조사에서 질문의 표현 방식이 결과에 영향을 미칠 수 있는 이유로 가장 적절한 것은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 응답자들이 어려운 질문을 이해하지 못할 가능성이 있기 때문이다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 질문의 문구가 응답자의 심리와 의견을 유도할 수 있기 때문이다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 응답자들은 같은 질문을 반복적으로 받으면 신뢰할 수 없는 답변을 하기 때문이다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 질문의 길이가 너무 길어지면 응답자가 끝까지 읽지 않을 가능성이 있기 때문이다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<!-- Page 25 -->
+<div class="card">
+<p><img src="../images/img_32.JPG" class="img-fluid"></p>
+</div>
+<div class="card">
+<p><span id="data-1-4" class="qlabel">데이터 1.4.</span> “<strong>만약 당신에게 다시 기회가 있다면 아이를 가지겠는가?</strong>”</p>
+<p><span class="math inline">\(1976\)</span>년에 한 젊은 부부가 한 신문의 유명한 칼럼니스트 앤 랜더스(Ann Landers)에게 아이를 가지는 것에 관한 조언을 구하는 편지를 보냈다. 이 편지는 아이를 가지지 않는 여러 이유가 있었지만 양육의 긍정적인 내용은 없었다. 앤은 편지 내용을 칼럼에 소개하며 독자에게 물었다. “만약 당신에게 다시 기회가 있다면 아이를 가지겠는가?” <span class="math inline">\(1\)</span>만 명이 넘는 사람이 응답했는데 단지 <span class="math inline">\(30\%\)</span>만이 “예”라고 답했다. 매우 실망한 앤은 이 결과를 Good Housekeeping 잡지에 발표하면서 독자에게 같은 질문을 하였다. 이번에는 <span class="math inline">\(95\%\)</span>가 “예”라고 답하였다.</p>
+</div>
+<div class="card">
+<p><span id="ex-1-19" class="qlabel">예제 1.19.</span> 같은 질문에 “예”라고 답한 비율이 <span class="math inline">\(30\%\)</span>, <span class="math inline">\(95\%\)</span>로 엄청 다르게 나왔다. 왜 이런 일이 발생했다고 생각하는가?</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p>첫 번째 비율은 아이를 가지지 않는 이유를 설명한 칼럼에서 얻어진 것이었다. 따라서 응답자는 이런 이유에 공감했을 것이다. 두 번째 비율은 아이를 가지지 않는 것을 혐오하는 칼럼에서 얻은 것이다. 칼럼의 논조가 응답자의 마음에 영향을 끼쳤을 것이다. 어떤 맥락속에서 질문을 하느냐에 따라 편향은 전혀 다른 방향으로 움직일 수 있다.</p>
+<p>위 조사에서는&nbsp;표집편향도 존재한다. 신문을 읽는 독자, 잡지를 읽는 독자, 질문에 응답한 독자 그룹은 각각 모집단을 대표하는 표본이 아닐뿐더러 응답도 다르게 했을 지도 모른다. 첫 번째 조사에서는 아이를 키우면서 좀더 부정적인 경험을 많이 한 사람들이 더 많이 응답했을 수도 있다. 반면에 두 번째 조사에서는 긍정적인 경험을 한 사람들이 더 많이 응답했을 수도 있다.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<p><span id="ex-1-20" class="qlabel">예제 1.20.</span> 아이가 있는 부모가 행복한지 아니면 후회하고 있는지 알고 싶다고 가정하자. 위 <a href="#data-1-4">데이터 1.4</a>에서 어떤 것을 신뢰하겠는가? 신뢰할 수 있는 데이터를 수집하려면 어떻게 해야 하는가?</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p><a href="#data-1-4">데이터 1.4</a>는 무작위 표본이 아니고 자원해서 응답한 표본이므로 표집편향이 존재하므로 어떤 것도 신뢰하지 말아야 한다. 신뢰할 수 있는 표본을 얻으려면 모든 부모를 대상으로 무작위 표본을 뽑아야 한다.</p>
+<p>“기회가 된다면 다시 아이를 갖겠는가?”라는 질문을 Newsday 신문은 미국의 모든 부모 중에서&nbsp;무작위&nbsp;표본을 뽑아 다시 하였다. <span class="math inline">\(91\%\)</span>가 아이를 다시 갖겠다고 대답하였다. 이것으로 모든 부모 중에서 정확히 <span class="math inline">\(91\%\)</span>가 아이를 다시 갖고 싶어한다고 말할 수 없다. 무작위 표본에서 얻어진 것이기 때문이다. 하지만 참 값에 가까운 값은 <span class="math inline">\(91\%\)</span>이지 <span class="math inline">\(30\%\)</span>는 아니라는 것을 3장에서 배울 것이다.</p>
+<p>편향은 사람들이 정직하게 답하지 않을 때도 발생한다. 표본을 신뢰할 수 없을 때는 모집단에 대한 어떤 일반화도 할 수 없음을 명심해야 한다.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<p><span id="ex-1-21" class="qlabel">예제 1.21.</span> <span class="math inline">\(2009\)</span> 년 미국 대학생 중에서 무작위 표본을 뽑아 여러 항목을 조사하는 가운데 불법 약물을 사용한 경험이 있냐고 물었다. 학생 중에 <span class="math inline">\(22.7\%\)</span>가 과거에 불법 약물을 사용한 경험이 있다고 대답하였다. 이 비율은 전체 대학생의 불법 약물 사용 경험 비율을 정확하게 묘사한 것이라고 생각하는가?</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p><span class="math inline">\(22.7\%\)</span>는 과소 추정한 값일 것이다. 무기명이지만 공식 조사에서 학생들은 불법 약물 사용 경험에 관한 질문에 솔직하게 답하지 않았을 것이다.</p>
+<p>데이터 수집에서&nbsp;편향은 여기에서 소개한 것과 다른 방식으로 나타날 수 있다. 가장 중요한 교훈은 항상 데이터가 수집된 방식을 비판적으로 생각하고, 수집한 데이터로부터 나오는 결론도 모두 유효한 것은 아니라는 것을 명심해야 한다.</p>
+<p>편향이 어디에서 발생했는 지를 일반 상식으로 충분히 인지할 수 있다.&nbsp;통계를 사용하여 얻은 결론을 접할 때마다 결론을 그저 받아들이지 말고 잠시 멈추라. 데이터 수집에서 혹&nbsp;편향은 발생하지 않았을까를 질문하고 생각해보는 습관을 가지도록 노력하라.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="1">
+<p><span class="qlabel">확인문제 1.</span> 앤 랜더스(Ann Landers)의 칼럼과 Good Housekeeping 잡지에서 동일한 질문을 했음에도 불구하고, 응답 결과가 크게 차이 난 주된 이유는 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 질문을 받은 모집단이 다르기 때문이다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 설문 응답자가 질문을 이해하지 못했기 때문이다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 두 설문조사의 표본 크기가 동일하지 않았기 때문이다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 응답자의 사회적 지위가 서로 달랐기 때문이다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="3">
+<p><span class="qlabel">확인문제 2.</span> 아이를 다시 가질 것인지에 대한 질문을 신뢰할 수 있는 데이터로 얻기 위해 가장 적절한 방법은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 잡지와 신문을 통해 많은 사람들의 의견을 수집한다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 부모들 중에서 자원한 응답자들의 의견을 수집한다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 미국의 모든 부모를 대상으로 무작위 표본을 뽑아 조사한다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 부모들에게 공개적으로 질문하여 사회적 압력을 가하여 정확한 응답을 유도한다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="3">
+<p><span class="qlabel">확인문제 3.</span> 불법 약물 사용에 관한 설문조사에서 학생들이 솔직하게 답하지 않을 가능성이 높은 이유는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 설문이 익명이 아니었기 때문이다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 학생들이 불법 약물을 사용한 적이 없었기 때문이다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 불법 약물 사용에 대해 정직하게 답하면 불이익이 있을 수 있다고 생각했기 때문이다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 설문조사가 너무 길어서 집중력이 떨어졌기 때문이다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<!-- Page 26 -->
+</section>
+<section id="학습-내용-정리" class="level3">
+<h3 class="anchored" data-anchor-id="학습-내용-정리">학습 내용 정리</h3>
+<div class="card">
+<p>다음 사항을 이해하거나 해결하는 능력이 있어야 한다.</p>
+<ul>
+<li>표본과 모집단을 구분할 수 있다.</li>
+<li>표본을 사용하여&nbsp;모집단을 추론하는 것이 언제&nbsp;가능한 지를 인지한다.</li>
+<li>표본 추출 방식을 비판적으로 사고하고&nbsp;표집편향의 근원이 무엇인 지를 찾아낼 수 있다.</li>
+<li>무작위&nbsp;표본 추출이 표집편향을 피하는 좋은 방법이다.</li>
+</ul>
+</div>
+<section id="표본과-모집단" class="level4">
+<h4 class="anchored" data-anchor-id="표본과-모집단">표본과 모집단</h4>
+<div class="card">
+<p>관심의 대상인 모든&nbsp;개인&nbsp;또는&nbsp;개체의 집합을 모집단(population)이라고 한다.</p>
+<p>표본(sample)은&nbsp;모집단의 한 부분집합이다.</p>
+</div>
+</section>
+<section id="통계적-추론" class="level4">
+<h4 class="anchored" data-anchor-id="통계적-추론">통계적 추론</h4>
+<div class="card">
+<p>표본에서 얻은 데이터로&nbsp;모집단에 관한&nbsp;정보를 얻는 과정을 통계적 추론(statistical inference)이라고 한다.</p>
+</div>
+</section>
+<section id="표집-편향" class="level4">
+<h4 class="anchored" data-anchor-id="표집-편향">표집 편향</h4>
+<div class="card">
+<p>표본&nbsp;추출&nbsp;방식이 잘못되어 표본이&nbsp;모집단과 일관되게 같은 방향으로 계속하여 치우칠 때 표집 편향(sampling bias)이 발생한다고 말한다. 표집 편향이 존재할 때는&nbsp;표본으로 모집단에&nbsp;일반화한 주장을&nbsp;신뢰할 수 없다.</p>
+</div>
+</section>
+<section id="단순-무작위-표본" class="level4">
+<h4 class="anchored" data-anchor-id="단순-무작위-표본">단순 무작위 표본</h4>
+<div class="card">
+<p>모집단에서 크기 n의 모든 그룹이 표본이 될&nbsp;가능성이 같을 때 이를 단순 무작위 표본(simple random sample)이라고 말한다. 결과적으로&nbsp;모집단의 모든 원소가 뽑힐 가능성이 같다. 단순 무작위 표본으로&nbsp;표집편향을 피할 수 있다.</p>
+</div>
+</section>
+<section id="무작위" class="level4">
+<h4 class="anchored" data-anchor-id="무작위">무작위</h4>
+<div class="card">
+<p>통계학에서&nbsp;무작위(random)는&nbsp;‘되는대로’, ‘마구잡이로’, ’마음대로’라는 뜻이 절대 아니다.&nbsp;무작위 표본을 뽑기 위하여&nbsp;기술 또는&nbsp;컴퓨터를 사용한다.</p>
+</div>
+</section>
+<section id="편향" class="level4">
+<h4 class="anchored" data-anchor-id="편향">편향</h4>
+<div class="card">
+<p>데이터를 수집하는 방식이 문제가 되어 표본이&nbsp;모집단을 정확히 묘사하지 못할 때 편향(bias)이 발생한다.</p>
+</div>
+<div class="card">
+<div class="quiz" data-answer="1">
+<p><span class="qlabel">확인문제 1.</span> 다음 중 “모집단(population)”의 정의로 가장 적절한 것은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 연구자가 관심을 가지는 전체 대상 집합</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 연구에서 조사한 표본 데이터</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 표본을 수집하는 과정</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 연구자가 선정한 특정 그룹</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="1">
+<p><span class="qlabel">확인문제 2.</span> 통계적 추론(statistical inference)이 가능하려면 어떤 조건이 충족되어야 하는가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 표본이 모집단을 대표할 수 있어야 한다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 모집단의 크기가 반드시 일정해야 한다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 표본이 모집단보다 더 큰 데이터를 포함해야 한다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 연구자가 원하는 방향의 데이터를 포함해야 한다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="1">
+<p><span class="qlabel">확인문제 3.</span> 표집 편향(sampling bias)이 발생하는 주요 원인은 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 모집단에서 특정 그룹이 표본에서 과소 또는 과대 대표될 때</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 표본 크기가 크면 반드시 편향이 발생한다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 모집단과 표본을 무작위로 선정하면 편향이 증가한다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 연구자가 모든 데이터를 직접 수집할 수 있을 때</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<!-- Page 27 -->
+<div class="card">
+<p><span id="hw-1-4" class="qlabel">과제 1.4.</span> 각 문제에서 기술한 데이터가 모집단이면 p, 표본이면 s로 표기하라.</p>
+<div class="quiz q qinline" data-answer="2">
+<p><span class="qsub">(1)</span> A 호수에 사는 송어의 크기를 추정하기 위하여 주말에 잡은 <span class="math inline">\(12\)</span>마리의 무게를 기록한다.</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 모집단 (p)</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 표본 (s)</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q qinline" data-answer="1">
+<p><span class="qsub">(2)</span> 음악 웹 사이트 B는 적극적으로 활동하는 가입자들의 총수를 모니터링한다.</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 모집단 (p)</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 표본 (s)</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q qinline" data-answer="1">
+<p><span class="qsub">(3)</span> 미국의 교통부는 승용차로 등록된 <span class="math inline">\(2\)</span>억<span class="math inline">\(5\)</span>천만대 중에 <span class="math inline">\(2.1\%\)</span>가 하이브리드 승용차라고 발표했다.</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 모집단 (p)</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 표본 (s)</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q qinline" data-answer="2">
+<p><span class="qsub">(4)</span> 사회학자 C는 쇼핑몰에서 <span class="math inline">\(120\)</span>명을 인터뷰하여 휴대폰 사용 실태를 조사하였다.</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 모집단 (p)</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 표본 (s)</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<p><span id="hw-1-5" class="qlabel">과제 1.5.</span> 각 문제에서 기술한 표본 추출 방법으로 모집단에서 무작위 표본이 추출된다면 y, 그렇지 않으면 n으로 표기하라.</p>
+<div class="quiz q qinline" data-answer="1">
+<p><span class="qsub">(1)</span> A 대학의 신입생이 모집단이다. 각 신입생의 이름을 종이 쪽지에 쓰고 모자 안에 넣는다. 잘 섞은 후에 <span class="math inline">\(20\)</span>명을 뽑았다.</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 무작위 표본 (y)</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 무작위 표본 아님 (n)</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q qinline" data-answer="1">
+<p><span class="qsub">(2)</span> 모집단은 인간의 DNA 중에서 단백질을 코딩하는 약 <span class="math inline">\(25,000\)</span>개의 유전자이다. 각 유전자에 번호(<span class="math inline">\(1\)</span>~<span class="math inline">\(25,000\)</span>)를 할당하고 컴퓨터를 사용하여 <span class="math inline">\(100\)</span>개의 번호를 뽑았다. 각 번호에 해당하는 유전자가 표본에 속한다.</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 무작위 표본 (y)</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 무작위 표본 아님 (n)</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q qinline" data-answer="2">
+<p><span class="qsub">(3)</span> B 회사의 모든 직원이 모집단이다. 모든 직원에게 인터넷 설문조사를 할 수 있는 링크를 첨부한 이메일을 보낸다.</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 무작위 표본 (y)</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 무작위 표본 아님 (n)</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q qinline" data-answer="2">
+<p><span class="qsub">(4)</span> C 숲에 사는 모든 나무가 모집단이다. 숲속을 걸어가면서 모든 나무를 대표할만한 나무가 보이면 표본으로 뽑는다.</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 무작위 표본 (y)</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 무작위 표본 아님 (n)</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q qinline" data-answer="2">
+<p><span class="qsub">(5)</span> CNN.com을 접속하는 모든 사람이 모집단이다. 모든 웹 사이트의 방문자에게 설문조사를 한다.</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 무작위 표본 (y)</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 무작위 표본 아님 (n)</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<p><span id="hw-1-6" class="qlabel">과제 1.6.</span> 각 연구 결과는 다음 중 어느 범주에 속하는지 답하라.</p>
+<div class="quiz q" data-answer="1">
+<p><span class="qsub">(1)</span> 금요일 밤 도서관에서 학생을 대상으로 무작위 표본을 뽑아 일주일에 몇 시간을 공부하느냐 물었다. 이 데이터로 이 대학의 전체 학생이 일주일에 평균 몇 시간을 공부하는지 추정한다.</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 표집편향이 발생하여 결과를 신뢰할 수 없다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 자발적인 응답으로 편향이 발생하여 결과를 신뢰할 수 없다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 표본 크기가 너무 작아 결과를 신뢰할 수 없다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 편향이 발생하지 않아 결과를 신뢰할 수 있다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q" data-answer="1">
+<p><span class="qsub">(2)</span> 사과를 가득 실은 트럭에서 눈에 보이는 사과 중에 <span class="math inline">\(10\)</span>개를 무작위로 뽑아 상처를 입었는지 조사한다. 이 데이터로 전체 사과의 몇 퍼센트가 상처를 입었는지 추정한다.</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 표집편향이 발생하여 결과를 신뢰할 수 없다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 자발적인 응답으로 편향이 발생하여 결과를 신뢰할 수 없다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 표본 크기가 너무 작아 결과를 신뢰할 수 없다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 편향이 발생하지 않아 결과를 신뢰할 수 있다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q" data-answer="2">
+<p><span class="qsub">(3)</span> A 대학의 학생 중에 무작위 표본을 뽑아 “우리 대학이 태권도 선수를 육성하기 위하여 기금을 조성하는 것에 찬성하는가?” 묻는 설문지를 보냈다. 응답한 결과를 가지고 기금 조성에 찬성하는 전체 학생의 비율을 추정한다.</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 표집편향이 발생하여 결과를 신뢰할 수 없다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 자발적인 응답으로 편향이 발생하여 결과를 신뢰할 수 없다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 표본 크기가 너무 작아 결과를 신뢰할 수 없다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 편향이 발생하지 않아 결과를 신뢰할 수 있다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q" data-answer="4">
+<p><span class="qsub">(4)</span> B 회사는 여러 종류의 프린터를 생산한다. C 타입의 프린터 중에서 무작위 표본을 뽑아 각 프린터는 잉크가 모두 소모될 때까지 얼마나 인쇄하는 지 조사한다. 이 데이터로 C 타입의 전체 프린터가 잉크가 소모될 때까지 평균 몇 페이지를 인쇄하는지 추정한다.</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 표집편향이 발생하여 결과를 신뢰할 수 없다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 자발적인 응답으로 편향이 발생하여 결과를 신뢰할 수 없다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 표본 크기가 너무 작아 결과를 신뢰할 수 없다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 편향이 발생하지 않아 결과를 신뢰할 수 있다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<!-- 소유권자: 프로브 (빌드팀) | 사용자: 프로브 / Date: 2026-06-23 -->
+<!-- 인터랙티브 퀴즈 채점 (self-host, 외부의존 0). 시안 넥서스-최종통합시안-★★★★★ 의 <script> 이식.
+     _quarto.yml format.html.include-after-body 로 전 페이지 주입. .quiz[data-answer][data-explain] 마크업과 짝. -->
+<script>
+document.querySelectorAll('.quiz').forEach(function(q){
+  var ans = q.getAttribute('data-answer'), fb = q.querySelector('.quiz-feedback');
+  q.querySelectorAll('.opt').forEach(function(opt){
+    opt.addEventListener('click', function(){
+      q.querySelectorAll('.opt').forEach(function(o){ o.classList.remove('correct','wrong'); });
+      if (opt.getAttribute('data-v') === ans) {
+        opt.classList.add('correct');
+        fb.className = 'quiz-feedback ok';
+        fb.textContent = '정답입니다! ' + (q.getAttribute('data-explain') || '');
+      } else {
+        opt.classList.add('wrong');
+        fb.className = 'quiz-feedback no';
+        fb.textContent = '다시 생각해 보세요.';
+      }
+    });
+  });
+});
+</script>
+<!-- 소유권자: 빌드팀 | 작성 대행: 넥서스(컨트롤타워) — 프로브 부재로 대표 지시 직접 진행 / Date: 2026-06-23 -->
+<!-- 예제 풀이 블러 리빌 (self-host, 외부의존 0). 시안 넥서스-예제블러리빌-★★★★★.
+     _quarto.yml format.html.include-after-body 로 전 페이지 주입. .card.sol-card 마크업과 짝.
+     풀이 카드 클릭 시 .on 추가 → 블러 해제. -->
+<script>
+document.querySelectorAll('.sol-card').forEach(function(c){
+  c.addEventListener('click', function(){ c.classList.add('on'); });
+});
+</script>
+<!-- 소유권자: 빌드팀 | 작성: 넥서스(컨트롤타워) / Date: 2026-06-23 -->
+<!-- 주관식 정답 확인 토글 (self-host, 외부의존 0). 옵저버 정석 .ansbtn/.ansbox 와 짝.
+     _quarto.yml include-after-body 로 전 페이지 주입. -->
+<script>
+document.querySelectorAll('.ansbtn').forEach(function(b){
+  b.addEventListener('click', function(){
+    var box = b.nextElementSibling;
+    if (!box || !box.classList.contains('ansbox')) return;
+    var on = box.classList.toggle('show');
+    b.textContent = on ? '정답 숨기기 ▴' : '정답 확인 ▾';
+  });
+});
+</script>
+<!-- 소유권자: 넥서스(컨트롤타워) | 사용자: 넥서스 / Date: 2026-06-25 -->
+<!-- 데이터뷰 iframe을 콘텐츠 높이에 자동 맞춤 → 표마다 정확한 높이(여백/스크롤 제거).
+     file:// 에선 contentDocument 접근이 차단되므로 자식이 자기 높이를 postMessage로 보내는 방식이 1순위.
+     http 에선 contentDocument 폴링도 병행. self-host, 외부의존 0. -->
+<script>
+(function(){
+  function setH(f, h){ if(h > 0){ f.scrolling = 'no'; f.style.height = (h + 4) + 'px'; } }
+  // 1순위: 자식이 postMessage 로 보낸 높이 (file:// 포함 동작)
+  window.addEventListener('message', function(e){
+    if(e.data && e.data.type === 'dvHeight' && e.data.h > 0){
+      document.querySelectorAll('iframe[src*="data-views/"]').forEach(function(f){
+        if(f.contentWindow === e.source) setH(f, e.data.h);
+      });
+    }
+  });
+  // 2순위: same-origin(http) 직접 읽기 (file:// 에선 catch 되어 무시)
+  function fit(f){
+    try{
+      var d = f.contentDocument || f.contentWindow.document;
+      if(d && d.body) setH(f, Math.max(d.documentElement.scrollHeight, d.body.scrollHeight, d.body.offsetHeight));
+    }catch(e){}
+  }
+  function init(){
+    document.querySelectorAll('iframe[src*="data-views/"]').forEach(function(f){
+      f.scrolling = 'no';
+      f.addEventListener('load', function(){ fit(f); [300,800].forEach(function(t){ setTimeout(function(){fit(f);}, t); }); });
+      [200,600,1200,2200].forEach(function(t){ setTimeout(function(){fit(f);}, t); });
+    });
+  }
+  if(document.readyState === 'complete') init();
+  else window.addEventListener('load', init);
+})();
+</script>
+<!-- 엑셀 코드블록(pre.xlcode) 복사버튼 — self-host, 외부의존 0 (질럿, 2026-06-23) -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('pre.xlcode').forEach(function (pre) {
+    if (pre.dataset.xlcopy) return;
+    pre.dataset.xlcopy = '1';
+    var code = pre.textContent;            // ★ 버튼 추가 전 캡처 = 태그 없는 순수 수식
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'xlcopy';
+    btn.textContent = '복사';
+    btn.addEventListener('click', function () {
+      navigator.clipboard.writeText(code).then(function () {
+        btn.textContent = '복사됨';
+        setTimeout(function () { btn.textContent = '복사'; }, 1500);
+      });
+    });
+    pre.appendChild(btn);
+  });
+});
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/01-01-data-structure.html" class="pagination-link" aria-label="1.1 데이터의 구조">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">1.1 데이터의 구조</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/01-03-causality.html" class="pagination-link" aria-label="1.3 실험연구와 관측연구">
+        <span class="nav-page-text"><span class="chapter-title">1.3 실험연구와 관측연구</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

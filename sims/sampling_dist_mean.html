@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<!-- 소유권자: 질럿(복원팀) | 사용자: 질럿 -->
+<!-- Date: 2026-06-23 (원본 enook 88p 앱 충실 재구현) -->
+<!-- 통사사복원소 — 3.1절 표본 평균의 표집분포 시뮬레이터.
+     원본 그대로: '모집단 히스토그램' 버튼+계급크기 / 모집단 textarea /
+       모집단 히스토그램(이중축: 모집단 빈도·표본 빈도, 전폭 겹침=보라, μ·σ 제목, 파란세모=모집단평균·빨간세모=표본평균) /
+       표본크기·표본추출 / 표집분포 히스토그램(계급크기, 초록세모·빨간세모). self-host, 외부라이브러리 0. -->
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>표집분포 시뮬레이터 (평균)</title>
+<style>
+  :root { --green:#5cb85c; --line:#d9dcdf; --ink:#333; }
+  * { box-sizing:border-box; }
+  body { font-family:-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif; color:var(--ink); margin:0; padding:18px; background:#fff; }
+  .wrap { max-width:780px; margin:0 auto; }
+  .lab { font-weight:700; font-size:.9rem; margin:4px 0; }
+  .row { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin:8px 0; }
+  button { background:var(--green); color:#fff; border:none; border-radius:5px; padding:6px 13px; cursor:pointer; font-size:.88rem; }
+  button:hover { filter:brightness(1.06); }
+  button.ghost { background:#fff; color:#666; border:1px solid var(--line); }
+  input[type=text]{ width:64px; padding:5px 8px; border:1px solid var(--line); border-radius:5px; font-size:.88rem; font-weight:700; text-align:center; }
+  input[readonly]{ background:#f1f3f5; }
+  select { padding:5px 8px; border:1px solid var(--line); border-radius:5px; font-size:.9rem; }
+  .mvar { font-family:'Cambria Math','Latin Modern Math',Georgia,serif; font-style:italic; }
+  textarea { width:100%; border:1px solid var(--line); border-radius:5px; padding:8px 10px; font-family:ui-monospace,monospace; font-size:.84rem; line-height:1.7; color:#444; resize:vertical; }
+  #pop { height:110px; } #lastSample { height:64px; margin-top:6px; }
+  .chart { background:#f3f7f4; border:1px solid #e2e9e4; border-radius:10px; margin-top:8px; padding:12px 10px 8px; }
+  .htitle { text-align:center; font-size:1.12rem; font-weight:700; }
+  .hsub { text-align:center; font-size:.82rem; color:#777; }
+  canvas { width:100%; height:300px; display:block; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="row">
+    <button onclick="drawPop()">모집단 히스토그램</button>
+    <span class="lab" style="margin:0">계급 크기:</span><input type="text" id="popBin" value="1" onchange="drawPop()">
+  </div>
+  <div class="lab">모집단 (population)</div>
+  <textarea id="pop" placeholder="모집단 데이터를 공백·줄바꿈·쉼표로 구분하여 붙여넣으세요"></textarea>
+
+  <div class="chart">
+    <div class="htitle" id="popTitle">모집단을 입력하고 '모집단 히스토그램'을 클릭하세요</div>
+    <div class="hsub" id="popSub"></div>
+    <canvas id="popCv"></canvas>
+  </div>
+
+  <div class="row"><span class="lab" style="margin:0">표본 크기 <span class="mvar">n</span>:</span>
+    <select id="n" onchange="resetDist()">
+      <option>1</option><option>2</option><option selected>5</option><option>10</option>
+      <option>20</option><option>30</option><option>50</option><option>100</option></select>
+    <span class="lab" style="margin:0 0 0 10px">표본 추출:</span>
+    <button onclick="draw(1)">1회</button><button onclick="draw(10)">10회</button>
+    <button onclick="draw(100)">100회</button><button onclick="draw(1000)">1000회</button>
+    <button class="ghost" onclick="resetDist()">초기화</button>
+  </div>
+  <textarea id="lastSample" readonly placeholder="가장 최근에 뽑은 표본이 여기에 표시됩니다"></textarea>
+
+  <div class="chart">
+    <div class="htitle" id="distTitle">표본 평균의 표집분포</div>
+    <div class="hsub" id="distSub">실험 횟수: 0</div>
+    <canvas id="distCv"></canvas>
+  </div>
+  <div class="row"><span class="lab" style="margin:0">표집분포 계급 크기:</span><input type="text" id="distBin" value="0.1" onchange="drawDist()"></div>
+</div>
+
+<script>
+const MAXN=100000;
+let POP=[], popMean=0, popSD=0, popShown=false;
+let means=[], lastMean=null, lastSampleArr=null, animId=null;
+function parse(s){ return s.split(/[\s,]+/).map(Number).filter(x=>!isNaN(x)); }
+function mean(a){ let s=0; for(const x of a) s+=x; return s/a.length; }
+function sdSample(a){ if(a.length<2) return 0; const m=mean(a); let s=0; for(const x of a) s+=(x-m)*(x-m); return Math.sqrt(s/(a.length-1)); } // 표본 SD(n-1) — 원본 88p σ=2.16
+function minOf(a){ let m=a[0]; for(const x of a) if(x<m)m=x; return m; }
+function maxOf(a){ let m=a[0]; for(const x of a) if(x>m)m=x; return m; }
+function Nsz(){ return parseInt(document.getElementById('n').value,10); }
+function cancelAnim(){ if(animId){ cancelAnimationFrame(animId); animId=null; } }
+function fmt(x){ return (+x.toFixed(3)).toString(); }
+function niceNum(x){ if(!(x>0)) return 1; const mag=Math.pow(10,Math.floor(Math.log10(x))), f=x/mag;
+  return (f<1.5?1:f<3?2:f<7?5:10)*mag; }
+function getBin(id,def){ let v=parseFloat(document.getElementById(id).value); return (v>0)?v:def; }
+function hist(arr, d0, binW, bins){ const c=new Array(bins).fill(0);
+  for(const x of arr){ let b=Math.floor((x-d0)/binW); if(b<0)b=0; if(b>=bins)b=bins-1; c[b]++; } return c; }
+
+function loadPop(){ POP=parse(document.getElementById('pop').value);
+  if(POP.length>=2){ popMean=mean(POP); popSD=sdSample(POP);
+    // 기본 계급 크기 자동(첫 로드 시)
+    if(!document.getElementById('popBin').dataset.set){ document.getElementById('popBin').value=niceNum((maxOf(POP)-minOf(POP))/8); document.getElementById('popBin').dataset.set='1'; }
+    return true; } popMean=0; popSD=0; return false; }
+
+function drawPop(){
+  if(!loadPop()){ alert('모집단 데이터를 2개 이상 입력하세요.'); return; }
+  popShown=true; renderPop();
+}
+function addBatch(k){ const n=Nsz(); let lastArr=null;
+  for(let t=0;t<k;t++){ const arr=new Array(n); let s=0;
+    for(let i=0;i<n;i++){ const v=POP[(Math.random()*POP.length)|0]; arr[i]=v; s+=v; }
+    means.push(s/n); lastArr=arr; }
+  lastMean=means[means.length-1]; lastSampleArr=lastArr;
+  document.getElementById('lastSample').value=lastArr.join('  ');
+}
+function draw(times){
+  if(!loadPop()){ alert('모집단 데이터를 2개 이상 입력하세요.'); return; }
+  popShown=true; cancelAnim();
+  let remaining=Math.min(times, MAXN-means.length);
+  if(remaining<=0){ document.getElementById('distSub').textContent='실험 횟수: '+means.length.toLocaleString()+' (상한 도달 — 초기화 후 진행)'; return; }
+  if(times===1){ addBatch(1); renderPop(); drawDist(); return; }
+  const frames=Math.min(remaining,120), per=Math.ceil(remaining/frames);
+  (function step(){ const k=Math.min(per,remaining); addBatch(k); remaining-=k; renderPop(); drawDist();
+    if(remaining>0) animId=requestAnimationFrame(step); else animId=null; })();
+}
+function resetDist(){ cancelAnim(); means=[]; lastMean=null; lastSampleArr=null;
+  document.getElementById('lastSample').value='';
+  document.getElementById('distTitle').textContent='표본 평균의 표집분포';
+  document.getElementById('distSub').textContent='실험 횟수: 0';
+  renderPop(); drawDist(); }
+
+function setup(id){ const cv=document.getElementById(id), dpr=window.devicePixelRatio||1;
+  const W=cv.clientWidth, H=cv.clientHeight; cv.width=W*dpr; cv.height=H*dpr;
+  const c=cv.getContext('2d'); c.scale(dpr,dpr); c.clearRect(0,0,W,H); return {c,W,H}; }
+function tri(c,x,y0,col){ c.fillStyle=col; c.beginPath(); c.moveTo(x,y0-1); c.lineTo(x-6,y0+10); c.lineTo(x+6,y0+10); c.closePath(); c.fill(); }
+
+// ── 모집단 히스토그램: 이중축(모집단 빈도 왼축 / 표본 빈도 오른축), 전폭 겹침 ──
+function renderPop(){
+  const {c,W,H}=setup('popCv');
+  const padL=46,padR=46,padT=26,padB=36,pW=W-padL-padR,pH=H-padT-padB,x0=padL,y0=padT+pH;
+  if(!popShown || POP.length<2){
+    document.getElementById('popTitle').textContent="모집단을 입력하고 '모집단 히스토그램'을 클릭하세요";
+    c.strokeStyle='#cdd3da'; c.beginPath(); c.moveTo(x0,y0); c.lineTo(x0+pW,y0); c.stroke(); return; }
+  document.getElementById('popTitle').innerHTML=`<span class="mvar">μ</span> = ${fmt(popMean)}, &nbsp;&nbsp; <span class="mvar">σ</span> = ${fmt(popSD)}`;
+  document.getElementById('popSub').textContent=`n = ${POP.length}`;
+  const binW=getBin('popBin', niceNum((maxOf(POP)-minOf(POP))/8));
+  let lo=minOf(POP), hi=maxOf(POP);
+  if(lastSampleArr){ lo=Math.min(lo,minOf(lastSampleArr)); hi=Math.max(hi,maxOf(lastSampleArr)); }
+  const d0=Math.floor(lo/binW)*binW, hiE=Math.ceil((hi+binW)/binW)*binW, bins=Math.max(1,Math.min(400,Math.round((hiE-d0)/binW))), dom=bins*binW;
+  const popCt=hist(POP,d0,binW,bins), sampCt=lastSampleArr?hist(lastSampleArr,d0,binW,bins):null;
+  const popYmax=niceNum(maxOf(popCt)||1)*1.05, sampYmax=sampCt?niceNum(maxOf(sampCt)||1)*1.05:1;
+  const X=v=>x0+(v-d0)/dom*pW, bw=pW/bins;
+  // 격자 + 왼축(모집단)·오른축(표본) 눈금
+  c.font='11px sans-serif'; c.lineWidth=1;
+  for(let k=0;k<=5;k++){ const y=y0-pH*k/5;
+    c.strokeStyle='#e7eee9'; c.beginPath(); c.moveTo(x0,y); c.lineTo(x0+pW,y); c.stroke();
+    c.fillStyle='#5b6f9c'; c.textAlign='right'; c.fillText(fmt(popYmax*k/5), x0-6, y+4);
+    if(sampCt){ c.fillStyle='#b06f8f'; c.textAlign='left'; c.fillText(fmt(sampYmax*k/5), x0+pW+6, y+4); } }
+  // 모집단 막대(전폭 반투명 파랑)
+  c.fillStyle='rgba(120,140,225,.45)';
+  for(let i=0;i<bins;i++){ if(!popCt[i])continue; const h=popCt[i]/popYmax*pH, x=x0+i*bw; c.fillRect(x, y0-h, bw, h); }
+  // 표본 막대(같은 전폭 반투명 자홍 → 겹친 곳 보라). 품지 않음
+  if(sampCt){ c.fillStyle='rgba(225,90,140,.42)';
+    for(let i=0;i<bins;i++){ if(!sampCt[i])continue; const h=sampCt[i]/sampYmax*pH, x=x0+i*bw; c.fillRect(x, y0-h, bw, h); } }
+  // 막대 경계선(옅게)
+  c.strokeStyle='rgba(255,255,255,.7)'; c.lineWidth=1;
+  for(let i=0;i<=bins;i++){ const x=x0+i*bw; if(popCt[i]||(i>0&&popCt[i-1])||sampCt&&(sampCt[i]||(i>0&&sampCt[i-1]))){ c.beginPath(); c.moveTo(x,y0); c.lineTo(x,padT); c.stroke(); } }
+  // 축 라벨
+  c.save(); c.translate(13,padT+pH/2); c.rotate(-Math.PI/2); c.textAlign='center'; c.fillStyle='#5b6f9c'; c.font='11px sans-serif'; c.fillText('빈도 (모집단)',0,0); c.restore();
+  if(sampCt){ c.save(); c.translate(W-13,padT+pH/2); c.rotate(Math.PI/2); c.textAlign='center'; c.fillStyle='#b06f8f'; c.fillText('빈도 (표본)',0,0); c.restore(); }
+  // x축
+  c.strokeStyle='#cdd3da'; c.lineWidth=1; c.beginPath(); c.moveTo(x0,y0); c.lineTo(x0+pW,y0); c.stroke();
+  const dec=(hi-lo)>=5?0:(hi-lo)>=0.5?1:2; c.fillStyle='#8a8f8a'; c.font='11px sans-serif'; c.textAlign='center';
+  { const ts=binW*Math.max(1,Math.round(bins/5)); for(let v=d0; v<=d0+dom+1e-9; v+=ts) c.fillText(fmt(+v.toFixed(dec)), X(v), y0+15); }
+  // 세모: 모집단 평균(파랑), 표본 평균(빨강)
+  if(X(popMean)>=x0-2&&X(popMean)<=x0+pW+2) tri(c,X(popMean),y0,'#2f6fd0');
+  if(lastMean!=null && X(lastMean)>=x0-2&&X(lastMean)<=x0+pW+2) tri(c,X(lastMean),y0,'#d9534f');
+}
+
+// ── 표본 평균의 표집분포 ──
+function drawDist(){ renderDist(); }
+function renderDist(){
+  const {c,W,H}=setup('distCv');
+  const padL=46,padR=14,padT=8,padB=36,pW=W-padL-padR,pH=H-padT-padB,x0=padL,y0=padT+pH;
+  if(means.length){ document.getElementById('distTitle').innerHTML=`표본 평균의 표집분포 — 평균 = ${mean(means).toFixed(3)}, 표준편차 = ${sdSample(means).toFixed(3)}`;
+    document.getElementById('distSub').textContent=`실험 횟수: ${means.length.toLocaleString()}`; }
+  if(!means.length){ c.strokeStyle='#cdd3da'; c.beginPath(); c.moveTo(x0,y0); c.lineTo(x0+pW,y0); c.stroke(); return; }
+  const binW=getBin('distBin',0.1);
+  let lo=minOf(means), hi=maxOf(means); lo=Math.min(lo,popMean); hi=Math.max(hi,popMean);
+  if(lastMean!=null){ lo=Math.min(lo,lastMean); hi=Math.max(hi,lastMean); }
+  const d0=Math.floor(lo/binW)*binW, hiE=Math.ceil((hi+binW)/binW)*binW, bins=Math.max(1,Math.min(400,Math.round((hiE-d0)/binW))), dom=bins*binW;
+  const ct=hist(means,d0,binW,bins), ymax=niceNum(maxOf(ct)||1)*1.05;
+  const X=v=>x0+(v-d0)/dom*pW, bw=pW/bins;
+  c.font='11px sans-serif'; c.lineWidth=1; c.textAlign='right';
+  for(let k=0;k<=5;k++){ const y=y0-pH*k/5; c.strokeStyle='#e7eee9'; c.beginPath(); c.moveTo(x0,y); c.lineTo(x0+pW,y); c.stroke();
+    c.fillStyle='#8a8f8a'; c.fillText(fmt(ymax*k/5), x0-6, y+4); }
+  c.save(); c.translate(14,padT+pH/2); c.rotate(-Math.PI/2); c.textAlign='center'; c.fillStyle='#666'; c.fillText('빈도',0,0); c.restore();
+  c.fillStyle='#f2a6a0';
+  for(let i=0;i<bins;i++){ if(!ct[i])continue; const h=ct[i]/ymax*pH, x=x0+i*bw; c.fillRect(x, y0-h, Math.max(1,bw-1), h); }
+  c.strokeStyle='#cdd3da'; c.lineWidth=1; c.beginPath(); c.moveTo(x0,y0); c.lineTo(x0+pW,y0); c.stroke();
+  const dec=(hi-lo)>=5?0:(hi-lo)>=0.5?1:2; c.fillStyle='#8a8f8a'; c.textAlign='center';
+  { const ts=binW*Math.max(1,Math.round(bins/5)); for(let v=d0; v<=d0+dom+1e-9; v+=ts) c.fillText((+v.toFixed(dec)).toString(), X(v), y0+15); }
+  // 세모: 모집단 평균(초록), 표본 평균(빨강)
+  if(X(popMean)>=x0-2&&X(popMean)<=x0+pW+2) tri(c,X(popMean),y0,'#3a8f3a');
+  if(lastMean!=null && X(lastMean)>=x0-2&&X(lastMean)<=x0+pW+2) tri(c,X(lastMean),y0,'#d9534f');
+}
+
+resetDist();
+window.addEventListener('resize', function(){ renderPop(); renderDist(); });
+</script>
+</body>
+</html>

@@ -1,0 +1,2584 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>4.3 통계적 유의성 판단 – 통계적 사고와 사회</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/04-04-supplement.html" rel="next">
+<link href="../chapters/04-02-p-values.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-de63f62b328812d8e578a4d74e282472.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-3355e44214f8815af4d3cdb2eb254b3a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating fullcontent quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/04.html">4장. 가설검증</a></li><li class="breadcrumb-item"><a href="../chapters/04-03-significance.html"><span class="chapter-title">4.3 통계적 유의성 판단</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">통계적 사고와 사회</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">통계적 사고와 사회</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">강의 소개</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-01-intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.1. 강의 소개</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-02-thinking.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.2. 통계적 사고란 무엇인가?</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-03-examples.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.3. 통계적 사고 예제</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-04-montyhall.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.4. 몬티 홀 게임</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-05-ppdac.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.5. PPDAC 사이클</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-06-mortality.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.6. 산모 사망률</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-07-cholera.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.7. 콜레라와 존 스노우</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../chapters/01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1장. 데이터 수집</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-01-data-structure.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">1.1 데이터의 구조</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-02-sampling.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">1.2 모집단에서 표본 추출</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-03-causality.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">1.3 실험연구와 관측연구</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../chapters/02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2장. 데이터 기술하기</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-01-categorical.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.1 범주형 변수</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-02-quantitative-center.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.2 양적 변수 한 개: 모양과 중심</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-03-quantitative-variation.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.3 양적 변수 한 개: 변동</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-04-outliers-boxplot.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.4 이상값과 상자그림</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-05-scatterplot-correlation.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.5 양적 변수 두 개: 산점도와 상관관계</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-06-regression.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.6 양적 변수 두 개: 선형회귀</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-07-multivariate.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.7 데이터 시각화와 다중 변수</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../chapters/03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3장. 신뢰구간</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-01-sampling-distribution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3.1 표집 분포</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-02-confidence-intervals.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3.2 신뢰구간에 대한 이해</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-03-bootstrap.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3.3 부트스트랩 신뢰구간</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-04-percentile-bootstrap.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3.4 백분위수에 의한 부트스트랩 신뢰구간</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../chapters/04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4장. 가설검증</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-01-hypothesis-testing.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4.1 가설검증 소개</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-02-p-values.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4.2 p-값</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-03-significance.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">4.3 통계적 유의성 판단</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-04-supplement.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4.4 가설검증의 오류</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-05-inference-summary.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4.5 통계적 추론 정리</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">참고자료</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-01-lotto.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">6/45 로또</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-02-numbergame.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">반응시간 게임</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">위젯</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../widgets/spreadsheet.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">스프레드시트</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../widgets/distribution-calculator.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">분포 계산기</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../widgets/r-calculator.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">R 계산기</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../widgets/jupyterlite.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">R/Python 실습</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">데이터</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/AllCountries.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">AllCountries.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/temp.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">April14Temps.csv (temp.csv)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/BaseballSalaries2015.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">BaseballSalaries2015.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/BodyFat.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">BodyFat.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/BodyTemp50.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">BodyTemp50.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/CarDepreciation.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">CarDepreciation.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/CommuteAtlanta.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">CommuteAtlanta.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/CommuteStLouis.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">CommuteStLouis.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/CricketChirps.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">CricketChirps.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/DDS.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">DDS.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/ElectionMargin.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">ElectionMargin.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/ExerciseHours.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">ExerciseHours.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/FloridaLakes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">FloridaLakes.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HappyPlanetIndex.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HappyPlanetIndex.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HeightData.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HeightData.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HollywoodMovies.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HollywoodMovies.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HollywoodMovies2011.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HollywoodMovies2011.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HoneybeeWaggle.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HoneybeeWaggle.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HouseStarts.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HouseStarts.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/Life.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Life.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/LightatNight.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">LightatNight.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/MalevolentUniformsNFL.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">MalevolentUniformsNFL.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/Mammal2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Mammal2.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/MustangPrice.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">MustangPrice.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/NutritionStudy.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">NutritionStudy.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/RestaurantTips.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">RestaurantTips.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/RetailSales.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">RetailSales.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/StudentSurvey.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">StudentSurvey.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/USStates.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">USStates.csv</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+ <span class="menu-text">데이터 표(본문 임베드)</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/StudentSurvey.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">StudentSurvey.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/AllCountries.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">AllCountries.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/Life.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Life.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/Mammal2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Mammal2.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/temp.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">temp.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/ElectionMargin.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">ElectionMargin.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/HoneybeeWaggle.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HoneybeeWaggle.csv</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/04.html">4장. 가설검증</a></li><li class="breadcrumb-item"><a href="../chapters/04-03-significance.html"><span class="chapter-title">4.3 통계적 유의성 판단</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-4-3" class="quarto-section-identifier"><span class="chapter-title">4.3 통계적 유의성 판단</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<!-- Page 138 -->
+<div class="card">
+<p><a href="../chapters/04-01-hypothesis-testing.html#sec-4-1">4.1절</a>에서 가설검증은 표본이 영가설을 반박하고 대안가설을 지지하는 증거가 얼마나 강한지 결정하는 것이라고 하였다. <a href="../chapters/04-02-p-values.html#sec-4-2">4.2절</a>에서 영가설이 사실일 때 표본 통계량이 얼마나 발생하기 어려운 값인지를 측정한 것이 p-값임을 배웠다. 이 절에서 두 가지 아이디어를 결합할 것이다.</p>
+</div>
+<div class="card">
+<p><span id="ex-4-15" class="qlabel">예제 4.15.</span> <a href="../chapters/04-01-hypothesis-testing.html#ex-4-2">예제 4.2</a>에서 먹고 남은 음식의 포장을 부탁한 후 잊고 가는 손님의 비율이 약 <span class="math inline">\(30\%\)</span>라는 주장을 다루었다. 모비율이 <span class="math inline">\(30\%\)</span>보다 큰가에 관심이 있을 때 가설은 다음과 같다.</p>
+<ul>
+<li><span class="math inline">\(H_0: p = 0.30\)</span></li>
+<li><span class="math inline">\(H_a: p &gt; 0.30\)</span></li>
+</ul>
+<p>여기서 <span class="math inline">\(p\)</span>는 레스토랑에서 남은 음식의 포장을 부탁하고 떠날 때 잊고 간 모든 손님의 비율이다. 다음 각 표본 비율에 대한 p-값을 구하고 대안가설을 지지하는 증거가 어느 정도인지 설명하라. 대안가설을 가장 강하게 지지하는 p-값은 어느 것인가?</p>
+<ul>
+<li><span class="qsub">(1)</span> <span class="math inline">\(\hat{p} = 39/120 = 0.325\)</span> <span class="qsub">(2)</span> <span class="math inline">\(\hat{p} = 51/120 = 0.425\)</span></li>
+</ul>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p>표본 비율 두 개 모두 <span class="math inline">\(0.3\)</span>보다 크다. 무작위 변동으로 인해 크게 나왔을까? 아니면 모수가 실제로 <span class="math inline">\(0.3\)</span>보다 커서 크게 나온 것일까?</p>
+<p><span class="qsub">(1)</span> 아래 그림 <span class="qsub">(1)</span>의 임의화 분포를 보면 표본 비율 <span class="math inline">\(\hat{p} = 0.325\)</span>는 발생할 가능성이 비교적 높은 지역에 있다. p-값은 <span class="math inline">\(0.283\)</span>이다. 모의 표본 중에 많은 것이 표본 비율 <span class="math inline">\(0.325\)</span>보다 더 극단적이다. 실제 모비율이 <span class="math inline">\(0.3\)</span>일 때 이 표본은 발생하기 어려운 값이 결코 아니다. 이 표본은 영가설을 반박하는 증거가 강하지 않다.</p>
+<p><span class="qsub">(2)</span> 아래 그림 <span class="qsub">(2)</span>의 임의화 분포를 보면 표본 비율 <span class="math inline">\(\hat{p} = 0.425\)</span>는 중심에서 거리가 먼 꼬리에 있다. p-값은 <span class="math inline">\(0.002\)</span>이다. 실제 모비율이 <span class="math inline">\(0.3\)</span>일 때 이 표본은 발생하기 매우 어려운 값이다. 이 표본은 영가설을 반박하고 모비율이 <span class="math inline">\(0.3\)</span>보다 크다는 대안가설에 강한 증거를 제공한다.</p>
+<p>p-값 <span class="math inline">\(0.002\)</span>가 <span class="math inline">\(0.283\)</span>보다 대안가설을 더 강하게 지지하는 증거를 제공한다.</p>
+<p><img src="../images/img_146.PNG" class="img-fluid"></p>
+<p><img src="../images/img_147.PNG" class="img-fluid"></p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="quiz card" data-answer="1" data-explain="">
+<p><span class="qlabel">확인문제 1.</span> 다음 중 <strong>p-값</strong>에 대한 설명으로 올바른 것은 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> p-값은 영가설이 참일 때, 표본 통계량보다 더 극단적인 통계량이 발생할 확률이다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> p-값은 영가설이 거짓일 때, 표본 통계량보다 더 극단적인 통계량이 발생할 확률이다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> p-값은 표본 통계량의 중앙값과 그 범위 내의 확률 분포를 나타낸다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> p-값은 임의화 분포에서 관측된 통계량이 나올 가능성의 비율을 나타낸다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="3" data-explain="">
+<p><span class="qlabel">확인문제 2.</span> <a href="#ex-4-15">예제 4.15</a> 에서, p-값이 <span class="math inline">\(0.283\)</span>인 표본 비율 <span class="math inline">\(\hat{p} = 0.325\)</span>에 대해, 영가설을 반박하는 증거는 얼마나 강한가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 매우 강한 증거</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 강한 증거</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 약한 증거</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 증거가 없다</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="2" data-explain="">
+<p><span class="qlabel">확인문제 3.</span> <a href="#ex-4-15">예제 4.15</a> 에서, p-값이 <span class="math inline">\(0.002\)</span>인 표본 비율 <span class="math inline">\(\hat{p} = 0.425\)</span>에 대해, 대안가설을 지지하는 증거는 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 영가설을 반박하는 강한 증거</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 대안가설을 지지하는 매우 강한 증거</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 증거가 약하다</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 대안가설을 지지하는 증거가 없다</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="3" data-explain="">
+<p><span class="qlabel">확인문제 4.</span> <a href="#ex-4-15">예제 4.15</a> 에서, <span class="math inline">\(\hat{p} = 0.325\)</span>의 표본 비율에 대해, p-값을 계산한 결과 <span class="math inline">\(0.283\)</span>이 나왔다면, 어떤 결론을 내릴 수 있는가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 영가설을 기각할 충분한 증거가 있다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 대안가설을 기각할 충분한 증거가 있다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 영가설을 기각할 증거가 부족하다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 대안가설을 기각할 증거가 부족하다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<!-- Page 139 -->
+<section id="통계적-유의성" class="level3">
+<h3 class="anchored" data-anchor-id="통계적-유의성">통계적 유의성</h3>
+<div class="card">
+<p>p-값이 충분히 작은 표본은 영가설이 참일 때 기대했던 것보다 극단적인 표본을 얻었다는 의미이다. 이럴 때 데이터는 통계적 유의성(statistical significance)이 있다고 말한다. 통계적으로 유의한 데이터는 영가설을 반박하고 대안가설을 지지하는 확실한 증거를 제공한다. 모집단에 관한 주장을 뒷받침하기 위해 표본을 활용할 수 있다.</p>
+</div>
+<div class="card">
+<p><span id="ex-4-16" class="qlabel">예제 4.16.</span> <a href="../chapters/04-01-hypothesis-testing.html#ex-4-7">예제 4.7</a>에서 회사는 공급받은 닭고기의 비소 농도가 <span class="math inline">\(80\)</span> ppb보다 높은지 검사한다. 가설은 다음과 같다.</p>
+<ul>
+<li><span class="math inline">\(H_0: \mu = 80\)</span></li>
+<li><span class="math inline">\(H_a: \mu &gt; 80\)</span></li>
+</ul>
+<p>여기서 <span class="math inline">\(\mu\)</span>는 공급받은 모든 닭고기의 평균 비소 농도이다.</p>
+<p><span class="qsub">(1)</span> 표본이 통계적으로 유의하다면, 회사는 어떤 결론을 내릴까?</p>
+<p><span class="qsub">(2)</span> 표본이 통계적으로 유의하지 않다면, 회사의 결론은 무엇일까?</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p><span class="qsub">(1)</span> 표본이 통계적으로 유의하다면, 회사는 공급받은 닭고기의 평균 비소 농도가 80보다 높다는 증거를 발견한 것이다. 회사는 이 공급자의 닭고기를 사지 말아야 한다.</p>
+<p><span class="qsub">(2)</span> 표본이 통계적으로 유의하지 않다면, 회사는 공급받은 닭고기의 평균 비소 농도에 관하여 어떤 결론도 내릴 수 없다. 평균 비소 농도가 80보다 클 수도 있고 아닐 수도 있으므로, 회사는 이 공급자의 닭고기 공급 계약을 취소할 증거는 충분하지 않다.</p>
+<p>p-값이 얼마나 작아야 통계적으로 유의하다고 말할 수 있을까? p-값이 <span class="math inline">\(0.0001\)</span>이면 통계적으로 유의하고, <span class="math inline">\(0.5\)</span>일 때는 통계적으로 유의하지 않다고 결정하는 데 동의한다고 하자. p-값이 <span class="math inline">\(0.0001\)</span>과 <span class="math inline">\(0.5\)</span> 사이에 있을 때는 어떻게 할 것인가? 사람마다 기준이 달라 같은 p-값에 대하여 유의성 판단이 다를 것이다. 따라서 사전에 합리적인 커트라인을 제시해야 한다. 통계학자는 커트라인을 검증의 유의수준이라고 부르며 그리스 문자 <span class="math inline">\(\alpha\)</span>(alpha)로 표기한다. <span class="math inline">\(\alpha = 0.05\)</span>라면, 우리는 표본의 p-값이 <span class="math inline">\(0.05\)</span>보다 작을 때 통계적으로 유의하다고 판단하는 <span class="math inline">\(5\%\)</span> 검증을 한다고 말한다.</p>
+<p>간단히 <span class="math inline">\(P &lt; 0.05\)</span>로 표기하면 p-값이 <span class="math inline">\(0.05\)</span>보다 작아 결과는 <span class="math inline">\(5\%\)</span> 유의수준에서 통계적으로 유의하다는 뜻이다.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="quiz card" data-answer="1" data-explain="">
+<p><span class="qlabel">확인문제 1.</span> 다음 중 <strong>p-값</strong>에 대한 설명으로 올바른 것은 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> p-값은 영가설이 참일 때, 표본 통계량보다 더 극단적인 통계량이 발생할 확률이다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> p-값은 영가설이 거짓일 때, 표본 통계량보다 더 극단적인 통계량이 발생할 확률이다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> p-값은 표본 통계량의 중앙값과 그 범위 내의 확률 분포를 나타낸다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> p-값은 임의화 분포에서 관측된 통계량이 나올 가능성의 비율을 나타낸다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="2" data-explain="">
+<p><span class="qlabel">확인문제 2.</span> <a href="#ex-4-16">예제 4.16</a> 에서, 표본이 통계적으로 유의하다면 회사는 어떤 결론을 내리게 되는가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 평균 비소 농도가 80보다 크지 않다고 결론 내린다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 공급받은 닭고기의 평균 비소 농도가 80보다 높다는 증거를 발견한 것이다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 평균 비소 농도가 80보다 작다고 결론 내린다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 공급받은 닭고기에서 비소 농도가 80보다 낮다고 결론 내린다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="1" data-explain="">
+<p><span class="qlabel">확인문제 3.</span> <a href="#ex-4-16">예제 4.16</a> 에서, p-값이 <span class="math inline">\(0.5\)</span>일 때 회사는 어떤 결론을 내리게 되는가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 평균 비소 농도가 80보다 클 수도 있고 작을 수도 있다는 결론을 내린다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 공급받은 닭고기의 평균 비소 농도가 80보다 크다고 결론 내린다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 평균 비소 농도가 80보다 크지 않다고 결론 내린다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 평균 비소 농도가 80보다 크다고 확신할 수 있다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="2" data-explain="">
+<p><span class="qlabel">확인문제 4.</span> <strong>통계적 유의성</strong>을 판단할 때 p-값이 <span class="math inline">\(0.05\)</span>보다 작다면 어떻게 해석하는가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 결과는 통계적으로 유의하지 않다고 판단한다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 결과는 통계적으로 유의하다고 판단한다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 결과가 우연히 발생했을 확률이 <span class="math inline">\(5\%\)</span> 이하라는 의미이다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> p-값이 커질수록 결과는 더욱 유의미하다고 판단한다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="2" data-explain="">
+<p><span class="qlabel">확인문제 5.</span> <a href="#ex-4-16">예제 4.16</a> 에서, 유의수준 <span class="math inline">\(\alpha\)</span>가 <span class="math inline">\(0.05\)</span>일 때, p-값이 <span class="math inline">\(0.04\)</span>라면 회사는 어떤 결정을 내릴 수 있는가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 평균 비소 농도가 80보다 작다고 결론 내린다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 영가설을 기각하고 대안가설을 지지한다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 평균 비소 농도가 80보다 크지 않다고 결론 내린다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 평균 비소 농도가 80보다 작을 수도 있다고 결론 내린다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<!-- Page 140 -->
+</section>
+<section id="통계적-결정" class="level3">
+<h3 class="anchored" data-anchor-id="통계적-결정">통계적 결정</h3>
+<div class="card">
+<p>p-값이 작다는 것은 표본 결과가 그저 우연히 발생한 것이 아니며, 영가설을 반박하고 대안가설을 지지하는 증거가 충분하다는 뜻이다. 영가설을 반박하는 증거가 충분할 때, 대안가설을 선호하고 <strong><em>영가설을 기각한다</em></strong>(reject <span class="math inline">\(H_0\)</span>)고 말한다. 데이터가 영가설 하에서 충분히 발생할 수 있을 때는 <strong><em>영가설을 기각하지 못한다</em></strong>(do not reject <span class="math inline">\(H_0\)</span>)고 표현한다. 유의수준 <span class="math inline">\(\alpha\)</span>가 주어지면 표본 통계량에서 얻은 p-값과 <span class="math inline">\(\alpha\)</span>를 비교하여 통계적 검증에 대한 결론을 내리는 것은 간단하다.</p>
+<ul>
+<li>p-값 &lt; <span class="math inline">\(\alpha\)</span>: <span class="math inline">\(H_0\)</span>를 기각한다. 결과는 통계적으로 유의하고 대안가설이 참이라는 확실한 증거가 있다.</li>
+<li>p-값 ≥ <span class="math inline">\(\alpha\)</span>: <span class="math inline">\(H_0\)</span>를 기각하지 못한다. 결과는 통계적으로 유의하지 않고 대안가설이 참이라는 확실한 증거는 없다.</li>
+</ul>
+</div>
+<div class="card">
+<p><span id="ex-4-17" class="qlabel">예제 4.17.</span> <a href="../chapters/04-02-p-values.html#ex-4-12">예제 4.12</a>에서 학생이 4자리 숫자를 무작위로 만들 때 마지막 자리의 숫자가 0인 비율이 <span class="math inline">\(10\%\)</span>보다 작은지 검증하는 문제의 가설은 <span class="math inline">\(H_0: p = 0.1\)</span> vs <span class="math inline">\(H_a: p &lt; 0.1\)</span> 이고 p-값은 <span class="math inline">\(0.001\)</span>이었다. <span class="math inline">\(0.05\)</span> 유의수준에서 어떤 결정을 내려야 할까? <span class="math inline">\(\alpha = 0.10\)</span> 또는 <span class="math inline">\(\alpha = 0.01\)</span>이면 결정이 달라지는가?</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p>p-값 <span class="math inline">\(0.001\)</span>은 유의수준 <span class="math inline">\(0.05\)</span>보다 작으므로 <span class="math inline">\(H_0\)</span>를 기각한다. 학생이 4자리 무작위 숫자를 만들 때, 마지막 자리의 숫자가 0인 비율은 실제로 무작위일 때 기대되는 <span class="math inline">\(10\%\)</span>의 비율보다 작다는 증거를 얻었다. p-값은 <span class="math inline">\(0.10\)</span>과 <span class="math inline">\(0.01\)</span>보다 작으므로 결론과 해석은 변하지 않는다. 학생들은 도구에 의지하지 않고 무작위 수를 만드는 것에 능하지 않다!</p>
+<p>공식적으로 가설검증을 할 때는, <strong>영가설의 기각여부를 결정한 후에 반드시 대안가설과 문제의 맥락에 따른 결론을 기술해야 한다</strong>.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<p><span id="ex-4-18" class="qlabel">예제 4.18.</span> <a href="../chapters/04-02-p-values.html#ex-4-10">예제 4.10</a>에서 밤에 전깃불을 켜놓으면 어두울 때보다 쥐의 평균 몸무게가 더 증가하는지 검증하는 문제의 가설은 <span class="math inline">\(H_0: \mu_L = \mu_D\)</span> vs <span class="math inline">\(H_a: \mu_L &gt; \mu_D\)</span>이고 p-값은 <span class="math inline">\(0.018\)</span>이었다. <span class="math inline">\(5\%\)</span> 유의수준을 사용하여 다음 물음에 답하라.</p>
+<p><span class="qsub">(1)</span> 결과는 통계적으로 유의한가?</p>
+<p><span class="qsub">(2)</span> 검증의 공식적인 결론은 무엇인가?</p>
+<p><span class="qsub">(3)</span> 문맥에 알맞게 결론을 기술하라.</p>
+<p><span class="qsub">(4)</span> 밤에 전깃불을 켜놓으면 쥐의 평균 몸무게를 증가시킨다고 결론 내릴 수 있는가?</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p><span class="qsub">(1)</span> 통계적으로 유의하다. p-값 <span class="math inline">\(0.018\)</span>은 유의수준 <span class="math inline">\(0.05\)</span>보다 작기 때문이다.</p>
+<p><span class="qsub">(2)</span> p-값 <span class="math inline">\(0.018\)</span>은 유의수준 <span class="math inline">\(0.05\)</span>보다 작으므로 공식적인 결론은 “<span class="math inline">\(H_0\)</span>를 기각한다”이다.</p>
+<p><span class="qsub">(3)</span> <span class="math inline">\(H_0\)</span>를 기각하므로 대안가설 <span class="math inline">\(\mu_L &gt; \mu_D\)</span>을 지지하는 증거를 얻었다. 밤에 전깃불을 켜놓았을 때 쥐의 평균 몸무게가 어두웠을 때보다 더 많이 증가한다는 확실한 증거를 얻었다.</p>
+<p><span class="qsub">(4)</span> 있다. 결과는 통계적으로 유의하고 데이터는 실험에서 얻어졌으므로 인과성이 존재한다고 결론 내릴 수 있다.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="quiz card" data-answer="2" data-explain="">
+<p><span class="qlabel">확인문제 1.</span> 다음 중 <strong>p-값</strong>에 대한 설명으로 올바른 것은 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> p-값이 작을수록 영가설을 기각할 확률이 낮다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> p-값은 표본 통계량이 영가설이 참일 때 얼마나 극단적일지를 나타낸다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> p-값은 영가설을 기각하는 기준이 된다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> p-값이 클수록 대안가설을 지지하는 증거가 강하다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="2" data-explain="">
+<p><span class="qlabel">확인문제 2.</span> <a href="#ex-4-17">예제 4.17</a> 에서 p-값이 <span class="math inline">\(0.001\)</span>일 때, 유의수준 <span class="math inline">\(\alpha\)</span>가 <span class="math inline">\(0.05\)</span>일 경우 어떤 결정을 내려야 하는가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 영가설을 기각하지 못한다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 영가설을 기각한다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> p-값이 너무 커서 결론을 내릴 수 없다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 대안가설을 기각한다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="2" data-explain="">
+<p><span class="qlabel">확인문제 3.</span> <a href="#ex-4-18">예제 4.18</a> 에서, p-값이 <span class="math inline">\(0.018\)</span>일 때 <strong>유의수준 <span class="math inline">\(5\%\)</span></strong>에서 결과는 통계적으로 어떤지 판단하라.</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 결과는 통계적으로 유의하지 않다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 결과는 통계적으로 유의하다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> p-값이 <span class="math inline">\(0.018\)</span>이라면 결과가 무의미하다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> p-값이 <span class="math inline">\(0.05\)</span>보다 크면 통계적으로 유의하지 않다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="3" data-explain="">
+<p><span class="qlabel">확인문제 4.</span> <a href="#ex-4-18">예제 4.18</a> 에서 검증 후 공식적인 결론은 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 영가설을 기각하지 않는다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 대안가설을 지지한다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 영가설을 기각한다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 영가설을 수용한다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="3" data-explain="">
+<p><span class="qlabel">확인문제 5.</span> <a href="#ex-4-18">예제 4.18</a> 에서, 밤에 전깃불을 켜놓으면 쥐의 몸무게가 증가한다고 결론 내릴 수 있는가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 결론을 내릴 수 없다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 결과는 통계적으로 유의하지만, 인과성을 결론 내릴 수 없다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 통계적으로 유의하고 실험에서 얻은 데이터로 인과성을 결론 내릴 수 있다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 결과가 유의하지 않으므로 결론을 내릴 수 없다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="card">
+<!-- Page 141 -->
+<p><span id="ex-4-19" class="qlabel">예제 4.19.</span> <a href="../chapters/04-02-p-values.html#sec-4-2">4.2절</a>의 <a href="../chapters/04-02-p-values.html#ex-4-14">예제 4.14</a>는 남녀 사이에 게임을 즐기는 비율이 다른지에 관한 가설 <span class="math inline">\(H_0: p_M = p_F\)</span> vs <span class="math inline">\(H_a: p_M \neq p_F\)</span>를 다룬다. 이 검증의 p-값은 <span class="math inline">\(0.282\)</span>이다. 유의수준 <span class="math inline">\(5\%\)</span>에서 공식적인 결정은 무엇인가? 문맥에 맞는 결론을 기술하라.</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p>p-값 <span class="math inline">\(0.282\)</span>는 유의수준 <span class="math inline">\(0.05\)</span>보다 작지 않다. <span class="math inline">\(H_0\)</span>를 기각할 충분한 증거가 없다. 남녀 사이에 게임을 즐기는 비율이 다르다는 확실한 증거를 얻지 못했다.</p>
+<p>공식적인 결정은 “영가설을 기각한다” 또는 “영가설을 기각하지 못한다”의 둘 중에 하나이다. 데이터가 유의하면 <span class="math inline">\(H_0\)</span>를 기각하고, 유의하지 못하면 <span class="math inline">\(H_0\)</span>를 기각하지 못한다.</p>
+<p>위 예제처럼 <strong>표본이 유의하지 않을 때<span class="math inline">\(H_0\)</span>를 채택한다고 말하면 안된다</strong>. 영가설을 반박하는 증거가 부족하다는 것이 영가설을 지지하는 증거는 아니기 때문이다. 사실상 <strong>가설검증은 대안가설을 지지하는 증거만 찾는 것이지, 영가설을 지지하는 증거를 찾는 것은 아니다</strong>. 다음 예제가 이런 점을 분명히 한다.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<p><span id="ex-4-20" class="qlabel">예제 4.20.</span> X라고 불리는 신비한 동물이 있다. 다음 가설을 생각하자.</p>
+<p><span class="math inline">\(H_0\)</span>: X는 코끼리이다.</p>
+<p><span class="math inline">\(H_a\)</span>: X는 코끼리가 아니다.</p>
+<p>다음 각각의 증거가 있다면 어떤 결론을 내리겠는가?</p>
+<p><span class="qsub">(1)</span> X는 <span class="math inline">\(4\)</span>개의 다리가 있다.</p>
+<p><span class="qsub">(2)</span> X는 두 다리로 걷는다.</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p><span class="qsub">(1)</span> 코끼리는 다리가 <span class="math inline">\(4\)</span>개이므로 영가설을 기각하지 못한다. 그렇다고 영가설을 받아들여 X는 코끼리라고 결론 내릴 수도 없다. 영가설을 반박하는 충분한 증거를 데이터에서 얻지 못했다. 따라서 우리는 X가 코끼리인지 아닌지는 결정할 수 없다.</p>
+<p><span class="qsub">(2)</span> 코끼리가 두 다리로 걷는 것이 불가능하지는 않지만(서커스에서 훈련받은 코끼리는 두 다리로 걷는다) 매우 드문 일인 것만은 확실하다. 따라서 두 다리로 걷는다는 것은 영가설을 기각하는 충분한 증거가 된다. X는 아마도 코끼리는 아닐 것이라고 결론 내린다.</p>
+<p>이 예제는 <a href="../chapters/04-01-hypothesis-testing.html#sec-4-1">4.1절</a>에서 기술한 영가설과 대안가설의 차이를 강조한다. <strong>가설검증은 대안가설을 지지하고 영가설을 반박하는 증거를 찾기 위하여 설계된 것이다</strong>.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="quiz card" data-answer="2" data-explain="">
+<p><span class="qlabel">확인문제 1.</span> 다음 중 <strong>Example <span class="math inline">\(4.19\)</span></strong>에서 <strong>p-값 <span class="math inline">\(0.282\)</span></strong>에 대한 결론으로 올바른 것은 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> p-값이 <span class="math inline">\(0.282\)</span>로 유의수준 <span class="math inline">\(5\%\)</span>보다 작기 때문에 <span class="math inline">\(H_0\)</span>를 기각한다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> p-값이 <span class="math inline">\(0.282\)</span>로 유의수준 <span class="math inline">\(5\%\)</span>보다 크므로 <span class="math inline">\(H_0\)</span>를 기각하지 않는다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> p-값이 <span class="math inline">\(0.282\)</span>로 유의수준 <span class="math inline">\(5\%\)</span>보다 크면 대안가설을 지지하는 증거가 있다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> p-값이 <span class="math inline">\(0.282\)</span>로 유의수준 <span class="math inline">\(5\%\)</span>보다 작으면 남녀 사이에 게임을 즐기는 비율이 다르다는 확실한 증거가 있다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="3" data-explain="">
+<p><span class="qlabel">확인문제 2.</span> <a href="#ex-4-20">예제 4.20</a> 에서, X가 <span class="math inline">\(4\)</span>개의 다리를 가지고 있을 때 결론은 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 영가설을 기각하고 X는 코끼리라고 결론 내린다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 영가설을 기각하지 못하고 X가 코끼리일 가능성이 높다고 결론 내린다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 영가설을 기각하지 못하고 X가 코끼리일 수 있다고 결론 내린다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 영가설을 기각하지 못하고 X가 코끼리라고 결론 내린다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="1" data-explain="">
+<p><span class="qlabel">확인문제 3.</span> <a href="#ex-4-20">예제 4.20</a> 에서, X가 두 다리로 걷는다면, 결론은 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 영가설을 기각하고 X는 코끼리가 아니라 결론 내린다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 영가설을 기각하지 못하고 X는 코끼리일 가능성이 있다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 영가설을 기각하고 X가 코끼리일 확률이 높다고 결론 내린다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 영가설을 기각하지 못하고 X가 코끼리일 수 있다고 결론 내린다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="4" data-explain="">
+<p><span class="qlabel">확인문제 4.</span> <a href="#ex-4-19">예제 4.19</a> 에서 영가설이 기각되지 않았을 때 어떤 결론을 내리는 것이 올바른가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 영가설을 받아들여 X가 코끼리라고 결론 내린다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 영가설을 기각하고 대안가설을 지지한다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 영가설을 기각하지 못하고 X가 코끼리일 가능성은 없다고 결론 내린다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 영가설을 기각하지 못하고 X가 코끼리일 가능성은 있다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="2" data-explain="">
+<p><span class="qlabel">확인문제 5.</span> <a href="#ex-4-19">예제 4.19</a> 에서 영가설을 기각하지 못한 경우, 어떤 결론을 내려야 하는가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 데이터가 영가설을 지지한다고 결론을 내린다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 영가설을 기각할 증거가 충분하지 않다고 결론 내린다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 대안가설이 참이라는 증거를 찾을 수 없다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 대안가설을 지지한다고 결론 내린다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="card">
+<!-- Page 142 -->
+<p><span id="data-4-3" class="qlabel">데이터 4.3.</span> <strong>미소와 관용</strong></p>
+<p>단순한 미소가 규율 위반에 대한 처벌에 영향을 줄 수 있을까? 한 연구팀이 미소가 범법자의 징계에 영향을 끼치는지 연구하였다. 실험 참가자는 부정행위로 고발된 학생의 징계 수위를 판단하는 대학 징계위원회 구성원의 역할을 맡았다.</p>
+<p>각 용의자의 범행에 대한 설명과 미소를 띠거나 중립적인 표정의 사진 한 장이 제공되었다. 참가자가 결정한 징계 수준에 따라 관용 점수를 산출했다. 전체 자료는 교재 웹사이트 Smiles에서 찾을 수 있다. 연구자는 미소를 띤 용의자의 평균 관용 점수가 중립적인 표정을 가진 용의자의 평균 점수와 다른지 검증한다.</p>
+</div>
+<div class="card">
+<p><span id="ex-4-21" class="qlabel">예제 4.21.</span> 위 실험에서 각 그룹에 참가한 학생 수는 <span class="math inline">\(34\)</span>명이다. <span class="math inline">\(10\)</span>점 만점의 관용 점수에서 미소 그룹의 평균 점수는 <span class="math inline">\(4.91\)</span>, 중립 그룹의 평균 점수는 <span class="math inline">\(4.12\)</span>이다. 미소가 관용에 영향을 끼치는지 유의수준 <span class="math inline">\(5\%\)</span>에서 검증하라.</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p>이 검증은 두 개의 평균을 비교한다. 미소를 짓는 그룹의 평균 관용 점수를 <span class="math inline">\(\mu_s\)</span>, 중립적인 표정을 짓는 그룹의 평균 점수는 <span class="math inline">\(\mu_n\)</span>으로 표기하자. 두 그룹 간의 평균 점수가 다른지 검증하는 것이므로 가설은 다음과 같다.</p>
+<p><span class="math inline">\(H_0: \mu_s = \mu_n\)</span></p>
+<p><span class="math inline">\(H_a: \mu_s \neq \mu_n\)</span></p>
+<p><span class="math inline">\(\bar{x}_s = 4.91\)</span>, <span class="math inline">\(\bar{x}_n = 4.12\)</span> 이므로 표본 평균의 차이는 <span class="math inline">\(\bar{x}_s - \bar{x}_n = 4.91 - 4.12 = 0.79\)</span> 이다. 아래 임의화 분포는 모의실험을 1,000번 하여 만든 것이다. 관측 통계량 <span class="math inline">\(0.79\)</span>보다 큰 값은 <span class="math inline">\(23\)</span>개이다. 양쪽 검증이므로 p-값은 (2×23) / 1000 = <span class="math inline">\(0.046\)</span> 이다. 이 p-값은 유의수준 <span class="math inline">\(0.05\)</span>보다 작다. 미소를 지으면 관용 점수가 다르다는 증거를 얻었다. 미소를 지으면 평균적으로 더 많은 관용을 기대할 수 있다. 여러분이 혹 징계위원회 앞에 선다면 미소를 지어야 한다!</p>
+<p><img src="../images/img_148.PNG" class="img-fluid"></p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<p><span id="ex-4-22" class="qlabel">예제 4.22.</span> 위 데이터에서 미소 그룹 또는 중립 그룹 중에 점수 하나만 조금 달라져도 평균 점수 차이는 <span class="math inline">\(\bar{x}_s - \bar{x}_n = 0.76\)</span> 이 된다. 임의화 분포에서 평균 차이를 넘는 점은 <span class="math inline">\(4\)</span>개가 추가된다. p-값을 계산하고 유의수준 <span class="math inline">\(5\%\)</span>에서 검증하라.</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p>임의화 분포에서 <span class="math inline">\(\bar{x}_s - \bar{x}_n = 0.76\)</span>을 초과하는 점은 23 + 4 = <span class="math inline">\(27\)</span>개이다. p-값은 (2×27) / 1000 = <span class="math inline">\(0.054\)</span> 이다. p-값은 <span class="math inline">\(5\%\)</span>보다 작지 않으므로 영가설을 기각할 수 없다. 미소를 지을 때 관용이 달라진다는 충분한 증거는 없다. 징계위원회 앞에서 미소는 효과가 없다!</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="quiz card" data-answer="2" data-explain="">
+<p><span class="qlabel">확인문제 1.</span> <a href="#ex-4-21">예제 4.21</a> 에서, 미소 그룹과 중립 그룹의 평균 점수 차이가 <span class="math inline">\(0.79\)</span>일 때, p-값을 계산한 결과 <span class="math inline">\(0.046\)</span>이 나왔다. 유의수준 <span class="math inline">\(5\%\)</span>에서 이 결과에 대한 결론은 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> p-값이 유의수준 <span class="math inline">\(0.05\)</span>보다 크므로 영가설을 기각할 수 없다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> p-값이 유의수준 <span class="math inline">\(0.05\)</span>보다 작으므로 영가설을 기각하고 대안가설을 지지한다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> p-값이 유의수준 <span class="math inline">\(0.05\)</span>보다 크므로 대안가설을 지지할 수 있다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> p-값이 유의수준 <span class="math inline">\(0.05\)</span>보다 작으므로 대안가설을 지지할 수 없다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="1" data-explain="">
+<p><span class="qlabel">확인문제 2.</span> <a href="#ex-4-22">예제 4.22</a> 에서, 미소 그룹과 중립 그룹의 평균 점수 차이가 <span class="math inline">\(0.76\)</span>일 때, p-값은 <span class="math inline">\(0.054\)</span>이다. 유의수준 <span class="math inline">\(5\%\)</span>에서 이 결과에 대한 결론은 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> p-값이 유의수준 <span class="math inline">\(0.05\)</span>보다 크므로 영가설을 기각할 수 없다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> p-값이 유의수준 <span class="math inline">\(0.05\)</span>보다 작으므로 영가설을 기각하고 대안가설을 지지한다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> p-값이 유의수준 <span class="math inline">\(0.05\)</span>보다 크므로 대안가설을 지지할 수 있다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> p-값이 유의수준 <span class="math inline">\(0.05\)</span>보다 크므로 영가설을 지지할 수 없다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="1" data-explain="">
+<p><span class="qlabel">확인문제 3.</span> <a href="#ex-4-21">예제 4.21</a> 에서, p-값이 <span class="math inline">\(0.046\)</span>로 유의수준 <span class="math inline">\(5\%\)</span>에서 유의미하다고 할 때, 결론은 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 미소를 지으면 관용 점수가 달라진다는 증거가 충분하다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 미소를 지으면 관용 점수가 달라진다는 증거는 부족하다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 미소를 지으면 관용 점수가 달라진다는 증거가 없다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 미소를 지으면 관용 점수가 달라질 가능성이 없다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="1" data-explain="">
+<p><span class="qlabel">확인문제 4.</span> <a href="#ex-4-22">예제 4.22</a> 에서, p-값이 <span class="math inline">\(0.054\)</span>로 유의수준 <span class="math inline">\(5\%\)</span>에서 유의미하지 않다고 할 때, 결론은 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 미소를 지을 때 관용이 달라진다는 증거가 충분히 없다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 미소를 지을 때 관용이 달라진다는 증거가 충분하다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 미소를 지을 때 관용이 달라질 가능성에 대한 확실한 증거가 없다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 미소를 지을 때 관용이 달라질 가능성에 대한 확실한 증거가 있다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<!-- Page 143 -->
+</section>
+<section id="비공식적인-통계적-결정" class="level3">
+<h3 class="anchored" data-anchor-id="비공식적인-통계적-결정">비공식적인 통계적 결정</h3>
+<div class="card">
+<p><img src="../images/img_149.PNG" class="img-fluid"></p>
+</div>
+<div class="card">
+<p><a href="#ex-4-22">예제 4.22</a>에서 한 사람의 점수 변화가 검증의 결론을 극적으로 바꾸었다. 고전적인 가설검증의 단점&nbsp;하나는 우리에게 흑백논리를 강제한다는 것이다. p-값이 유의수준보다 작으면&nbsp;“영가설을 기각하라” 아니면 “영가설을 기각하지&nbsp;마라”가 공식적인 결정이다. 위 그림 <span class="qsub">(1)</span>가 <span class="math inline">\(5\%\)</span> 유의수준에서 공식적인 결정이다.</p>
+<p>흑백논리에서 벗어날 때 좀 더 편안할 수 있다. 영가설을 기각하는 증거를 얻었다고 상당히 확신은 하지만 그렇다고 영가설을 반박할 만큼 아주 확실하지&nbsp;않은 증거일 수도 있다. 이런 이유로&nbsp;p-값을&nbsp;흑백논리로 해석하지 않고 영가설을 반박하는 증거의 강도가 어느 정도인지 기술하기도 한다. 앞의 두 예제에서&nbsp;p-값 <span class="math inline">\(0.046\)</span>과 <span class="math inline">\(0.054\)</span>는 미소가 관용을 증가시킨다는 보통의(moderate) 증거를 얻었지만 매우&nbsp;강한&nbsp;증거는 아니라고 해석한다.</p>
+<p>위 그림 <span class="qsub">(2)</span>는 영가설을 반박하는 증거의 강도를 다르게 해석한다. 두 가지 방법 중에 어느 것이 옳을까?&nbsp; 둘 다&nbsp;장점이 있다. 명심해야 할 것은 유의수준이 주어지면 구체적인 결정을 할 수도 있고,&nbsp;p-값을 증거의 강도를 측정하는 것으로 사용할 수도 있다는 것이다.</p>
+</div>
+<div class="quiz card" data-answer="2" data-explain="">
+<p><span class="qlabel">확인문제 1.</span> <a href="#ex-4-22">예제 4.22</a> 에서 p-값이 <span class="math inline">\(0.054\)</span>로 유의수준 <span class="math inline">\(5\%\)</span>에서 유의미하지 않다고 결론 내렸을 때, 이 결과에 대해 가장 적절한 해석은 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> p-값이 <span class="math inline">\(0.05\)</span>보다 작으므로 영가설을 기각할 수 있다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> p-값이 <span class="math inline">\(0.05\)</span>보다 크므로 영가설을 기각할 수 없다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> p-값이 <span class="math inline">\(0.05\)</span>보다 크지만 영가설을 기각해야 한다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> p-값이 <span class="math inline">\(0.05\)</span>보다 작으므로 영가설을 기각하지 않는다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="4" data-explain="">
+<p><span class="qlabel">확인문제 2.</span> <strong><a href="#ex-4-22">예제 4.22</a></strong>에서 <strong>p-값 <span class="math inline">\(0.046\)</span>과 <span class="math inline">\(0.054\)</span></strong>는 <strong>미소가 관용을 증가시킨다는 보통의 증거</strong>로 해석되었다. 이를 기반으로, 두 p-값에 대한 결론은 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> p-값 <span class="math inline">\(0.046\)</span>은 매우 강한 증거이고, p-값 <span class="math inline">\(0.054\)</span>는 보통의 증거로 해석된다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 두 p-값 모두 매우 강한 증거로 해석된다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> p-값 <span class="math inline">\(0.046\)</span>은 보통의 증거로 해석되며, p-값 <span class="math inline">\(0.054\)</span>는 강한 증거로 해석된다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 두 p-값은 모두 보통의 증거로 해석된다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="2" data-explain="">
+<p><span class="qlabel">확인문제 3.</span> 영가설을 기각하는 증거가 확실하지 않을 때, p-값을 어떻게 해석해야 할까?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> p-값을 통해 영가설을 기각할지 말지를 결정한다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> p-값은 증거의 강도를 나타내며, 영가설을 반박하는 증거의 강도를 다르게 해석할 수 있다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> p-값은 단지 <span class="math inline">\(0.05\)</span>보다 작은지 큰지에 따라 해석한다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> p-값이 매우 작으면 영가설을 확실하게 반박할 수 있다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="3" data-explain="">
+<p><span class="qlabel">확인문제 4.</span> <a href="#ex-4-21">예제 4.21</a> 에서 p-값 <span class="math inline">\(0.046\)</span>이 나왔을 때, 이 p-값을 해석할 때 가장 중요한 점은 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> p-값이 <span class="math inline">\(0.046\)</span>이면 영가설을 기각할 수 있다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> p-값 <span class="math inline">\(0.046\)</span>은 유의수준 <span class="math inline">\(0.05\)</span>보다 작기 때문에 미소가 관용을 증가시킨다는 강한 증거가 된다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> p-값 <span class="math inline">\(0.046\)</span>은 미소가 관용을 증가시킨다는 보통의 증거를 제공하지만 매우 강한 증거는 아니다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> p-값 <span class="math inline">\(0.046\)</span>은 매우 강한 증거로 해석된다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<!-- Page 144 -->
+</section>
+<section id="학습-내용-정리" class="level3">
+<h3 class="anchored" data-anchor-id="학습-내용-정리">학습 내용 정리</h3>
+<div class="card">
+<p>다음 사항을 이해하거나 해결하는 능력이 있어야 한다.</p>
+<ul>
+<li>p-값이 작으면 대안가설을 지지하는 증거가 더 강하다.</li>
+<li>통계적 유의성이 무엇을 의미하는지 이해한다.</li>
+<li>가설검증에서 영가설 기각 여부를 p-값과 유의수준을 비교하여 할 수 있다.</li>
+<li>가설검증의 결론을 문맥에 맞게 기술할 수 있다.</li>
+<li>p-값으로 공식적인 결정 없이 증거의 강도를 기술할 수 있다.</li>
+<li>다양한 문제에서 가설검증을 할 수 있다.</li>
+</ul>
+</div>
+<section id="p-값과-증거의-강도" class="level4">
+<h4 class="anchored" data-anchor-id="p-값과-증거의-강도">p-값과 증거의 강도</h4>
+<div class="card">
+<p>p-값이 작을수록 영가설을 반박하고 대안가설을 더 강하게 지지한다.</p>
+</div>
+</section>
+<section id="통계적-유의성-1" class="level4">
+<h4 class="anchored" data-anchor-id="통계적-유의성-1">통계적 유의성</h4>
+<div class="card">
+<p>p-값이 충분히 작다면, 관측된 표본 통계량만큼 극단적인 결과는 영가설이 참이라는 가정하에서 우연히 발생하기 어렵다. 이 경우 표본은 통계적 유의성(statistical significance)이 있다고 말한다. 표본이 통계적으로 유의할 때, 영가설을 반박하고 대안가설을 지지하는 확실한 증거를 제공한다.</p>
+</div>
+</section>
+<section id="유의수준" class="level4">
+<h4 class="anchored" data-anchor-id="유의수준">유의수준</h4>
+<div class="card">
+<p>가설검증에서 유의수준 <span class="math inline">\(\alpha\)</span>보다 작은 p-값은 영가설을 반박하고 대안가설을 지지하는 통계적으로 유의한 증거이다. 자주 사용하는 유의수준은 <span class="math inline">\(\alpha = 0.05\)</span>, <span class="math inline">\(\alpha = 0.01\)</span>, <span class="math inline">\(\alpha = 0.10\)</span>이다. 유의수준에 대한 언급이 없을 때는 <span class="math inline">\(\alpha = 0.05\)</span>이다.</p>
+</div>
+</section>
+<section id="공식적인-통계적-결정" class="level4">
+<h4 class="anchored" data-anchor-id="공식적인-통계적-결정">공식적인 통계적 결정</h4>
+<div class="card">
+<ul>
+<li>p-값 <span class="math inline">\(&lt; \alpha\)</span>: <span class="math inline">\(H_0\)</span>를 기각한다. 결과는 통계적으로 유의하고 대안가설이 참이라는 확실한 증거가 있다.</li>
+<li>p-값 <span class="math inline">\(\geq \alpha\)</span>: <span class="math inline">\(H_0\)</span>를 기각하지 못한다. 결과는 통계적으로 유의하지 않고 대안가설이 참이라는 확실한 증거는 없다.</li>
+</ul>
+</div>
+</section>
+<section id="가설검증" class="level4">
+<h4 class="anchored" data-anchor-id="가설검증">가설검증</h4>
+<div class="card">
+<ul>
+<li>모수를 정의하고 영가설과 대안가설을 기술한다.</li>
+<li>관측 통계량 값을 계산한다.</li>
+<li>p-값을 구한다.</li>
+<li>영가설의 기각 여부를 결정한다.</li>
+<li>검증의 결론을 문맥, 대안가설, 연구 문제에 맞게 설명한다.</li>
+</ul>
+</div>
+<div class="quiz card" data-answer="2" data-explain="">
+<p><span class="qlabel">확인문제 1.</span> <strong>p-값이 작을수록</strong> 무엇을 의미하는가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 영가설을 반박하는 증거가 더 약하다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 대안가설을 지지하는 증거가 더 강하다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 통계적 유의성이 낮다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 표본이 우연히 발생할 가능성이 높다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="2" data-explain="">
+<p><span class="qlabel">확인문제 2.</span> <strong>p-값이 <span class="math inline">\(0.03\)</span></strong>이고, 유의수준 <span class="math inline">\(\alpha = 0.05\)</span>일 때, 가설검증의 공식적인 결론은 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(H_0\)</span>를 기각하지 못한다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(H_0\)</span>를 기각한다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 대안가설이 참일 확률은 <span class="math inline">\(0.03\)</span>이다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> p-값이 <span class="math inline">\(0.03\)</span>보다 크므로 <span class="math inline">\(H_0\)</span>를 기각한다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="2" data-explain="">
+<p><span class="qlabel">확인문제 3.</span> <strong>유의수준 <span class="math inline">\(\alpha = 0.05\)</span></strong>에서 <strong>p-값이 <span class="math inline">\(0.07\)</span></strong>이면 어떤 결론을 내릴 수 있는가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 영가설을 기각한다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 영가설을 기각하지 못한다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 결과는 통계적으로 유의하다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 대안가설을 지지하는 증거가 강하다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="3" data-explain="">
+<p><span class="qlabel">확인문제 4.</span> <strong>가설검증에서</strong> p-값이 <strong>유의수준 <span class="math inline">\(\alpha\)</span>보다 작을 때</strong> 어떤 결정을 내릴 수 있는가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(H_0\)</span>를 기각하지 못한다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 결과는 통계적으로 유의하지 않다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(H_0\)</span>를 기각한다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 결과는 통계적으로 유의한지 알 수 없다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="2" data-explain="">
+<p><span class="qlabel">확인문제 5.</span> <a href="#ex-4-21">예제 4.21</a> 에서 p-값이 <span class="math inline">\(0.046\)</span>일 때, 이 p-값을 어떻게 해석할 수 있는가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> p-값이 <span class="math inline">\(0.046\)</span>이면 영가설을 기각할 수 없다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> p-값이 <span class="math inline">\(0.046\)</span>이면 영가설을 기각한다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> p-값이 <span class="math inline">\(0.046\)</span>이면 대안가설이 맞다는 확실한 증거를 제공한다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> p-값이 <span class="math inline">\(0.046\)</span>이면 통계적 유의성이 없다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<!-- Page 145 -->
+<div class="card">
+<p><span id="hw-4-7" class="qlabel">과제 4.7.</span> 각 문제에 주어진 p-값에 알맞은 결론을 고르시오.</p>
+<div class="quiz q" data-answer="1" data-explain="0.05 < p ≤ 0.10이라 유의수준 10%에서만 유의하다.">
+<p><span class="qsub">(1)-</span><span class="subb">a</span> p-값 <span class="math inline">\(0.0875\)</span>의 결론은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 유의수준 10%에서만 영가설 반박 증거가 유의</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 영가설 반박·대안가설 지지 증거가 매우 강함</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 유의수준 10%에서도 영가설 반박 증거가 유의하지 않음</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 유의수준 5%에서는 유의하나 1%에서는 유의하지 않음</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q" data-answer="3" data-explain="p > 0.10이라 어느 유의수준에서도 유의하지 않다.">
+<p><span class="qsub">(1)-</span><span class="subb">b</span> p-값 <span class="math inline">\(0.5457\)</span>의 결론은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 유의수준 10%에서만 영가설 반박 증거가 유의</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 영가설 반박·대안가설 지지 증거가 매우 강함</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 유의수준 10%에서도 영가설 반박 증거가 유의하지 않음</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 유의수준 5%에서는 유의하나 1%에서는 유의하지 않음</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q" data-answer="4" data-explain="0.01 < p ≤ 0.05라 5%에서는 유의하나 1%에서는 유의하지 않다.">
+<p><span class="qsub">(1)-</span><span class="subb">c</span> p-값 <span class="math inline">\(0.0217\)</span>의 결론은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 유의수준 10%에서만 영가설 반박 증거가 유의</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 영가설 반박·대안가설 지지 증거가 매우 강함</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 유의수준 10%에서도 영가설 반박 증거가 유의하지 않음</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 유의수준 5%에서는 유의하나 1%에서는 유의하지 않음</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q" data-answer="2" data-explain="p가 매우 작아 영가설을 반박하는 증거가 매우 강하다.">
+<p><span class="qsub">(1)-</span><span class="subb">d</span> p-값 <span class="math inline">\(0.00003\)</span>의 결론은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 유의수준 10%에서만 영가설 반박 증거가 유의</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 영가설 반박·대안가설 지지 증거가 매우 강함</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 유의수준 10%에서도 영가설 반박 증거가 유의하지 않음</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 유의수준 5%에서는 유의하나 1%에서는 유의하지 않음</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q" data-answer="2" data-explain="p가 매우 작아 영가설을 반박하는 증거가 매우 강하다.">
+<p><span class="qsub">(2)-</span><span class="subb">a</span> p-값 <span class="math inline">\(0.00008\)</span>의 결론은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 유의수준 10%에서만 영가설 반박 증거가 유의</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 영가설 반박·대안가설 지지 증거가 매우 강함</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 유의수준 10%에서도 영가설 반박 증거가 유의하지 않음</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 유의수준 5%에서는 유의하나 1%에서는 유의하지 않음</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q" data-answer="1" data-explain="0.05 < p ≤ 0.10이라 유의수준 10%에서만 유의하다.">
+<p><span class="qsub">(2)-</span><span class="subb">b</span> p-값 <span class="math inline">\(0.0571\)</span>의 결론은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 유의수준 10%에서만 영가설 반박 증거가 유의</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 영가설 반박·대안가설 지지 증거가 매우 강함</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 유의수준 10%에서도 영가설 반박 증거가 유의하지 않음</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 유의수준 5%에서는 유의하나 1%에서는 유의하지 않음</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q" data-answer="4" data-explain="0.01 < p ≤ 0.05라 5%에서는 유의하나 1%에서는 유의하지 않다.">
+<p><span class="qsub">(2)-</span><span class="subb">c</span> p-값 <span class="math inline">\(0.0368\)</span>의 결론은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 유의수준 10%에서만 영가설 반박 증거가 유의</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 영가설 반박·대안가설 지지 증거가 매우 강함</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 유의수준 10%에서도 영가설 반박 증거가 유의하지 않음</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 유의수준 5%에서는 유의하나 1%에서는 유의하지 않음</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q" data-answer="3" data-explain="p > 0.10이라 어느 유의수준에서도 유의하지 않다.">
+<p><span class="qsub">(2)-</span><span class="subb">d</span> p-값 <span class="math inline">\(0.1753\)</span>의 결론은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 유의수준 10%에서만 영가설 반박 증거가 유의</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 영가설 반박·대안가설 지지 증거가 매우 강함</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 유의수준 10%에서도 영가설 반박 증거가 유의하지 않음</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 유의수준 5%에서는 유의하나 1%에서는 유의하지 않음</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<p><span id="hw-4-8" class="qlabel">과제 4.8.</span> 캐나다의 한 연구팀은 유아기에 항생제를 처방하면 나중에 아이가 과체중이 될 가능성이 높아지는지 연구했다. 생후 <span class="math inline">\(1\)</span>년 동안 항생제 처방 여부와 12살 때 과체중 여부를 조사하였다. 각 그룹의 과체중 비율을 비교한 연구의 결론은 "생후 <span class="math inline">\(1\)</span>년 안에 항생제 처방을 받은 아이는 처방을 받지 않은 아이보다 과체중이 될 가능성이 더 높았다(<span class="math inline">\(32.4\%\)</span> vs <span class="math inline">\(18.2\%\)</span>, P<span class="math inline">\(=0.002\)</span>)"이다.</p>
+<div class="quiz qgrid q" data-answer="1" data-explain="처방 여부가 원인 후보이므로 설명변수이다." style="--qcols:2">
+<p><span class="qsub">(1)-</span><span class="subb">a</span> 설명변수는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 항생제 처방 여부</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 과체중 여부</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="2" data-explain="과체중 여부가 결과이므로 반응변수이다." style="--qcols:2">
+<p><span class="qsub">(1)-</span><span class="subb">b</span> 반응변수는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 항생제 처방 여부</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 과체중 여부</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="1" data-explain="처방/미처방으로 나뉘므로 범주형 변수이다." style="--qcols:2">
+<p><span class="qsub">(2)-</span><span class="subb">a</span> ’항생제 처방 여부’는 어떤 변수?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 범주형 변수</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 양적 변수</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="1" data-explain="과체중/정상으로 나뉘므로 범주형 변수이다." style="--qcols:2">
+<p><span class="qsub">(2)-</span><span class="subb">b</span> ’과체중 여부’는 어떤 변수?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 범주형 변수</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 양적 변수</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="1" data-explain="처방을 무작위로 배정하지 않고 기록을 조사했으므로 관측연구이다." style="--qcols:2">
+<p><span class="qsub">(3)</span> 연구의 종류는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 관측연구</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 실험연구</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="1" data-explain="처방 그룹의 과체중 '비율'에 관심이 있으므로 모수는 p_A이다." style="--qcols:5">
+<p><span class="qsub">(4)</span> 항생제 처방 그룹의 모수는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(p_A\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(\mu_A\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(\rho_A\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(\hat{p}_A\)</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> <span class="math inline">\(\bar{x}_A\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="1" data-explain="비처방 그룹의 과체중 비율 모수는 p_N이다." style="--qcols:5">
+<p><span class="qsub">(5)</span> 비처방 그룹의 모수는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(p_N\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(\mu_N\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(\rho_N\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(\hat{p}_N\)</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> <span class="math inline">\(\bar{x}_N\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="1" data-explain="영가설은 두 비율이 같다는 등식(p_A = p_N)이다." style="--qcols:3">
+<p><span class="qsub">(6)-</span><span class="subb">a</span> 영가설의 등식은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(p_A=p_N\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(p_A \lt p_N\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(p_A \gt p_N\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(p_A\neq p_N\)</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> <span class="math inline">\(H_0\)</span></p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> <span class="math inline">\(H_a\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="5" data-explain="영가설의 기호는 H_0이다." style="--qcols:3">
+<p><span class="qsub">(6)-</span><span class="subb">b</span> 영가설의 기호는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(p_A=p_N\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(p_A \lt p_N\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(p_A \gt p_N\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(p_A\neq p_N\)</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> <span class="math inline">\(H_0\)</span></p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> <span class="math inline">\(H_a\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="3" data-explain="처방 그룹의 비율이 더 크다는 대안가설(p_A > p_N)이다." style="--qcols:3">
+<p><span class="qsub">(6)-</span><span class="subb">c</span> 대안가설의 등식은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(p_A=p_N\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(p_A \lt p_N\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(p_A \gt p_N\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(p_A\neq p_N\)</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> <span class="math inline">\(H_0\)</span></p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> <span class="math inline">\(H_a\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="6" data-explain="대안가설의 기호는 H_a이다." style="--qcols:3">
+<p><span class="qsub">(6)-</span><span class="subb">d</span> 대안가설의 기호는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(p_A=p_N\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(p_A \lt p_N\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(p_A \gt p_N\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(p_A\neq p_N\)</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> <span class="math inline">\(H_0\)</span></p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> <span class="math inline">\(H_a\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="3" data-explain="표본 통계량은 두 표본비율의 차 p̂_A - p̂_N이다." style="--qcols:3">
+<p><span class="qsub">(7)-</span><span class="subb">a</span> 표본 통계량의 기호는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(\bar{p}_A-\bar{p}_N\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(\bar{x}_A-\bar{x}_N\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(\hat{p}_A-\hat{p}_N\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(\hat{x}_A-\hat{x}_N\)</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> <span class="math inline">\(0.324\)</span></p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> <span class="math inline">\(0.182\)</span></p>
+</div>
+<div class="opt" data-v="7">
+<p><span class="circ">7</span> <span class="math inline">\(0.002\)</span></p>
+</div>
+<div class="opt" data-v="8">
+<p><span class="circ">8</span> <span class="math inline">\(0.142\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="8" data-explain="0.324 - 0.182 = 0.142이다." style="--qcols:3">
+<p><span class="qsub">(7)-</span><span class="subb">b</span> 표본 통계량의 값은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(\bar{p}_A-\bar{p}_N\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(\bar{x}_A-\bar{x}_N\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(\hat{p}_A-\hat{p}_N\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(\hat{x}_A-\hat{x}_N\)</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> <span class="math inline">\(0.324\)</span></p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> <span class="math inline">\(0.182\)</span></p>
+</div>
+<div class="opt" data-v="7">
+<p><span class="circ">7</span> <span class="math inline">\(0.002\)</span></p>
+</div>
+<div class="opt" data-v="8">
+<p><span class="circ">8</span> <span class="math inline">\(0.142\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="1" data-explain="p-값 0.002 < 0.05이므로 영가설을 기각한다." style="--qcols:3">
+<p><span class="qsub">(8)-</span><span class="subb">a</span> p-값을 사용한 공식 결론은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(H_0\)</span> 기각</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(H_a\)</span> 기각</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(H_0\)</span> 기각 못함</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(H_a\)</span> 기각 못함</p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> 매우 강함</p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> 강함</p>
+</div>
+<div class="opt" data-v="7">
+<p><span class="circ">7</span> 보통</p>
+</div>
+<div class="opt" data-v="8">
+<p><span class="circ">8</span> 조금</p>
+</div>
+<div class="opt" data-v="9">
+<p><span class="circ">9</span> 거의 없음</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="5" data-explain="p-값이 매우 작아 증거가 매우 강하다." style="--qcols:3">
+<p><span class="qsub">(8)-</span><span class="subb">b</span> 증거의 강도는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(H_0\)</span> 기각</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(H_a\)</span> 기각</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(H_0\)</span> 기각 못함</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(H_a\)</span> 기각 못함</p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> 매우 강함</p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> 강함</p>
+</div>
+<div class="opt" data-v="7">
+<p><span class="circ">7</span> 보통</p>
+</div>
+<div class="opt" data-v="8">
+<p><span class="circ">8</span> 조금</p>
+</div>
+<div class="opt" data-v="9">
+<p><span class="circ">9</span> 거의 없음</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="2" data-explain="무작위 배정이 아닌 관측연구이므로 인과관계로 결론지을 수 없다." style="--qcols:2">
+<p><span class="qsub">(9)</span> 항생제 처방이 과체중의 원인이라 결론지을 수 있는가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 있다</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 없다</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<p><span id="hw-4-9" class="qlabel">과제 4.9.</span> 당뇨병은 도시에서 더 널리 퍼지는 경향이 있지만, 왜 그런지는 충분히 이해되지 않았다. 한 연구팀이 쥐에서 당뇨병과 대기오염의 연관성을 연구하기 위하여 <span class="math inline">\(28\)</span>마리의 쥐를 무작위로 두 그룹으로 나누었다. 한 그룹의 <span class="math inline">\(14\)</span>마리 쥐는 깨끗한 공기를 흡입했고 나머지 그룹의 <span class="math inline">\(14\)</span>마리 쥐는 일반적인 대기오염의 공기를 흡입했다. 반응 변수는 <span class="math inline">\(24\)</span>주 후 각 쥐의 인슐린 저항성 점수이다. 인슐린 저항성 점수가 높으면 당뇨병에 걸릴 위험이 크다.</p>
+<div class="quiz qgrid q" data-answer="2" data-explain="쥐를 무작위로 두 공기 조건에 배정했으므로 실험연구이다." style="--qcols:2">
+<p><span class="qsub">(1)</span> 이 연구는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 관측 연구</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 실험 연구</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="1" data-explain="영가설은 두 그룹의 평균이 같다(μ_C = μ_P)이다." style="--qcols:3">
+<p><span class="qsub">(2)-</span><span class="subb">a</span> 깨끗한 공기·오염 공기 그룹의 영가설은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(H_0: \mu_C = \mu_P\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(H_0: \mu_C &lt; \mu_P\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(H_0: \mu_C &gt; \mu_P\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(H_0: \mu_C \neq \mu_P\)</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> <span class="math inline">\(H_a: \mu_C = \mu_P\)</span></p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> <span class="math inline">\(H_a: \mu_C &lt; \mu_P\)</span></p>
+</div>
+<div class="opt" data-v="7">
+<p><span class="circ">7</span> <span class="math inline">\(H_a: \mu_C &gt; \mu_P\)</span></p>
+</div>
+<div class="opt" data-v="8">
+<p><span class="circ">8</span> <span class="math inline">\(H_a: \mu_C \neq \mu_P\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="8" data-explain="연관성의 방향을 정하지 않았으므로 양쪽 대안가설(μ_C ≠ μ_P)이다." style="--qcols:3">
+<p><span class="qsub">(2)-</span><span class="subb">b</span> 대안가설은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(H_0: \mu_C = \mu_P\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(H_0: \mu_C &lt; \mu_P\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(H_0: \mu_C &gt; \mu_P\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(H_0: \mu_C \neq \mu_P\)</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> <span class="math inline">\(H_a: \mu_C = \mu_P\)</span></p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> <span class="math inline">\(H_a: \mu_C &lt; \mu_P\)</span></p>
+</div>
+<div class="opt" data-v="7">
+<p><span class="circ">7</span> <span class="math inline">\(H_a: \mu_C &gt; \mu_P\)</span></p>
+</div>
+<div class="opt" data-v="8">
+<p><span class="circ">8</span> <span class="math inline">\(H_a: \mu_C \neq \mu_P\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<p><img src="../images/img_150.PNG" class="img-fluid"></p>
+<div class="quiz q" data-answer="1" data-explain="차이 -4.4가 임의화 분포에서 극단적이라 영가설을 기각한다.">
+<p><span class="qsub">(3)</span> 표본 평균 차이 <span class="math inline">\(D=\bar{x}_C-\bar{x}_P=1.8-6.2=-4.4\)</span>. 임의화 분포로 본 결론은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 영가설을 기각한다</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 영가설을 기각하지 못한다</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 대안가설을 기각한다</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 영가설을 채택한다</p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> 대안가설을 채택한다</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="4" data-explain="임의화 분포에서 차이가 매우 극단적이라 p-값은 약 0.001이다." style="--qcols:4">
+<p><span class="qsub">(4)</span> p-값은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 0.10</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 0.05</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 0.01</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 0.001</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q" data-answer="1" data-explain="무작위 배정 실험이므로 공기가 당뇨병에 영향을 준다는 결론이 가능하다.">
+<p><span class="qsub">(5)</span> 문맥에 맞는 결론은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 당뇨병은 공기의 영향을 받는다</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 공기와 당뇨병은 관계가 없다</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 당뇨병에 걸리면 깨끗한 공기를 마셔야 한다</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 공기는 당뇨병의 원인이 아니다</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<!-- 소유권자: 프로브 (빌드팀) | 사용자: 프로브 / Date: 2026-06-23 -->
+<!-- 인터랙티브 퀴즈 채점 (self-host, 외부의존 0). 시안 넥서스-최종통합시안-★★★★★ 의 <script> 이식.
+     _quarto.yml format.html.include-after-body 로 전 페이지 주입. .quiz[data-answer][data-explain] 마크업과 짝. -->
+<script>
+document.querySelectorAll('.quiz').forEach(function(q){
+  var ans = q.getAttribute('data-answer'), fb = q.querySelector('.quiz-feedback');
+  q.querySelectorAll('.opt').forEach(function(opt){
+    opt.addEventListener('click', function(){
+      q.querySelectorAll('.opt').forEach(function(o){ o.classList.remove('correct','wrong'); });
+      if (opt.getAttribute('data-v') === ans) {
+        opt.classList.add('correct');
+        fb.className = 'quiz-feedback ok';
+        fb.textContent = '정답입니다! ' + (q.getAttribute('data-explain') || '');
+      } else {
+        opt.classList.add('wrong');
+        fb.className = 'quiz-feedback no';
+        fb.textContent = '다시 생각해 보세요.';
+      }
+    });
+  });
+});
+</script>
+<!-- 소유권자: 빌드팀 | 작성 대행: 넥서스(컨트롤타워) — 프로브 부재로 대표 지시 직접 진행 / Date: 2026-06-23 -->
+<!-- 예제 풀이 블러 리빌 (self-host, 외부의존 0). 시안 넥서스-예제블러리빌-★★★★★.
+     _quarto.yml format.html.include-after-body 로 전 페이지 주입. .card.sol-card 마크업과 짝.
+     풀이 카드 클릭 시 .on 추가 → 블러 해제. -->
+<script>
+document.querySelectorAll('.sol-card').forEach(function(c){
+  c.addEventListener('click', function(){ c.classList.add('on'); });
+});
+</script>
+<!-- 소유권자: 빌드팀 | 작성: 넥서스(컨트롤타워) / Date: 2026-06-23 -->
+<!-- 주관식 정답 확인 토글 (self-host, 외부의존 0). 옵저버 정석 .ansbtn/.ansbox 와 짝.
+     _quarto.yml include-after-body 로 전 페이지 주입. -->
+<script>
+document.querySelectorAll('.ansbtn').forEach(function(b){
+  b.addEventListener('click', function(){
+    var box = b.nextElementSibling;
+    if (!box || !box.classList.contains('ansbox')) return;
+    var on = box.classList.toggle('show');
+    b.textContent = on ? '정답 숨기기 ▴' : '정답 확인 ▾';
+  });
+});
+</script>
+<!-- 소유권자: 넥서스(컨트롤타워) | 사용자: 넥서스 / Date: 2026-06-25 -->
+<!-- 데이터뷰 iframe을 콘텐츠 높이에 자동 맞춤 → 표마다 정확한 높이(여백/스크롤 제거).
+     file:// 에선 contentDocument 접근이 차단되므로 자식이 자기 높이를 postMessage로 보내는 방식이 1순위.
+     http 에선 contentDocument 폴링도 병행. self-host, 외부의존 0. -->
+<script>
+(function(){
+  function setH(f, h){ if(h > 0){ f.scrolling = 'no'; f.style.height = (h + 4) + 'px'; } }
+  // 1순위: 자식이 postMessage 로 보낸 높이 (file:// 포함 동작)
+  window.addEventListener('message', function(e){
+    if(e.data && e.data.type === 'dvHeight' && e.data.h > 0){
+      document.querySelectorAll('iframe[src*="data-views/"]').forEach(function(f){
+        if(f.contentWindow === e.source) setH(f, e.data.h);
+      });
+    }
+  });
+  // 2순위: same-origin(http) 직접 읽기 (file:// 에선 catch 되어 무시)
+  function fit(f){
+    try{
+      var d = f.contentDocument || f.contentWindow.document;
+      if(d && d.body) setH(f, Math.max(d.documentElement.scrollHeight, d.body.scrollHeight, d.body.offsetHeight));
+    }catch(e){}
+  }
+  function init(){
+    document.querySelectorAll('iframe[src*="data-views/"]').forEach(function(f){
+      f.scrolling = 'no';
+      f.addEventListener('load', function(){ fit(f); [300,800].forEach(function(t){ setTimeout(function(){fit(f);}, t); }); });
+      [200,600,1200,2200].forEach(function(t){ setTimeout(function(){fit(f);}, t); });
+    });
+  }
+  if(document.readyState === 'complete') init();
+  else window.addEventListener('load', init);
+})();
+</script>
+<!-- 엑셀 코드블록(pre.xlcode) 복사버튼 — self-host, 외부의존 0 (질럿, 2026-06-23) -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('pre.xlcode').forEach(function (pre) {
+    if (pre.dataset.xlcopy) return;
+    pre.dataset.xlcopy = '1';
+    var code = pre.textContent;            // ★ 버튼 추가 전 캡처 = 태그 없는 순수 수식
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'xlcopy';
+    btn.textContent = '복사';
+    btn.addEventListener('click', function () {
+      navigator.clipboard.writeText(code).then(function () {
+        btn.textContent = '복사됨';
+        setTimeout(function () { btn.textContent = '복사'; }, 1500);
+      });
+    });
+    pre.appendChild(btn);
+  });
+});
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/04-02-p-values.html" class="pagination-link" aria-label="4.2 p-값">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">4.2 p-값</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/04-04-supplement.html" class="pagination-link" aria-label="4.4 가설검증의 오류">
+        <span class="nav-page-text"><span class="chapter-title">4.4 가설검증의 오류</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

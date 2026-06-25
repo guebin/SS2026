@@ -1,0 +1,1994 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>BaseballSalaries2015.csv – 통계적 사고와 사회</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../datasets/BodyFat.html" rel="next">
+<link href="../datasets/temp.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-de63f62b328812d8e578a4d74e282472.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-3355e44214f8815af4d3cdb2eb254b3a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../datasets/AllCountries.html">데이터</a></li><li class="breadcrumb-item"><a href="../datasets/BaseballSalaries2015.html"><span class="chapter-title">BaseballSalaries2015.csv</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">통계적 사고와 사회</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">통계적 사고와 사회</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">강의 소개</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-01-intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.1. 강의 소개</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-02-thinking.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.2. 통계적 사고란 무엇인가?</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-03-examples.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.3. 통계적 사고 예제</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-04-montyhall.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.4. 몬티 홀 게임</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-05-ppdac.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.5. PPDAC 사이클</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-06-mortality.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.6. 산모 사망률</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-07-cholera.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.7. 콜레라와 존 스노우</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../chapters/01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1장. 데이터 수집</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-01-data-structure.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">1.1 데이터의 구조</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-02-sampling.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">1.2 모집단에서 표본 추출</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-03-causality.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">1.3 실험연구와 관측연구</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../chapters/02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2장. 데이터 기술하기</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-01-categorical.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.1 범주형 변수</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-02-quantitative-center.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.2 양적 변수 한 개: 모양과 중심</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-03-quantitative-variation.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.3 양적 변수 한 개: 변동</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-04-outliers-boxplot.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.4 이상값과 상자그림</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-05-scatterplot-correlation.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.5 양적 변수 두 개: 산점도와 상관관계</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-06-regression.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.6 양적 변수 두 개: 선형회귀</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-07-multivariate.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.7 데이터 시각화와 다중 변수</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../chapters/03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3장. 신뢰구간</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-01-sampling-distribution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3.1 표집 분포</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-02-confidence-intervals.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3.2 신뢰구간에 대한 이해</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-03-bootstrap.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3.3 부트스트랩 신뢰구간</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-04-percentile-bootstrap.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3.4 백분위수에 의한 부트스트랩 신뢰구간</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../chapters/04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4장. 가설검증</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-01-hypothesis-testing.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4.1 가설검증 소개</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-02-p-values.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4.2 p-값</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-03-significance.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4.3 통계적 유의성 판단</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-04-supplement.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4.4 가설검증의 오류</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-05-inference-summary.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4.5 통계적 추론 정리</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">참고자료</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-01-lotto.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">6/45 로또</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-02-numbergame.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">반응시간 게임</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">위젯</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../widgets/spreadsheet.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">스프레드시트</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../widgets/distribution-calculator.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">분포 계산기</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../widgets/r-calculator.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">R 계산기</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../widgets/jupyterlite.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">R/Python 실습</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">데이터</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/AllCountries.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">AllCountries.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/temp.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">April14Temps.csv (temp.csv)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/BaseballSalaries2015.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">BaseballSalaries2015.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/BodyFat.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">BodyFat.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/BodyTemp50.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">BodyTemp50.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/CarDepreciation.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">CarDepreciation.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/CommuteAtlanta.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">CommuteAtlanta.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/CommuteStLouis.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">CommuteStLouis.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/CricketChirps.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">CricketChirps.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/DDS.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">DDS.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/ElectionMargin.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">ElectionMargin.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/ExerciseHours.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">ExerciseHours.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/FloridaLakes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">FloridaLakes.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HappyPlanetIndex.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HappyPlanetIndex.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HeightData.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HeightData.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HollywoodMovies.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HollywoodMovies.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HollywoodMovies2011.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HollywoodMovies2011.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HoneybeeWaggle.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HoneybeeWaggle.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HouseStarts.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HouseStarts.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/Life.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Life.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/LightatNight.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">LightatNight.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/MalevolentUniformsNFL.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">MalevolentUniformsNFL.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/Mammal2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Mammal2.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/MustangPrice.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">MustangPrice.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/NutritionStudy.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">NutritionStudy.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/RestaurantTips.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">RestaurantTips.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/RetailSales.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">RetailSales.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/StudentSurvey.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">StudentSurvey.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/USStates.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">USStates.csv</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+ <span class="menu-text">데이터 표(본문 임베드)</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/StudentSurvey.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">StudentSurvey.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/AllCountries.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">AllCountries.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/Life.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Life.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/Mammal2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Mammal2.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/temp.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">temp.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/ElectionMargin.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">ElectionMargin.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/HoneybeeWaggle.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HoneybeeWaggle.csv</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page-right" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../datasets/AllCountries.html">데이터</a></li><li class="breadcrumb-item"><a href="../datasets/BaseballSalaries2015.html"><span class="chapter-title">BaseballSalaries2015.csv</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-title">BaseballSalaries2015.csv</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-right">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<script type="text/plain" id="csvdata">
+Name,Salary,Team,Position
+Clayton Kershaw,31.000,LAD ,SP
+Justin Verlander,28.000,DET ,SP
+Zack Greinke,27.000,LAD ,SP
+Josh Hamilton,25.000,LAA ,LF
+Ryan Howard,25.000,PHI ,1B
+Cliff Lee,25.000,PHI ,SP
+Felix Hernandez,24.857,SEA ,SP
+Albert Pujols,24.000,LAA ,1B
+Robinson Cano,24.000,SEA ,2B
+Prince Fielder,24.000,TEX ,1B
+Cole Hamels,23.500,PHI ,SP
+Mark Teixeira,23.125,NYY ,1B
+Joe Mauer,23.000,MIN ,1B
+CC Sabathia,23.000,NYY ,SP
+Miguel Cabrera,22.000,DET ,1B
+Alex Rodriguez,22.000,NYY ,3B
+Masahiro Tanaka,22.000,NYY ,SP
+Jose Reyes,22.000,TOR ,SS
+Adrian Gonzalez,21.857,LAD ,1B
+Jayson Werth,21.571,WSH ,LF
+Carl Crawford,21.357,LAD ,LF
+Matt Kemp,21.250,SD ,RF
+Jacoby Ellsbury,21.143,NYY ,CF
+Matt Cain,20.833,SF ,SP
+Troy Tulowitzki,20.000,COL ,SS
+Jon Lester,20.000,CHC ,SP
+Mark Buehrle,20.000,TOR ,SP
+Hanley Ramirez,19.750,BOS ,LF
+David Price,19.750,DET ,SP
+Adam Wainwright,19.500,STL ,SP
+David Wright,19.347,NYM ,3B
+Hunter Pence,18.700,SF ,RF
+C.J. Wilson,18.500,LAA ,SP
+Jered Weaver,18.200,LAA ,SP
+Andre Ethier,18.000,LAD ,RF
+Tim Lincecum,18.000,SF ,SP
+Pablo Sandoval,17.600,BOS ,3B
+Buster Posey,17.278,SF ,C
+Max Scherzer,17.143,WSH ,SP
+Brian McCann,17.000,NYY ,C
+Anibal Sanchez,16.800,DET ,SP
+Jordan Zimmermann,16.500,WSH ,SP
+Carlos Gonzalez,16.429,COL ,RF
+Matt Holliday,16.228,STL ,LF
+Adrian Beltre,16.000,TEX ,3B
+Ian Kinsler,16.000,DET ,2B
+Curtis Granderson,16.000,NYM ,RF
+Mike Napoli,16.000,BOS ,1B
+David Ortiz,16.000,BOS ,DH
+John Danks,15.750,CWS ,SP
+Elvis Andrus,15.333,TEX ,SS
+Yadier Molina,15.200,STL ,C
+Melvin Upton Jr,15.050,SD ,CF
+Nick Swisher,15.000,CLE ,RF
+Jhonny Peralta,15.000,STL ,SS
+Carlos Beltran,15.000,NYY ,RF
+Justin Upton,14.708,SD ,LF
+Nelson Cruz,14.250,SEA ,RF
+Joey Votto,14.000,CIN ,1B
+Shin-Soo Choo,14.000,TEX ,RF
+Ryan Zimmerman,14.000,WSH ,1B
+Victor Martinez,14.000,DET ,DH
+Jose Bautista,14.000,TOR ,RF
+Aramis Ramirez,14.000,MIL ,3B
+Alex Gordon,13.750,KC ,LF
+Ervin Santana,13.500,MIN ,SP
+Michael Bourn,13.500,CLE ,CF
+Adam Jones,13.355,BAL ,CF
+Dan Uggla,13.250,WSH ,2B
+Matt Harrison,13.200,TEX ,SP
+Ryan Braun,13.111,MIL ,RF
+Chase Headley,13.000,NYY ,3B
+Edwin Jackson,13.000,CHC ,SP
+Jonathan Papelbon,13.000,PHI ,RP
+Melky Cabrera,13.000,CWS ,LF
+Shane Victorino,13.000,BOS ,RF
+Scott Kazmir,13.000,OAK ,SP
+Yovani Gallardo,13.000,TEX ,SP
+Brett Gardner,12.500,NYY ,LF
+Brandon McCarthy,12.500,LAD ,SP
+Jorge De La Rosa,12.500,COL ,SP
+Rick Porcello,12.500,BOS ,SP
+Clay Buchholz,12.250,BOS ,SP
+Matt Garza,12.209,MIL ,SP
+Trevor Cahill,12.200,ATL ,SP
+Dustin Pedroia,12.142,BOS ,2B
+Brandon Phillips,12.083,CIN ,2B
+Jay Bruce,12.042,CIN ,RF
+Miguel Montero,12.000,CHC ,C
+Ricky Nolasco,12.000,MIN ,SP
+Aaron Hill,12.000,ARI ,2B
+Adam LaRoche,12.000,CWS ,1B
+R.A. Dickey,12.000,TOR ,SP
+Tim Hudson,12.000,SF ,SP
+Chris Davis,12.000,BAL ,1B
+Ubaldo Jimenez,11.923,BAL ,SP
+Francisco Liriano,11.667,PIT ,SP
+Evan Longoria,11.500,TB ,3B
+Doug Fister,11.400,WSH ,SP
+J.J. Hardy,11.209,BAL ,SS
+Gio Gonzalez,11.100,WSH ,SP
+Nick Markakis,11.000,ATL ,RF
+Martin Prado,11.000,MIA ,3B
+Kyle Lohse,11.000,MIL ,SP
+Coco Crisp,11.000,OAK ,CF
+Bartolo Colon,11.000,NYM ,SP
+Ian Desmond,11.000,WSH ,SS
+Jimmy Rollins,11.000,LAD ,SS
+Yoenis Cespedes,10.500,DET ,LF
+Torii Hunter,10.500,MIN ,RF
+Angel Pagan,10.250,SF ,CF
+Andrew McCutchen,10.208,PIT ,CF
+Homer Bailey,10.000,CIN ,SP
+James Shields,10.000,SD ,SP
+Yu Darvish,10.000,TEX ,SP
+David Robertson,10.000,CWS ,RP
+Alexei Ramirez,10.000,CWS ,SS
+Scott Feldman,10.000,HOU ,SP
+Edwin Encarnacion,10.000,TOR ,1B
+Chase Utley,10.000,PHI ,2B
+Joe Nathan,10.000,DET ,RP
+Brett Anderson,10.000,LAD ,SP
+Dan Haren,10.000,MIA ,SP
+Johnny Cueto,10.000,CIN ,SP
+Howie Kendrick,9.850,LAD ,2B
+Ian Kennedy,9.850,SD ,SP
+Jeff Samardzija,9.800,CWS ,SP
+Mike Leake,9.775,CIN ,SP
+Bronson Arroyo,9.500,ARI ,P
+Alex Rios,9.500,KC ,RF
+Dexter Fowler,9.500,CHC ,CF
+Justin Masterson,9.500,BOS ,SP
+Mat Latos,9.400,MIA ,SP
+Jaime Garcia,9.375,STL ,SP
+Craig Kimbrel,9.250,SD ,RP
+Phil Hughes,9.200,MIN ,SP
+Andrew Miller,9.000,NYY ,RP
+Jeremy Guthrie,9.000,KC ,SP
+Jake Peavy,9.000,SF ,SP
+Jonathan Broxton,9.000,MIL ,RP
+Jason Hammel,9.000,CHC ,SP
+Koji Uehara,9.000,BOS ,RP
+Denard Span,9.000,WSH ,CF
+Freddie Freeman,8.859,ATL ,1B
+Jason Heyward,8.800,STL ,RF
+Bud Norris,8.800,BAL ,SP
+Erick Aybar,8.750,LAA ,SS
+Jose Abreu,8.667,CWS ,1B
+James Loney,8.667,TB ,1B
+Jason Vargas,8.500,KC ,SP
+Carlos Ruiz,8.500,PHI ,C
+Brandon League,8.500,LAD ,RP
+Michael Cuddyer,8.500,NYM ,LF
+A.J. Burnett,8.500,PIT ,SP
+Tyler Clippard,8.300,OAK ,RP
+Matt Wieters,8.275,BAL ,C
+Greg Holland,8.250,KC ,RP
+Joaquin Benoit,8.233,SD ,RP
+Aroldis Chapman,8.050,CIN ,RP
+Carlos Quentin,8.000,ATL ,LF
+Carlos Gomez,8.000,MIL ,CF
+Jed Lowrie,8.000,HOU ,SS
+Charlie Morton,8.000,PIT ,SP
+Marlon Byrd,8.000,CIN ,LF
+Colby Rasmus,8.000,HOU ,LF
+Daniel Murphy,8.000,NYM ,2B
+Neil Walker,8.000,PIT ,2B
+Juan Uribe,7.925,LAD ,3B
+Ben Zobrist,7.750,OAK ,2B
+Austin Jackson,7.700,SEA ,CF
+Omar Infante,7.500,KC ,2B
+Edinson Volquez,7.500,KC ,SP
+Michael Morse,7.500,MIA ,1B
+Adam Lind,7.500,MIL ,1B
+Asdrubal Cabrera,7.500,TB ,SS
+Kenley Jansen,7.425,LAD ,RP
+Derek Holland,7.400,TEX ,SP
+Stephen Strasburg,7.400,WSH ,SP
+Grant Balfour,7.316,TB ,RP
+Justin Morneau,7.250,COL ,1B
+Cameron Maybin,7.100,ATL ,CF
+Jon Niese,7.050,NYM ,P
+Russell Martin,7.000,TOR ,C
+Lance Lynn,7.000,STL ,SP
+Jarrod Saltalamacchia,7.000,MIA ,C
+Fernando Rodney,7.000,SEA ,RP
+Hisashi Iwakuma,7.000,SEA ,SP
+Huston Street,7.000,LAA ,RP
+Joakim Soria,7.000,DET ,RP
+Wade Davis,7.000,KC ,RP
+Madison Bumgarner,6.917,SF ,SP
+Mark Trumbo,6.900,ARI ,RF
+Starlin Castro,6.857,CHC ,SS
+J.A. Happ,6.700,SEA ,SP
+Billy Butler,6.667,OAK ,DH
+Steve Cishek,6.650,MIA ,RP
+Sean Marshall,6.625,CIN ,RP
+Giancarlo Stanton,6.500,MIA ,RF
+Alex Guerrero,6.500,LAD ,LF
+Kendrys Morales,6.500,KC ,DH
+Brandon Moss,6.500,CLE ,RF
+David Freese,6.425,LAA ,3B
+Eric O`Flaherty,6.275,OAK ,RP
+Gerardo Parra,6.238,MIL ,LF
+Yasiel Puig,6.214,LAD ,RF
+Carlos Santana,6.200,CLE ,1B
+Mike Trout,6.083,LAA ,CF
+Chris Sale,6.000,CWS ,SP
+Chris Johnson,6.000,ATL ,3B
+Luke Gregerson,6.000,HOU ,RP
+Jeremy Affeldt,6.000,SF ,RP
+Sergio Romo,6.000,SF ,RP
+Seth Smith,6.000,SEA ,RF
+David Murphy,6.000,CLE ,LF
+Kurt Suzuki,6.000,MIN ,C
+Michael Brantley,5.875,CLE ,LF
+Drew Stubbs,5.825,COL ,CF
+Pedro Alvarez,5.750,PIT ,1B
+Drew Storen,5.700,WSH ,RP
+Travis Wood,5.685,CHC ,SP
+Eric Hosmer,5.650,KC ,1B
+Mike Minor,5.600,ATL ,SP
+Alfredo Simon,5.550,DET ,SP
+Chris Iannetta,5.525,LAA ,C
+Allen Craig,5.500,BOS ,RF
+Boone Logan,5.500,COL ,RP
+Pat Neshek,5.500,HOU ,RP
+J.P. Howell,5.500,LAD ,RP
+Mike Pelfrey,5.500,MIN ,SP
+Kyle Kendrick,5.500,COL ,SP
+Alex Avila,5.400,DET ,C
+Mark Melancon,5.400,PIT ,RP
+Cory Luebke,5.375,SD ,SP
+Dillon Gee,5.300,NYM ,SP
+Anthony Rizzo,5.286,CHC ,1B
+Joe Smith,5.250,LAA ,RP
+Tyson Ross,5.250,SD ,SP
+Santiago Casilla,5.167,SF ,RP
+David DeJesus,5.114,TB ,LF
+Yunel Escobar,5.000,WSH ,3B
+Nate McLouth,5.000,WSH ,LF
+Brad Ziegler,5.000,ARI ,RP
+Rajai Davis,5.000,DET ,CF
+Dioner Navarro,5.000,TOR ,C
+Aaron Harang,5.000,PHI ,SP
+Chris Capuano,5.000,NYY ,SP
+Garrett Jones,5.000,NYY ,1B
+Stephen Drew,5.000,NYY ,2B
+Alejandro De Aza,5.000,BAL ,LF
+Addison Reed,4.875,ARI ,RP
+Hyun-Jin Ryu,4.833,LAD ,SP
+Casey McGehee,4.800,SF ,3B
+Trevor Plouffe,4.800,MIN ,3B
+Leonys Martin,4.750,TEX ,CF
+Edward Mujica,4.750,BOS ,RP
+Matt Joyce,4.750,LAA ,LF
+Wei-Yin Chen,4.750,BAL ,SP
+Glen Perkins,4.650,MIN ,RP
+Tommy Hunter,4.650,BAL ,RP
+Kyle Seager,4.500,SEA ,3B
+Zach Duke,4.500,CWS ,RP
+Jason Motte,4.500,CHC ,RP
+Jason Grilli,4.375,ATL ,RP
+Chris Tillman,4.315,BAL ,SP
+Josh Donaldson,4.300,TOR ,3B
+Jeremy Hellickson,4.275,ARI ,SP
+Will Venable,4.250,SD ,CF
+A.J. Ellis,4.250,LAD ,C
+Darren O`Day,4.250,BAL ,RP
+Lucas Duda,4.200,NYM ,1B
+Luis Valbuena,4.200,HOU ,3B
+Chris Carter,4.175,HOU ,1B
+Jason Kipnis,4.167,CLE ,2B
+Jon Jay,4.125,STL ,CF
+Neftali Feliz,4.125,TEX ,RP
+Ben Revere,4.100,PHI ,LF
+Josh Reddick,4.100,OAK ,RF
+Andrew Cashner,4.050,SD ,SP
+Javier Lopez,4.000,SF ,RP
+Luke Hochevar,4.000,KC ,RP
+Alex Cobb,4.000,TB ,SP
+Colby Lewis,4.000,TEX ,SP
+Gavin Floyd,4.000,CLE ,SP
+Henderson Alvarez,4.000,MIA ,SP
+Jason Castro,4.000,HOU ,C
+Jonny Gomes,4.000,ATL ,LF
+Norichika Aoki,4.000,SF ,LF
+Ryan Vogelsong,4.000,SF ,SP
+Tsuyoshi Wada,4.000,CHC ,SP
+Marco Estrada,3.900,TOR ,SP
+Ike Davis,3.800,OAK ,1B
+Matt Carpenter,3.750,STL ,3B
+Todd Frazier,3.750,CIN ,3B
+Bobby Parnell,3.700,NYM ,RP
+Steve Pearce,3.700,BAL ,LF
+Wade Miley,3.667,BOS ,SP
+Jake Arrieta,3.630,CHC ,SP
+Gregor Blanco,3.600,SF ,RF
+Brandon Belt,3.600,SF ,1B
+Jake McGee,3.550,TB ,RP
+Wilson Ramos,3.550,WSH ,C
+Francisco Rodriguez,3.500,MIL ,RP
+Ryan Hanigan,3.500,BOS ,C
+Matt Thornton,3.500,WSH ,RP
+Manny Parra,3.500,CIN ,RP
+Casey Janssen,3.500,WSH ,RP
+Matt Belisle,3.500,STL ,RP
+Mike Aviles,3.500,CLE ,SS
+Ross Detwiler,3.450,TEX ,SP
+Ivan Nova,3.300,NYY ,SP
+Nathan Eovaldi,3.300,NYY ,SP
+Cliff Pennington,3.275,ARI ,SS
+Miguel Gonzalez,3.275,BAL ,SP
+Brian Matusz,3.200,BAL ,RP
+Garrett Richards,3.200,LAA ,SP
+Zach Britton,3.200,BAL ,RP
+Brandon Crawford,3.175,SF ,SS
+John Jaso,3.175,TB ,C
+Andrelton Simmons,3.143,ATL ,SS
+Matt Moore,3.100,TB ,SP
+Jonathan Lucroy,3.100,MIL ,C
+Nick Hundley,3.100,COL ,C
+Antonio Bastardo,3.100,PIT ,RP
+Desmond Jennings,3.100,TB ,LF
+Paul Goldschmidt,3.083,ARI ,1B
+Kevin Jepsen,3.025,TB ,RP
+Alcides Escobar,3.000,KC ,SS
+Maicer Izturis,3.000,TOR ,2B
+Randy Choate,3.000,STL ,RP
+Chad Qualls,3.000,HOU ,RP
+Willie Bloomquist,3.000,SEA ,SS
+Alberto Callaspo,3.000,ATL ,3B
+Emilio Bonifacio,3.000,CWS ,2B
+J.D. Martinez,3.000,DET ,RF
+Neal Cotts,3.000,MIL ,RP
+Mitch Moreland,2.950,TEX ,1B
+Michael Saunders,2.875,TOR ,RF
+Shawn Kelley,2.835,SD ,RP
+Josh Harrison,2.800,PIT ,3B
+Wilin Rosario,2.800,COL ,1B
+Tommy Milone,2.775,MIN ,SP
+Ryan Webb,2.750,BAL ,P
+Logan Morrison,2.725,SEA ,1B
+Lorenzo Cain,2.725,KC ,CF
+Brian Duensing,2.700,MIN ,RP
+Jose Altuve,2.688,HOU ,2B
+Jordan Walden,2.675,STL ,RP
+Tyler Flowers,2.675,CWS ,C
+Jorge Soler,2.667,CHC ,RF
+Drew Smyly,2.650,TB ,SP
+Mike Moustakas,2.640,KC ,3B
+Chris Denorfia,2.600,CHC ,RF
+Dustin Ackley,2.600,SEA ,LF
+John Axford,2.600,COL ,RP
+Jenrry Mejia,2.595,NYM ,RP
+Devin Mesoraco,2.525,CIN ,C
+Darwin Barney,2.525,LAD ,2B
+Pedro Strop,2.525,CHC ,RP
+Chris Coghlan,2.505,CHC ,LF
+Justin Ruggiano,2.505,SEA ,RF
+Bryce Harper,2.500,WSH ,RF
+David Ross,2.500,CHC ,C
+Skip Schumaker,2.500,CIN ,LF
+Ryan Raburn,2.500,CLE ,LF
+Oliver Perez,2.500,ARI ,RP
+Anthony Rendon,2.500,WSH ,2B
+Brandon Beachy,2.500,LAD ,SP
+Brandon Morrow,2.500,SD ,SP
+Chris Young,2.500,NYY ,RF
+Corey Hart,2.500,PIT ,RF
+Dee Gordon,2.500,MIA ,2B
+Domonic Brown,2.500,PHI ,RF
+Jerome Williams,2.500,PHI ,SP
+Joel Peralta,2.500,LAD ,RP
+Jung-Ho Kang,2.500,PIT ,3B
+Justin Turner,2.500,LAD ,3B
+Brett Cecil,2.475,TOR ,RP
+Jordan Lyles,2.475,COL ,SP
+Vance Worley,2.450,PIT ,SP
+Danny Duffy,2.425,KC ,SP
+Everth Cabrera,2.400,BAL ,SS
+Jerry Blevins,2.400,NYM ,RP
+Marc Rzepczynski,2.400,CLE ,RP
+Tony Sipp,2.400,HOU ,RP
+Mike Dunn,2.350,MIA ,RP
+Zack Cozart,2.350,CIN ,SS
+Carlos Carrasco,2.338,CLE ,SP
+Juan Nicasio,2.300,LAD ,RP
+Hector Santiago,2.290,LAA ,SP
+Craig Stammen,2.250,WSH ,RP
+Delmon Young,2.250,BAL ,RF
+Junichi Tazawa,2.250,BOS ,RP
+LaTroy Hawkins,2.250,COL ,RP
+Lonnie Chisenhall,2.250,CLE ,3B
+Phil Coke,2.250,CHC ,RP
+Tim Stauffer,2.200,MIN ,RP
+Jesse Chavez,2.150,OAK ,SP
+Jeff Baker,2.100,MIA ,1B
+Michael Pineda,2.100,NYY ,SP
+Travis Snider,2.100,BAL ,RF
+Welington Castillo,2.100,CHC ,C
+Yusmeiro Petit,2.100,SF ,RP
+Jedd Gyorko,2.000,SD ,2B
+Brian Dozier,2.000,MIN ,2B
+Kris Medlen,2.000,KC ,RP
+Brendan Ryan,2.000,NYY ,SS
+A.J. Pierzynski,2.000,ATL ,C
+Carlos Villanueva,2.000,STL ,RP
+Craig Breslow,2.000,BOS ,RP
+David Hernandez,2.000,ARI ,RP
+Eric Stults,2.000,ATL ,SP
+Gordon Beckham,2.000,CWS ,3B
+Grady Sizemore,2.000,PHI ,RF
+Ichiro Suzuki,2.000,MIA ,RF
+Mark Reynolds,2.000,STL ,1B
+Rickie Weeks,2.000,SEA ,LF
+Aaron Crow,1.975,MIA ,RP
+Hector Noesi,1.950,CWS ,RP
+Trevor Bauer,1.940,CLE ,SP
+Adeiny Hechavarria,1.925,MIA ,SS
+Brett Lawrie,1.925,OAK ,3B
+Sean Rodriguez,1.900,PIT ,1B
+Ruben Tejada,1.880,NYM ,SS
+Daniel Nava,1.850,BOS ,RF
+Franklin Morales,1.850,KC ,RP
+Danny Espinosa,1.800,WSH ,2B
+Salvador Perez,1.750,KC ,C
+Sam Fuld,1.750,OAK ,CF
+Tony Watson,1.750,PIT ,RP
+Al Alburquerque,1.725,DET ,RP
+Raisel Iglesias,1.714,CIN ,SP
+Wesley Wright,1.700,BAL ,RP
+Danny Valencia,1.675,TOR ,3B
+Peter Bourjos,1.650,STL ,CF
+Yonder Alonso,1.650,SD ,1B
+Kelvin Herrera,1.600,KC ,RP
+Craig Gentry,1.600,OAK ,CF
+Jim Johnson,1.600,ATL ,RP
+Bryan Shaw,1.550,CLE ,RP
+Jordan Schafer,1.550,MIN ,CF
+Daniel Descalso,1.500,COL ,SS
+Alexi Ogando,1.500,BOS ,RP
+Chad Billingsley,1.500,PHI ,SP
+Geovany Soto,1.500,CWS ,C
+Jason Marquis,1.500,CIN ,SP
+Jeff Mathis,1.500,MIA ,C
+Josh Tomlin,1.500,CLE ,SP
+Kelly Johnson,1.500,ATL ,3B
+Kevin Gregg,1.500,CIN ,RP
+Matt Albers,1.500,CWS ,RP
+Esmil Rogers,1.480,NYY ,RP
+Tim Collins,1.475,KC ,RP
+Joaquin Arias,1.450,SF ,SS
+Josh Collmenter,1.450,ARI ,SP
+John Mayberry Jr.,1.450,NYM ,LF
+Jose Iglesias,1.444,DET ,SS
+Brayan Pena,1.400,CIN ,C
+David Phelps,1.400,MIA ,SP
+Tom Wilhelmsen,1.400,SEA ,RP
+Casey Fien,1.375,MIN ,RP
+Dale Thayer,1.375,SD ,RP
+Fernando Salas,1.370,LAA ,RP
+Starling Marte,1.333,PIT ,LF
+Cesar Ramos,1.313,LAA ,RP
+Adam Ottavino,1.300,COL ,RP
+Charlie Furbush,1.300,SEA ,RP
+Clint Barmes,1.300,SD ,SS
+David Carpenter,1.275,NYY ,RP
+Martin Perez,1.250,TEX ,SP
+Brennan Boesch,1.250,CIN ,RF
+Don Kelly,1.250,MIA ,3B
+Jason Frasor,1.250,KC ,RP
+Roberto Hernandez,1.250,HOU ,SP
+Chris Stewart,1.225,PIT ,C
+Jarrod Dyson,1.225,KC ,CF
+Jose Lobaton,1.200,WSH ,C
+Rene Rivera,1.200,TB ,C
+Julio Teheran,1.167,ATL ,SP
+Chris Archer,1.167,TB ,SP
+Alexi Amarista,1.150,SD ,SS
+Vinnie Pestano,1.150,LAA ,RP
+Logan Forsythe,1.100,TB ,2B
+Travis Ishikawa,1.100,SF ,1B
+Michael McKenry,1.088,COL ,C
+Fernando Abad,1.088,OAK ,RP
+Yan Gomes,1.083,CLE ,C
+Eric Sogard,1.075,OAK ,2B
+Hank Conger,1.075,HOU ,C
+Jared Hughes,1.075,PIT ,RP
+Ryan Flaherty,1.075,BAL ,2B
+Marwin Gonzalez,1.063,HOU ,SS
+Eduardo Nunez,1.025,MIN ,SS
+Jose Quintana,1.000,CWS ,SP
+Tyler Chatwood,1.000,COL ,SP
+Burke Badenhop,1.000,CIN ,RP
+Corey Kluber,1.000,CLE ,SP
+Eric Young Jr.,1.000,ATL ,CF
+Gerald Laird,1.000,ARI ,C
+Jacob Turner,1.000,CHC ,SP
+Joba Chamberlain,1.000,DET ,RP
+Joe Thatcher,1.000,HOU ,RP
+Josh Johnson,1.000,SD ,SP
+Justin Maxwell,1.000,SF ,RF
+Justin Smoak,1.000,TOR ,1B
+Kyuji Fujikawa,1.000,TEX ,RP
+Radhames Liz,1.000,PIT ,RP
+Rafael Betancourt,1.000,COL ,RP
+Reed Johnson,1.000,WSH ,LF
+Tom Gorzelanny,1.000,DET ,RP
+Collin Cowgill,0.995,LAA ,LF
+Drew Butera,0.988,LAA ,C
+Francisco Cervelli,0.988,PIT ,C
+Carlos Corporan,0.975,TEX ,C
+Javy Guerra,0.938,CWS ,P
+Jeff Francoeur,0.925,PHI ,RF
+Josh Outman,0.925,ATL ,RP
+Adam Rosales,0.900,TEX ,3B
+Anthony Swarzak,0.900,CLE ,RP
+Jonathan Herrera,0.900,CHC ,2B
+Jordan Pacheco,0.900,ARI ,C
+Scott Atchison,0.900,CLE ,RP
+Andres Blanco,0.850,PHI ,SS
+Jarrod Parker,0.850,OAK ,SP
+Ryan Madson,0.850,KC ,RP
+Wil Nieves,0.850,SD ,C
+Martin Maldonado,0.825,MIL ,C
+Daniel Hudson,0.800,ARI ,RP
+Ernesto Frieri,0.800,TB ,RP
+Hector Sanchez,0.800,SF ,C
+Jeanmar Gomez,0.800,PHI ,RP
+Sean Doolittle,0.780,OAK ,RP
+Tony Cruz,0.775,STL ,C
+Yordano Ventura,0.750,KC ,SP
+Blaine Boyer,0.750,MIN ,RP
+Anthony Bass,0.725,TEX ,RP
+Buddy Carlyle,0.725,NYM ,RP
+Bobby Wilson,0.700,TB ,C
+Yasmani Grandal,0.693,LAD ,C
+Chris Young,0.675,KC ,SP
+Nate Jones,0.660,CWS ,RP
+Christian Yelich,0.651,MIA ,LF
+Jose Fernandez,0.651,MIA ,SP
+Erik Cordier,0.650,SF ,P
+Matt Harvey,0.614,NYM ,SP
+Joe Kelly,0.603,BOS ,SP
+Antoan Richardson,0.600,TEX ,CF
+Dustin McGowan,0.600,PHI ,RP
+Carlos Torres,0.582,NYM ,RP
+Anthony Varvaro,0.577,BOS ,RP
+Cesar Jimenez,0.575,PHI ,RP
+Adam Warren,0.573,NYY ,SP
+Tom Koehler,0.570,MIA ,SP
+Robbie Ross Jr.,0.567,BOS ,RP
+Adam Eaton,0.560,CWS ,CF
+Tommy Layne,0.557,BOS ,RP
+Justin Wilson,0.556,NYY ,RP
+Conor Gillaspie,0.555,CWS ,3B
+Marcell Ozuna,0.555,MIA ,CF
+Didi Gregorius,0.554,NYY ,SS
+Shane Robinson,0.550,MIN ,CF
+Manny Machado,0.548,BAL ,3B
+Cody Allen,0.547,CLE ,RP
+Zack Wheeler,0.546,NYM ,SP
+Billy Hamilton,0.545,CIN ,CF
+Derek Norris,0.545,SD ,C
+Hector Rondon,0.544,CHC ,RP
+Xander Bogaerts,0.543,BOS ,SS
+Will Middlebrooks,0.541,SD ,3B
+Jarred Cosart,0.540,MIA ,SP
+Jordy Mercer,0.538,PIT ,SS
+Kole Calhoun,0.538,LAA ,RF
+Kyle Gibson,0.538,MIN ,SP
+Jake Diekman,0.536,PHI ,RP
+J.J. Hoover,0.535,CIN ,RP
+Shelby Miller,0.535,ATL ,SP
+Trevor Rosenthal,0.535,STL ,RP
+Jean Segura,0.534,MIL ,SS
+Matt Adams,0.534,STL ,1B
+Eduardo Escobar,0.533,MIN ,LF
+Erik Kratz,0.533,KC ,C
+Oswaldo Arcia,0.533,MIN ,LF
+Jacob deGrom,0.532,NYM ,SP
+Bryan Morris,0.532,MIA ,RP
+Donovan Solano,0.532,MIA ,SS
+Justin Grimm,0.532,CHC ,RP
+Gerrit Cole,0.531,PIT ,SP
+Jeff Locke,0.531,PIT ,SP
+Brock Holt,0.531,BOS ,RF
+A.J. Ramos,0.530,MIA ,RP
+Danny Santana,0.530,MIN ,SS
+Luis Avilan,0.530,ATL ,RP
+Seth Maness,0.530,STL ,RP
+Tanner Roark,0.530,WSH ,RP
+Juan Lagares,0.529,NYM ,CF
+Justin De Fratus,0.528,PHI ,RP
+Brad Miller,0.528,SEA ,SS
+Jean Machi,0.528,SF ,RP
+Yoervis Medina,0.527,SEA ,RP
+Aaron Loup,0.527,TOR ,RP
+Danny Farquhar,0.527,SEA ,RP
+Evan Gattis,0.527,HOU ,DH
+Randall Delgado,0.526,ARI ,RP
+David Lough,0.526,BAL ,LF
+Tony Cingrani,0.526,CIN ,RP
+Wily Peralta,0.526,MIL ,SP
+Travis d`Arnaud,0.525,NYM ,C
+Kirk Nieuwenhuis,0.525,NYM ,LF
+Nick Vincent,0.525,SD ,RP
+Samuel Deduno,0.525,HOU ,RP
+Clint Robinson,0.525,WSH ,LF
+Gregory Polanco,0.525,PIT ,RF
+Nick Castellanos,0.525,DET ,3B
+Zach Putnam,0.525,CWS ,RP
+Dallas Keuchel,0.525,HOU ,SP
+Patrick Corbin,0.524,ARI ,SP
+Jeurys Familia,0.524,NYM ,RP
+Mike Zunino,0.524,SEA ,C
+Avisail Garcia,0.523,CWS ,RF
+Brad Brach,0.523,BAL ,RP
+Dan Jennings,0.523,CWS ,RP
+Alex Torres,0.523,NYM ,RP
+Erasmo Ramirez,0.523,TB ,SP
+Chris Hatcher,0.523,LAD ,RP
+Chris Withrow,0.523,LAD ,P
+Jason Bourgeois,0.523,CIN ,CF
+Joe Panik,0.523,SF ,2B
+Paco Rodriguez,0.523,LAD ,RP
+Scott Van Slyke,0.523,LAD ,LF
+Jake Odorizzi,0.522,TB ,SP
+Kevin Gausman,0.522,BAL ,RP
+Pete Kozma,0.522,STL ,SS
+Brad Boxberger,0.521,TB ,RP
+Josh Edgin,0.521,NYM ,RP
+Brandon Cumpton,0.521,PIT ,SP
+Zach McAllister,0.520,CLE ,RP
+Drew Hutchison,0.520,TOR ,SP
+Aaron Thompson,0.520,MIN ,RP
+Alex Wood,0.520,ATL ,SP
+Andrew Romine,0.520,DET ,SS
+Brad Hand,0.520,MIA ,RP
+Carlos Martinez,0.520,STL ,SP
+Jake Petricka,0.520,CWS ,RP
+Kolten Wong,0.520,STL ,2B
+Michael Wacha,0.520,STL ,SP
+Mike Olt,0.520,CHC ,3B
+Todd Redmond,0.520,TOR ,RP
+Wil Myers,0.520,SD ,CF
+Shawn Tolleson,0.520,TEX ,RP
+A.J. Pollock,0.520,ARI ,CF
+Khris Davis,0.520,MIL ,LF
+James Paxton,0.519,SEA ,SP
+Ken Giles,0.519,PHI ,RP
+John Ryan Murphy,0.519,NYY ,C
+Justin Sellers,0.519,PIT ,SS
+Liam Hendriks,0.518,TOR ,RP
+Robinson Chirinos,0.518,TEX ,C
+Kyle Drabek,0.518,CWS ,P
+Tyler Moore,0.518,WSH ,LF
+Kevin Siegrist,0.518,STL ,RP
+Tony Sanchez,0.518,PIT ,C
+Anthony Recker,0.518,NYM ,C
+A.J. Griffin,0.518,OAK ,SP
+Charlie Blackmon,0.518,COL ,CF
+Cody Asche,0.518,PHI ,LF
+DJ LeMahieu,0.518,COL ,2B
+Drew Pomeranz,0.518,OAK ,SP
+George Kontos,0.518,SF ,RP
+Matt Shoemaker,0.518,LAA ,SP
+Rob Scahill,0.518,PIT ,RP
+Odrisamer Despaigne,0.517,SD ,SP
+Steve Tolleson,0.517,TOR ,2B
+Nick Hagadone,0.517,CLE ,RP
+Kennys Vargas,0.517,MIN ,1B
+Josh Fields,0.517,HOU ,RP
+Scooter Gennett,0.517,MIL ,2B
+Xavier Cedeno,0.517,WSH ,RP
+Yangervis Solarte,0.516,SD ,1B
+Collin McHugh,0.516,HOU ,SP
+Johnny Giavotella,0.516,LAA ,2B
+Eric Surkamp,0.516,CWS ,P
+J.B. Shuck,0.516,CWS ,RF
+Rubby De La Rosa,0.516,ARI ,SP
+Brad Peacock,0.516,HOU ,SP
+Brandon Guyer,0.516,TB ,LF
+Brett Oberholtzer,0.516,HOU ,SP
+Arquimedes Caminero,0.516,PIT ,RP
+Vic Black,0.516,NYM ,RP
+Tanner Scheppers,0.515,TEX ,RP
+Andrew Lambo,0.515,PIT ,RF
+Anthony Gose,0.515,DET ,CF
+Caleb Joseph,0.515,BAL ,C
+Darin Ruf,0.515,PHI ,LF
+Ian Krol,0.515,DET ,RP
+Jimmy Paredes,0.515,BAL ,2B
+Jonathan Schoop,0.515,BAL ,2B
+Nick Martinez,0.515,TEX ,SP
+Robbie Grossman,0.515,HOU ,LF
+Shane Greene,0.515,DET ,SP
+Tyler Skaggs,0.515,LAA ,SP
+Marcus Stroman,0.515,TOR ,SP
+Mookie Betts,0.515,BOS ,CF
+Neil Ramirez,0.515,CHC ,RP
+Tuffy Gosewisch,0.515,ARI ,C
+Aaron Barrett,0.514,WSH ,RP
+Mike Morin,0.514,LAA ,RP
+Steve Clevenger,0.514,BAL ,C
+Will Harris,0.514,HOU ,RP
+Rougned Odor,0.514,TEX ,2B
+Kevin Kiermaier,0.514,TB ,CF
+Jeff Beliveau,0.514,TB ,RP
+Wilmer Flores,0.514,NYM ,SS
+Freddy Galvis,0.514,PHI ,SS
+Taijuan Walker,0.513,SEA ,SP
+Cory Rasmus,0.513,LAA ,RP
+Ender Inciarte,0.513,ARI ,LF
+Jonathan Villar,0.513,HOU ,SS
+Tommy La Stella,0.513,CHC ,2B
+George Springer,0.513,HOU ,RF
+Blake Treinen,0.513,WSH ,RP
+Kirby Yates,0.513,TB ,RP
+Matt den Dekker,0.513,WSH ,LF
+C.J. Cron,0.513,LAA ,DH
+Charlie Culberson,0.513,COL ,2B
+Chase Anderson,0.513,ARI ,SP
+Chris Owings,0.513,ARI ,2B
+Christian Friedrich,0.513,COL ,RP
+Christian Vazquez,0.513,BOS ,C
+Corey Dickerson,0.513,COL ,LF
+Dan Otero,0.513,OAK ,RP
+David Buchanan,0.513,PHI ,SP
+David Hale,0.513,COL ,SP
+Edgar Olmos,0.513,SEA ,RP
+Evan Scribner,0.513,OAK ,RP
+Kristopher Negron,0.513,CIN ,SS
+Mario Hollands,0.513,PHI ,RP
+Mike Fiers,0.513,MIL ,SP
+Nate Freiman,0.513,OAK ,1B
+Nolan Arenado,0.513,COL ,3B
+Pedro Baez,0.513,LAD ,RP
+Sonny Gray,0.513,OAK ,SP
+Stephen Vogt,0.513,OAK ,C
+Will Smith,0.513,MIL ,RP
+Chris Taylor,0.512,SEA ,SS
+Tim Federowicz,0.512,SD ,C
+David Peralta,0.512,ARI ,LF
+Evan Marshall,0.512,ARI ,RP
+Jim Henderson,0.512,MIL ,P
+Kevin Pillar,0.512,TOR ,CF
+T.J. House,0.512,CLE ,SP
+Jimmy Nelson,0.512,MIL ,SP
+Jose Ramirez,0.511,CLE ,SS
+Jake Marisnick,0.511,HOU ,CF
+Chris Martin,0.511,NYY ,RP
+Efren Navarro,0.511,LAA ,LF
+Rafael Montero,0.511,NYM ,RP
+Kyle Crockett,0.511,CLE ,RP
+Nick Franklin,0.511,TB ,2B
+Aaron Sanchez,0.511,TOR ,RP
+Alex Colome,0.511,TB ,SP
+Colt Hynes,0.511,TOR ,RP
+Jeremy Jeffress,0.511,MIL ,RP
+Logan Schafer,0.511,MIL ,CF
+Matt Stites,0.511,ARI ,RP
+Steven Wright,0.511,BOS ,SP
+Tyler Thornburg,0.511,MIL ,RP
+Sandy Leon,0.510,BOS ,C
+Chasen Shreve,0.510,NYY ,RP
+Arismendy Alcantara,0.510,CHC ,2B
+Bruce Rondon,0.510,DET ,RP
+Carlos Sanchez,0.510,CWS ,2B
+Cesar Hernandez,0.510,PHI ,2B
+Chris Dominguez,0.510,CIN ,3B
+Chris Herrmann,0.510,MIN ,C
+Gregorio Petit,0.510,NYY ,2B
+Jaff Decker,0.510,PIT ,LF
+Joc Pederson,0.510,LAD ,CF
+Jonathan Pettibone,0.510,PHI ,SP
+Jose Pirela,0.510,NYY ,2B
+Josh Phegley,0.510,OAK ,C
+Jumbo Diaz,0.510,CIN ,RP
+Kyle Hendricks,0.510,CHC ,SP
+Marcus Semien,0.510,OAK ,SS
+Randal Grichuk,0.510,STL ,RF
+Yimi Garcia,0.510,LAD ,RP
+Zach Walters,0.510,CLE ,SS
+Christian Colon,0.510,KC ,SS
+Brooks Brown,0.510,COL ,RP
+Carson Smith,0.510,SEA ,RP
+Christian Bergman,0.510,COL ,RP
+Eddie Butler,0.510,COL ,SP
+Jose Alvarez,0.510,LAA ,RP
+Jurickson Profar,0.510,TEX ,2B
+Phil Klein,0.510,TEX ,SP
+Rafael Ynoa,0.510,COL ,LF
+Roman Mendez,0.510,TEX ,RP
+Tyler Matzek,0.510,COL ,SP
+Jesus Sucre,0.509,SEA ,C
+Luis Garcia,0.509,PHI ,RP
+Matt Duffy,0.509,SF ,3B
+Erik Davis,0.509,WSH ,RP
+Steve Geltz,0.509,TB ,RP
+Nathan Karns,0.509,TB ,SP
+Shae Simmons,0.509,ATL ,RP
+Daniel Norris,0.509,TOR ,SP
+Michael Taylor,0.509,WSH ,RF
+Steven Souza Jr.,0.509,TB ,RF
+Roberto Perez,0.509,CLE ,C
+Cory Spangenberg,0.509,SD ,2B
+Dallas Beeler,0.509,CHC ,SP
+Dalton Pompey,0.509,TOR ,CF
+Edwin Escobar,0.509,BOS ,RP
+Frank Garces,0.509,SD ,RP
+Hernan Perez,0.509,DET ,3B
+Jake Lamb,0.509,ARI ,3B
+Jake Smolinski,0.509,TEX ,LF
+Lisalverto Bonilla,0.509,TEX ,RP
+Luis Jimenez,0.509,MIL ,3B
+Matt Szczur,0.509,CHC ,LF
+Michael Blazek,0.509,MIL ,RP
+Nick Ahmed,0.509,ARI ,SS
+Ryan Rua,0.509,TEX ,LF
+Tim Beckham,0.508,TB ,2B
+Cameron Rupp,0.508,PHI ,C
+Austin Adams,0.508,CLE ,RP
+Andrew Chafin,0.508,ARI ,RP
+Andrew McKirahan,0.508,ATL ,RP
+Angel Nesbitt,0.508,DET ,RP
+Anthony DeSclafani,0.508,CIN ,SP
+Archie Bradley,0.508,ARI ,SP
+Asher Wojciechowski,0.508,HOU ,SP
+Billy Burns,0.508,OAK ,CF
+Christian Bethancourt,0.508,ATL ,C
+Cody Martin,0.508,ATL ,RP
+Daniel Winkler,0.508,ATL ,RP
+Delino DeShields Jr.,0.508,TEX ,CF
+Dellin Betances,0.508,NYY ,RP
+Devon Travis,0.508,TOR ,2B
+Drew Rucinski,0.508,LAA ,RP
+Hector Gomez,0.508,MIL ,2B
+J.R. Graham,0.508,MIN ,RP
+Jace Peterson,0.508,ATL ,2B
+James McCann,0.508,DET ,C
+Jason Garcia,0.508,BAL ,RP
+Jesse Hahn,0.508,OAK ,SP
+Joey Terdoslavich,0.508,ATL ,LF
+John Lackey,0.508,STL ,SP
+Juan Jaime,0.508,ATL ,RP
+Kendall Graveman,0.508,OAK ,SP
+Keone Kela,0.508,TEX ,RP
+Logan Verrett,0.508,TEX ,RP
+Mark Canha,0.508,OAK ,1B
+Matt Andriese,0.508,TB ,SP
+Micah Johnson,0.508,CWS ,2B
+Miguel Castro,0.508,TOR ,RP
+Odubel Herrera,0.508,PHI ,CF
+Oscar Hernandez,0.508,ARI ,C
+Paulo Orlando,0.508,KC ,RF
+Phil Gosselin,0.508,ATL ,2B
+R.J. Alvarez,0.508,OAK ,RP
+Roberto Osuna,0.508,TOR ,RP
+Sam Dyson,0.508,MIA ,RP
+Sean Gilmartin,0.508,NYM ,RP
+Sean Nolin,0.508,OAK ,SP
+Taylor Featherston,0.508,LAA ,3B
+Taylor Thompson,0.508,OAK ,RP
+Thomas Pham,0.508,STL ,CF
+Tyler Ladendorf,0.508,OAK ,2B
+Tyler Olson,0.508,SEA ,RP
+</script>
+<iframe id="ssframe" src="../sims/spreadsheet.html" width="100%" style="height:calc(100vh - 120px); min-height:480px; border:1px solid #e3e7ec; border-radius:10px;" loading="lazy"></iframe>
+<script>
+(function(){
+  var csv = document.getElementById('csvdata').textContent.replace(/^\n/, '');
+  var ifr = document.getElementById('ssframe');
+  var done = false, n = 0;
+  function send(){ if(done) return; try{ ifr.contentWindow.postMessage({type:'loadCSV', csv:csv}, '*'); }catch(e){} }
+  window.addEventListener('message', function(e){
+    if(e.data==='sheetLoaded') done=true; else if(e.data==='sheetReady') send();
+  });
+  ifr.addEventListener('load', send);
+  var t = setInterval(function(){ send(); if(done || ++n>30) clearInterval(t); }, 400);
+})();
+</script>
+
+
+
+</main> <!-- /main -->
+<!-- 소유권자: 프로브 (빌드팀) | 사용자: 프로브 / Date: 2026-06-23 -->
+<!-- 인터랙티브 퀴즈 채점 (self-host, 외부의존 0). 시안 넥서스-최종통합시안-★★★★★ 의 <script> 이식.
+     _quarto.yml format.html.include-after-body 로 전 페이지 주입. .quiz[data-answer][data-explain] 마크업과 짝. -->
+<script>
+document.querySelectorAll('.quiz').forEach(function(q){
+  var ans = q.getAttribute('data-answer'), fb = q.querySelector('.quiz-feedback');
+  q.querySelectorAll('.opt').forEach(function(opt){
+    opt.addEventListener('click', function(){
+      q.querySelectorAll('.opt').forEach(function(o){ o.classList.remove('correct','wrong'); });
+      if (opt.getAttribute('data-v') === ans) {
+        opt.classList.add('correct');
+        fb.className = 'quiz-feedback ok';
+        fb.textContent = '정답입니다! ' + (q.getAttribute('data-explain') || '');
+      } else {
+        opt.classList.add('wrong');
+        fb.className = 'quiz-feedback no';
+        fb.textContent = '다시 생각해 보세요.';
+      }
+    });
+  });
+});
+</script>
+<!-- 소유권자: 빌드팀 | 작성 대행: 넥서스(컨트롤타워) — 프로브 부재로 대표 지시 직접 진행 / Date: 2026-06-23 -->
+<!-- 예제 풀이 블러 리빌 (self-host, 외부의존 0). 시안 넥서스-예제블러리빌-★★★★★.
+     _quarto.yml format.html.include-after-body 로 전 페이지 주입. .card.sol-card 마크업과 짝.
+     풀이 카드 클릭 시 .on 추가 → 블러 해제. -->
+<script>
+document.querySelectorAll('.sol-card').forEach(function(c){
+  c.addEventListener('click', function(){ c.classList.add('on'); });
+});
+</script>
+<!-- 소유권자: 빌드팀 | 작성: 넥서스(컨트롤타워) / Date: 2026-06-23 -->
+<!-- 주관식 정답 확인 토글 (self-host, 외부의존 0). 옵저버 정석 .ansbtn/.ansbox 와 짝.
+     _quarto.yml include-after-body 로 전 페이지 주입. -->
+<script>
+document.querySelectorAll('.ansbtn').forEach(function(b){
+  b.addEventListener('click', function(){
+    var box = b.nextElementSibling;
+    if (!box || !box.classList.contains('ansbox')) return;
+    var on = box.classList.toggle('show');
+    b.textContent = on ? '정답 숨기기 ▴' : '정답 확인 ▾';
+  });
+});
+</script>
+<!-- 소유권자: 넥서스(컨트롤타워) | 사용자: 넥서스 / Date: 2026-06-25 -->
+<!-- 데이터뷰 iframe을 콘텐츠 높이에 자동 맞춤 → 표마다 정확한 높이(여백/스크롤 제거).
+     file:// 에선 contentDocument 접근이 차단되므로 자식이 자기 높이를 postMessage로 보내는 방식이 1순위.
+     http 에선 contentDocument 폴링도 병행. self-host, 외부의존 0. -->
+<script>
+(function(){
+  function setH(f, h){ if(h > 0){ f.scrolling = 'no'; f.style.height = (h + 4) + 'px'; } }
+  // 1순위: 자식이 postMessage 로 보낸 높이 (file:// 포함 동작)
+  window.addEventListener('message', function(e){
+    if(e.data && e.data.type === 'dvHeight' && e.data.h > 0){
+      document.querySelectorAll('iframe[src*="data-views/"]').forEach(function(f){
+        if(f.contentWindow === e.source) setH(f, e.data.h);
+      });
+    }
+  });
+  // 2순위: same-origin(http) 직접 읽기 (file:// 에선 catch 되어 무시)
+  function fit(f){
+    try{
+      var d = f.contentDocument || f.contentWindow.document;
+      if(d && d.body) setH(f, Math.max(d.documentElement.scrollHeight, d.body.scrollHeight, d.body.offsetHeight));
+    }catch(e){}
+  }
+  function init(){
+    document.querySelectorAll('iframe[src*="data-views/"]').forEach(function(f){
+      f.scrolling = 'no';
+      f.addEventListener('load', function(){ fit(f); [300,800].forEach(function(t){ setTimeout(function(){fit(f);}, t); }); });
+      [200,600,1200,2200].forEach(function(t){ setTimeout(function(){fit(f);}, t); });
+    });
+  }
+  if(document.readyState === 'complete') init();
+  else window.addEventListener('load', init);
+})();
+</script>
+<!-- 엑셀 코드블록(pre.xlcode) 복사버튼 — self-host, 외부의존 0 (질럿, 2026-06-23) -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('pre.xlcode').forEach(function (pre) {
+    if (pre.dataset.xlcopy) return;
+    pre.dataset.xlcopy = '1';
+    var code = pre.textContent;            // ★ 버튼 추가 전 캡처 = 태그 없는 순수 수식
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'xlcopy';
+    btn.textContent = '복사';
+    btn.addEventListener('click', function () {
+      navigator.clipboard.writeText(code).then(function () {
+        btn.textContent = '복사됨';
+        setTimeout(function () { btn.textContent = '복사'; }, 1500);
+      });
+    });
+    pre.appendChild(btn);
+  });
+});
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation column-page-right">
+  <div class="nav-page nav-page-previous">
+      <a href="../datasets/temp.html" class="pagination-link" aria-label="April14Temps.csv (temp.csv)">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">April14Temps.csv (temp.csv)</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../datasets/BodyFat.html" class="pagination-link" aria-label="BodyFat.csv">
+        <span class="nav-page-text"><span class="chapter-title">BodyFat.csv</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

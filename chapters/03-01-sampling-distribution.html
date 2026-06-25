@@ -1,0 +1,3114 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>3.1 표집 분포 – 통계적 사고와 사회</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/03-02-confidence-intervals.html" rel="next">
+<link href="../chapters/03.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-de63f62b328812d8e578a4d74e282472.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-3355e44214f8815af4d3cdb2eb254b3a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating fullcontent quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/03.html">3장. 신뢰구간</a></li><li class="breadcrumb-item"><a href="../chapters/03-01-sampling-distribution.html"><span class="chapter-title">3.1 표집 분포</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">통계적 사고와 사회</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">통계적 사고와 사회</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">강의 소개</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-01-intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.1. 강의 소개</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-02-thinking.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.2. 통계적 사고란 무엇인가?</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-03-examples.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.3. 통계적 사고 예제</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-04-montyhall.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.4. 몬티 홀 게임</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-05-ppdac.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.5. PPDAC 사이클</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-06-mortality.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.6. 산모 사망률</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-07-cholera.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.7. 콜레라와 존 스노우</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../chapters/01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1장. 데이터 수집</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-01-data-structure.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">1.1 데이터의 구조</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-02-sampling.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">1.2 모집단에서 표본 추출</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-03-causality.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">1.3 실험연구와 관측연구</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../chapters/02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2장. 데이터 기술하기</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-01-categorical.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.1 범주형 변수</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-02-quantitative-center.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.2 양적 변수 한 개: 모양과 중심</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-03-quantitative-variation.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.3 양적 변수 한 개: 변동</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-04-outliers-boxplot.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.4 이상값과 상자그림</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-05-scatterplot-correlation.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.5 양적 변수 두 개: 산점도와 상관관계</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-06-regression.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.6 양적 변수 두 개: 선형회귀</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-07-multivariate.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.7 데이터 시각화와 다중 변수</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../chapters/03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3장. 신뢰구간</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-01-sampling-distribution.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">3.1 표집 분포</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-02-confidence-intervals.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3.2 신뢰구간에 대한 이해</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-03-bootstrap.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3.3 부트스트랩 신뢰구간</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-04-percentile-bootstrap.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3.4 백분위수에 의한 부트스트랩 신뢰구간</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../chapters/04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4장. 가설검증</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-01-hypothesis-testing.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4.1 가설검증 소개</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-02-p-values.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4.2 p-값</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-03-significance.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4.3 통계적 유의성 판단</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-04-supplement.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4.4 가설검증의 오류</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-05-inference-summary.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4.5 통계적 추론 정리</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">참고자료</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-01-lotto.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">6/45 로또</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-02-numbergame.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">반응시간 게임</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">위젯</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../widgets/spreadsheet.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">스프레드시트</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../widgets/distribution-calculator.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">분포 계산기</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../widgets/r-calculator.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">R 계산기</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../widgets/jupyterlite.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">R/Python 실습</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">데이터</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/AllCountries.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">AllCountries.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/temp.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">April14Temps.csv (temp.csv)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/BaseballSalaries2015.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">BaseballSalaries2015.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/BodyFat.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">BodyFat.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/BodyTemp50.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">BodyTemp50.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/CarDepreciation.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">CarDepreciation.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/CommuteAtlanta.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">CommuteAtlanta.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/CommuteStLouis.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">CommuteStLouis.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/CricketChirps.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">CricketChirps.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/DDS.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">DDS.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/ElectionMargin.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">ElectionMargin.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/ExerciseHours.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">ExerciseHours.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/FloridaLakes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">FloridaLakes.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HappyPlanetIndex.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HappyPlanetIndex.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HeightData.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HeightData.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HollywoodMovies.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HollywoodMovies.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HollywoodMovies2011.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HollywoodMovies2011.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HoneybeeWaggle.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HoneybeeWaggle.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HouseStarts.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HouseStarts.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/Life.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Life.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/LightatNight.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">LightatNight.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/MalevolentUniformsNFL.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">MalevolentUniformsNFL.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/Mammal2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Mammal2.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/MustangPrice.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">MustangPrice.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/NutritionStudy.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">NutritionStudy.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/RestaurantTips.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">RestaurantTips.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/RetailSales.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">RetailSales.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/StudentSurvey.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">StudentSurvey.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/USStates.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">USStates.csv</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+ <span class="menu-text">데이터 표(본문 임베드)</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/StudentSurvey.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">StudentSurvey.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/AllCountries.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">AllCountries.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/Life.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Life.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/Mammal2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Mammal2.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/temp.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">temp.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/ElectionMargin.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">ElectionMargin.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/HoneybeeWaggle.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HoneybeeWaggle.csv</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/03.html">3장. 신뢰구간</a></li><li class="breadcrumb-item"><a href="../chapters/03-01-sampling-distribution.html"><span class="chapter-title">3.1 표집 분포</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-3-1" class="quarto-section-identifier"><span class="chapter-title">3.1 표집 분포</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<!-- Page 85 -->
+<div class="card">
+<p><img src="../images/img_104.jpg" class="img-fluid"></p>
+</div>
+<div class="card">
+<p>1장에서 관심 있는 모집단에서 표본을 얻는 방법을 배웠다. 이 장에서 표본의 정보를 활용하여 모집단의 특성을 이해하는 통계적 추론(statistical inference)을 배울 것이다.</p>
+</div>
+<section id="모수와-표본-통계량" class="level3">
+<h3 class="anchored" data-anchor-id="모수와-표본-통계량">모수와 표본 통계량</h3>
+<div class="card">
+<p>통계적 추론에서는 모집단인지 아니면 표본인지를 명확하게 구분하는 것이 매우 중요하다. 모집단에서 측정한 값은 모수(母數, population parameter ), 표본에서 측정한 값은 표본 통계량(sample statistic) 또는 간단히 통계량이라고 부른다.</p>
+<p>2장에서 모집단이나 표본에서 평균과 비율 등의 이름은 같지만 기호는 다르다고 강조하였다. 다음 표는 앞 장에서 배웠던 모수와 표본 통계량의 기호를 요약한 것이다.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>이름</th>
+<th>모수</th>
+<th>표본 통계량</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>평균</td>
+<td><span class="math inline">\(\mu\)</span></td>
+<td><span class="math inline">\(\bar{x}\)</span></td>
+</tr>
+<tr class="even">
+<td>표준편차</td>
+<td><span class="math inline">\(\sigma\)</span></td>
+<td><span class="math inline">\(s\)</span></td>
+</tr>
+<tr class="odd">
+<td>비율</td>
+<td><span class="math inline">\(p\)</span></td>
+<td><span class="math inline">\(\hat{p}\)</span></td>
+</tr>
+<tr class="even">
+<td>상관관계</td>
+<td><span class="math inline">\(\rho\)</span></td>
+<td><span class="math inline">\(r\)</span></td>
+</tr>
+<tr class="odd">
+<td>기울기</td>
+<td><span class="math inline">\(\beta\)</span></td>
+<td><span class="math inline">\(b\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="card">
+<p><span id="ex-3-1" class="qlabel">예제 3.1.</span> 미국 센서스 조사 결과 <span class="math inline">\(25\)</span>세 이상의 성인 중에서 학사 이상의 학위를 가진 사람은 <span class="math inline">\(27.5\%\)</span>이다. 표본 크기 <span class="math inline">\(n=200\)</span>인 무작위 표본을 뽑았더니 <span class="math inline">\(58\)</span>명이 학사 이상의 학위를 가지고 있었다. 모수와 표본 통계량은 무엇인가? 올바른 기호를 사용하여 답하라.</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p>모수는 <span class="math inline">\(25\)</span>세 이상의 모든 미국인 중에서 학사 이상의 학위를 가진 비율이므로 <span class="math inline">\(p = 0.275\)</span>이다. 표본 통계량은 표본에서 <span class="math inline">\(25\)</span>세 이상의 모든 미국인 중에서 학사 이상의 학위를 가진 비율이므로 <span class="math inline">\(\hat{p} = 58/200 = 0.29\)</span>이다.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<p><img src="../images/img_105.jpg" class="img-fluid"></p>
+</div>
+</section>
+<section id="모수의-추정치로서-표본-통계량" class="level3">
+<h3 class="anchored" data-anchor-id="모수의-추정치로서-표본-통계량">모수의 추정치로서 표본 통계량</h3>
+<div class="card">
+<p><span class="math inline">\(2011\)</span>년 <span class="math inline">\(4\)</span>월 <span class="math inline">\(29\)</span>일 영국의 윌리엄 왕자 결혼식을 미국의 성인 중에서 <span class="math inline">\(34\%\)</span>가 시청했다고 한 여론조사 업체가 발표했다. 미국의 모든 성인 중에서 <span class="math inline">\(34\%\)</span>가 시청했다는 것을 어떻게 알았을까? 정확하게 알기 위하여 모든 성인에게 결혼식을 보았는지 물어보았을까? 실제로 이렇게 조사했을 거라 생각하는가?</p>
+<p>무작위 표본을 사용한다면 표본 통계량으로 모수를 상당히 정확하게 추정할 수 있다. 이 여론조사 업체가 발표한 결혼식 시청의 추정치 <span class="math inline">\(34\%\)</span>는 단지 <span class="math inline">\(1006\)</span>명의 무작위 표본에 기초하였다. 일반적으로 모수를 정확하게 알려면 모집단 전체의 데이터를 수집하고 모수를 계산해야 한다. 하지만 대부분의 경우에 이것은 가능하지 않다. 대신에 모집단에서 표본을 뽑아 통계량을 계산하여 모수를 추정할 수 있다.</p>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 1.</span> 모수와 표본 통계량의 차이점에 대한 설명으로 올바른 것은? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 모수는 표본에서 측정한 값이며, 표본 통계량은 모집단에서 측정한 값이다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 모수는 모집단에서 측정한 값이며, 표본 통계량은 표본에서 측정한 값이다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 모수와 표본 통계량은 동일한 값을 의미한다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 표본 통계량은 모집단에서 측정된 값을 추정하는 데 사용된다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="1">
+<p><span class="qlabel">확인문제 2.</span> 다음 중 모수와 표본 통계량에 대해 맞는 설명은? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 모수는 모집단의 특성을 나타내며, 표본 통계량은 그 모수를 추정하는 데 사용된다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 표본 통계량은 모집단에서 계산된 값이며, 모수는 표본에서 계산된 값이다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 표본 통계량은 모집단의 특성을 반영하지 않는다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 모수는 항상 정확한 값을 제공하며, 표본 통계량은 부정확하다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="3">
+<p><span class="qlabel">확인문제 3.</span> 다음 중 “모수의 추정치로서 표본 통계량”에 대한 올바른 설명은? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 표본 통계량은 모집단의 모든 데이터를 수집하여 계산된 값이다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 표본 통계량은 모집단의 특성을 정확하게 반영할 수 있다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 표본 통계량은 일반적으로 모수를 정확하게 추정하는 데 사용된다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 표본 통계량은 모집단의 특성을 알기 위해 표본이 필요 없을 때 사용된다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<!-- Page 86 -->
+<div class="card">
+<p>표본만 하나 있고 모수를 모를 때, 모수의 가장 좋은 추정치(best estimate)는 표본 통계량이다.</p>
+</div>
+<div class="card">
+<p><span id="ex-3-2" class="qlabel">예제 3.2.</span> 자동차의 연비는 환경청에서 자동차의 표본을 뽑아 검사한 후에 결정된다. <span class="math inline">\(2012\)</span>년 현대 자동차의 A 모델 중에서 <span class="math inline">\(n=12\)</span>인 표본을 뽑아 평균 연비를 조사하였더니 <span class="math inline">\(1\)</span>리터당 <span class="math inline">\(20\)</span>.5km이다. 모집단과 모수를 기술하라. 표본 정보를 가지고 모수를 가장 좋게 추정하라.</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p><span class="math inline">\(2012\)</span>년에 생산된 A 모델의 모든 현대 자동차가 모집단이다. 모수 <span class="math inline">\(\mu\)</span>는 <span class="math inline">\(2012\)</span>년 A 모델의 모든 현대 자동차의 평균 연비이다. 표본에서 <span class="math inline">\(\bar{x}\)</span>는 <span class="math inline">\(20.5\)</span>이다. 모수 <span class="math inline">\(\mu\)</span>에 대한 가장 좋은 추정치는 표본 평균인 <span class="math inline">\(20.5\)</span>이다. <span class="math inline">\(\mu\)</span>의 정확한 값을 알려면 <span class="math inline">\(2012\)</span>년에 생산된 A 모델의 모든 현대 자동차의 연비를 조사해야 한다.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<p><span id="ex-3-3" class="qlabel">예제 3.3.</span> 다음 각각의 질문에서 관심 있는 모수와 이 모수를 추정할 표본 통계량을 기술하라.</p>
+<p><span class="qsub">(1)</span> B 도시 근로자의 평균 통근 시간은 무엇인가?</p>
+<p><span class="qsub">(2)</span> 레스토랑에서 계산서 금액과 팁의 상관관계는 무엇인가?</p>
+<p><span class="qsub">(3)</span> 유선 전화 없이 휴대폰만 가진 <span class="math inline">\(30\)</span>대와 <span class="math inline">\(50\)</span>대의 비율 차이는 무엇일까?</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p><span class="qsub">(1)</span> 적절한 모수는 <span class="math inline">\(\mu\)</span>인데 B 도시에 사는 모든 근로자의 평균 통근 시간이다. B 도시에 사는 근로자 중에서 무작위로 뽑은 표본에 기초한 <span class="math inline">\(\bar{x}\)</span>로 <span class="math inline">\(\mu\)</span>를 추정한다.</p>
+<p><span class="qsub">(2)</span> 적절한 모수는 <span class="math inline">\(\rho\)</span>이고 레스토랑의 모든 고객이 계산한 금액과 지불한 팁 액수 사이의 상관관계이다. 계산서의 무작위 표본을 뽑아 <span class="math inline">\(r\)</span>을 계산하여 모수 <span class="math inline">\(\rho\)</span>를 추정한다.</p>
+<p><span class="qsub">(3)</span> 적절한 모수는 <span class="math inline">\(p_1 - p_2\)</span>이다. <span class="math inline">\(p_1\)</span>은 <span class="math inline">\(30\)</span>대 중에서 휴대폰만 사용하는 사람의 비율이고 <span class="math inline">\(p_2\)</span>는 <span class="math inline">\(50\)</span>대 중에서 휴대폰만 사용하는 사람의 비율이다. 각 나이 그룹에서 무작위 표본을 뽑아 계산한 표본 비율의 차이 <span class="math inline">\(\hat{p}_1 - \hat{p}_2\)</span>로 모수 <span class="math inline">\(p_1 - p_2\)</span>를 추정한다.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="1">
+<p><span class="qlabel">확인문제 1.</span> 다음 중 모수를 추정하기 위해 사용되는 가장 좋은 추정치는 무엇인가? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 표본 통계량</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 모집단 통계량</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 표본 평균</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 모집단 평균</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="1">
+<p><span class="qlabel">확인문제 2.</span> 다음 설명에서 모수와 표본 통계량에 대해 맞는 설명은? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 표본 통계량은 표본에서 계산된 값이며, 모수는 모집단에서 계산된 값이다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 모수와 표본 통계량은 항상 동일하다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 모수는 표본에서 추정된 값이며, 표본 통계량은 모집단에서 측정된 값이다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 표본 통계량은 모집단에서 구할 수 없는 값을 추정하는 데 사용된다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz q" data-answer="4">
+<p><span class="qlabel">확인문제 3.</span> 다음 중 적절한 모수와 그에 대한 표본 통계량을 기술한 것은?</p>
+<p><span class="qsub">(1)</span> B 도시 근로자의 평균 통근 시간은 무엇인가?<br>
+<span class="qsub">(2)</span> 레스토랑에서 계산서 금액과 팁의 상관관계는 무엇인가?<br>
+<span class="qsub">(3)</span> 유선 전화 없이 휴대폰만 가진 <span class="math inline">\(30\)</span>대와 <span class="math inline">\(50\)</span>대의 비율 차이는 무엇일까? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="qsub">(1)</span> <span class="math inline">\(\mu\)</span>, <span class="math inline">\(\bar{x}\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="qsub">(2)</span> <span class="math inline">\(\rho\)</span>, <span class="math inline">\(r\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="qsub">(3)</span> <span class="math inline">\(p_1 - p_2\)</span>, <span class="math inline">\(\hat{p}_1 - \hat{p}_2\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 모든 항목에 대해 위와 같이 해당된다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<!-- Page 87 -->
+</section>
+<section id="표본-통계량의-변동variability" class="level3">
+<h3 class="anchored" data-anchor-id="표본-통계량의-변동variability">표본 통계량의 변동(variability)</h3>
+<div class="card">
+<p>모수는 고정된 값이지만 통계량은 모집단의 어떤 케이스가 표본으로 뽑히느냐에 따라 값이 다르다. 모수의 값을 알고 싶지만 직접 계산할 수는 없다. 모집단의 모든 데이터를 수집하는 것은 현실에서 매우 어렵거나 불가능하기 때문이다. 통계량 값은 표본에 따라 달라지지만 그것이 어느 정도인지 계산할 수 있다.</p>
+<p><a href="#ex-3-3">예제 3.3</a>에서 표본 통계량으로 모수를 추정하는 몇 가지 사례를 제시하였다. 이 추정치들은 얼마나 정확할까? 이것은 통계적 추론에서 가장 기본적인 질문 중의 하나이다. 모수는 고정된 값이지만 모르고, 통계량은 값을 알지만 표본에 따라 변하는 값이다. 이 문제를 해결하려면 통계량의 값이 표본에 따라 얼마나 변하는지를 이해해야 한다.</p>
+<p><a href="#ex-3-2">예제 3.2</a>에서 다룬 자동차의 평균 연비를 생각하자. 표본에서 구한 평균 <span class="math inline">\(\bar{x}\)</span>는 <span class="math inline">\(20.5\)</span>이다. 무작위 표본을 다시 뽑아 평균을 계산하니 <span class="math inline">\(20.4\)</span>가 나왔다고 하자. <span class="math inline">\(20.4\)</span>는 <span class="math inline">\(20.5\)</span>와 매우 가까우므로 표본의 변동이 작아서 처음의 추정치 <span class="math inline">\(20.5\)</span>가 상당히 정확한 값임을 의미한다. 하지만 새로운 추정치가 <span class="math inline">\(24.1\)</span>이라면 <span class="math inline">\(20.5\)</span>와 상당히 떨어진 값이므로 표본의 변동이 커서 처음의 추정치 <span class="math inline">\(20.5\)</span>에 대한 불확실성이 높아진다.</p>
+<p>물론 표본 평균 두 개만 비교해서 변동을 정확하게 평가할 수는 없다. 표본 평균의 변동을 좀 더 정확하게 추정하려면 훨씬 더 많은 표본이 필요하다. 이것을 이해하는 가장 좋은 방법은 아래 예제와 같이 알고 있는 모집단에서 표본을 뽑는 컴퓨터 모의실험(computer simulation)을 하는 것이다.</p>
+</div>
+<div class="card">
+<p><span id="ex-3-4" class="qlabel">예제 3.4.</span> <span class="math inline">\(2015\)</span>년 미국 프로 야구 메이저 리그에 소속된 모든 야구 선수 <span class="math inline">\(868\)</span>명의 연봉(단위: 백만 달러) <a href="https://www.lock5stat.com/datasets2e/BaseballSalaries2015.txt">자료</a>는 <a href="http://www.lock5stat.com/datasets2e/BaseballSalaries2015.csv">BaseballSalaries2015</a>에서 얻을 수 있다. 모든 야구 선수의 평균 연봉은 얼마인가? 올바른 기호를 사용하여 답하라.</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p><span class="math inline">\(2015\)</span>년 모든 야구 선수의 평균 연봉을 구글의 스프레드시트로 계산하면 <span class="math inline">\(4.215\)</span>이다. <span class="math inline">\(2015\)</span>년 모든 야구 선수를 포함한 모집단이므로 <span class="math inline">\(\mu = 4.215\)</span>이다.</p>
+<p>메이저 리그 야구 선수 중에 한국인은 몇 명 있는가?</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<p><span id="ex-3-5" class="qlabel">예제 3.5.</span> <span class="math inline">\(30\)</span>명의 무작위 표본을 여러 번 뽑아 평균을 계산하여 모평균과 비교하는 작업을 구글의 스프레드시트 앱에서 해보시오.</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<ol type="1">
+<li>데이터를 시트에서 읽는다.</li>
+<li>새로운 시트를 하나 만든다.</li>
+<li><code class="inl"><span class="cell">Salary</span></code> 열의 <code class="inl"><span class="cell">B2:B869</span></code> 데이터를 새로운 시트의 <code class="inl"><span class="cell">A</span></code> 열에 복사한다.</li>
+<li>셀 <code class="inl"><span class="cell">B1</span></code>에 <code class="inl"><span class="op">=</span><span class="fn">average</span><span class="pnb">(</span><span class="cell">A1:A868</span><span class="pnb">)</span></code>을 입력하여 모집단의 평균을 계산한다.</li>
+<li>셀 <code class="inl"><span class="cell">A1</span></code> 위의 열 이름 <code class="inl"><span class="cell">A</span></code>의 삼각형을 클릭하면 나오는 메뉴 중에서 ’범위 임의로 섞기’를 클릭하여 모든 데이터를 무작위로 섞는다.</li>
+<li>셀 <code class="inl"><span class="cell">C1</span></code>에 <code class="inl"><span class="op">=</span><span class="fn">average</span><span class="pnb">(</span><span class="cell">A1:A30</span><span class="pnb">)</span></code>을 입력하여 <span class="math inline">\(30\)</span>개의 표본 평균을 구한다.</li>
+<li>셀 <code class="inl"><span class="cell">C1</span></code>의 값을 복사하여 셀 <code class="inl"><span class="cell">E1</span></code>에 값만 붙여 넣는다. 단축키는 “Ctrl+Shift+V”이다.</li>
+<li><span class="math inline">\(5\)</span>-<span class="math inline">\(7\)</span>번의 작업을 셀 <code class="inl"><span class="cell">C2:C5</span></code>까지 반복한다.</li>
+<li>셀 <code class="inl"><span class="cell">F1</span></code>에 <code class="inl"><span class="op">=</span><span class="cell">E1</span><span class="op">-</span><span class="cell">$B$1</span></code>을 입력하여 모평균과의 차이를 구한다.</li>
+<li>셀 <code class="inl"><span class="cell">F1</span></code>을 <code class="inl"><span class="cell">F5</span></code>까지 마우스로 끌어 당긴다. 위 모의실험을 <span class="math inline">\(1{,}000\)</span>번 반복하여 표본 평균의 히스토그램을 그린다면 어떤 모양일까?</li>
+</ol>
+<p><img src="../images/img_106.PNG" class="img-fluid"></p>
+<p><a href="#ex-3-5">예제 3.5</a>에서 표본 통계량이 항상 정확히 일치하지 않는 이유는 표본을 다시 추출할 때마다 데이터가 달라지므로 당연하다. 하지만 우리는 표본 통계량이 모수와 가까운 값이기를 기대한다.</p>
+<p>위 그림은 모의실험을 <span class="math inline">\(5\)</span>번 반복한 결과이다. 첫 번째 표본 평균은 <span class="math inline">\(4.748\)</span>인데 모평균 <span class="math inline">\(4.215\)</span>와 상당히 가까운 값이다. 두 번째 표본 평균은 <span class="math inline">\(2.894\)</span>인데 모평균보다 <span class="math inline">\(1.321\)</span> 작은 값이다. 다섯 번째 표본 평균은 <span class="math inline">\(3.484\)</span>이다.</p>
+<p>모집단 크기가 <span class="math inline">\(868\)</span>일 때 표본 크기가 <span class="math inline">\(30\)</span>인 무작위 표본의 경우의 수는 <span class="math inline">\(3.25 \times 10^{55}\)</span>이다. 지구 상의 어떤 컴퓨터라도 할 수 없는 엄청난 작업이다. 모의실험을 반복하여 표본 평균과 모평균을 비교하는 다른 방법이 있을까?</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 1.</span> 다음 중 모수와 표본 통계량의 차이를 잘 설명한 것은 무엇인가? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 모수는 표본에서 측정된 값이며, 표본 통계량은 모집단에서 측정된 값이다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 모수는 모집단에서 계산된 값이고, 표본 통계량은 표본에서 계산된 값이다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 표본 통계량은 모수의 정확한 추정치이다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 모수는 표본을 통해 정확하게 알 수 있다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="1">
+<p><span class="qlabel">확인문제 2.</span> <span class="math inline">\(2015\)</span>년 미국 프로 야구 메이저 리그에 소속된 모든 야구 선수의 평균 연봉을 구했을 때, 모집단 평균 연봉은 얼마인가? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(4.215\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(4.748\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(3.484\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(2.894\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 3.</span> <span class="math inline">\(30\)</span>개의 무작위 표본 평균을 구하고 이를 모평균과 비교할 때, 표본에서 구한 평균이 모평균과 다를 수 있는 이유는 무엇인가? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 표본 크기가 충분히 크면 표본 평균은 모평균과 정확히 일치한다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 표본을 뽑을 때마다 데이터가 달라져서 표본 평균이 다를 수 있다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 표본 평균은 항상 모평균보다 클 수밖에 없다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 모평균을 알 수 없기 때문에 표본 평균은 항상 정확하다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<!-- Page 88 -->
+</section>
+<section id="표본-평균의-표집분포" class="level3">
+<h3 class="anchored" data-anchor-id="표본-평균의-표집분포">표본 평균의 표집분포</h3>
+<div class="card">
+<p>동일한 모집단에서 같은&nbsp;크기의 표본을 여러 번 뽑아 만든 표본 통계량의 분포를 표집분포(sampling distribution)라고 한다. 표집분포는 표본이 달라지면&nbsp;표본 통계량이 얼마나 변하는지&nbsp;보여준다.</p>
+<ol type="1">
+<li>모집단의 텍스트 상자에 야구 선수 <span class="math inline">\(868\)</span>명의 연봉 데이터를 복사하여 붙여 넣는다.</li>
+<li>‘모집단 히스토그램’ 버튼을 클릭한다. 히스토그램은 오른쪽으로 꼬리가 긴 분포이다. 히스토그램 제목에 모집단의 평균과 표준편차가 있고 그래프에서 파란색&nbsp;세모가 모집단 평균이다.</li>
+<li>표본 추출 ‘1회’ 버튼을 클릭하면 텍스트 상자에 무작위로 뽑힌 표본 데이터 <span class="math inline">\(30\)</span>개가 나타난다.</li>
+<li>왼쪽 수직축은 모집단&nbsp;히스토그램의 각 계급의 빈도이고 오른쪽은 표본 히스토그램의 계급 빈도이다. 두 분포가 겹쳐 있어 쉽게 비교할 수 있다.&nbsp;표본 평균은 빨간색&nbsp;세모이다.</li>
+<li>표본 추출을 <span class="math inline">\(1{,}000\)</span>번 정도 반복하면 표본 평균의 히스토그램은 대략&nbsp;대칭이며 종 모양과 비슷하다. <iframe src="../sims/sampling_dist_mean.html" width="100%" height="1150" style="border:1px solid #e7ebf2; border-radius:10px;" loading="lazy"></iframe></li>
+</ol>
+</div>
+<div class="card">
+<div class="quiz" data-answer="1">
+<p><span class="qlabel">확인문제 1.</span> 표본 평균의 표집분포에 대한 설명으로 옳은 것은 무엇인가? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 표본 평균의 표집분포는 표본 크기가 달라지면 변화한다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 표본 평균의 표집분포는 표본 크기가 일정하면 변화하지 않는다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 표본 평균의 표집분포는 표본이 달라지면 표본 통계량이 변하지 않는다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 표본 평균의 표집분포는 표본 추출 횟수가 많을수록 변화하지 않는다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 2.</span> 모집단 히스토그램의 특징으로 옳은 것은 무엇인가? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 모집단 히스토그램은 왼쪽으로 꼬리가 긴 분포이다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 모집단 히스토그램은 오른쪽으로 꼬리가 긴 분포이다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 모집단 히스토그램은 대칭적이고 정규 분포를 따른다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 모집단 히스토그램은 정규 분포와 관계없이 왼쪽으로 치우친 분포이다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="3">
+<p><span class="qlabel">확인문제 3.</span> 표본 추출 <span class="math inline">\(1\)</span>회 후, 표본 평균이 빨간색 세모로 나타나는 이유는 무엇인가? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 표본 평균은 모집단의 평균과 일치하기 때문이다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 표본 평균은 표본 히스토그램의 가장 작은 값이기 때문이다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 표본 평균은 무작위로 추출된 표본 데이터의 평균이기 때문이다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 표본 평균은 모집단 히스토그램에서 가장 큰 빈도를 나타내기 때문이다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="3">
+<p><span class="qlabel">확인문제 4.</span> 표본 추출을 <span class="math inline">\(1{,}000\)</span>번 반복한 후 표본 평균의 히스토그램이 대칭적이고 종 모양에 가까운 이유는 무엇인가? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 표본이 무작위로 추출되어 다양한 값을 가진다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 표본의 수가 적어 표본 평균이 대칭을 이룬다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 많은 표본을 추출하여 중심극한정리(Central Limit Theorem)가 적용되기 때문이다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 표본 추출 횟수가 적어서 히스토그램이 대칭적으로 나타난다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="1">
+<p><span class="qlabel">확인문제 5.</span> 모집단에서 표본을 추출할 때 중요한 특징으로 옳은 것은 무엇인가? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 표본 크기가 작을수록 표본 평균의 표집분포는 더 넓어진다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 표본 크기가 클수록 표본 평균의 표집분포는 더 넓어진다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 표본 크기가 작을수록 표본 평균의 표집분포는 더 좁아진다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 표본 크기가 커지면 표본 평균의 표집분포가 대칭적이지 않게 된다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<!-- Page 89 -->
+</section>
+<section id="표본-비율의-표집분포" class="level3">
+<h3 class="anchored" data-anchor-id="표본-비율의-표집분포">표본 비율의 표집분포</h3>
+<div class="card">
+<p><span id="ex-3-6" class="qlabel">예제 3.6.</span> <a href="#ex-3-1">예제 3.1</a>에서 <span class="math inline">\(25\)</span>세 이상의 미국 성인 중에서 학사 학위 이상을 가진 사람의 비율은 <span class="math inline">\(27.5\%\)</span>라고 하였다. 아래 앱을 사용하여 표본 크기 <span class="math inline">\(n=200\)</span>의 표본 비율 분포의 모양, 중심, 변동을 기술하라.</p>
+<iframe src="../sims/sampling_dist_prop.html" width="100%" height="750" style="border:1px solid #e7ebf2; border-radius:10px;" loading="lazy">
+</iframe>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<ol type="1">
+<li>모집단의 비율 상자에 <span class="math inline">\(p=0.275\)</span>를 입력한다.</li>
+<li>표본 크기는 <span class="math inline">\(200\)</span>을 선택한다.</li>
+<li>표본 추출 ‘1회’ 버튼을 클릭한다. 뽑힌 사람이 학사 학위 이상이면 <span class="math inline">\(1\)</span>, 아니면 <span class="math inline">\(0\)</span>이다. 표본 비율을 계산하여 히스토그램에 표시한다.</li>
+<li>모의실험을 <span class="math inline">\(1{,}000\)</span>번 정도 반복한다.</li>
+<li>표본 비율의 표집분포의 중심은 대략 모비율인 <span class="math inline">\(0.275\)</span>이고 범위는 대략 <span class="math inline">\(0.17\)</span>에서 <span class="math inline">\(0.38\)</span>이다. 분포의 모양은 거의 대칭이고 종 모양이다.</li>
+</ol>
+<p>표본 비율과 표본 평균의 분포 모양은 거의 유사한데, 대략 좌우 대칭이고 종 모양이다. 이는 통계 이론으로 예측 가능한 매우 보편적인 성질이다. 표본을 무작위로 추출하고 표본 크기가 충분히 클 때, 표본 통계량의 분포는 대칭이고 종 모양이며 중심은 모수의 값이다. 표본 크기가 얼마나 커야 충분히 크다고 할 수 있는지는 뒤에서 다시 다룰 것이다.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 1.</span> 표본 비율의 표집분포에서 주어진 표본 크기 <span class="math inline">\(n=200\)</span>과 모집단 비율 <span class="math inline">\(p=0.275\)</span>에 대한 결과로 옳은 것은 무엇인가? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 표본 비율의 중심은 <span class="math inline">\(0.17\)</span>에서 <span class="math inline">\(0.38\)</span> 사이의 값으로 분포된다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 표본 비율의 표집분포의 중심은 모집단 비율인 <span class="math inline">\(0.275\)</span>이다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 표본 비율의 표집분포는 오른쪽으로 치우친 분포를 보인다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 표본 비율의 표집분포는 불균형적인 형태를 보인다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 2.</span> 표본 비율의 표집분포에서 <span class="math inline">\(1{,}000\)</span>번의 모의 실험 후 얻은 결과로 옳은 것은 무엇인가? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 표본 비율의 표집분포는 대칭적이지 않다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 표본 비율의 표집분포는 모양이 대칭적이고 종 모양이다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 표본 비율의 표집분포의 범위는 <span class="math inline">\(0.25\)</span>에서 <span class="math inline">\(0.35\)</span>이다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 표본 비율의 표집분포의 범위는 <span class="math inline">\(0.18\)</span>에서 <span class="math inline">\(0.40\)</span>이다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="3">
+<p><span class="qlabel">확인문제 3.</span> 표본 비율의 표집분포의 중심은 대체로 무엇과 일치하는가? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 표본 평균</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 모집단 평균</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 모집단 비율</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 표본 크기</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="3">
+<p><span class="qlabel">확인문제 4.</span> 표본 비율의 표집분포에서 표본 크기가 충분히 크면 어떤 특징을 보이는가? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 표본 평균이 분포의 중심에서 크게 벗어나게 된다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 표본 통계량의 분포는 대칭적이지 않고 왜곡된다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 표본 통계량의 분포는 대칭적이고 종 모양이 된다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 표본 통계량의 분포는 점근적이지 않게 된다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="3">
+<p><span class="qlabel">확인문제 5.</span> 표본 비율의 표집분포에서 <span class="math inline">\(95\%\)</span> 신뢰구간을 계산하려면 어떤 기준을 사용할 수 있는가? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 표본 평균이 신뢰구간의 중심으로 사용된다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 표본 크기가 <span class="math inline">\(30\)</span> 이상일 때 신뢰구간을 계산할 수 있다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 표본 비율의 표집분포에서 <span class="math inline">\(2.5\%\)</span>의 양쪽 꼬리를 제외한 구간이 신뢰구간이다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 표본 비율의 표집분포에서 신뢰구간을 계산할 수 없다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<!-- Page 90 -->
+</section>
+<section id="표집-변동-측정-표준오차" class="level3">
+<h3 class="anchored" data-anchor-id="표집-변동-측정-표준오차">표집 변동 측정: 표준오차</h3>
+<div class="card">
+<p>다른 무엇보다 중요한 것은 표집분포의 변동(variability)이다. 표본에 따라 통계량이 얼마나 달라지는지를 알면 모수의 추정치가 얼마나 정확한지 알 수 있기 때문이다.</p>
+<p>통계량의 변동은 표집분포의 표준편차로 측정한다. 통계량의 표준편차는 대단히 중요하기 때문에 자신만의 특별한 이름인 “표준오차”(standard error)로 부르고 간단히 <span class="math inline">\(SE\)</span>로 표기한다. 이름이 다르면 표본 내에서 값들의 변동과 통계량의 변동을 혼동하지 않기 때문이다.&nbsp;표준오차는 통계량이 모수와 떨어진 평균적인 거리로 생각하면 된다.</p>
+</div>
+<div class="card">
+<p><span id="ex-3-7" class="qlabel">예제 3.7.</span> 앞에서 사용했던 앱으로 다음 표집분포의 표준오차를 추정하라.</p>
+<p><span class="qsub">(1)</span> 표본 크기가 <span class="math inline">\(30\)</span>인 표본에서 야구 선수의 평균&nbsp;연봉 (<a href="http://www.lock5stat.com/datasets2e/BaseballSalaries2015.csv">BaseballSalaries2015</a>)</p>
+<p><span class="qsub">(2)</span> 표본 크기가 <span class="math inline">\(200\)</span>인 표본에서 학사 학위 이상 소지자의 비율</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p>표집분포의 표준오차는 모의실험으로 얻은 표본 통계량의 표준편차이다.</p>
+<p><span class="qsub">(1)</span> 표본 평균의 표집분포 앱에서 표본 크기가 <span class="math inline">\(30\)</span>일 때 <span class="math inline">\(1{,}000\)</span>번 반복 실험하면&nbsp;표준오차는 대략 <span class="math inline">\(0.99\)</span>가 나온다.</p>
+<p><span class="qsub">(2)</span> 표본 비율의 표집분포 앱에서 표본 크기가 <span class="math inline">\(200\)</span>일 때 <span class="math inline">\(1{,}000\)</span>번 반복 실험하면 표준오차는 대략&nbsp;<span class="math inline">\(0.03\)</span>이 나온다.</p>
+<p>무작위로 뽑은 표본에 기초하여 표준편차를 계산하므로 모의실험을 할 때마다 값이 다를 수 있다.</p>
+<p><a href="../chapters/02-03-quantitative-variation.html#sec-2-3">2.3절</a>에서 분포가 비교적 대칭이고 종 모양일 때는 대략 <span class="math inline">\(95\%\)</span>의 데이터가 평균에서 <span class="math inline">\(2\)</span>배의 표준편차 범위 내에 있다는 <span class="math inline">\(95\%\)</span> 법칙을 배웠다. 이 법칙을 표집분포에 적용하면 약 <span class="math inline">\(95\%\)</span>의 표본 통계량은 평균에서 <span class="math inline">\(2\)</span>배의 표준오차&nbsp;범위 내에 있게 된다. 따라서 표집분포의 히스토그램에서 통계량의 대략 <span class="math inline">\(95\%\)</span> 범위를 찾아내서&nbsp;<span class="math inline">\(4\)</span>로 나누면 근사적인 표준오차를 얻을 수 있다.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<p><span id="ex-3-8" class="qlabel">예제 3.8.</span> <span class="math inline">\(95\%\)</span> 법칙을 사용하여 다음 표집분포의 표준오차를 추정하라.</p>
+<p><span class="qsub">(1)</span> 표본 크기가 <span class="math inline">\(30\)</span>인 표본에서 야구 선수의 평균 연봉</p>
+<p><span class="qsub">(2)</span> 표본 크기가 <span class="math inline">\(200\)</span>인 표본에서 학사 학위 이상 소지자의 비율</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p><span class="qsub">(1)</span> 표본 평균의 표집분포 앱에서 중앙의 <span class="math inline">\(95\%\)</span> 표본 평균의 범위는 대략&nbsp;<span class="math inline">\(2.5\)</span>에서&nbsp;<span class="math inline">\(6.5\)</span>이다. 표준오차의 추정치는 (<span class="math inline">\(6.5\)</span> - <span class="math inline">\(2.5\)</span>)/<span class="math inline">\(4\)</span>&nbsp;= <span class="math inline">\(1.0\)</span>이다.</p>
+<p><span class="qsub">(2)</span> 표본 비율의 표집분포 앱에서 중앙의 <span class="math inline">\(95\%\)</span> 표본 평균의 범위는 대략 <span class="math inline">\(0.21\)</span>에서 <span class="math inline">\(0.34\)</span>이다. 표준오차의 추정치는 (<span class="math inline">\(0.34\)</span>&nbsp;-&nbsp;<span class="math inline">\(0.21\)</span>)/<span class="math inline">\(4\)</span>&nbsp;= <span class="math inline">\(0.0325\)</span>이다.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="3">
+<p><span class="qlabel">확인문제 1.</span> 다음 중 표준오차(standard error)의 정의로 올바른 것은 무엇인가? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 표준오차는 표본 내 값들의 변동을 측정하는 값이다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 표준오차는 모집단의 통계량의 변동을 측정하는 값이다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 표준오차는 표본에서 구한 통계량의 표준편차로, 통계량이 모수와 얼마나 떨어져 있는지를 나타낸다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 표준오차는 모수에서 통계량을 빼서 구한다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="3">
+<p><span class="qlabel">확인문제 2.</span> 표본 크기가 <span class="math inline">\(30\)</span>인 표본에서 표본 평균의 표집분포의 표준오차를 추정했을 때 대략 얼마가 되었는가? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(0.03\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(0.32\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(0.99\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(1.5\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 3.</span> <span class="math inline">\(95\%\)</span> 법칙을 사용하여 표본 비율의 표집분포에서 표준오차를 추정할 때, 중앙 <span class="math inline">\(95\%\)</span> 범위가 <span class="math inline">\(0.21\)</span>에서 <span class="math inline">\(0.34\)</span> 사이에 있을 경우 표준오차는 대략 얼마인가? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(0.01\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(0.0325\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(0.05\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(0.1\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<!-- Page 91 -->
+</section>
+<section id="표본-크기의-중요성" class="level3">
+<h3 class="anchored" data-anchor-id="표본-크기의-중요성">표본 크기의 중요성</h3>
+<div class="card">
+<p><span id="ex-3-9" class="qlabel">예제 3.9.</span> <a href="#ex-3-1">예제 3.1</a>에서 미국 대학 졸업자 비율은 <span class="math inline">\(p=0.275\)</span>라고 하였다. 표본 크기 <span class="math inline">\(n=200\)</span>일 때 표본 비율의 표집 분포의 모양과 표준오차를 모의실험으로 알아보았다. 표본 크기가 커지면서 표집 분포는 어떻게 달라질까? 아래 앱에서 표본 크기 <span class="math inline">\(n\)</span>이 <span class="math inline">\(50\)</span>, <span class="math inline">\(200\)</span>, <span class="math inline">\(1000\)</span>일 때 <span class="math inline">\(1{,}000\)</span>번 반복 실험한다. 표본 크기는 표집분포의 중심과 표준오차에 어떠한 영향을 끼치는지 기술하라.</p>
+<iframe src="../sims/sampling_dist_prop.html" width="100%" height="750" style="border:1px solid #e7ebf2; border-radius:10px;" loading="lazy">
+</iframe>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p>표본 크기가 <span class="math inline">\(50\)</span>, <span class="math inline">\(200\)</span>, <span class="math inline">\(1000\)</span>인 경우 모두 표집분포의 중심은 모비율 <span class="math inline">\(0.275\)</span>와 매우 가깝지만 변동은 매우 다르다. 표본 크기가 증가하면 변동은 감소하고 표본 비율은 모집단 비율에 더 가까이 있을 가능성이 커진다. 즉, 표본 크기가 커지면 표준오차가 작아진다.</p>
+<p>표본 크기가 커질 때 표집분포의 변동은 왜 작아질까? 표본 크기가 커지면 모집단에 대한 정보가 더 많아져서 모수를 좀 더 정확하게 추정할 수 있기 때문이다.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<p><span id="ex-3-10" class="qlabel">예제 3.10.</span> 표본 크기가 다를 때 대학 졸업자의 표준오차(<span class="math inline">\(SE\)</span>)로 가능한 값은 다음 <span class="math inline">\(5\)</span>가지 이다.</p>
+<p><span class="math inline">\(SE=0.005\)</span>, <span class="math inline">\(SE=0.014\)</span>, <span class="math inline">\(SE=0.032\)</span>, <span class="math inline">\(SE=0.063\)</span>, <span class="math inline">\(SE=0.120\)</span></p>
+<p>표본 크기 <span class="math inline">\(n\)</span>이 <span class="math inline">\(50\)</span>, <span class="math inline">\(200\)</span>, <span class="math inline">\(1000\)</span>일 때 위의 앱을 사용하여 적절한 표준오차를 위의 보기에서 고르시오.</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p><span class="math inline">\(n=50\)</span>: 적절한 <span class="math inline">\(SE\)</span>는 <span class="math inline">\(0.063\)</span>이다.</p>
+<p><span class="math inline">\(n=200\)</span>: 적절한 <span class="math inline">\(SE\)</span>는 <span class="math inline">\(0.032\)</span>이다.</p>
+<p><span class="math inline">\(n=1000\)</span>: 적절한 <span class="math inline">\(SE\)</span>는 <span class="math inline">\(0.014\)</span>이다.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 1.</span> 표본 크기 <span class="math inline">\(n\)</span>이 증가하면 표집분포의 변동이 어떻게 달라지는지에 대한 설명으로 올바른 것은 무엇인가? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 표본 크기가 증가하면 표집분포의 변동은 증가한다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 표본 크기가 증가하면 표집분포의 변동은 감소한다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 표본 크기와 표집분포의 변동은 관계가 없다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 표본 크기가 증가하면 표집분포의 변동은 일정하게 유지된다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="3">
+<p><span class="qlabel">확인문제 2.</span> 표본 크기가 <span class="math inline">\(200\)</span>일 때 가능한 표준오차(SE)는 무엇인가? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(0.005\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(0.014\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(0.032\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(0.120\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="3">
+<p><span class="qlabel">확인문제 3.</span> 표본 크기 <span class="math inline">\(50\)</span>일 때 적절한 표준오차(SE)는 무엇인가? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(0.005\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(0.032\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(0.063\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(0.120\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<!-- Page 92 -->
+</section>
+<section id="무작위-추출의-중요성" class="level3">
+<h3 class="anchored" data-anchor-id="무작위-추출의-중요성">무작위 추출의 중요성</h3>
+<div class="card">
+<p>지금까지 다룬 모든 표집분포의 중심은 모수(population parameter)이다. 중요한 것은 표본을 무작위로 뽑는 것인데 종종 간과되는 경우가 많다. 무작위로 표본을 뽑으면 표집분포의 중심은 모수가 되지만, 무작위로 뽑지 않으면 표집 편향(sampling bias)이 발생한다는 것을 <a href="../chapters/01-02-sampling.html#sec-1-2">1.2절</a>에서 배웠다. 표집 편향이 발생하면 표집분포의 중심은 모수가 아닌 다른 잘못된&nbsp;값이다.</p>
+</div>
+<div class="card">
+<p><img src="../images/img_107.PNG" class="img-fluid"></p>
+</div>
+<div class="card">
+<p><span id="ex-3-11" class="qlabel">예제 3.11.</span> 대학생은 <span class="math inline">\(1\)</span>주일에 평균 <span class="math inline">\(15\)</span>시간 공부한다고 가정하자. 두 학생 Judy와 Mark는 표집 편향이 실제로 어떻게 발생하는지 알고 싶었다. 두 학생은 각각 표본 크기 <span class="math inline">\(n=50\)</span>인 학생 표본을 뽑아 <span class="math inline">\(1\)</span>주일에 공부를 얼마나 하는지 조사하여 평균을 계산하였다. Judy는 전체 학생을 대상으로 표본을 반복 추출하였고 Mark는 도서관에서 표본을 반복 추출하였다. Mark와 Judy의 표집분포 그래프는 위에 있다. 어느 것이 Judy의 표집분포인가? 왜 두 사람은 다른 결과를 얻었을까?</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p>Judy는 전체 학생을 대상으로 무작위로 표본을 추출하였기 때문에 표본 평균의 분포는 모집단 평균인 <span class="math inline">\(15\)</span>시간이 중심일 것이다. 따라서 검은색의 점도표가 Judy의 표집분포이다. 하지만 Mark의 표본은 도서관에서 조사한 편의표본이라 평균을 과대 추정할 것이다.</p>
+<p>이 절에서 표본 통계량은 표본마다 값이 달라지며, 고정된 미지의 모수 값을 추정하는데 사용된다는 것을 배웠다. 표본 통계량은 모수와 정확히 일치하지&nbsp;않으므로 추정치가 얼마나 정확한지 아는 것은 매우 중요하다. 이것을 알기 위하여 동일한 모집단에서 같은 크기의 표본을 반복 추출하여&nbsp;표집분포를 만들었다. 표집분포의 표준편차를&nbsp;표준오차라고 부르는데 통계량의 변동을 측정할 때 가장 많이 사용한다. 표본에 따라 통계량이 얼마나 변하는지 알면 모수 추정치의 불확실성이 어느 정도인지 파악하는데 도움이 되는데 다음 절에서 상세히 다룰 것이다.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 1.</span> 다음 중 표본을 무작위로 뽑을 때 표집분포의 중심에 대한 설명으로 올바른 것은 무엇인가? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 무작위로 표본을 뽑으면 표집분포의 중심이 잘못된 값이 될 수 있다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 무작위로 표본을 뽑으면 표집분포의 중심이 모수가 된다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 무작위로 표본을 뽑아도 표집분포의 중심은 항상 <span class="math inline">\(0\)</span>이 된다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 무작위로 표본을 뽑아도 표집분포의 중심은 고정된 값을 알 수 없다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 2.</span> Judy와 Mark의 표집분포에서 Judy는 무엇을 했고 Mark는 무엇을 했는지 설명하라. <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> Judy는 도서관에서 표본을 추출하고, Mark는 무작위로 표본을 추출했다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> Judy는 전체 학생을 대상으로 무작위로 표본을 추출했고, Mark는 도서관에서 표본을 추출했다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> Judy는 도서관에서 표본을 추출하고, Mark는 전체 학생을 대상으로 무작위로 표본을 추출했다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> Judy와 Mark는 둘 다 무작위로 표본을 추출했다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<!-- Page 93 -->
+</section>
+<section id="학습-내용-정리" class="level3">
+<h3 class="anchored" data-anchor-id="학습-내용-정리">학습 내용 정리</h3>
+<div class="card">
+<p>다음 사항을 이해하거나 해결하는 능력이 있어야 한다.</p>
+<ul>
+<li>모수와&nbsp;통계량을 구분할 수 있다.&nbsp;모수는 고정된 값이지만&nbsp;통계량은 표본마다 달라지는 값임을 알고 있다.</li>
+<li>표본에서 적절한&nbsp;통계량을 계산하여 모수를&nbsp;추정할 수 있다.</li>
+<li>표집분포는 표본 통계량이 표본마다 얼마나 변하는지 보여준다.</li>
+<li>무작위&nbsp;표본에서 계산한 통계량의 표집분포의 중심은&nbsp;모수이다.</li>
+<li>표집분포를 보고 통계량의&nbsp;표준오차를 추정할 수 있다.</li>
+<li>표본&nbsp;크기가 표집분포에 어떤 영향을 끼치는지 설명할 수 있다.</li>
+</ul>
+</div>
+<section id="통계적-추론" class="level4">
+<h4 class="anchored" data-anchor-id="통계적-추론">통계적 추론</h4>
+<div class="card">
+<p>표본에서 얻은 정보로&nbsp;모집단에 관한 결론을 도출하는 과정을 통계적 추론(statistical inference)이라고 한다.</p>
+</div>
+</section>
+<section id="모수와-통계량" class="level4">
+<h4 class="anchored" data-anchor-id="모수와-통계량">모수와 통계량</h4>
+<div class="card">
+<p>모수(population parameter)는&nbsp;모집단의 어떤&nbsp;특성을 기술한 숫자이다.</p>
+<p>통계량(statistic)은&nbsp;표본에서 계산한 숫자이다.</p>
+</div>
+</section>
+<section id="최적-추정치" class="level4">
+<h4 class="anchored" data-anchor-id="최적-추정치">최적 추정치</h4>
+<div class="card">
+<p>표본 하나만 있고 모수를 모를 때 표본&nbsp;통계량이 모수의 최적&nbsp;추정치(best estimate)이다.</p>
+</div>
+</section>
+<section id="표집분포" class="level4">
+<h4 class="anchored" data-anchor-id="표집분포">표집분포</h4>
+<div class="card">
+<p>동일한 모집단에서 같은&nbsp;크기의 표본을&nbsp;반복&nbsp;추출하여 만든 통계량의 분포를&nbsp;표집분포(sampling distribution)라고 한다. 표집분포는 통계량이&nbsp;표본에 따라 얼마나 변하는지 보여준다.</p>
+</div>
+</section>
+<section id="표집분포의-모양과-중심" class="level4">
+<h4 class="anchored" data-anchor-id="표집분포의-모양과-중심">표집분포의 모양과 중심</h4>
+<div class="card">
+<p>대부분의 모수에 대하여, 표본을&nbsp;무작위로 뽑고 표본 크기가&nbsp;충분히&nbsp;클 때 표집분포는 대칭이고&nbsp;종&nbsp;모양이며 중심은&nbsp;모수이다.</p>
+</div>
+</section>
+<section id="표준오차" class="level4">
+<h4 class="anchored" data-anchor-id="표준오차">표준오차</h4>
+<div class="card">
+<p>통계량의&nbsp;표준오차(standard error)는 <span class="math inline">\(SE\)</span>로 간단히 표기하고 표집분포의&nbsp;표준편차이다.</p>
+</div>
+</section>
+<section id="표본-크기의-중요성-1" class="level4">
+<h4 class="anchored" data-anchor-id="표본-크기의-중요성-1">표본 크기의 중요성</h4>
+<div class="card">
+<p>표본 크기가 커지면 통계량의 변동은&nbsp;감소하며 통계량은 모수의 참 값과 더욱 가까워진다.</p>
+</div>
+</section>
+<section id="무작위-표본의-중요성" class="level4">
+<h4 class="anchored" data-anchor-id="무작위-표본의-중요성">무작위 표본의 중요성</h4>
+<div class="card">
+<p>통계적 추론은 표본이 모집단에서&nbsp;무작위로 추출되었다는 가정에 의존한다. 따라서 무작위 표본이 아니면 통계적 추론은 모집단에 대하여 잘못된&nbsp;결론을 내린다.</p>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 1.</span> 다음 중 <strong>모수</strong>에 대한 설명으로 옳지 않은 것은? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 모수는 모집단에 대한 특성이다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 모수는 표본에서 계산할 수 있다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 모수는 고정된 값이다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 모수는 보통 알려져 있지 않다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 2.</span> 표본 크기가 커질수록 표집분포에서 <strong>표준오차</strong>가 어떻게 변하는가? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 증가한다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 감소한다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 변화하지 않는다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 처음 증가한 뒤 일정하다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="1">
+<p><span class="qlabel">확인문제 3.</span> 다음 중 <strong>표집분포</strong>에 대한 설명으로 옳은 것은? <span style="color:#6b7480;font-size:.85em;">(선택지를 눌러 채점)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 표집분포는 표본 통계량이 얼마나 변하는지를 보여준다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 표집분포는 항상 대칭적이지 않다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 표집분포의 중심은 표본 통계량의 평균이다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 표집분포의 모양은 표본 크기와 상관없이 일정하다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<!-- Page 94 -->
+<div class="card">
+<p><span id="hw-3-1" class="qlabel">과제 3.1.</span></p>
+<p><img src="../images/img_108.PNG" class="img-fluid"></p>
+<div class="directive">
+<p>그림 (a)~(d) 각각에서 모수와 통계량의 표준오차를 보기에서 고르시오. [문제 1–4]</p>
+</div>
+<div class="quiz qgrid q" data-answer="8" style="--qcols:5">
+<p><span class="qsub">(a)-(1)</span> 그림 (a)의 <strong>모수</strong>는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(0.05\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(0.07\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(0.09\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(0.11\)</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> <span class="math inline">\(0.15\)</span></p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> <span class="math inline">\(0.20\)</span></p>
+</div>
+<div class="opt" data-v="7">
+<p><span class="circ">7</span> <span class="math inline">\(0.23\)</span></p>
+</div>
+<div class="opt" data-v="8">
+<p><span class="circ">8</span> <span class="math inline">\(0.30\)</span></p>
+</div>
+<div class="opt" data-v="9">
+<p><span class="circ">9</span> <span class="math inline">\(0.35\)</span></p>
+</div>
+<div class="opt" data-v="10">
+<p><span class="circ">10</span> <span class="math inline">\(0.37\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="2" style="--qcols:5">
+<p><span class="qsub">(a)-(2)</span> 그림 (a)의 <strong>통계량의 표준오차</strong>는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(0.05\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(0.07\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(0.09\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(0.11\)</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> <span class="math inline">\(0.15\)</span></p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> <span class="math inline">\(0.20\)</span></p>
+</div>
+<div class="opt" data-v="7">
+<p><span class="circ">7</span> <span class="math inline">\(0.23\)</span></p>
+</div>
+<div class="opt" data-v="8">
+<p><span class="circ">8</span> <span class="math inline">\(0.30\)</span></p>
+</div>
+<div class="opt" data-v="9">
+<p><span class="circ">9</span> <span class="math inline">\(0.35\)</span></p>
+</div>
+<div class="opt" data-v="10">
+<p><span class="circ">10</span> <span class="math inline">\(0.37\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="8" style="--qcols:5">
+<p><span class="qsub">(b)-(1)</span> 그림 (b)의 <strong>모수</strong>는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(20\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(25\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(30\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(35\)</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> <span class="math inline">\(45\)</span></p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> <span class="math inline">\(65\)</span></p>
+</div>
+<div class="opt" data-v="7">
+<p><span class="circ">7</span> <span class="math inline">\(75\)</span></p>
+</div>
+<div class="opt" data-v="8">
+<p><span class="circ">8</span> <span class="math inline">\(85\)</span></p>
+</div>
+<div class="opt" data-v="9">
+<p><span class="circ">9</span> <span class="math inline">\(95\)</span></p>
+</div>
+<div class="opt" data-v="10">
+<p><span class="circ">10</span> <span class="math inline">\(105\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="1" style="--qcols:5">
+<p><span class="qsub">(b)-(2)</span> 그림 (b)의 <strong>통계량의 표준오차</strong>는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(20\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(25\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(30\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(35\)</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> <span class="math inline">\(45\)</span></p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> <span class="math inline">\(65\)</span></p>
+</div>
+<div class="opt" data-v="7">
+<p><span class="circ">7</span> <span class="math inline">\(75\)</span></p>
+</div>
+<div class="opt" data-v="8">
+<p><span class="circ">8</span> <span class="math inline">\(85\)</span></p>
+</div>
+<div class="opt" data-v="9">
+<p><span class="circ">9</span> <span class="math inline">\(95\)</span></p>
+</div>
+<div class="opt" data-v="10">
+<p><span class="circ">10</span> <span class="math inline">\(105\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="7" style="--qcols:5">
+<p><span class="qsub">(c)-(1)</span> 그림 (c)의 <strong>모수</strong>는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(5\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(10\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(15\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(20\)</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> <span class="math inline">\(25\)</span></p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> <span class="math inline">\(295\)</span></p>
+</div>
+<div class="opt" data-v="7">
+<p><span class="circ">7</span> <span class="math inline">\(300\)</span></p>
+</div>
+<div class="opt" data-v="8">
+<p><span class="circ">8</span> <span class="math inline">\(305\)</span></p>
+</div>
+<div class="opt" data-v="9">
+<p><span class="circ">9</span> <span class="math inline">\(310\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="1" style="--qcols:5">
+<p><span class="qsub">(c)-(2)</span> 그림 (c)의 <strong>통계량의 표준오차</strong>는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(5\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(10\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(15\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(20\)</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> <span class="math inline">\(25\)</span></p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> <span class="math inline">\(295\)</span></p>
+</div>
+<div class="opt" data-v="7">
+<p><span class="circ">7</span> <span class="math inline">\(300\)</span></p>
+</div>
+<div class="opt" data-v="8">
+<p><span class="circ">8</span> <span class="math inline">\(305\)</span></p>
+</div>
+<div class="opt" data-v="9">
+<p><span class="circ">9</span> <span class="math inline">\(310\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="9" style="--qcols:5">
+<p><span class="qsub">(d)-(1)</span> 그림 (d)의 <strong>모수</strong>는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(0.01\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(0.02\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(0.03\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(0.04\)</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> <span class="math inline">\(0.05\)</span></p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> <span class="math inline">\(0.77\)</span></p>
+</div>
+<div class="opt" data-v="7">
+<p><span class="circ">7</span> <span class="math inline">\(0.78\)</span></p>
+</div>
+<div class="opt" data-v="8">
+<p><span class="circ">8</span> <span class="math inline">\(0.79\)</span></p>
+</div>
+<div class="opt" data-v="9">
+<p><span class="circ">9</span> <span class="math inline">\(0.80\)</span></p>
+</div>
+<div class="opt" data-v="10">
+<p><span class="circ">10</span> <span class="math inline">\(0.81\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="3" style="--qcols:5">
+<p><span class="qsub">(d)-(2)</span> 그림 (d)의 <strong>통계량의 표준오차</strong>는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(0.01\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(0.02\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(0.03\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(0.04\)</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> <span class="math inline">\(0.05\)</span></p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> <span class="math inline">\(0.77\)</span></p>
+</div>
+<div class="opt" data-v="7">
+<p><span class="circ">7</span> <span class="math inline">\(0.78\)</span></p>
+</div>
+<div class="opt" data-v="8">
+<p><span class="circ">8</span> <span class="math inline">\(0.79\)</span></p>
+</div>
+<div class="opt" data-v="9">
+<p><span class="circ">9</span> <span class="math inline">\(0.80\)</span></p>
+</div>
+<div class="opt" data-v="10">
+<p><span class="circ">10</span> <span class="math inline">\(0.81\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="directive">
+<p>그림 (a)~(d)에서 다음 통계량 값이 발생할 가능성을 고르시오. [문제 5–8]</p>
+</div>
+<div class="quiz qgrid q" data-answer="2" style="--qcols:3">
+<p><span class="qsub">(a)-(3)</span> 그림 (a)에서 <span class="math inline">\(\hat{p}=0.1\)</span>이(가) 발생할 가능성은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 상당히 있다</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 아주 조금 있다</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 거의 없다</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="1" style="--qcols:3">
+<p><span class="qsub">(a)-(4)</span> 그림 (a)에서 <span class="math inline">\(\hat{p}=0.35\)</span>이(가) 발생할 가능성은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 상당히 있다</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 아주 조금 있다</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 거의 없다</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="3" style="--qcols:3">
+<p><span class="qsub">(a)-(5)</span> 그림 (a)에서 <span class="math inline">\(\hat{p}=0.6\)</span>이(가) 발생할 가능성은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 상당히 있다</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 아주 조금 있다</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 거의 없다</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="1" style="--qcols:3">
+<p><span class="qsub">(b)-(3)</span> 그림 (b)에서 <span class="math inline">\(\bar{x}=70\)</span>이(가) 발생할 가능성은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 상당히 있다</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 아주 조금 있다</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 거의 없다</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="1" style="--qcols:3">
+<p><span class="qsub">(b)-(4)</span> 그림 (b)에서 <span class="math inline">\(\bar{x}=100\)</span>이(가) 발생할 가능성은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 상당히 있다</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 아주 조금 있다</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 거의 없다</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="2" style="--qcols:3">
+<p><span class="qsub">(b)-(5)</span> 그림 (b)에서 <span class="math inline">\(\bar{x}=140\)</span>이(가) 발생할 가능성은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 상당히 있다</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 아주 조금 있다</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 거의 없다</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="3" style="--qcols:3">
+<p><span class="qsub">(c)-(3)</span> 그림 (c)에서 <span class="math inline">\(\bar{x}=250\)</span>이(가) 발생할 가능성은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 상당히 있다</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 아주 조금 있다</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 거의 없다</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="1" style="--qcols:3">
+<p><span class="qsub">(c)-(4)</span> 그림 (c)에서 <span class="math inline">\(\bar{x}=305\)</span>이(가) 발생할 가능성은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 상당히 있다</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 아주 조금 있다</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 거의 없다</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="2" style="--qcols:3">
+<p><span class="qsub">(c)-(5)</span> 그림 (c)에서 <span class="math inline">\(\bar{x}=315\)</span>이(가) 발생할 가능성은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 상당히 있다</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 아주 조금 있다</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 거의 없다</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="2" style="--qcols:3">
+<p><span class="qsub">(d)-(3)</span> 그림 (d)에서 <span class="math inline">\(\hat{p}=0.72\)</span>이(가) 발생할 가능성은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 상당히 있다</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 아주 조금 있다</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 거의 없다</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="2" style="--qcols:3">
+<p><span class="qsub">(d)-(4)</span> 그림 (d)에서 <span class="math inline">\(\hat{p}=0.88\)</span>이(가) 발생할 가능성은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 상당히 있다</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 아주 조금 있다</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 거의 없다</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="3" style="--qcols:3">
+<p><span class="qsub">(d)-(5)</span> 그림 (d)에서 <span class="math inline">\(\hat{p}=0.95\)</span>이(가) 발생할 가능성은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 상당히 있다</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 아주 조금 있다</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 거의 없다</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<p><span id="hw-3-2" class="qlabel">과제 3.2.</span></p>
+<p><img src="../images/img_109.PNG" class="img-fluid"></p>
+<p>2010년 미국에서 65세 이상의 인구가 전체의 13%를 차지하고 있다. 표본 크기가 100과 1000인 경우에 표본 비율의 표집분포 그림이 위에 있다.</p>
+<div class="quiz qgrid q" data-answer="3" style="--qcols:6">
+<p><span class="qsub">(1)-</span><span class="subb">a</span> 표본 크기 100일 때 표집분포의 중심은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(0.120\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(0.125\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(0.130\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(0.135\)</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> <span class="math inline">\(0.140\)</span></p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> <span class="math inline">\(0.145\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="3" style="--qcols:6">
+<p><span class="qsub">(1)-</span><span class="subb">b</span> 표본 크기 1000일 때 표집분포의 중심은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(0.120\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(0.125\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(0.130\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(0.135\)</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> <span class="math inline">\(0.140\)</span></p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> <span class="math inline">\(0.145\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="3" style="--qcols:4">
+<p><span class="qsub">(2)-</span><span class="subb">a</span> 표본 크기 100 — 근사적인 최솟값은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(0.03\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(0.04\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(0.05\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(0.06\)</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> <span class="math inline">\(0.21\)</span></p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> <span class="math inline">\(0.22\)</span></p>
+</div>
+<div class="opt" data-v="7">
+<p><span class="circ">7</span> <span class="math inline">\(0.23\)</span></p>
+</div>
+<div class="opt" data-v="8">
+<p><span class="circ">8</span> <span class="math inline">\(0.24\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="7" style="--qcols:4">
+<p><span class="qsub">(2)-</span><span class="subb">b</span> 표본 크기 100 — 근사적인 최댓값은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(0.03\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(0.04\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(0.05\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(0.06\)</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> <span class="math inline">\(0.21\)</span></p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> <span class="math inline">\(0.22\)</span></p>
+</div>
+<div class="opt" data-v="7">
+<p><span class="circ">7</span> <span class="math inline">\(0.23\)</span></p>
+</div>
+<div class="opt" data-v="8">
+<p><span class="circ">8</span> <span class="math inline">\(0.24\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="4" style="--qcols:5">
+<p><span class="qsub">(2)-</span><span class="subb">c</span> 표본 크기 1000 — 근사적인 최솟값은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(0.05\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(0.07\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(0.09\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(0.10\)</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> <span class="math inline">\(0.11\)</span></p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> <span class="math inline">\(0.15\)</span></p>
+</div>
+<div class="opt" data-v="7">
+<p><span class="circ">7</span> <span class="math inline">\(0.16\)</span></p>
+</div>
+<div class="opt" data-v="8">
+<p><span class="circ">8</span> <span class="math inline">\(0.17\)</span></p>
+</div>
+<div class="opt" data-v="9">
+<p><span class="circ">9</span> <span class="math inline">\(0.18\)</span></p>
+</div>
+<div class="opt" data-v="10">
+<p><span class="circ">10</span> <span class="math inline">\(0.19\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="7" style="--qcols:5">
+<p><span class="qsub">(2)-</span><span class="subb">d</span> 표본 크기 1000 — 근사적인 최댓값은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(0.05\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(0.07\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(0.09\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(0.10\)</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> <span class="math inline">\(0.11\)</span></p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> <span class="math inline">\(0.15\)</span></p>
+</div>
+<div class="opt" data-v="7">
+<p><span class="circ">7</span> <span class="math inline">\(0.16\)</span></p>
+</div>
+<div class="opt" data-v="8">
+<p><span class="circ">8</span> <span class="math inline">\(0.17\)</span></p>
+</div>
+<div class="opt" data-v="9">
+<p><span class="circ">9</span> <span class="math inline">\(0.18\)</span></p>
+</div>
+<div class="opt" data-v="10">
+<p><span class="circ">10</span> <span class="math inline">\(0.19\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="2" style="--qcols:4">
+<p><span class="qsub">(3)-</span><span class="subb">a</span> 표본 크기 100 — 근사적인 표준오차는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(0.01\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(0.03\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(0.05\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(0.07\)</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> <span class="math inline">\(0.13\)</span></p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> <span class="math inline">\(0.15\)</span></p>
+</div>
+<div class="opt" data-v="7">
+<p><span class="circ">7</span> <span class="math inline">\(0.17\)</span></p>
+</div>
+<div class="opt" data-v="8">
+<p><span class="circ">8</span> <span class="math inline">\(0.19\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="1" style="--qcols:4">
+<p><span class="qsub">(3)-</span><span class="subb">b</span> 표본 크기 1000 — 근사적인 표준오차는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(0.01\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(0.03\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(0.05\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(0.07\)</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> <span class="math inline">\(0.13\)</span></p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> <span class="math inline">\(0.15\)</span></p>
+</div>
+<div class="opt" data-v="7">
+<p><span class="circ">7</span> <span class="math inline">\(0.17\)</span></p>
+</div>
+<div class="opt" data-v="8">
+<p><span class="circ">8</span> <span class="math inline">\(0.19\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q" data-answer="1">
+<p><span class="qsub">(4)-</span><span class="subb">a</span> 표본 크기 100에서 표본 비율 17%가 나왔다면?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 충분히 나올 수 있는 값이다</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 전혀 기대하지 않은 값이 나와 놀랍다</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q" data-answer="2">
+<p><span class="qsub">(4)-</span><span class="subb">b</span> 표본 크기 1000에서 표본 비율 17%가 나왔다면?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 충분히 나올 수 있는 값이다</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 전혀 기대하지 않은 값이 나와 놀랍다</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<p><span id="hw-3-3" class="qlabel">과제 3.3.</span></p>
+<p>미국 할리우드에서 2007~2013년까지 제작한 900편이 넘는 모든 영화에 관한 모집단 데이터는 <a href="../data/HollywoodMovies.csv">⬇ HollywoodMovies.csv</a>에서 얻을 수 있다. 이 데이터에서 관심이 있는 변수는 제작비(Budget, 단위: 백만 달러)이다. 73개의 영화는 제작비가 없으므로 897개의 제작비 데이터가 모집단이다.</p>
+<div class="quiz qgrid q" data-answer="7" style="--qcols:5">
+<p><span class="qsub">(1)-</span><span class="subb">a</span> 제작비의 평균은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(50.3\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(51.8\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(52.3\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(53.8\)</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> <span class="math inline">\(54.3\)</span></p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> <span class="math inline">\(55.3\)</span></p>
+</div>
+<div class="opt" data-v="7">
+<p><span class="circ">7</span> <span class="math inline">\(56.1\)</span></p>
+</div>
+<div class="opt" data-v="8">
+<p><span class="circ">8</span> <span class="math inline">\(56.8\)</span></p>
+</div>
+<div class="opt" data-v="9">
+<p><span class="circ">9</span> <span class="math inline">\(57.1\)</span></p>
+</div>
+<div class="opt" data-v="10">
+<p><span class="circ">10</span> <span class="math inline">\(57.8\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="4" style="--qcols:5">
+<p><span class="qsub">(1)-</span><span class="subb">b</span> 제작비의 표준편차는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(50.3\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(51.8\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(52.3\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(53.8\)</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> <span class="math inline">\(54.3\)</span></p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> <span class="math inline">\(55.3\)</span></p>
+</div>
+<div class="opt" data-v="7">
+<p><span class="circ">7</span> <span class="math inline">\(56.1\)</span></p>
+</div>
+<div class="opt" data-v="8">
+<p><span class="circ">8</span> <span class="math inline">\(56.8\)</span></p>
+</div>
+<div class="opt" data-v="9">
+<p><span class="circ">9</span> <span class="math inline">\(57.1\)</span></p>
+</div>
+<div class="opt" data-v="10">
+<p><span class="circ">10</span> <span class="math inline">\(57.8\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="3" style="--qcols:4">
+<p><span class="qsub">(1)-</span><span class="subb">c</span> 평균의 올바른 기호는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(\bar{x}\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(\hat{x}\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(\mu\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(\sigma\)</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> <span class="math inline">\(s\)</span></p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> <span class="math inline">\(\hat{p}\)</span></p>
+</div>
+<div class="opt" data-v="7">
+<p><span class="circ">7</span> <span class="math inline">\(\rho\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="4" style="--qcols:4">
+<p><span class="qsub">(1)-</span><span class="subb">d</span> 표준편차의 올바른 기호는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(\bar{x}\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(\hat{x}\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(\mu\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(\sigma\)</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> <span class="math inline">\(s\)</span></p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> <span class="math inline">\(\hat{p}\)</span></p>
+</div>
+<div class="opt" data-v="7">
+<p><span class="circ">7</span> <span class="math inline">\(\rho\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="directive">
+<p>아래 앱을 사용하여 각각의 표본 크기에서 표본 평균의 표집분포에 대한 질문에 답하라. 모의실험은 1,000번 반복하라.</p>
+</div>
+<p><span style="color:#6b7480;font-size:.9em;">(위 <a href="../data/HollywoodMovies.csv">HollywoodMovies.csv</a>를 내려받아 <strong>Budget(제작비) 열</strong>을 복사한 뒤, 아래 앱의 “모집단 데이터” 칸에 붙여넣어 사용하세요.)</span></p>
+<iframe src="../sims/sampling_dist_mean.html" width="100%" height="1220" style="border:1px solid #e7ebf2; border-radius:10px;" loading="lazy">
+</iframe>
+<div class="quiz q" data-answer="2">
+<p><span class="qsub">(2)-</span><span class="subb">a</span> 표본 크기 5 — 표집분포의 대략적인 모양은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 왼쪽 꼬리가 긴 분포</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 오른쪽 꼬리가 긴 분포</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 대칭이고 종 모양인 분포</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="2" style="--qcols:5">
+<p><span class="qsub">(2)-</span><span class="subb">b</span> 표본 크기 5 — 근사적인 중심은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(53.3\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(56.1\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(57.8\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(59.1\)</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> <span class="math inline">\(61.8\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="2" style="--qcols:5">
+<p><span class="qsub">(2)-</span><span class="subb">c</span> 표본 크기 5 — 근사적인 표준오차는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(22.1\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(24.2\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(26.4\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(28.3\)</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> <span class="math inline">\(30.5\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q" data-answer="3">
+<p><span class="qsub">(3)-</span><span class="subb">a</span> 표본 크기 30 — 표집분포의 대략적인 모양은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 왼쪽 꼬리가 긴 분포</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 오른쪽 꼬리가 긴 분포</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 대칭이고 종 모양인 분포</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="2" style="--qcols:5">
+<p><span class="qsub">(3)-</span><span class="subb">b</span> 표본 크기 30 — 근사적인 중심은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(53.3\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(56.1\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(57.8\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(59.1\)</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> <span class="math inline">\(61.8\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="1" style="--qcols:6">
+<p><span class="qsub">(3)-</span><span class="subb">c</span> 표본 크기 30 — 근사적인 표준오차는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(9.8\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(12.3\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(15.5\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(17.3\)</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> <span class="math inline">\(22.1\)</span></p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span> <span class="math inline">\(24.2\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<!-- 소유권자: 프로브 (빌드팀) | 사용자: 프로브 / Date: 2026-06-23 -->
+<!-- 인터랙티브 퀴즈 채점 (self-host, 외부의존 0). 시안 넥서스-최종통합시안-★★★★★ 의 <script> 이식.
+     _quarto.yml format.html.include-after-body 로 전 페이지 주입. .quiz[data-answer][data-explain] 마크업과 짝. -->
+<script>
+document.querySelectorAll('.quiz').forEach(function(q){
+  var ans = q.getAttribute('data-answer'), fb = q.querySelector('.quiz-feedback');
+  q.querySelectorAll('.opt').forEach(function(opt){
+    opt.addEventListener('click', function(){
+      q.querySelectorAll('.opt').forEach(function(o){ o.classList.remove('correct','wrong'); });
+      if (opt.getAttribute('data-v') === ans) {
+        opt.classList.add('correct');
+        fb.className = 'quiz-feedback ok';
+        fb.textContent = '정답입니다! ' + (q.getAttribute('data-explain') || '');
+      } else {
+        opt.classList.add('wrong');
+        fb.className = 'quiz-feedback no';
+        fb.textContent = '다시 생각해 보세요.';
+      }
+    });
+  });
+});
+</script>
+<!-- 소유권자: 빌드팀 | 작성 대행: 넥서스(컨트롤타워) — 프로브 부재로 대표 지시 직접 진행 / Date: 2026-06-23 -->
+<!-- 예제 풀이 블러 리빌 (self-host, 외부의존 0). 시안 넥서스-예제블러리빌-★★★★★.
+     _quarto.yml format.html.include-after-body 로 전 페이지 주입. .card.sol-card 마크업과 짝.
+     풀이 카드 클릭 시 .on 추가 → 블러 해제. -->
+<script>
+document.querySelectorAll('.sol-card').forEach(function(c){
+  c.addEventListener('click', function(){ c.classList.add('on'); });
+});
+</script>
+<!-- 소유권자: 빌드팀 | 작성: 넥서스(컨트롤타워) / Date: 2026-06-23 -->
+<!-- 주관식 정답 확인 토글 (self-host, 외부의존 0). 옵저버 정석 .ansbtn/.ansbox 와 짝.
+     _quarto.yml include-after-body 로 전 페이지 주입. -->
+<script>
+document.querySelectorAll('.ansbtn').forEach(function(b){
+  b.addEventListener('click', function(){
+    var box = b.nextElementSibling;
+    if (!box || !box.classList.contains('ansbox')) return;
+    var on = box.classList.toggle('show');
+    b.textContent = on ? '정답 숨기기 ▴' : '정답 확인 ▾';
+  });
+});
+</script>
+<!-- 소유권자: 넥서스(컨트롤타워) | 사용자: 넥서스 / Date: 2026-06-25 -->
+<!-- 데이터뷰 iframe을 콘텐츠 높이에 자동 맞춤 → 표마다 정확한 높이(여백/스크롤 제거).
+     file:// 에선 contentDocument 접근이 차단되므로 자식이 자기 높이를 postMessage로 보내는 방식이 1순위.
+     http 에선 contentDocument 폴링도 병행. self-host, 외부의존 0. -->
+<script>
+(function(){
+  function setH(f, h){ if(h > 0){ f.scrolling = 'no'; f.style.height = (h + 4) + 'px'; } }
+  // 1순위: 자식이 postMessage 로 보낸 높이 (file:// 포함 동작)
+  window.addEventListener('message', function(e){
+    if(e.data && e.data.type === 'dvHeight' && e.data.h > 0){
+      document.querySelectorAll('iframe[src*="data-views/"]').forEach(function(f){
+        if(f.contentWindow === e.source) setH(f, e.data.h);
+      });
+    }
+  });
+  // 2순위: same-origin(http) 직접 읽기 (file:// 에선 catch 되어 무시)
+  function fit(f){
+    try{
+      var d = f.contentDocument || f.contentWindow.document;
+      if(d && d.body) setH(f, Math.max(d.documentElement.scrollHeight, d.body.scrollHeight, d.body.offsetHeight));
+    }catch(e){}
+  }
+  function init(){
+    document.querySelectorAll('iframe[src*="data-views/"]').forEach(function(f){
+      f.scrolling = 'no';
+      f.addEventListener('load', function(){ fit(f); [300,800].forEach(function(t){ setTimeout(function(){fit(f);}, t); }); });
+      [200,600,1200,2200].forEach(function(t){ setTimeout(function(){fit(f);}, t); });
+    });
+  }
+  if(document.readyState === 'complete') init();
+  else window.addEventListener('load', init);
+})();
+</script>
+<!-- 엑셀 코드블록(pre.xlcode) 복사버튼 — self-host, 외부의존 0 (질럿, 2026-06-23) -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('pre.xlcode').forEach(function (pre) {
+    if (pre.dataset.xlcopy) return;
+    pre.dataset.xlcopy = '1';
+    var code = pre.textContent;            // ★ 버튼 추가 전 캡처 = 태그 없는 순수 수식
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'xlcopy';
+    btn.textContent = '복사';
+    btn.addEventListener('click', function () {
+      navigator.clipboard.writeText(code).then(function () {
+        btn.textContent = '복사됨';
+        setTimeout(function () { btn.textContent = '복사'; }, 1500);
+      });
+    });
+    pre.appendChild(btn);
+  });
+});
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/03.html" class="pagination-link" aria-label="3장. 신뢰구간">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">3장. 신뢰구간</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/03-02-confidence-intervals.html" class="pagination-link" aria-label="3.2 신뢰구간에 대한 이해">
+        <span class="nav-page-text"><span class="chapter-title">3.2 신뢰구간에 대한 이해</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

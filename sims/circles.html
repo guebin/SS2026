@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<style>
+body{font-family:'Apple SD Gothic Neo','Malgun Gothic',-apple-system,sans-serif;margin:0;padding:20px;background:#fff;color:#333;max-width:860px;margin:0 auto;}
+h3{margin:0 0 5px 0;font-weight:normal;}
+.chapter-title{text-align:right;font-size:14px;color:#333;margin-bottom:8px;}
+.box{border:1px solid #d0d0d0;border-radius:6px;padding:16px 16px 16px 16px;margin-bottom:16px;position:relative;}
+.icons{position:absolute;top:10px;right:10px;display:flex;gap:4px;}
+.icon{width:30px;height:26px;border:1px solid #d0d0d0;border-radius:4px;background:#f5f5f5;display:flex;align-items:center;justify-content:center;font-size:13px;color:#555;}
+.icon.active{background:#8fc9e4;border-color:#6fb5d4;color:#fff;}
+.description p{margin:0;line-height:1.75;padding-right:110px;}
+.example{background:#f7f7f7;padding:10px 14px;border-radius:4px;margin-top:12px;line-height:2;}
+.example-tag{background:#5bab4a;color:white;padding:3px 9px;border-radius:3px;font-weight:bold;font-size:13px;margin-right:6px;}
+.blank{display:inline-block;border-bottom:1px solid #333;min-width:55px;padding:0 6px;text-align:center;height:20px;vertical-align:middle;}
+.prediction p{margin:0 0 10px 0;font-weight:bold;line-height:1.6;}
+.prediction label{display:block;margin:5px 0;cursor:pointer;user-select:none;}
+.prediction input{margin-right:6px;}
+.canvas-wrap{background:#e9f0e4;border-radius:4px;padding:14px;margin-bottom:20px;}
+#canvas{width:100%;height:auto;display:block;}
+.circle-g{cursor:pointer;}
+.circle-shape{transition:filter 0.1s;}
+.circle-g:hover .circle-shape{filter:brightness(1.08);}
+.circle-number{fill:#333;pointer-events:none;text-anchor:middle;dominant-baseline:central;font-family:Arial,sans-serif;}
+.sample-section{display:flex;gap:24px;align-items:flex-start;margin-bottom:24px;flex-wrap:wrap;}
+table{border-collapse:collapse;font-size:14px;}
+table th,table td{border:1px solid #a0a0a0;padding:5px 12px;text-align:center;min-width:50px;}
+table th{background:#f0f0f0;font-weight:normal;}
+table td:first-child{background:#f0f0f0;}
+.sample-info{flex:1;min-width:240px;}
+.sample-mean-display{font-size:16px;font-weight:bold;margin:4px 0 16px;}
+button{padding:7px 16px;font-size:14px;border:1px solid #999;border-radius:4px;background:white;cursor:pointer;margin-right:6px;font-family:inherit;}
+button:hover:not(:disabled){background:#f0f0f0;}
+button.primary{background:#4a90d9;color:white;border-color:#4a90d9;}
+button.primary:hover:not(:disabled){background:#3a7eb8;}
+button:disabled{opacity:0.45;cursor:not-allowed;}
+.status-msg{margin-top:10px;font-size:13px;color:#2d7a2d;min-height:18px;}
+.histogram-section{text-align:center;margin-top:28px;}
+.histogram-section h3{font-size:18px;}
+.histogram-section .subtitle{font-size:13px;color:#666;margin-bottom:6px;}
+#histogram-svg{width:100%;max-width:620px;height:260px;margin:0 auto;display:block;}
+</style>
+</head>
+<body>
+<div class="canvas-wrap">
+  <svg id="canvas" viewBox="0 0 700 700" xmlns="http://www.w3.org/2000/svg"></svg>
+</div>
+
+<div class="sample-section">
+  <table>
+    <thead><tr><th></th><th>원 번호</th><th>면적</th></tr></thead>
+    <tbody id="sample-tbody"></tbody>
+  </table>
+  <div class="sample-info">
+    <div id="sample-mean-display" class="sample-mean-display">표본 평균: -</div>
+    <div>
+      <button id="submit-btn" class="primary" disabled>제출</button>
+      <button id="reset-btn">다시 뽑기</button>
+      <button id="reshuffle-btn">새로 섞기</button>
+    </div>
+    <div id="status-msg" class="status-msg"></div>
+  </div>
+</div>
+
+<div class="histogram-section">
+  <h3>실험 참가: <span id="count">0</span>명</h3>
+  <div class="subtitle">모집단 평균: <span id="pop-mean">-</span></div>
+  <svg id="histogram-svg" viewBox="0 0 620 260" xmlns="http://www.w3.org/2000/svg"></svg>
+</div>
+
+<script>
+// ===== 재현 가능한 난수 =====
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return ((t^t>>>14)>>>0)/4294967296;}}
+const rng = mulberry32(Math.floor(Math.random() * 2147483647));
+
+// ===== 면적 분포: 합=382, 평균=3.82 =====
+const areaCounts={1:10,2:20,3:25,4:15,5:10,6:8,7:5,8:3,9:2,10:1,12:1};
+const ALL_AREAS=[];
+for(const [a,c] of Object.entries(areaCounts))for(let i=0;i<c;i++)ALL_AREAS.push(+a);
+
+// 큰 원(7이상) / 작은 원(6이하)로 분리해 클러스터마다 골고루 분배
+const bigPool=ALL_AREAS.filter(a=>a>=7).sort((a,b)=>b-a);
+const smallPool=ALL_AREAS.filter(a=>a<7);
+for(let i=smallPool.length-1;i>0;i--){const j=Math.floor(rng()*(i+1));[smallPool[i],smallPool[j]]=[smallPool[j],smallPool[i]];}
+
+const clusterColors=['#F2A868','#74B256','#D06C68','#B39DD1','#947267','#E29CBD','#A0A0A0','#BFC25A','#7CC5D2','#5F91BE'];
+const clusterCenters=[
+  {x:540,y:570},{x:170,y:335},{x:385,y:305},{x:595,y:420},{x:465,y:155},
+  {x:600,y:265},{x:500,y:400},{x:380,y:555},{x:290,y:175},{x:260,y:465}
+];
+
+const clusterAreas=Array.from({length:10},()=>[]);
+let bi=0;
+while(bi<bigPool.length){for(let c=0;c<10&&bi<bigPool.length;c++)clusterAreas[c].push(bigPool[bi++]);}
+let si=0;
+for(let c=0;c<10;c++)while(clusterAreas[c].length<10)clusterAreas[c].push(smallPool[si++]);
+
+const circles=[];
+for(let c=0;c<10;c++){
+  const arr=clusterAreas[c];
+  for(let i=arr.length-1;i>0;i--){const j=Math.floor(rng()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}
+  for(let i=0;i<10;i++){
+    const area=arr[i];
+    circles.push({id:c*10+i+1,area,r:Math.sqrt(area/Math.PI)*14,clusterIdx:c,color:clusterColors[c],x:0,y:0});
+  }
+}
+const popMeanInitial=circles.reduce((s,c)=>s+c.area,0)/circles.length;
+let popMean=popMeanInitial;
+
+// ===== 원 배치: 클러스터별 greedy packing =====
+function packCircles(){
+  const placed=[];
+  for(let ci=0;ci<10;ci++){
+    const cluster=circles.filter(c=>c.clusterIdx===ci).sort((a,b)=>b.r-a.r);
+    const center=clusterCenters[ci];
+    const clusterPlaced=[];
+    const first=cluster[0];
+    let cx=center.x,cy=center.y;
+    for(let att=0;att<300;att++){
+      let ok=true;
+      if(cx-first.r<15||cx+first.r>685||cy-first.r<15||cy+first.r>685)ok=false;
+      if(ok)for(const p of placed){if(Math.hypot(p.x-cx,p.y-cy)<p.r+first.r+2){ok=false;break;}}
+      if(ok)break;
+      const ang=rng()*Math.PI*2,d=3+att*0.7;
+      cx=center.x+Math.cos(ang)*d;cy=center.y+Math.sin(ang)*d;
+    }
+    first.x=cx;first.y=cy;clusterPlaced.push(first);placed.push(first);
+    for(let i=1;i<cluster.length;i++){
+      const c=cluster[i];
+      let bx=center.x,by=center.y,bd=Infinity,found=false;
+      for(let att=0;att<3000;att++){
+        const anchor=clusterPlaced[Math.floor(rng()*clusterPlaced.length)];
+        const ang=rng()*Math.PI*2;
+        const sep=anchor.r+c.r+0.3+rng()*2;
+        const x=anchor.x+Math.cos(ang)*sep;
+        const y=anchor.y+Math.sin(ang)*sep;
+        if(x-c.r<15||x+c.r>685||y-c.r<15||y+c.r>685)continue;
+        let ok=true;
+        for(const p of placed){if(Math.hypot(p.x-x,p.y-y)<p.r+c.r+0.3){ok=false;break;}}
+        if(!ok)continue;
+        const d=Math.hypot(x-center.x,y-center.y);
+        if(d<bd){bd=d;bx=x;by=y;found=true;}
+      }
+      if(!found){
+        for(let att=0;att<5000;att++){
+          const x=20+rng()*660,y=20+rng()*660;
+          let ok=true;
+          for(const p of placed){if(Math.hypot(p.x-x,p.y-y)<p.r+c.r+0.5){ok=false;break;}}
+          if(ok){bx=x;by=y;break;}
+        }
+      }
+      c.x=bx;c.y=by;clusterPlaced.push(c);placed.push(c);
+    }
+  }
+}
+packCircles();
+
+// ===== 상태 =====
+const svgNS='http://www.w3.org/2000/svg';
+const canvas=document.getElementById('canvas');
+const selected=new Set();
+let submitted=false,mySampleMean=null,allSamples=[];
+
+const circleRefs=new Map();
+let animId=null;
+function renderCircles(rebuild){
+  if(rebuild||circleRefs.size===0){
+    canvas.innerHTML='';circleRefs.clear();
+    const sorted=[...circles].sort((a,b)=>b.r-a.r);
+    for(const c of sorted){
+      const g=document.createElementNS(svgNS,'g');
+      g.setAttribute('class','circle-g');
+      g.addEventListener('click',()=>handleClick(c.id));
+      const shape=document.createElementNS(svgNS,'circle');
+      shape.setAttribute('cx',c.x);shape.setAttribute('cy',c.y);shape.setAttribute('r',c.r);
+      shape.setAttribute('fill',c.color);shape.setAttribute('class','circle-shape');
+      g.appendChild(shape);
+      const digits=String(c.id).length;
+      const fs=Math.max(7.5,Math.min(c.r*0.95,c.r*1.55/digits));
+      const text=document.createElementNS(svgNS,'text');
+      text.setAttribute('x',c.x);text.setAttribute('y',c.y+0.5);
+      text.setAttribute('class','circle-number');text.setAttribute('font-size',fs);
+      text.textContent=c.id;g.appendChild(text);
+      canvas.appendChild(g);
+      circleRefs.set(c.id,{shape,text});
+    }
+  }else{
+    for(const c of circles){
+      const r=circleRefs.get(c.id);
+      if(r){
+        r.shape.setAttribute('cx',c.x);r.shape.setAttribute('cy',c.y);
+        r.text.setAttribute('x',c.x);r.text.setAttribute('y',c.y+0.5);
+      }
+    }
+  }
+  for(const [id,r] of circleRefs){
+    const sel=selected.has(id);
+    r.shape.setAttribute('stroke',sel?'#000':'rgba(0,0,0,0.12)');
+    r.shape.setAttribute('stroke-width',sel?3:0.5);
+  }
+}
+
+function handleClick(id){
+  if(submitted)return;
+  if(selected.has(id))selected.delete(id);
+  else if(selected.size<5)selected.add(id);
+  renderCircles();updateSampleTable();
+}
+
+function updateSampleTable(){
+  const tbody=document.getElementById('sample-tbody');
+  tbody.innerHTML='';
+  const arr=[...selected];
+  for(let i=0;i<5;i++){
+    const tr=document.createElement('tr');
+    if(i<arr.length){
+      const c=circles.find(x=>x.id===arr[i]);
+      tr.innerHTML=`<td>${i+1}</td><td>${c.id}</td><td>${c.area}</td>`;
+    }else tr.innerHTML=`<td>${i+1}</td><td></td><td></td>`;
+    tbody.appendChild(tr);
+  }
+  const btn=document.getElementById('submit-btn');
+  if(selected.size===5){
+    const sum=[...selected].reduce((s,id)=>s+circles.find(c=>c.id===id).area,0);
+    const mean=sum/5;
+    document.getElementById('sample-mean-display').textContent=`표본 평균: ${mean.toFixed(2)}`;
+    btn.disabled=submitted;
+  }else{
+    document.getElementById('sample-mean-display').textContent=`표본 평균: -  (${selected.size}/5 선택됨)`;
+    btn.disabled=true;
+  }
+}
+
+document.getElementById('submit-btn').addEventListener('click',async()=>{
+  if(selected.size!==5||submitted)return;
+  const sum=[...selected].reduce((s,id)=>s+circles.find(c=>c.id===id).area,0);
+  mySampleMean=sum/5;
+  allSamples.push(mySampleMean);
+  try{await window.storage.set('sample_means_v1',JSON.stringify(allSamples),true);}catch(e){console.warn('save fail',e);}
+  submitted=true;
+  document.getElementById('submit-btn').disabled=true;
+  document.getElementById('status-msg').textContent=`제출되었습니다. 내 표본 평균: ${mySampleMean.toFixed(2)} | 모집단 평균: ${popMean.toFixed(2)} | 차이: ${Math.abs(mySampleMean-popMean).toFixed(2)}`;
+  renderHistogram();
+});
+
+document.getElementById('reset-btn').addEventListener('click',()=>{
+  selected.clear();submitted=false;mySampleMean=null;
+  document.getElementById('status-msg').textContent='';
+  renderCircles();updateSampleTable();renderHistogram();
+});
+
+document.getElementById('reshuffle-btn').addEventListener('click',()=>{
+  selected.clear();submitted=false;mySampleMean=null;
+  document.getElementById('status-msg').textContent='';
+  animateLayout();updateSampleTable();renderHistogram();
+});
+
+// ===== 히스토그램 =====
+function renderHistogram(){
+  document.getElementById('count').textContent=allSamples.length;
+  document.getElementById('pop-mean').textContent=popMean.toFixed(2);
+  const svg=document.getElementById('histogram-svg');
+  svg.innerHTML='';
+  const W=620,H=260,pad={l:50,r:20,t:20,b:40};
+  const pw=W-pad.l-pad.r,ph=H-pad.t-pad.b;
+  const xMin=1,xMax=12,binCount=22,binW=(xMax-xMin)/binCount;
+  const bins=new Array(binCount).fill(0);
+  for(const s of allSamples){let i=Math.floor((s-xMin)/binW);i=Math.max(0,Math.min(binCount-1,i));bins[i]++;}
+  const maxBin=Math.max(3,...bins);
+  const xScale=v=>pad.l+((v-xMin)/(xMax-xMin))*pw;
+  const yScale=v=>pad.t+ph-(v/maxBin)*ph;
+
+  const xAxis=document.createElementNS(svgNS,'line');
+  xAxis.setAttribute('x1',pad.l);xAxis.setAttribute('y1',pad.t+ph);
+  xAxis.setAttribute('x2',pad.l+pw);xAxis.setAttribute('y2',pad.t+ph);
+  xAxis.setAttribute('stroke','#888');svg.appendChild(xAxis);
+
+  const yStep=maxBin<=5?1:Math.ceil(maxBin/5);
+  for(let v=0;v<=maxBin;v+=yStep){
+    const y=yScale(v);
+    if(v>0){const gl=document.createElementNS(svgNS,'line');gl.setAttribute('x1',pad.l);gl.setAttribute('y1',y);gl.setAttribute('x2',pad.l+pw);gl.setAttribute('y2',y);gl.setAttribute('stroke','#eee');svg.appendChild(gl);}
+    const lbl=document.createElementNS(svgNS,'text');
+    lbl.setAttribute('x',pad.l-8);lbl.setAttribute('y',y+4);lbl.setAttribute('text-anchor','end');
+    lbl.setAttribute('font-size',12);lbl.setAttribute('fill','#555');lbl.textContent=v;svg.appendChild(lbl);
+  }
+  for(let v=2;v<=10;v+=2){
+    const x=xScale(v);
+    const lbl=document.createElementNS(svgNS,'text');
+    lbl.setAttribute('x',x);lbl.setAttribute('y',pad.t+ph+18);lbl.setAttribute('text-anchor','middle');
+    lbl.setAttribute('font-size',12);lbl.setAttribute('fill','#555');lbl.textContent=v;svg.appendChild(lbl);
+  }
+  const xLbl=document.createElementNS(svgNS,'text');
+  xLbl.setAttribute('x',pad.l+pw/2);xLbl.setAttribute('y',H-6);xLbl.setAttribute('text-anchor','middle');
+  xLbl.setAttribute('font-size',13);xLbl.setAttribute('fill','#333');xLbl.textContent='표본평균';svg.appendChild(xLbl);
+  const yLbl=document.createElementNS(svgNS,'text');
+  yLbl.setAttribute('x',18);yLbl.setAttribute('y',pad.t+ph/2);yLbl.setAttribute('text-anchor','middle');
+  yLbl.setAttribute('font-size',13);yLbl.setAttribute('fill','#333');
+  yLbl.setAttribute('transform',`rotate(-90 18 ${pad.t+ph/2})`);yLbl.textContent='빈도';svg.appendChild(yLbl);
+
+  for(let i=0;i<binCount;i++){
+    if(bins[i]===0)continue;
+    const x=xScale(xMin+i*binW),y=yScale(bins[i]);
+    const w=pw/binCount,h=pad.t+ph-y;
+    const rect=document.createElementNS(svgNS,'rect');
+    rect.setAttribute('x',x);rect.setAttribute('y',y);rect.setAttribute('width',w);rect.setAttribute('height',h);
+    rect.setAttribute('fill','#A5C9E2');rect.setAttribute('stroke','white');rect.setAttribute('stroke-width',1);
+    svg.appendChild(rect);
+  }
+
+  // 모집단 평균: 빨간 삼각형
+  const px=xScale(popMean),py=pad.t+ph;
+  const redTri=document.createElementNS(svgNS,'polygon');
+  redTri.setAttribute('points',`${px},${py+1} ${px-7},${py+12} ${px+7},${py+12}`);
+  redTri.setAttribute('fill','#E74C3C');svg.appendChild(redTri);
+
+  // 내 표본 평균: 파란 삼각형
+  if(mySampleMean!=null){
+    const mx=xScale(mySampleMean),my=pad.t+ph;
+    const blueTri=document.createElementNS(svgNS,'polygon');
+    blueTri.setAttribute('points',`${mx},${my+1} ${mx-7},${my+12} ${mx+7},${my+12}`);
+    blueTri.setAttribute('fill','#3498DB');svg.appendChild(blueTri);
+  }
+}
+
+function regeneratePopulation(){
+  // 큰 원 10개 (각 클러스터에 1개씩), 면적 7~12
+  const big=[];
+  for(let i=0;i<10;i++)big.push(Math.max(7,Math.min(12,Math.round(7+rng()*5))));
+  // 작은/중간 원 90개, 면적 1~6 (작은 값으로 편향)
+  const small=[];
+  for(let i=0;i<90;i++){
+    const u=rng();
+    small.push(Math.max(1,Math.min(6,Math.round(1+Math.pow(u,2)*5))));
+  }
+  // 합계를 382로 맞춤 (모집단 평균 3.82)
+  let sum=big.reduce((s,v)=>s+v,0)+small.reduce((s,v)=>s+v,0);
+  let safety=0;
+  while(sum!==382&&safety<5000){
+    if(sum<382){
+      let idx=Math.floor(rng()*90);
+      if(small[idx]<6){small[idx]++;sum++;}
+      else{idx=Math.floor(rng()*10);if(big[idx]<12){big[idx]++;sum++;}}
+    }else{
+      let idx=Math.floor(rng()*90);
+      if(small[idx]>1){small[idx]--;sum--;}
+      else{idx=Math.floor(rng()*10);if(big[idx]>7){big[idx]--;sum--;}}
+    }
+    safety++;
+  }
+  // 셔플
+  for(let i=big.length-1;i>0;i--){const j=Math.floor(rng()*(i+1));[big[i],big[j]]=[big[j],big[i]];}
+  for(let i=small.length-1;i>0;i--){const j=Math.floor(rng()*(i+1));[small[i],small[j]]=[small[j],small[i]];}
+  // 각 클러스터에 큰원 1개 + 작은원 9개 배분, 그 후 ID에 무작위 매핑
+  const assigns=[];
+  for(let c=0;c<10;c++){
+    assigns.push({clusterIdx:c,area:big[c]});
+    for(let k=0;k<9;k++)assigns.push({clusterIdx:c,area:small[c*9+k]});
+  }
+  for(let i=assigns.length-1;i>0;i--){const j=Math.floor(rng()*(i+1));[assigns[i],assigns[j]]=[assigns[j],assigns[i]];}
+  for(let i=0;i<100;i++){
+    const a=assigns[i];
+    circles[i].clusterIdx=a.clusterIdx;
+    circles[i].color=clusterColors[a.clusterIdx];
+    circles[i].area=a.area;
+    circles[i].r=Math.sqrt(a.area/Math.PI)*14;
+  }
+  // 모집단 평균 갱신
+  popMean=circles.reduce((s,c)=>s+c.area,0)/circles.length;
+}
+
+function animateLayout(){
+  if(animId)cancelAnimationFrame(animId);
+  regeneratePopulation();
+  // 클러스터 중심 주변에 흩어진 초기 위치
+  for(const c of circles){
+    const cc=clusterCenters[c.clusterIdx];
+    let att=0;
+    do{
+      const ang=rng()*Math.PI*2;
+      const d=30+rng()*110;
+      c.x=cc.x+Math.cos(ang)*d;
+      c.y=cc.y+Math.sin(ang)*d;
+      att++;
+    }while((c.x-c.r<15||c.x+c.r>685||c.y-c.r<15||c.y+c.r>685)&&att<20);
+    c.x=Math.max(15+c.r,Math.min(685-c.r,c.x));
+    c.y=Math.max(15+c.r,Math.min(685-c.r,c.y));
+    c.vx=0;c.vy=0;
+  }
+  renderCircles(true);
+  let frame=0;const maxFrames=140;
+  function tick(){
+    frame++;
+    // 클러스터 중심으로 끌어당기는 힘
+    for(const c of circles){
+      const cc=clusterCenters[c.clusterIdx];
+      c.vx+=(cc.x-c.x)*0.05;
+      c.vy+=(cc.y-c.y)*0.05;
+    }
+    // 충돌 해소 (여러 번 반복)
+    for(let it=0;it<3;it++){
+      for(let i=0;i<circles.length;i++){
+        for(let j=i+1;j<circles.length;j++){
+          const a=circles[i],b=circles[j];
+          const dx=b.x-a.x,dy=b.y-a.y;
+          let d=Math.hypot(dx,dy);
+          const minD=a.r+b.r+0.4;
+          if(d<minD){
+            if(d<0.01){a.x+=(rng()-0.5)*0.5;a.y+=(rng()-0.5)*0.5;continue;}
+            const ov=minD-d,nx=dx/d,ny=dy/d;
+            a.x-=nx*ov*0.5;a.y-=ny*ov*0.5;
+            b.x+=nx*ov*0.5;b.y+=ny*ov*0.5;
+          }
+        }
+      }
+    }
+    // 속도 적용 + 감쇠
+    for(const c of circles){
+      c.x+=c.vx;c.y+=c.vy;
+      c.vx*=0.62;c.vy*=0.62;
+      if(c.x-c.r<15){c.x=15+c.r;c.vx=0;}
+      if(c.x+c.r>685){c.x=685-c.r;c.vx=0;}
+      if(c.y-c.r<15){c.y=15+c.r;c.vy=0;}
+      if(c.y+c.r>685){c.y=685-c.r;c.vy=0;}
+    }
+    renderCircles();
+    if(frame<maxFrames){animId=requestAnimationFrame(tick);}else{animId=null;}
+  }
+  animId=requestAnimationFrame(tick);
+}
+
+async function init(){
+  try{const data=await window.storage.get('sample_means_v1',true);if(data)allSamples=JSON.parse(data.value);}catch(e){allSamples=[];}
+  animateLayout();updateSampleTable();renderHistogram();
+}
+init();
+</script>
+</body>
+</html>

@@ -1,0 +1,2373 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>4.4 가설검증의 오류 – 통계적 사고와 사회</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/04-05-inference-summary.html" rel="next">
+<link href="../chapters/04-03-significance.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-de63f62b328812d8e578a4d74e282472.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-3355e44214f8815af4d3cdb2eb254b3a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating fullcontent quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/04.html">4장. 가설검증</a></li><li class="breadcrumb-item"><a href="../chapters/04-04-supplement.html"><span class="chapter-title">4.4 가설검증의 오류</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">통계적 사고와 사회</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">통계적 사고와 사회</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">강의 소개</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-01-intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.1. 강의 소개</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-02-thinking.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.2. 통계적 사고란 무엇인가?</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-03-examples.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.3. 통계적 사고 예제</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-04-montyhall.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.4. 몬티 홀 게임</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-05-ppdac.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.5. PPDAC 사이클</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-06-mortality.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.6. 산모 사망률</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-07-cholera.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.7. 콜레라와 존 스노우</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../chapters/01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1장. 데이터 수집</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-01-data-structure.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">1.1 데이터의 구조</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-02-sampling.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">1.2 모집단에서 표본 추출</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-03-causality.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">1.3 실험연구와 관측연구</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../chapters/02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2장. 데이터 기술하기</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-01-categorical.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.1 범주형 변수</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-02-quantitative-center.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.2 양적 변수 한 개: 모양과 중심</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-03-quantitative-variation.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.3 양적 변수 한 개: 변동</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-04-outliers-boxplot.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.4 이상값과 상자그림</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-05-scatterplot-correlation.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.5 양적 변수 두 개: 산점도와 상관관계</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-06-regression.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.6 양적 변수 두 개: 선형회귀</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-07-multivariate.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.7 데이터 시각화와 다중 변수</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../chapters/03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3장. 신뢰구간</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-01-sampling-distribution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3.1 표집 분포</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-02-confidence-intervals.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3.2 신뢰구간에 대한 이해</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-03-bootstrap.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3.3 부트스트랩 신뢰구간</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-04-percentile-bootstrap.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3.4 백분위수에 의한 부트스트랩 신뢰구간</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../chapters/04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4장. 가설검증</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-01-hypothesis-testing.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4.1 가설검증 소개</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-02-p-values.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4.2 p-값</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-03-significance.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4.3 통계적 유의성 판단</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-04-supplement.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">4.4 가설검증의 오류</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-05-inference-summary.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4.5 통계적 추론 정리</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">참고자료</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-01-lotto.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">6/45 로또</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-02-numbergame.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">반응시간 게임</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">위젯</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../widgets/spreadsheet.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">스프레드시트</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../widgets/distribution-calculator.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">분포 계산기</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../widgets/r-calculator.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">R 계산기</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../widgets/jupyterlite.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">R/Python 실습</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">데이터</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/AllCountries.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">AllCountries.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/temp.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">April14Temps.csv (temp.csv)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/BaseballSalaries2015.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">BaseballSalaries2015.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/BodyFat.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">BodyFat.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/BodyTemp50.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">BodyTemp50.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/CarDepreciation.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">CarDepreciation.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/CommuteAtlanta.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">CommuteAtlanta.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/CommuteStLouis.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">CommuteStLouis.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/CricketChirps.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">CricketChirps.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/DDS.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">DDS.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/ElectionMargin.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">ElectionMargin.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/ExerciseHours.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">ExerciseHours.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/FloridaLakes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">FloridaLakes.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HappyPlanetIndex.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HappyPlanetIndex.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HeightData.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HeightData.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HollywoodMovies.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HollywoodMovies.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HollywoodMovies2011.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HollywoodMovies2011.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HoneybeeWaggle.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HoneybeeWaggle.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HouseStarts.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HouseStarts.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/Life.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Life.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/LightatNight.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">LightatNight.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/MalevolentUniformsNFL.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">MalevolentUniformsNFL.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/Mammal2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Mammal2.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/MustangPrice.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">MustangPrice.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/NutritionStudy.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">NutritionStudy.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/RestaurantTips.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">RestaurantTips.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/RetailSales.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">RetailSales.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/StudentSurvey.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">StudentSurvey.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/USStates.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">USStates.csv</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+ <span class="menu-text">데이터 표(본문 임베드)</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/StudentSurvey.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">StudentSurvey.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/AllCountries.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">AllCountries.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/Life.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Life.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/Mammal2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Mammal2.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/temp.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">temp.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/ElectionMargin.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">ElectionMargin.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/HoneybeeWaggle.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HoneybeeWaggle.csv</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/04.html">4장. 가설검증</a></li><li class="breadcrumb-item"><a href="../chapters/04-04-supplement.html"><span class="chapter-title">4.4 가설검증의 오류</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-4-4" class="quarto-section-identifier"><span class="chapter-title">4.4 가설검증의 오류</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<!-- Page 146 -->
+<div class="card">
+<p>가설검증으로 관측 효과가 실제 존재하는 것인지 아니면 그저 우연히 발생한 것인지 밝힐 수 있으므로 다양한 분야에서 쓸모가 있는 강력한 통계 기법이다. 하지만 가설검증은 잘못된 결론을 내릴 수도 있다. 참인 영가설을 기각하거나, 거짓인 가설을 기각하지 못하는 경우가 있다. 이 절은 공식적인 가설검증의 위험성을 다룬다.</p>
+</div>
+<section id="제1종오류와-제2종오류" class="level3">
+<h3 class="anchored" data-anchor-id="제1종오류와-제2종오류">제1종오류와 제2종오류</h3>
+<div class="card">
+<p>공식적인 가설검증의 결과는 “영가설을 기각한다” 또는 “영가설을 기각하지 못한다” 중 하나다. 현실에서 영가설이 기술하는 모집단에 관한 주장은 “참” 또는 “거짓” 중 하나만 가능하다.</p>
+<p>밤에 켜놓은 전깃불이 몸무게를 증가시키는 원인일 수도 있지만(<span class="math inline">\(H_a\)</span>), 전깃불의 효과는 없고(<span class="math inline">\(H_0\)</span>) 표본 차이는 그저 우연히 발생한 것일 수도 있다. 우리가 “영가설을 기각한다”고 결정할 때, 참인 영가설을 잘못 기각하는 위험이 존재한다.</p>
+<p>예를 들어, 영가설이 참인 상황에서 1,000개의 표본 중에 하나는 영가설을 기각하는 표본이 나올 수도 있다고 하자. 운이 나쁘게도 지금 그런 표본이 나와 영가설을 잘못 기각했는지 모른다.</p>
+<p>참인 영가설을 잘못 기각하는 실수를 제1종오류(Type I error)라고 부른다. 거짓인 영가설을 기각하지 못할 때도 실수가 발생하는데 이 오류는 제2종오류(Type II error)라고 부른다. 표로 정리한 결과가 아래에 있다.</p>
+<p>의학에서는 제1종오류를 “거짓 양성(false positive)”이라 부른다. 질병이 없는 환자의 검사 결과가 양성(질병이 있음)으로 나온 경우이다. 제2종오류는 “거짓 음성(false negative)”인데 질병이 있는 환자의 검사 결과가 음성(질병이 없음)으로 나온 경우이다.</p>
+</div>
+<div class="card">
+<p><img src="../images/img_151.PNG" class="img-fluid"></p>
+</div>
+<div class="card">
+<p><span id="ex-4-23" class="qlabel">예제 4.23.</span> 다음 각각의 경우 제1종오류와 제2종오류가 무엇인지 기술하라.</p>
+<p><span class="qsub">(1)</span> 밤에 전깃불을 켜놓는 실험에서 가설</p>
+<ul>
+<li><span class="math inline">\(H_0: \mu_L = \mu_D\)</span> vs <span class="math inline">\(H_a: \mu_L &gt; \mu_D\)</span></li>
+</ul>
+<p><span class="qsub">(2)</span> 신비의 동물 X가 있을 때 가설</p>
+<ul>
+<li><span class="math inline">\(H_0\)</span>: X는 코끼리이다 vs <span class="math inline">\(H_a\)</span>: X는 코끼리가 아니다</li>
+</ul>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p><span class="qsub">(1)</span> 제1종오류는 참인 영가설을 기각할 때 발생한다. 제1종오류는 밤에 켜놓은 전깃불은 어떤 효과도 없는 데 몸무게를 증가시킨다고 결론을 내릴 때 발생한다.</p>
+<p>제2종오류는 거짓인 영가설을 기각하지 못할 때 발생한다. 제2종오류는 밤에 켜놓은 전깃불이 실제로 몸무게를 증가시키지만 이를 뒷받침하는 표본이 나오지 않을 때 발생한다.</p>
+<p><span class="qsub">(2)</span> X는 실제 코끼리(서커스에서 훈련한 코끼리)인데, 코끼리가 아니라는 아주 드문 증거(두 다리를 걷는다)가 나와 X가 코끼리가 아니라고 결론 내릴 때 제1종오류가 발생한다.</p>
+<p>코끼리가 가진 흔한 증거(다리 <span class="math inline">\(4\)</span>개를 갖고 있다)를 발견하고 영가설을 기각하지 않았는데 X는 코끼리가 아닌 기린이었다. 제2종오류가 발생한 것이다.</p>
+<p>유의한 결과를 얻어 영가설을 기각했다면, 우리가 올바른 결정을 내린 것인지 아니면 제1종오류를 범한 것인지 모른다. 마찬가지로 유의한 결과가 나오지 않아 영가설을 기각하지 못했다면, 우리가 올바른 결정을 내렸을 수도 있지만 제2종오류를 범한 것일지도 모른다. 이런 실수를 저지를 가능성을 전적으로 배제할 수는 없지만, 실수를 범할 가능성을 어느 정도 제어할 수는 있다.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="quiz card" data-answer="1" data-explain="">
+<p><span class="qlabel">확인문제 1.</span> 다음 중 <strong>제1종 오류</strong>에 대한 설명으로 올바른 것은 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 참인 영가설을 기각하는 오류.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 거짓인 영가설을 기각하지 못하는 오류.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 참인 대안가설을 기각하는 오류.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 거짓인 대안가설을 기각하는 오류.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="4" data-explain="">
+<p><span class="qlabel">확인문제 2.</span> <strong>제2종 오류</strong>는 어떤 경우에 발생하는가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 영가설이 참일 때 영가설을 기각하는 경우.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 영가설이 거짓일 때 영가설을 기각하는 경우.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 영가설이 참일 때 영가설을 기각하지 못하는 경우.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 영가설이 거짓일 때 영가설을 기각하지 못하는 경우.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="1" data-explain="">
+<p><span class="qlabel">확인문제 3.</span> 다음 중 <strong>제1종 오류</strong>가 발생하는 상황으로 적절한 것은 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 코끼리가 실제로 두 다리로 걷는 모습을 보고, 그것만으로 X가 코끼리가 아니라고 결론 내리는 경우.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 코끼리가 네 다리를 가진 흔한 증거를 발견했음에도 불구하고 X가 코끼리가 아니라고 결론 내리는 경우.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 질병이 없는 환자에게 질병이 없다고 진단하는 경우.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 질병이 있는 환자에게 질병이 없다고 진단하는 경우.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="2" data-explain="">
+<p><span class="qlabel">확인문제 4.</span> 가설검증에서 <strong>p-값</strong>이 <span class="math inline">\(0.03\)</span>이고 <strong>유의수준 <span class="math inline">\(\alpha = 0.05\)</span></strong>일 때, 어떤 결정을 내려야 하는가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 영가설을 기각할 수 없다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 영가설을 기각한다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 유의수준을 <span class="math inline">\(0.01\)</span>로 변경해야 한다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> p-값이 <span class="math inline">\(0.03\)</span>보다 큰 경우만 영가설을 기각할 수 있다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="2" data-explain="">
+<p><span class="qlabel">확인문제 5.</span> <strong>제1종 오류</strong>와 <strong>제2종 오류</strong>의 차이점에 대해 설명한 것으로 옳은 것은 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 제1종 오류는 영가설이 거짓일 때 발생하며, 제2종 오류는 영가설이 참일 때 발생한다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 제1종 오류는 영가설이 참일 때 발생하고, 제2종 오류는 영가설이 거짓일 때 발생한다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 제1종 오류는 p-값이 <span class="math inline">\(0.5\)</span> 이상일 때 발생하며, 제2종 오류는 p-값이 <span class="math inline">\(0.5\)</span> 이하일 때 발생한다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 제1종 오류와 제2종 오류는 동일한 상황에서 발생한다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<!-- Page 147 -->
+</section>
+<section id="유의수준과-오류" class="level3">
+<h3 class="anchored" data-anchor-id="유의수준과-오류">유의수준과 오류</h3>
+<div class="card">
+<p>양쪽 타입의 오류를 피하고 싶지만, 실제로는 둘 사이에 균형을 취할 수밖에 없다. 영가설을 기각하기 어렵게 만들면 제1종오류를 범할 가능성을 줄일 수 있다. 하지만 제2종오류를 범할 가능성이 증가한다. 다른 한편으로 영가설을 쉽게 기각할 수 있게 하면 제2종로류는 줄어들지만, 제1종오류가 증가해서 참인 영가설을 너무 많이 기각한다.</p>
+<p>따라서 영가설 기각을 쉽게 하느냐 아니면 어렵게 하느냐 기준을 정해서 균형을 취해야 한다. 이 기준의 역할을 하는 것이 바로 유의수준이다.</p>
+<p>제1종오류를 범할 가능성을 줄이려면 유의수준을 작게 설정하여 영가설 기각을 어렵게 만든다. 제2종오류를 범할 가능성을 줄이려면 유의수준을 크게 설정하여 영가설 기각을 쉽게 만든다.</p>
+<p>오른쪽 꼬리 검증에서 유의수준이 <span class="math inline">\(5\%\)</span>일 때, 임의화 분포에서 상위 <span class="math inline">\(5\%\)</span> 영역에 있는 모든 표본은 영가설을 기각한다. 유의수준이 <span class="math inline">\(1\%\)</span>이면 상위 <span class="math inline">\(1\%\)</span> 표본은 영가설을 기각한다. 유의수준이 작아지면 극단적인 표본도 적어지므로 영가설을 덜 기각한다.</p>
+<p>통계량 중에 <span class="math inline">\(5\%\)</span>는 임의화 분포에서 극단적인 <span class="math inline">\(5\%\)</span>에 속하므로, 통계량 중에 <span class="math inline">\(5\%\)</span>는 p-값이 <span class="math inline">\(0.05\)</span>보다 작게 나온다. 임의화 분포는 영가설이 참이라는 가정에서 만들어졌기 때문에, 영가설이 참이라도 <span class="math inline">\(\alpha = 0.05\)</span>에서 표본 중 <span class="math inline">\(5\%\)</span>는 영가설을 기각한다. 이 성질은 유의수준이 <span class="math inline">\(0.05\)</span>가 아닌 다른 값일 때도 똑같이 성립하므로 <span class="math inline">\(\alpha\)</span>는 제1종오류를 범할 확률이다.</p>
+<p>제1종오류의 결과가 심각할 때(예를 들면, 위험할 수도 있는 신약 판매 허용), <span class="math inline">\(\alpha\)</span>를 <span class="math inline">\(0.001\)</span>과 같이 아주 작은 값을 사용한다. 제2종오류의 결과가 심각할 때는(예를 들면, 치료할 수 있는 질병의 진단), 비교적 큰 <span class="math inline">\(\alpha\)</span>를 사용하여 영가설 기각을 쉽게 만든다. 명심할 것은 두 종류의 오류 중에서 항상 균형을 유지하는 것인데 흔히 사용하는 <span class="math inline">\(\alpha\)</span>는 <span class="math inline">\(5\%\)</span>, <span class="math inline">\(10\%\)</span>, <span class="math inline">\(1\%\)</span>이다.</p>
+</div>
+<div class="card">
+<p><span id="ex-4-24" class="qlabel">예제 4.24.</span> 가설검증을 법정의 재판과 비교해서 생각하면 도움이 된다. 아래 기술에서 밑줄 친 단어나 구절을 가설검증에서 유추하라.</p>
+<p><span class="qsub">(1)</span> 사람은 유죄라고 증명될 때까지 무죄이다.</p>
+<p><span class="qsub">(2)</span> 제시된 증거는 합리적인 의심을 넘어 피의자가 유죄임이 입증되어야 한다.</p>
+<p><span class="qsub">(3)</span> 재판장이 범할 수 있는 실수는 두 가지이다.</p>
+<ul>
+<li>유죄인 사람을 무죄 판결</li>
+<li>무죄인 사람을 유죄 판결</li>
+</ul>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p><span class="qsub">(1)</span> ’무죄’는 영가설(반대되는 확실한 증거가 나타날 때까지 사실이라고 가정)이다. ’유죄’는 대안가설이다.</p>
+<p><span class="qsub">(2)</span> ’증거’는 표본 데이터와 p-값이다. ’합리적인 의심’은 유의수준 <span class="math inline">\(\alpha\)</span>이다. 피의자가 무죄라면 발생하기 어려운(<span class="math inline">\(\alpha\)</span>보다 작다) 증거(p-값)가 나왔을 때 무죄(<span class="math inline">\(H_0\)</span>)라는 주장을 기각하고 피의자는 유죄(<span class="math inline">\(H_a\)</span>)라고 판결한다.</p>
+<p><span class="qsub">(3)</span> ’유죄인 사람을 무죄 판결’하는 것은 제2종오류이다. 거짓인 영가설을 기각하는 증거를 찾지 못해서 오류가 발생했다. ’무죄인 사람을 유죄 판결’은 제1종오류이다. 참인 영가설을 기각하는 충분한 증거(사실은 잘못된 증거)를 찾아서 오류가 발생했다. 우리 법 체계는 제1종오류(무죄인 사람을 유죄 판결)를 제2종오류(유죄인 사람을 무죄 판결)보다 더 심각하게 생각한다. 또한 법체계에는 균형도 있다. 중벌을 내릴 때는 더 확실한 증거를 요구한다.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="quiz card" data-answer="1" data-explain="">
+<p><span class="qlabel">확인문제 1.</span> <strong>유의수준</strong> <span class="math inline">\(\alpha\)</span>가 <span class="math inline">\(0.01\)</span>일 때, 임의화 분포에서 영가설을 기각하는 표본의 비율은 대체로 얼마인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(1\%\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(5\%\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(10\%\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(50\%\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="2" data-explain="">
+<p><span class="qlabel">확인문제 2.</span> <strong>유의수준 <span class="math inline">\(\alpha\)</span></strong>가 <span class="math inline">\(0.05\)</span>일 때, 임의화 분포에서 영가설을 기각하는 표본의 비율은 대체로 얼마인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(1\%\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(5\%\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(10\%\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(50\%\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="2" data-explain="">
+<p><span class="qlabel">확인문제 3.</span> 다음 중 <strong>유의수준</strong> <span class="math inline">\(\alpha\)</span>가 작아질 때 발생하는 결과로 올바른 것은 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 제1종오류의 확률이 증가한다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 제2종오류의 확률이 증가한다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 표본을 쉽게 기각할 수 있게 된다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 표본 기각이 어려워진다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="1" data-explain="">
+<p><span class="qlabel">확인문제 4.</span> <strong>제1종 오류</strong>가 발생할 때의 상황으로 올바른 것은 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 실제로 효과가 없는데, 효과가 있다고 결론 내린다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 실제로 효과가 있는데, 효과가 없다고 결론 내린다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 표본에서 통계량이 유의미하지 않다고 결론 내린다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 영가설을 기각하지 못한다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="2" data-explain="">
+<p><span class="qlabel">확인문제 5.</span> <strong>제2종 오류</strong>가 발생할 때의 상황으로 올바른 것은 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 실제로 효과가 없는데, 효과가 있다고 결론 내린다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 실제로 효과가 있는데, 효과가 없다고 결론 내린다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 표본에서 통계량이 유의미하지 않다고 결론 내린다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 영가설을 기각하지 못한다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<!-- Page 148 -->
+</section>
+<section id="다중-검증의-문제" class="level3">
+<h3 class="anchored" data-anchor-id="다중-검증의-문제">다중 검증의 문제</h3>
+<div class="card">
+<p>영가설이 참일 때, <span class="math inline">\(5\%\)</span> 유의수준을 사용하는 가설검증이 영가설을 잘못 기각하는 비율은 <span class="math inline">\(5\%\)</span>임을 배웠다. 이 문제는 다중 검증을 할 때 더욱 중요하다. <span class="math inline">\(\alpha = 0.05\)</span>일 때, 참인 영가설에 대한 모든 가설검증 중에서 <span class="math inline">\(5\%\)</span>는 영가설을 기각한다. 즉, 실제는 효과가 없는데(영가설이 참), <span class="math inline">\(100\)</span>개의 가설검증 중 <span class="math inline">\(5\%\)</span>는 효과가 있다고 결론 내린다(영가설을 잘못 기각).</p>
+</div>
+<div class="card">
+<p><span id="ex-4-25" class="qlabel">예제 4.25.</span> 실내에서 우산을 펴면 불운한 일이 생길까? 전 세계의 많은 연구자가 이것이 사실인지 검증한다고 가정하자. 각 연구자는 무작위로 사람들이 실내에서 우산을 펴거나 실외에서 우산을 펴도록 하고, 그 후에 어떤 식으로든 “운”을 측정한다고 가정하자. 실내에서 우산을 펴더라도 불운을 가져오지 않는다고 할 때, <span class="math inline">\(\alpha = 0.05\)</span>로 <span class="math inline">\(100\)</span>명의 사람을 검증하면 통계적으로 유의한 결과는 대략 몇 명 나올 것으로 예상하는가?</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p>영가설이 참일 때(실내에서 우산을 펴는 것은 운에 영향을 끼치지 않는다), 검증의 약 <span class="math inline">\(5\%\)</span>는 우연히 p-값이 <span class="math inline">\(0.05\)</span>보다 작게 나올 것이다. <span class="math inline">\(100\)</span>명 중 대략 <span class="math inline">\(5\)</span>명은 통계적으로 유의한 결과를 얻을 것이다.</p>
+<p>효과가 존재하지 않은 영가설에 대한 검증을 여러 번 수행하면, 그들 중 몇몇은 우연히 유의한 결과가 나온다. 검증 횟수가 증가할수록 하나라도 제1종오류를 범할 확률은 높아진다. 이 문제를 <strong><em>다중 검증</em></strong>(multiple testing) 문제라고 한다.</p>
+<p>이 문제는 보통 유의한 결과만 발표되기 때문에 더욱 악화된다. 이 문제를 출판편향(publication bias)이라고 부른다. 만약 연구자가 유의한 결과만 발표한다면, 유의하지 않은 연구 결과의 존재를 우리는 모를 것이다.</p>
+<p>우산 예를 들어보자. 만약 통계적으로 유의한 연구 결과 <span class="math inline">\(5\)</span>개만 발표되고, <span class="math inline">\(95\)</span>개의 유의하지 않은 연구의 존재를 알지 못한다면, 실내에서 우산을 펴면 정말로 불운이 온다는 증거로 받아들일 수 있다. 불행히도 과학 연구에는 이런 문제가 현실적으로 존재한다.</p>
+<p>다중 검증의 문제는 연구자가 여러 가설을 동시에 검증할 때도 발생한다.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<p><span id="ex-4-26" class="qlabel">예제 4.26.</span> 유전자가 특정 질병 또는 특성과 연관되어 있는지에 대한 검사인 게놈 연구는 현재 의학 연구, 특히 암 연구에 널리 사용되고 있다. 사람에게서 DNA를 수집하면, 그들 중 몇몇은 문제의 질병과 연관이 있고, 몇몇은 그렇지 않다. 가장 유명한 게놈 연구 중 하나는 두 종류의 백혈병(급성 골수성 백혈병과 급성 림프성 백혈병)을 앓고 있는 환자들 사이의 유전적 차이를 검사한 것이다. 이 연구에서 과학자는 백혈병 환자 <span class="math inline">\(38\)</span>명의 <span class="math inline">\(7129\)</span>개의 유전자 데이터를 수집했다. 각 유전자가 백혈병의 종류와 연관이 있는지 검증한다.</p>
+<p><span class="qsub">(1)</span> 백혈병의 종류에 따라 유전적인 차이는 없다고 가정하자. 유의수준 <span class="math inline">\(0.01\)</span>에서 모든 검증을 수행할 때, 통계적으로 유의한 유전자는 몇 개 정도 나올까?</p>
+<p><span class="qsub">(2)</span> 통계적으로 유의한 유전자 모두 백혈병 종류와 실제로 연관이 있다고 생각하는가?</p>
+<p><span class="qsub">(3)</span> 실제 연구 결과, 유전자 중 <span class="math inline">\(11\%\)</span>는 p-값이 <span class="math inline">\(0.01\)</span>보다 작았다. 유전자와 백혈병 종류 사이에 연관이 있다고 생각하는가?</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p><span class="qsub">(1)</span> 백혈병 종류에 따라 유전적인 차이가 없을 때, 대략 <span class="math inline">\(1\%\)</span>의 검증은 우연히 통계적으로 유의한 결과가 나온다. 유전자 중 약 <span class="math inline">\(0.01 \times 7129 \fallingdotseq 71\)</span> 개 유전자는 통계적으로 유의할 것이라고 예상한다.</p>
+<p><span class="qsub">(2)</span> 연관이 없더라도 약 <span class="math inline">\(71\)</span>개 유전자는 통계적으로 유의하다는 결과가 우연히 나올 것이다. 따라서 유의하다고 나온 모든 유전자를 백혈병 종류와 실제 연관이 있다고 생각하면 안 된다.</p>
+<p><span class="qsub">(3)</span> 모든 유전자가 백혈병과 연관이 없다면, 전체 검증 중 약 <span class="math inline">\(1\%\)</span>는 p-값이 <span class="math inline">\(0.01\)</span>보다 작게 나올 것이다. <span class="math inline">\(11\%\)</span> 유전자의 p-값이 <span class="math inline">\(0.01\)</span>보다 작게 나왔으므로 몇몇 유전자는 백혈병 종류와 연관이 실제 있을 것이다.</p>
+<p>다중 검증 문제를 해결하는 통계 기법이 여러 가지 있지만 이 강의의 수준을 넘어선다. 가장 중요한 것은 이런 문제가 있다는 것을 깨닫는 것이다. 다중 검증에서 유의하다고 나온 결과 중 몇몇은 그저 우연히 유의하게 나온 것임을 명심하자.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="quiz card" data-answer="2" data-explain="">
+<p><span class="qlabel">확인문제 1.</span> 다중 검증에서 <strong>영가설</strong>이 참일 때, 유의수준 <span class="math inline">\(\alpha = 0.05\)</span>로 <span class="math inline">\(100\)</span>번의 가설검증을 하면, 그 중 몇 개는 우연히 통계적으로 유의한 결과가 나올 것인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(1\)</span>개</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(5\)</span>개</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(10\)</span>개</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(50\)</span>개</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="1" data-explain="">
+<p><span class="qlabel">확인문제 2.</span> <strong>다중 검증</strong>에서 연구자가 여러 번의 검증을 수행할 때, 검증 횟수가 많아질수록 무엇이 증가하는가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 제1종 오류</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 제2종 오류</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 표본의 크기</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> p-값</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="2" data-explain="">
+<p><span class="qlabel">확인문제 3.</span> 다음 중 <strong>다중 검증</strong> 문제의 특징으로 알맞은 것은 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 영가설을 기각하기 어려워진다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 검증 횟수가 늘어나면 제1종 오류의 확률이 증가한다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 검증 횟수가 많아지면 유의한 결과가 적어진다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 표본을 무작위로 선택하는 것이 중요하다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="2" data-explain="">
+<p><span class="qlabel">확인문제 4.</span> <strong>출판편향</strong>(publication bias)이 발생하는 이유는 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 유의하지 않은 결과만 발표되기 때문이다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 유의한 결과만 발표되기 때문이다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> p-값이 너무 커서 유의하지 않은 결과가 발표된다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 제2종 오류를 방지하기 위해 유의한 결과만 발표된다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="2" data-explain="">
+<p><span class="qlabel">확인문제 5.</span> <strong>유전자 연구</strong>에서 <span class="math inline">\(7129\)</span>개의 유전자에 대한 검증을 할 때, <strong>유의수준 <span class="math inline">\(0.01\)</span></strong>에서 통계적으로 유의한 유전자는 대체로 몇 개가 나올 것으로 예상되는가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(1\)</span>개</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(71\)</span>개</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(500\)</span>개</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(100\)</span>개</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<!-- Page 149 -->
+</section>
+<section id="복제-연구" class="level3">
+<h3 class="anchored" data-anchor-id="복제-연구">복제 연구</h3>
+<div class="card">
+<p>통계적으로 유의한 결과가 나왔을 때, 불행히도 우리는 전체 모집단을 조사할 수 없다면 대안가설이 실제로 참인지 아니면 제1종오류가 발생했는지 결코 알 수 없다. 다중&nbsp;검증이 수행되었거나 결과가 놀랍도록 현재의 과학 이론에 역행했을 때는&nbsp;제1종오류가 더욱 의심스러울 수 있다.</p>
+<p>연구 결과가 현재의 관행을 변화시킬 정도로 중요한 영향을 미칠 때,&nbsp;제1종오류를 범하면 매우 심각한 사회&nbsp;문제가 된다.&nbsp;신약이 효과가 없는데 수백만 명에게 잠재적인 부작용이 있는 신약을 처방해도 좋은가?&nbsp;이와 같은 상황에서 통계적 유의성을 산출하는 연구는 복제되거나&nbsp;재현되어야 한다.</p>
+</div>
+<div class="card">
+<p><span id="ex-4-27" class="qlabel">예제 4.27.</span> 임상 시험은 신약이나 의학적 치료에 관한 연구인데 4단계로 진행된다. 1단계에서 새로운 치료법의 안전성을 연구한다. 2단계는 (대개 위약에 대해) 새로운 치료법의 효과를 검증한다. 2단계가 통계적으로 유의하면, 3단계 연구는 표본 크기를 더 키우거나 기존 치료법과 비교하는 복제 연구를 한다. 4단계는 신약이 시판된 후 약물 부작용 등과 같은 데이터를 수집하여 연구한다. 임상 시험에서 별도의 무작위 실험을 두 번 요구하는 이유를 설명하라.</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p>2단계 실험에서 통계적으로 유의한 결과가 나왔을 때 치료 효과가 실제 있는 것인지 아니면 제1종오류가 발생했는지 확실히 알 수 없다. 광범위한 사용을 승인하기 전에 치료법이 실제로 효과가 있는지 확인하고, 결과를 재현하기 위해 다른 실험을 요구한다.</p>
+<p>3단계 실험에서도 통계적으로 유의한 결과가 나왔을 때, 치료가 실제로&nbsp;효과적이라는 것을 훨씬 더&nbsp;확신할 수 있다.&nbsp;3단계 실험에서 통계적으로 유의한 결과가 나오지 않는다면, 2단계 실험의 유의성은 단지&nbsp;제1종오류의 결과일 뿐이다.</p>
+<p>복제는 두 가지 이유로 임상 시험에서 중요한 안전장치이다.&nbsp;하나는 많은 제약회사가 신약과 치료제를 항상&nbsp;검증하고 있기에 우리는 다중&nbsp;검증 문제를 안고 있다.&nbsp;두 번째 이유는 실제 효과가 없는&nbsp;신약이나 새로운 치료법을 효과가 있다고&nbsp;결론 내릴 때, 사회에 매우 해로울&nbsp;수 있다. 이유 없이 부작용을 겪을 수도 있고, 실제로 효과가 있는&nbsp;다른 치료법보다 효과가 없는&nbsp;치료법을 선택할 수도 있다.</p>
+<p>연구 결과의&nbsp;복제는 과학에서 매우 중요하기 때문에, 데이터 수집과 분석의 각 단계를 다른 연구자에게 투명하게 하여 완전히&nbsp;재현&nbsp;가능한 방법으로 연구해야 한다.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="quiz card" data-answer="2" data-explain="">
+<p><span class="qlabel">확인문제 1.</span> <strong>복제 연구</strong>에서, <span class="math inline">\(100\)</span>개의 연구를 수행했을 때, 유의수준 <span class="math inline">\(0.05\)</span>를 사용하면 몇 개의 연구에서 제1종 오류를 범할 수 있을까?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(1\)</span>개</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(5\)</span>개</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(10\)</span>개</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(50\)</span>개</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="2" data-explain="">
+<p><span class="qlabel">확인문제 2.</span> <strong>임상 시험 2단계</strong>에서, 통계적으로 유의한 결과가 나왔을 때 연구자가 <strong>다시 실험을 요구하는 이유</strong>는 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 첫 번째 실험에서의 유의성은 단지 제2종 오류일 수 있기 때문이다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 유의성의 결과가 제1종 오류일 가능성을 배제할 수 없다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 표본 크기를 늘리기 위한 추가적인 실험을 진행하기 위해서이다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 두 번째 실험을 통해 효과가 없는 결과를 확인하려는 목적이다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="2" data-explain="">
+<p><span class="qlabel">확인문제 3.</span> <strong>복제 연구</strong>가 중요한 이유 중 하나는 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 연구자들이 연구 결과를 조작할 가능성이 있기 때문이다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 신약이나 치료법의 실제 효과가 없을 경우 사회에 미치는 해로움을 방지하기 위해서이다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 연구자가 실험을 반복해서 수행할 수 없기 때문이다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 다중 검증을 통해서 유의한 결과를 더 많이 찾을 수 있기 때문이다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="1" data-explain="">
+<p><span class="qlabel">확인문제 4.</span> <strong>복제 연구</strong>에서 <strong>다중 검증 문제</strong>를 해결하기 위해 연구자가 수행해야 할 행동은 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 다른 연구자가 동일한 실험을 수행할 수 있도록 데이터를 제공한다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 연구 결과에 대한 모든 세부 정보를 은폐하여 결과를 잘못 해석하지 않도록 한다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 연구 데이터를 숨겨서 다른 연구자가 이를 확인할 수 없게 한다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 연구 결과를 발표하기 전에 다수의 외부 전문가의 검증을 받는다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="2" data-explain="">
+<p><span class="qlabel">확인문제 5.</span> <strong>임상 시험에서 제1종 오류</strong>를 줄이기 위해 연구자는 유의수준을 어떻게 설정해야 하는가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 유의수준을 크게 설정한다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 유의수준을 작게 설정한다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 유의수준을 <span class="math inline">\(0.1\)</span>로 설정한다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 유의수준을 1로 설정한다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<!-- Page 150 -->
+</section>
+<section id="실제적-유의성과-통계적-유의성" class="level3">
+<h3 class="anchored" data-anchor-id="실제적-유의성과-통계적-유의성">실제적 유의성과 통계적 유의성</h3>
+<div class="card">
+<p>한 회사가 SAT와 같은 표준화 시험을 다시 치를 때 점수를 향상시키는 온라인 학습 코스를 제공한다고 가정하자. 이 과정을 이수하면 SAT 점수가 오르는가? 성적을 향상시키는지 알기 위해 가설검증을 할 수도 있고 향상된 점수의 크기에 대한 신뢰구간을 구할 수도 있다.</p>
+<p>SAT 시험을 다시 치르기 전에 학생을 온라인&nbsp;코스 그룹과 스스로의 힘으로 공부하는 그룹에 무작위로&nbsp;배치하여 비교하는 실험을 한다고 가정하자. 온라인 그룹의 평균 점수 변화는 <span class="math inline">\(\mu_c\)</span>, 스스로 공부하는 그룹의 평균&nbsp;점수 변화는 <span class="math inline">\(\mu_n\)</span>으로 표기할 때,&nbsp;가설은 다음과 같다.</p>
+<ul>
+<li><span class="math inline">\(H_0: \mu_c = \mu_n\)</span></li>
+<li><span class="math inline">\(H_a: \mu_c &gt; \mu_n\)</span></li>
+</ul>
+<p>각 그룹에 <span class="math inline">\(2000\)</span>명씩 무작위로 배치하여 아래 그림과 같은 히스토그램을 얻었다.</p>
+</div>
+<div class="card">
+<p><img src="../images/img_152.PNG" class="img-fluid"></p>
+</div>
+<div class="card">
+<p>몇몇 학생의 점수는 하락했지만, 일반적으로 두 번째 SAT 시험을 치를 때 점수는 향상하는 경향이 있다. 온라인&nbsp;그룹의 평균 점수 변화 <span class="math inline">\(\bar{x}_c = 42.7\)</span>, 스스로&nbsp;공부하는 그룹의 평균 점수 변화 <span class="math inline">\(\bar{x}_n = 38.5\)</span> 이다. 점수 차이 <span class="math inline">\(\bar{x}_c - \bar{x}_n = 42.7 - 38.5 = 4.2\)</span> 이다. 임의화 분포에서&nbsp;p-값은 약 <span class="math inline">\(0.0038\)</span>이다. 보통 사용하는 유의수준에서 이 p-값은 매우 작으므로&nbsp;영가설을 기각하는 아주 강한&nbsp;증거를 얻었다. 온라인 코스를 이수하는 학생의 평균&nbsp;점수가 더 많이 오른다고 결론 내린다.</p>
+<p>유의성뿐만 아니라 온라인&nbsp;코스를 이수하면 점수가 얼마나 향상되었는가도 우리의 관심이다. 두 그룹 사이의 평균 점수 차이에 대한 <span class="math inline">\(95\%\)</span> 신뢰구간은 <span class="math inline">\((1.04, 7.36)\)</span> 이다. SAT 시험의 총점은 <span class="math inline">\(800\)</span>점인데 <span class="math inline">\(1\)</span>점에서 <span class="math inline">\(7\)</span>점 사이의 점수 향상이 가치가 있는가? 온라인 코스 비용은 $3,000이고 과정을 마치는데 <span class="math inline">\(50\)</span>시간이 걸린다. 당신이라면 약 <span class="math inline">\(4\)</span>점을 올리려고 스스로&nbsp;공부하는 것보다 온라인&nbsp;코스를&nbsp;선택하겠는가?</p>
+</div>
+<div class="card">
+<p><span id="ex-4-28" class="qlabel">예제 4.28.</span> SAT 시험의 온라인 준비 코스가 성적을 향상시키는가에 대한 검증에서 점수 변화의 평균은 <span class="math inline">\(4.2\)</span>점, p-값은 <span class="math inline">\(0.0038\)</span>이다. 이 결과는 통계적으로 유의한가? 실제로도 유의한가?</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p>p-값 <span class="math inline">\(0.0038\)</span>은 매우 작은 값이므로 이 결과는 확실히 통계적으로 유의하다. 그러나 점수 향상은 단지 <span class="math inline">\(4.2\)</span>점이므로 실제로는 유의하지 않다. 온라인 코스를 선택할 가치가 없을지도 모른다.</p>
+<p>이 가상의 예는 통계적으로 유의한 차이가 실제적인 유의성은 없을 수도 있음을 시사한다.&nbsp;특히 표본 크기가 클 경우, 총점 <span class="math inline">\(800\)</span>점인 SAT 시험에서 <span class="math inline">\(4\)</span>점처럼 다소 작은&nbsp;차이가 통계적으로 유의하게 나타날 수 있다.&nbsp;그렇다고 해서 이 차이가&nbsp;온라인 강좌 수강 여부를&nbsp;결정하는 개인에게 특별히 중요한 것은 아니다.&nbsp;약간의 작은 차이가 중요할 수 있고, 큰 표본이 실제 효과를 밝히는 데 도움이 될 수 있지만, 통계적으로 유의한 것은&nbsp;실질적으로 유의하다고 쉽게 판단하지 말아야 한다.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="quiz card" data-answer="2" data-explain="">
+<p><span class="qlabel">확인문제 1.</span> 온라인 학습 코스를 이수한 그룹과 스스로 공부한 그룹의 SAT 점수 변화에 대한 가설검증을 수행한 결과, p-값이 <span class="math inline">\(0.0038\)</span>로 나타났다. 이 p-값이 의미하는 바는 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 점수 향상에 대한 통계적 유의성이 없음을 의미한다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 점수 향상에 대한 통계적 유의성이 있음을 의미한다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 실제로 점수 향상은 없으나 우연히 p-값이 작게 나온 것일 수 있다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 점수 향상은 실제로 유의하지 않지만, p-값이 작아서 통계적 유의성을 보인다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="2" data-explain="">
+<p><span class="qlabel">확인문제 2.</span> SAT 점수 향상에 대한 가설검증에서 평균 점수 변화가 <span class="math inline">\(4.2\)</span>점, p-값이 <span class="math inline">\(0.0038\)</span>로 나타났다. 이 결과에 대한 결론을 내리면 어떻게 되는가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 점수 변화가 크므로 온라인 학습 코스를 선택하는 것이 유의미하다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> p-값이 작기 때문에 이 결과는 통계적으로 유의하다. 그러나 점수 향상의 실제 효과는 미미하다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> p-값이 작으므로, <span class="math inline">\(4.2\)</span>점의 점수 향상은 실제로 중요한 효과가 있다는 것을 의미한다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 유의수준을 변경해야만 이 결과를 받아들일 수 있다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="3" data-explain="">
+<p><span class="qlabel">확인문제 3.</span> 통계적으로 유의한 결과가 나왔을 때, 실제로도 유의한 결과인지 판단하는 것은 무엇을 기준으로 해야 하는가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 표본 크기</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> p-값의 크기</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 효과 크기와 실제 의미</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 실험의 유의수준</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="3" data-explain="">
+<p><span class="qlabel">확인문제 4.</span> 실제 SAT 시험 점수 변화에서 <span class="math inline">\(4\)</span>점의 차이가 통계적으로 유의한 것으로 나타났다. 그러나 이 차이가 실제로 중요한지 판단할 때 어떤 요소가 고려되어야 하는가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 표본의 크기만 고려하면 된다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> p-값이 작은 것만 중요하고, 실제 효과는 무시한다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 점수 변화가 작은 경우 실제 효과의 중요성을 평가해야 한다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(4\)</span>점의 변화가 아무리 작더라도 그 자체로 유의미한 결과이다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="4" data-explain="">
+<p><span class="qlabel">확인문제 5.</span> 온라인 학습 코스와 스스로 공부하는 그룹의 SAT 점수 차이를 비교한 결과, 유의수준 <span class="math inline">\(0.05\)</span>에서 p-값이 <span class="math inline">\(0.0038\)</span>로 나타났다. 이 결과가 의미하는 바는 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 온라인 학습 코스를 이수한 학생의 점수 향상이 실제로 유의미하다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 유의수준 <span class="math inline">\(0.05\)</span>에서 점수 변화가 통계적으로 유의하지 않다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 온라인 학습 코스를 선택한 그룹의 점수 변화가 우연히 일어났다고 결론을 내릴 수 있다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 통계적 유의성을 넘어서 실제로 점수 변화가 유의미한지 추가적으로 분석이 필요하다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<!-- Page 151 -->
+</section>
+<section id="표본-크기의-효과" class="level3">
+<h3 class="anchored" data-anchor-id="표본-크기의-효과">표본 크기의 효과</h3>
+<div class="card">
+<p><a href="../chapters/03-01-sampling-distribution.html#sec-3-1">3.1절</a>에서 표본 크기가 증가할수록 표본 통계량의 변동은 감소하고 표본 통계량은 모수의 참값에 가까워진다고 배웠다. 이 원리는 가설검증에서도 성립한다. 표본 크기가 증가하면, 영가설이 참일 때 우연히 발생하는 통계량의 변동도 감소한다.</p>
+</div>
+<div class="card">
+<p><span id="ex-4-29" class="qlabel">예제 4.29.</span> 앞에서 레스토랑 손님이 남은 음식의 포장을 부탁한 후 잊고 가는 손님의 비율을 검증하는 문제를 다루었다. 가설은 <span class="math inline">\(H_0: p = 0.3\)</span> vs <span class="math inline">\(H_a: p &gt; 0.3\)</span> 이다. 다음 두 가지 경우 표본 통계량은 같지만 표본 크기는 다르다. p-값을 구하고 유의수준 <span class="math inline">\(5\%\)</span>에서 영가설 기각 여부를 결정하라. 또한 문맥에 맞게 결론을 설명하라.</p>
+<p><span class="qsub">(1)</span> <span class="math inline">\(\hat{p} = 0.35\)</span>, <span class="math inline">\(n = 100\)</span></p>
+<p><span class="qsub">(2)</span> <span class="math inline">\(\hat{p} = 0.35\)</span>, <span class="math inline">\(n = 1000\)</span></p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p><span class="qsub">(1)</span> 표본 크기가 100인 경우 임의화 분포는 아래 그림 <span class="qsub">(1)</span>이다. p-값 <span class="math inline">\(0.166\)</span>은 유의수준 <span class="math inline">\(0.05\)</span>보다 작지 않으므로 영가설을 기각하지 못한다. <span class="math inline">\(100\)</span>명의 고객에서 표본 비율 <span class="math inline">\(0.35\)</span>는, 남은 음식을 포장을 부탁하고 놓고 간 사람의 비율이 <span class="math inline">\(0.3\)</span>보다 크다는 주장에 대한 확실한 증거를 제시하지 못한다.</p>
+<p><span class="qsub">(2)</span> 아래 그림 <span class="qsub">(2)</span>가 표본 크기가 1000인 경우의 임의화 분포이다. p-값 <span class="math inline">\(0.001\)</span>은 유의수준 <span class="math inline">\(0.05\)</span>보다 작으므로 영가설을 기각한다. <span class="math inline">\(1000\)</span>명의 고객에서 표본 비율 <span class="math inline">\(0.35\)</span>는, 남은 음식을 포장을 부탁하고 놓고 간 사람의 비율이 <span class="math inline">\(0.3\)</span>보다 크다는 주장에 대하여 강한 증거를 제시한다.</p>
+<p><img src="../images/img_153.PNG" class="img-fluid"></p>
+<p>위 예제에서 가설과 표본 통계량은 같고 표본 크기만 달랐다. 표본 크기가 100인 임의화 분포는 표본 크기가 1000인 임의화 분포보다 큰 변동을 가지는 것을 위 그림에서 알 수 있다. 결과적으로 실제 모비율이 <span class="math inline">\(0.3\)</span>이라면, 표본 크기가 <span class="math inline">\(100\)</span>일 때 <span class="math inline">\(0.35\)</span>만큼 큰 표본 비율은 쉽게 발생할 수 있다. 하지만 표본 크기가 1000이라면 <span class="math inline">\(0.35\)</span>만큼 큰 표본 비율은 관측하기 매우 어렵다. 대안가설이 참일 때, 표본 크기가 크면 영가설을 더 쉽게 기각할 수 있다.</p>
+<p>이 절에서 공식적인 가설검증의 결과가 잘못될 수 있음을 배웠다. 영가설을 기각했을 때, 영가설이 실제 사실이고 제1종오류를 범했을 가능성은 항상 있다. 영가설을 기각하지 못했을 때 대안가설이 사실이고, 제2종오류를 범했을 수도 있다.</p>
+<p>가설검증의 오류를 사전에 방지할 수는 없지만 유의수준을 조절하거나 표본 크기를 늘려서 오류 발생 가능성을 제어할 수 있다. 다중 검증을 할 때는 제1종오류가, 표본 크기가 작으면 제2종오류가 쉽게 발생한다. 제1종오류가 발생했는지 알려면 복제 연구가 이루어져야 한다.</p>
+<p>통계적 추론에서 명심해야 할 것은 신뢰구간이 항상 모수를 포함하는 것은 아니라는 것이다. 또한 영가설이 사실이지만 영가설을 반박하는 통계적으로 유의한 결과가 나올 수 있으며, 영가설을 기각하지 않았다고 영가설이 참은 아니라는 점도 명심해야 한다.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="quiz card" data-answer="2" data-explain="">
+<p><span class="qlabel">확인문제 1.</span> 레스토랑에서 손님이 남은 음식을 포장하고 놓고 간 비율에 대해 가설 검증을 진행하였다. 표본 크기가 <span class="math inline">\(100\)</span>일 때 p-값이 <span class="math inline">\(0.166\)</span>으로 나왔고, 표본 크기가 <span class="math inline">\(1000\)</span>일 때 p-값이 <span class="math inline">\(0.001\)</span>로 나왔다. 유의수준 <span class="math inline">\(5\%\)</span>에서 영가설을 기각할지 여부를 판단하시오.</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 표본 크기가 <span class="math inline">\(100\)</span>일 때만 영가설을 기각할 수 있다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 표본 크기가 <span class="math inline">\(1000\)</span>일 때만 영가설을 기각할 수 있다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 두 경우 모두 영가설을 기각할 수 있다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 두 경우 모두 영가설을 기각할 수 없다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="3" data-explain="">
+<p><span class="qlabel">확인문제 2.</span> 영가설이 참일 때, 표본 크기가 커질수록 표본 통계량의 변동은 어떻게 변하는가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 표본 통계량의 변동이 커진다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 표본 통계량의 변동은 그대로 유지된다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 표본 통계량의 변동은 감소한다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 표본 통계량의 변동은 일정하게 증가한다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="2" data-explain="">
+<p><span class="qlabel">확인문제 3.</span> 영가설이 참일 때, 표본 크기가 증가하면 영가설을 더 쉽게 기각할 수 있다. 이 주장의 이유는 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 표본 크기가 커지면 표본 통계량의 변동이 커져, 기각하기 쉬워진다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 표본 크기가 커지면 표본 통계량의 변동이 감소하여, 더 정확한 추론을 할 수 있다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 표본 크기가 커지면 p-값이 커져, 기각하기 쉬워진다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 표본 크기가 커지면 p-값이 작아져, 기각하기 어렵다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="2" data-explain="">
+<p><span class="qlabel">확인문제 4.</span> 다중 검증을 할 때, 제1종오류와 제2종오류의 발생 가능성은 어떻게 변하는가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 제1종오류의 발생 가능성은 증가하고, 제2종오류의 발생 가능성은 감소한다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 제1종오류의 발생 가능성은 증가하고, 제2종오류의 발생 가능성도 증가한다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 제1종오류의 발생 가능성은 감소하고, 제2종오류의 발생 가능성은 증가한다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 제1종오류와 제2종오류의 발생 가능성 모두 감소한다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="2" data-explain="">
+<p><span class="qlabel">확인문제 5.</span> 가설 검증에서 영가설을 기각할 수 없다고 결론을 내렸을 때, 그것이 반드시 영가설이 참이라는 것을 의미하는가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 네, 영가설을 기각하지 못하면 영가설이 참입니다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 아니요, 영가설을 기각하지 못했다고 해서 영가설이 반드시 참이라고 할 수 없습니다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 네, 영가설을 기각하지 못하면 대안가설이 참입니다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 아니요, 영가설을 기각하지 못한 것은 대안가설을 지지하는 증거가 되기 때문에 대안가설이 참입니다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<!-- Page 152 -->
+</section>
+<section id="학습-내용-정리" class="level3">
+<h3 class="anchored" data-anchor-id="학습-내용-정리">학습 내용 정리</h3>
+<div class="card">
+<p>다음 사항을 이해하거나 해결하는 능력이 있어야 한다.</p>
+<ul>
+<li>가설검증에서 제1종오류와 제2종오류가 어떻게 다른지 이해한다.</li>
+<li>제1종오류를 범할 가능성을 유의수준으로 제어한다.</li>
+<li>다중 검증에서 유의한 결과들이 가진 잠재적인 문제를 이해한다.</li>
+<li>유의한 연구 결과를 복제하는 것이 과학에서 중요하다.</li>
+<li>통계적 유의성이 항상 실제적 유의성을 의미하는 것은 아니다.</li>
+<li>대안가설이 참일 때, 표본 크기가 크면 영가설을 더 쉽게 기각한다.</li>
+</ul>
+</div>
+<section id="유의수준" class="level4">
+<h4 class="anchored" data-anchor-id="유의수준">유의수준</h4>
+<div class="card">
+<p>유의수준(significance level) <span class="math inline">\(\alpha\)</span>는 제1종오류를 범할 확률을 제어한다.</p>
+</div>
+</section>
+<section id="다중-검증의-문제-1" class="level4">
+<h4 class="anchored" data-anchor-id="다중-검증의-문제-1">다중 검증의 문제</h4>
+<div class="card">
+<p>다중 검증(multiple testing)을 수행할 때, 영가설이 모두 참일 경우, 통계적으로 유의한 결과가 우연히 나오는 비율은 대략 유의수준 <span class="math inline">\(\alpha\)</span>이다.</p>
+</div>
+</section>
+<section id="출판편향" class="level4">
+<h4 class="anchored" data-anchor-id="출판편향">출판편향</h4>
+<div class="card">
+<p>종종 통계적으로 유의한 결과만 발표된다. 검증을 많이 하면, 그 중 일부는 우연히 통계적으로 유의하게 나올 것이고, 우리가 보는 것은 단지 이러한 연구들일 수도 있다.</p>
+</div>
+</section>
+<section id="복제-연구-1" class="level4">
+<h4 class="anchored" data-anchor-id="복제-연구-1">복제 연구</h4>
+<div class="card">
+<p>통계적으로 유의한 결과를 다시 복제하는 연구에서 영가설이 기각되면 대안가설이 참임을 다시 확신할 수 있다. 영가설을 기각하지 못하면 처음 결과가 제1종오류에서 나온 것으로 의심할 수 있다.</p>
+</div>
+</section>
+<section id="표본-크기의-효과-1" class="level4">
+<h4 class="anchored" data-anchor-id="표본-크기의-효과-1">표본 크기의 효과</h4>
+<div class="card">
+<p>표본 크기가 작으면 대안가설이 참일 때 유의한 결과를 얻기 어려울 수 있다. 표본 크기가 크면 대안가설이 참일 때 유의한 결과를 쉽게 얻는다. 하지만 통계적 유의성이 실제적 유의성을 의미하지는 않는다.</p>
+</div>
+<div class="quiz card" data-answer="2" data-explain="">
+<p><span class="qlabel">확인문제 1.</span> 가설검증에서 제1종오류와 제2종오류가 어떻게 다른지 이해한다. 제1종오류와 제2종오류의 차이로 옳은 것은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 제1종오류는 대안가설이 참일 때 발생하고, 제2종오류는 영가설이 참일 때 발생한다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 제1종오류는 영가설이 참일 때 발생하고, 제2종오류는 대안가설이 참일 때 발생한다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 제1종오류는 영가설이 참일 때 발생하고, 제2종오류는 영가설이 기각될 때 발생한다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 제1종오류와 제2종오류는 같은 의미로 사용된다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="2" data-explain="">
+<p><span class="qlabel">확인문제 2.</span> 유의수준(significance level) <span class="math inline">\(\alpha\)</span>의 역할은 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 제2종오류를 범할 확률을 제어한다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 제1종오류를 범할 확률을 제어한다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 다중 검증에서 제1종오류의 발생 가능성을 증가시킨다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 표본 크기의 변동을 제어한다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="3" data-explain="">
+<p><span class="qlabel">확인문제 3.</span> 다중 검증(multiple testing)에서 영가설이 모두 참일 때, 통계적으로 유의한 결과가 우연히 나오는 비율은 얼마인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(1\%\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(5\%\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 유의수준 <span class="math inline">\(\alpha\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(10\%\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="1" data-explain="">
+<p><span class="qlabel">확인문제 4.</span> 출판편향(publication bias) 문제에 대한 설명으로 옳은 것은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 통계적으로 유의한 결과만 발표되기 때문에, 유의하지 않은 연구 결과는 모두 무시된다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 검증을 많이 하면, 우연히 유의한 결과가 나오는 비율은 감소한다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 검증을 많이 하면, 유의하지 않은 연구 결과가 점차 유의한 결과로 바뀐다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 통계적으로 유의한 결과만 발표되기 때문에 연구 결과의 정확도가 높아진다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="2" data-explain="">
+<p><span class="qlabel">확인문제 5.</span> 복제 연구에서 영가설이 기각되면 무엇을 확신할 수 있는가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 대안가설이 틀렸다는 것을 확신할 수 있다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 대안가설이 참임을 확신할 수 있다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 영가설이 참임을 확신할 수 있다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 복제 연구는 불필요하므로 그 결과는 중요하지 않다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="2" data-explain="">
+<p><span class="qlabel">확인문제 6.</span> 표본 크기가 커지면 대안가설이 참일 때 어떤 결과가 발생하는가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 유의한 결과를 얻기가 어려워진다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 유의한 결과를 쉽게 얻을 수 있다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 표본 크기와는 상관없이 결과는 변화하지 않는다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 유의한 결과를 얻기 어려운 경우가 많다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz card" data-answer="2" data-explain="">
+<p><span class="qlabel">확인문제 7.</span> 통계적 유의성과 실제적 유의성의 차이에 대한 설명으로 옳은 것은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 통계적 유의성이 높으면 반드시 실제적 유의성도 크다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 통계적 유의성이 작은 차이를 강조하는 반면, 실제적 유의성은 차이의 크기에 집중한다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 통계적 유의성이 없으면 실제적 유의성도 없다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 실제적 유의성이 높을 경우, 반드시 통계적 유의성도 높다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<!-- Page 153 -->
+<div class="card">
+<p><span id="hw-4-10" class="qlabel">과제 4.10.</span> 두 항공사의 항공편이 예정된 시간보다 <span class="math inline">\(30\)</span>분 이상 늦게 도착하는 비율에 관심이 있다. 델타 항공은 <span class="math inline">\(1{,}000\)</span>편 중 <span class="math inline">\(67\)</span>편, 유나이티드 항공은 <span class="math inline">\(1{,}000\)</span>편 중 <span class="math inline">\(160\)</span>편이 <span class="math inline">\(30\)</span>분 이상 늦게 도착했다. 유나이티드 항공의 비율(<span class="math inline">\(p_U\)</span>)과 델타 항공의 비율(<span class="math inline">\(p_D\)</span>)이 다른지 검증하려고 한다.</p>
+<div class="quiz qgrid q" data-answer="4" data-explain="영가설은 두 비율이 같다는 등식(p_U = p_D)이다." style="--qcols:2">
+<p><span class="qsub">(1)-</span><span class="subb">a</span> 영가설은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(H_a: p_U \neq p_D\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(H_a: p_U  \lt  p_D\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(H_a: p_U  \gt  p_D\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(H_0: p_U = p_D\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="1" data-explain="두 비율이 '다른지' 검증하므로 양쪽 대안가설(p_U ≠ p_D)이다." style="--qcols:2">
+<p><span class="qsub">(1)-</span><span class="subb">b</span> 대안가설은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(H_a: p_U \neq p_D\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(H_a: p_U  \lt  p_D\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(H_a: p_U  \gt  p_D\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(H_0: p_U = p_D\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="3" data-explain="0.067 - 0.160 = -0.093이다." style="--qcols:5">
+<p><span class="qsub">(2)</span> 관측 통계량 값은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 0.067</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 0.160</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> −0.093</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 0.30</p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> 0.016</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="5" data-explain="표본이 크고 차이가 뚜렷해 p-값은 거의 0이다." style="--qcols:5">
+<p><span class="qsub">(3)</span> StatKey 임의화 분포로 구한 p-값은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 0.123</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 0.056</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 0.023</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 0.015</p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> 0.000</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q" data-answer="1" data-explain="p-값( 0)이 0.01보다 작아 영가설을 기각한다.">
+<p><span class="qsub">(4)</span> 유의수준 0.01에서 검증 결과는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 영가설을 기각한다</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 대안가설을 기각한다</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 영가설을 채택한다</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 영가설을 기각하지 못한다</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="1" data-explain="표본 크기가 75로 작아지면 p-값은 약 0.123으로 커진다." style="--qcols:5">
+<p><span class="qsub">(5)-</span><span class="subb">a</span> 표본 크기가 75(비율 동일)이면 p-값은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 0.123</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 0.056</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 0.023</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 0.015</p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> 0.000</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q" data-answer="4" data-explain="p-값 0.123 > 0.01이라 영가설을 기각하지 못한다.">
+<p><span class="qsub">(5)-</span><span class="subb">b</span> 그때 유의수준 0.01에서 검증 결과는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 영가설을 기각한다</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 대안가설을 기각한다</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 영가설을 채택한다</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 영가설을 기각하지 못한다</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<p><span id="hw-4-11" class="qlabel">과제 4.11.</span> Newscience.com에 "아침 식사 시리얼이 남자아이를 임신할 가능성을 높여준다"는 기사가 실렸다. 이 기사는 임신하기 전에 아침 시리얼을 먹는 여성이 남자아이를 임신할 확률이 훨씬 높다는 연구에 기초한 것이다. 연구자는 <span class="math inline">\(133\)</span>개의 음식 각각에 대해, 그 음식을 먹은 여성과 그렇지 않은 여성 사이에 남자아이를 임신하는 비율에 차이가 있는지 검사했다. 모든 음식 중에서 오직 아침 식사 시리얼만이 상당한 차이를 보였다. 이 연구의 유의수준은 <span class="math inline">\(0.01\)</span>이었다.</p>
+<div class="quiz qgrid q" data-answer="2" data-explain="영향을 주는 음식이 없어도 유의수준 0.01 × 133 1~2개는 우연히 유의하게 나온다." style="--qcols:5">
+<p><span class="qsub">(1)</span> 영향을 주는 음식이 없다면, 우연만으로 몇 개 정도 유의한 결과가 나올까?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 0</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 1~2</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 3~4</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 5~6</p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> 7~8</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q" data-answer="2" data-explain="실제 효과가 없는데 유의하다고 판단한 제1종오류이다.">
+<p><span class="qsub">(2)</span> 연구 결과를 올바로 기술한 것은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 어떤 종류의 오류도 없다</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 제1종오류가 발생했다</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 제2종오류가 발생했다</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q" data-answer="4" data-explain="무작위 배정이 아닌 관측연구이므로 헤드라인을 믿어서는 안 된다.">
+<p><span class="qsub">(3)</span> 시리얼 먹는 여성의 남아 출산율이 더 높더라도 헤드라인을 믿어야 하는가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 실험연구이므로 믿어야 한다</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 실험연구이므로 믿지 말아야 한다</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 관측연구이므로 믿어야 한다</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 관측연구이므로 믿지 말아야 한다</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<p><span id="hw-4-12" class="qlabel">과제 4.12.</span> 초파리에게 짝짓기 선택권을 주면 더 건강한 초파리를 낳을까? 연구자는 암컷 초파리를 무작위로 두 그룹으로 나누었다. 한 그룹은 수컷이 많은 우리에 넣어 자유롭게 짝을 선택할 수 있게 하고, 다른 그룹은 한 마리의 수컷만 있는 방에 넣어 짝짓기 선택권을 주지 않았다. 암컷이 낳은 알에서 유충의 생존율을 조사하였다. 네이처에 발표된 한 연구는 짝을 선택하는 것이 초파리 유충의 생존율을 증가시킨다는 것을 발견했다(p-값 <span class="math inline">\(&lt;0.02\)</span>). 그러나 이 결과는 유전학의 통념에 어긋나 논란이 있었고, 이 결과를 복제하기 위한 연구가 실시되었다.</p>
+<div class="quiz qgrid q" data-answer="2" data-explain="복제 실험의 p-값은 약 0.10이다." style="--qcols:5">
+<p><span class="qsub">(1)-</span><span class="subb">a</span> 복제: 선택권 10,000중 6,067 생존, 무선택 10,000중 5,976 생존. p-값은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 0.04</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 0.10</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 0.21</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 0.25</p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> 0.29</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="5" data-explain="p-값 0.10 > 0.05이라 증거가 거의 없다." style="--qcols:3">
+<p><span class="qsub">(1)-</span><span class="subb">b</span> 유의수준 0.05에서 결론은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 아주 강한 증거</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 강한 증거</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 보통의 증거</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 약간의 증거</p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> 증거가 거의 없음</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="3" data-explain="50회 실험의 평균 차이를 검증하면 p-값은 약 0.21이다." style="--qcols:5">
+<p><span class="qsub">(2)-</span><span class="subb">a</span> 50회 실험(각 200마리)을 사례로 평균 차이가 0보다 큰가 검증하면 p-값은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 0.04</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 0.10</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 0.21</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 0.25</p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> 0.29</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="5" data-explain="p-값 0.21 > 0.05이라 증거가 거의 없다." style="--qcols:3">
+<p><span class="qsub">(2)-</span><span class="subb">b</span> 유의수준 0.05에서 결론은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 아주 강한 증거</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 강한 증거</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 보통의 증거</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 약간의 증거</p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span> 증거가 거의 없음</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="2" data-explain="효과가 실제로 있는데 복제 연구가 잡지 못했으니 제2종오류이다." style="--qcols:3">
+<p><span class="qsub">(3)</span> 짝짓기 선택이 정말 생존율을 향상시킨다면, 복제 연구 결과는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 제1종오류</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 제2종오류</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 어떤 오류도 없음</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz qgrid q" data-answer="1" data-explain="효과가 없는데 원래 연구가 유의하다고 했으니 제1종오류이다." style="--qcols:3">
+<p><span class="qsub">(4)</span> 향상시키지 않는다면, 원래 네이처 연구는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 제1종오류</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 제2종오류</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 어떤 오류도 없음</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<!-- 소유권자: 프로브 (빌드팀) | 사용자: 프로브 / Date: 2026-06-23 -->
+<!-- 인터랙티브 퀴즈 채점 (self-host, 외부의존 0). 시안 넥서스-최종통합시안-★★★★★ 의 <script> 이식.
+     _quarto.yml format.html.include-after-body 로 전 페이지 주입. .quiz[data-answer][data-explain] 마크업과 짝. -->
+<script>
+document.querySelectorAll('.quiz').forEach(function(q){
+  var ans = q.getAttribute('data-answer'), fb = q.querySelector('.quiz-feedback');
+  q.querySelectorAll('.opt').forEach(function(opt){
+    opt.addEventListener('click', function(){
+      q.querySelectorAll('.opt').forEach(function(o){ o.classList.remove('correct','wrong'); });
+      if (opt.getAttribute('data-v') === ans) {
+        opt.classList.add('correct');
+        fb.className = 'quiz-feedback ok';
+        fb.textContent = '정답입니다! ' + (q.getAttribute('data-explain') || '');
+      } else {
+        opt.classList.add('wrong');
+        fb.className = 'quiz-feedback no';
+        fb.textContent = '다시 생각해 보세요.';
+      }
+    });
+  });
+});
+</script>
+<!-- 소유권자: 빌드팀 | 작성 대행: 넥서스(컨트롤타워) — 프로브 부재로 대표 지시 직접 진행 / Date: 2026-06-23 -->
+<!-- 예제 풀이 블러 리빌 (self-host, 외부의존 0). 시안 넥서스-예제블러리빌-★★★★★.
+     _quarto.yml format.html.include-after-body 로 전 페이지 주입. .card.sol-card 마크업과 짝.
+     풀이 카드 클릭 시 .on 추가 → 블러 해제. -->
+<script>
+document.querySelectorAll('.sol-card').forEach(function(c){
+  c.addEventListener('click', function(){ c.classList.add('on'); });
+});
+</script>
+<!-- 소유권자: 빌드팀 | 작성: 넥서스(컨트롤타워) / Date: 2026-06-23 -->
+<!-- 주관식 정답 확인 토글 (self-host, 외부의존 0). 옵저버 정석 .ansbtn/.ansbox 와 짝.
+     _quarto.yml include-after-body 로 전 페이지 주입. -->
+<script>
+document.querySelectorAll('.ansbtn').forEach(function(b){
+  b.addEventListener('click', function(){
+    var box = b.nextElementSibling;
+    if (!box || !box.classList.contains('ansbox')) return;
+    var on = box.classList.toggle('show');
+    b.textContent = on ? '정답 숨기기 ▴' : '정답 확인 ▾';
+  });
+});
+</script>
+<!-- 소유권자: 넥서스(컨트롤타워) | 사용자: 넥서스 / Date: 2026-06-25 -->
+<!-- 데이터뷰 iframe을 콘텐츠 높이에 자동 맞춤 → 표마다 정확한 높이(여백/스크롤 제거).
+     file:// 에선 contentDocument 접근이 차단되므로 자식이 자기 높이를 postMessage로 보내는 방식이 1순위.
+     http 에선 contentDocument 폴링도 병행. self-host, 외부의존 0. -->
+<script>
+(function(){
+  function setH(f, h){ if(h > 0){ f.scrolling = 'no'; f.style.height = (h + 4) + 'px'; } }
+  // 1순위: 자식이 postMessage 로 보낸 높이 (file:// 포함 동작)
+  window.addEventListener('message', function(e){
+    if(e.data && e.data.type === 'dvHeight' && e.data.h > 0){
+      document.querySelectorAll('iframe[src*="data-views/"]').forEach(function(f){
+        if(f.contentWindow === e.source) setH(f, e.data.h);
+      });
+    }
+  });
+  // 2순위: same-origin(http) 직접 읽기 (file:// 에선 catch 되어 무시)
+  function fit(f){
+    try{
+      var d = f.contentDocument || f.contentWindow.document;
+      if(d && d.body) setH(f, Math.max(d.documentElement.scrollHeight, d.body.scrollHeight, d.body.offsetHeight));
+    }catch(e){}
+  }
+  function init(){
+    document.querySelectorAll('iframe[src*="data-views/"]').forEach(function(f){
+      f.scrolling = 'no';
+      f.addEventListener('load', function(){ fit(f); [300,800].forEach(function(t){ setTimeout(function(){fit(f);}, t); }); });
+      [200,600,1200,2200].forEach(function(t){ setTimeout(function(){fit(f);}, t); });
+    });
+  }
+  if(document.readyState === 'complete') init();
+  else window.addEventListener('load', init);
+})();
+</script>
+<!-- 엑셀 코드블록(pre.xlcode) 복사버튼 — self-host, 외부의존 0 (질럿, 2026-06-23) -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('pre.xlcode').forEach(function (pre) {
+    if (pre.dataset.xlcopy) return;
+    pre.dataset.xlcopy = '1';
+    var code = pre.textContent;            // ★ 버튼 추가 전 캡처 = 태그 없는 순수 수식
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'xlcopy';
+    btn.textContent = '복사';
+    btn.addEventListener('click', function () {
+      navigator.clipboard.writeText(code).then(function () {
+        btn.textContent = '복사됨';
+        setTimeout(function () { btn.textContent = '복사'; }, 1500);
+      });
+    });
+    pre.appendChild(btn);
+  });
+});
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/04-03-significance.html" class="pagination-link" aria-label="4.3 통계적 유의성 판단">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">4.3 통계적 유의성 판단</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/04-05-inference-summary.html" class="pagination-link" aria-label="4.5 통계적 추론 정리">
+        <span class="nav-page-text"><span class="chapter-title">4.5 통계적 추론 정리</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<!--
+  소유권자: 드라군(복원팀) | 사용자: 드라군
+  Date: 2026-06-22
+  용도: enook 5장 "반응 시간 게임" 인터랙티브 애플릿 복원 (page 167).
+        claude.ai 아티팩트로 게시 후 URL을 05-02-numbergame.qmd .sim-link에 연결.
+-->
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>반응 시간 게임</title>
+<style>
+  :root { --accent:#2563eb; --line:#dee2e6; --wait:#f8c8d8; --go:#b2f2bb; --head:#f1f3f5; }
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+         margin: 0; padding: 24px; color: #212529; background: #fff; line-height: 1.6; }
+  h1 { font-size: 22px; color: var(--accent); margin: 0 0 12px; }
+  p.intro, ul.rules { font-size: 14px; color: #495057; max-width: 760px; }
+  ul.rules { padding-left: 20px; }
+  #stage { position: relative; width: 100%; max-width: 600px; height: 280px; margin: 16px 0;
+           border-radius: 8px; background: var(--wait); cursor: pointer; user-select: none;
+           display: flex; align-items: center; justify-content: center; text-align: center;
+           font-size: 16px; color: #495057; transition: background .1s; }
+  #stage.go { background: var(--go); }
+  #cat { font-size: 64px; line-height: 1; }
+  #msg { font-size: 15px; margin: 4px 0 8px; min-height: 24px; }
+  .stat { display: inline-block; min-width: 120px; font-size: 14px; margin-right: 16px; }
+  .stat b { color: var(--accent); font-size: 18px; }
+  table { border-collapse: collapse; margin: 12px 0; }
+  th, td { border: 1px solid var(--line); padding: 5px 12px; font-size: 14px; text-align: center; }
+  th { background: var(--head); }
+  button { font-size: 14px; padding: 7px 14px; border: 1px solid var(--line); border-radius: 6px;
+           background: #f8f9fa; cursor: pointer; }
+  button:hover { background: #e9ecef; }
+  .name-row { margin: 8px 0; font-size: 14px; }
+  input.name { font-size: 14px; padding: 5px 8px; border: 1px solid var(--line); border-radius: 4px; }
+</style>
+</head>
+<body>
+  <h1>반응 시간 게임</h1>
+  <p class="intro">
+    시각적인 변화에 우리는 얼마나 빨리 반응할 수 있을까? 성별 또는 나이가 영향을 끼친다고 생각합니까?
+    한두 번 잘했다고 반응이 빠르다고 할 수 없습니다. 마지막으로 시도한 5번의 평균 값이 자신의 기록입니다.
+    평균은 극단 값의 영향을 많이 받습니다. 따라서 실험할 때는 집중해야 합니다.
+  </p>
+  <ul class="rules">
+    <li>고양이가 있는 화면을 클릭하면 고양이가 사라집니다.</li>
+    <li>사라진 고양이는 무작위로 1~4초 사이에 다시 나타납니다.</li>
+    <li>고양이가 나타나자마자 화면을 다시 클릭하여 반응 시간을 측정합니다.</li>
+    <li>마지막으로 시도한 5번의 평균 반응 시간이 가장 적은 사람이 이깁니다.</li>
+  </ul>
+
+  <div class="name-row">
+    이름: <input class="name" id="name" placeholder="이름 입력" maxlength="12">
+  </div>
+
+  <div id="stage"><span id="catWrap"><span id="cat">🐱</span><div style="font-size:14px;margin-top:8px">클릭하여 시작</div></span></div>
+  <div id="msg">화면을 클릭하면 게임이 시작됩니다.</div>
+
+  <div>
+    <span class="stat">시도 횟수 <b id="count">0</b></span>
+    <span class="stat">최근 평균 <b id="avg">–</b></span>
+    <span class="stat">최솟값 <b id="min">–</b></span>
+    <span class="stat">최댓값 <b id="max">–</b></span>
+  </div>
+
+  <table id="log">
+    <thead><tr><th>실험 회차</th><th>이름</th><th>반응시간(초)</th></tr></thead>
+    <tbody></tbody>
+  </table>
+  <button id="reset">기록 초기화</button>
+
+<script>
+(function () {
+  const stage = document.getElementById("stage");
+  const cat = document.getElementById("cat");
+  const catWrap = document.getElementById("catWrap");
+  const msg = document.getElementById("msg");
+  const logBody = document.querySelector("#log tbody");
+  let state = "idle";   // idle | waiting | go
+  let appearTime = 0, timer = null;
+  const times = [];     // 모든 반응시간(초)
+
+  function fmt(s) { return s.toFixed(3); }
+
+  function refresh() {
+    document.getElementById("count").textContent = times.length;
+    const last5 = times.slice(-5);
+    if (last5.length) {
+      const avg = last5.reduce((a, b) => a + b, 0) / last5.length;
+      document.getElementById("avg").textContent = fmt(avg);
+      document.getElementById("min").textContent = fmt(Math.min(...times));
+      document.getElementById("max").textContent = fmt(Math.max(...times));
+    } else {
+      ["avg", "min", "max"].forEach(id => document.getElementById(id).textContent = "–");
+    }
+  }
+
+  function startWait() {
+    state = "waiting";
+    catWrap.style.display = "none";
+    stage.classList.remove("go");
+    msg.textContent = "고양이가 사라졌습니다… 다시 나타나면 클릭!";
+    const delay = 1000 + Math.random() * 3000; // 1~4초
+    timer = setTimeout(() => {
+      state = "go";
+      stage.classList.add("go");
+      catWrap.style.display = "block";
+      cat.textContent = "😺";
+      appearTime = performance.now();
+      msg.textContent = "지금! 클릭하세요!";
+    }, delay);
+  }
+
+  stage.addEventListener("click", function () {
+    if (state === "idle") { cat.textContent = "🐱"; startWait(); return; }
+    if (state === "waiting") {           // 너무 빨리 클릭 (실수)
+      clearTimeout(timer);
+      msg.textContent = "너무 일찍 클릭했어요! 다시 시작하려면 클릭하세요.";
+      state = "idle"; catWrap.style.display = "block"; cat.textContent = "🐱";
+      return;
+    }
+    if (state === "go") {
+      const rt = (performance.now() - appearTime) / 1000;
+      times.push(rt);
+      const name = document.getElementById("name").value.trim() || "익명";
+      const tr = document.createElement("tr");
+      tr.innerHTML = `<td>${times.length}</td><td>${name}</td><td>${fmt(rt)}</td>`;
+      logBody.appendChild(tr);
+      refresh();
+      msg.textContent = `반응 시간 ${fmt(rt)}초! 다시 시작하려면 화면을 클릭하세요.`;
+      state = "idle"; cat.textContent = "🐱";
+      catWrap.querySelector("div").textContent = "클릭하여 다음 시도";
+    }
+  });
+
+  document.getElementById("reset").onclick = function () {
+    times.length = 0; logBody.innerHTML = ""; refresh();
+    msg.textContent = "기록을 초기화했습니다. 화면을 클릭하면 시작됩니다.";
+    state = "idle"; catWrap.style.display = "block"; cat.textContent = "🐱";
+    stage.classList.remove("go");
+  };
+
+  refresh();
+})();
+</script>
+</body>
+</html>

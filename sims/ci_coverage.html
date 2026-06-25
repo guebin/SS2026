@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<!-- 소유권자: 질럿(복원팀) | 사용자: 질럿 -->
+<!-- Date: 2026-06-23 (원본 enook 98p 신뢰구간 coverage 앱 충실 재구현) -->
+<!-- 통사사복원소 — 3.2절 신뢰구간 coverage 시뮬레이터.
+     p̂ 히스토그램(모수 포함 CI=파랑, 미포함=빨강) + 현재 표본 신뢰구간 선 + "모수 포함 비율 = hit/total".
+     빨강세모=모비율 p, 초록세모=표본비율 p̂. self-host, 외부라이브러리 0. -->
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>신뢰구간 coverage 시뮬레이터</title>
+<style>
+  :root { --green:#5cb85c; --line:#d9dcdf; --ink:#333; }
+  * { box-sizing:border-box; }
+  body { font-family:-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif; color:var(--ink); margin:0; padding:18px; background:#fff; }
+  .wrap { max-width:780px; margin:0 auto; }
+  .ctl { display:grid; grid-template-columns:auto 1fr; gap:8px 12px; align-items:center; margin-bottom:10px; }
+  .ctl > label { font-weight:700; font-size:.9rem; text-align:right; }
+  .mvar { font-family:'Cambria Math','Latin Modern Math',Georgia,serif; font-style:italic; }
+  input[type=text]{ width:72px; padding:5px 8px; border:1px solid var(--line); border-radius:5px; font-size:.9rem; font-weight:700; }
+  input[readonly]{ background:#f1f3f5; }
+  select { padding:5px 8px; border:1px solid var(--line); border-radius:5px; font-size:.9rem; }
+  .btns { display:flex; gap:6px; flex-wrap:wrap; }
+  .btns button { background:var(--green); color:#fff; border:none; border-radius:5px; padding:6px 14px; cursor:pointer; font-size:.88rem; }
+  .btns button:hover { filter:brightness(1.06); }
+  .btns button.ghost { background:#f0ad4e; }
+  textarea { width:100%; height:64px; margin-top:6px; border:1px solid var(--line); border-radius:5px; padding:8px 10px; font-family:ui-monospace,monospace; font-size:.84rem; line-height:1.7; color:#444; resize:vertical; }
+  .chart { background:#f3f7f4; border:1px solid #e2e9e4; border-radius:10px; margin-top:10px; padding:12px 10px 8px; }
+  .htitle { text-align:center; font-size:1.12rem; font-weight:700; }
+  canvas { width:100%; height:400px; display:block; }
+  .row { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin:8px 0; }
+  .lab { font-weight:700; font-size:.9rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="ctl">
+    <label>모비율 <span class="mvar">p</span>:</label>
+    <div><input type="text" id="p" value="0.3" onchange="resetSim()"></div>
+    <label>표본 크기 <span class="mvar">n</span>:</label>
+    <div><select id="n" onchange="resetSim()">
+      <option>10</option><option selected>30</option><option>50</option><option>100</option>
+      <option>200</option><option>500</option><option>1000</option></select></div>
+    <label>표본 추출:</label>
+    <div class="btns">
+      <button onclick="run(1)">1회</button><button onclick="run(10)">10회</button>
+      <button onclick="run(100)">100회</button><button onclick="run(1000)">1000회</button>
+      <button class="ghost" onclick="resetSim()">reset</button>
+    </div>
+    <label>표본 비율 <span class="mvar">p̂</span>:</label>
+    <div><input type="text" id="phat" readonly></div>
+  </div>
+  <textarea id="lastSample" readonly placeholder="가장 최근에 뽑은 표본(0/1)이 여기에 표시됩니다"></textarea>
+
+  <div class="chart">
+    <div class="htitle" id="title">표본을 추출하세요</div>
+    <canvas id="cv"></canvas>
+  </div>
+  <div class="row"><span class="lab">계급 크기:</span><input type="text" id="distBin" value="0.02" onchange="render()"></div>
+</div>
+
+<script>
+const MAXN=100000;
+let phats=[], total=0, hit=0, lastPhat=null, lastCI=null, animId=null;
+function P(){ return parseFloat(document.getElementById('p').value); }
+function Nsz(){ return parseInt(document.getElementById('n').value,10); }
+function minOf(a){ let m=a[0]; for(const x of a) if(x<m)m=x; return m; }
+function maxOf(a){ let m=a[0]; for(const x of a) if(x>m)m=x; return m; }
+function cancelAnim(){ if(animId){ cancelAnimationFrame(animId); animId=null; } }
+function niceNum(x){ if(!(x>0)) return 1; const mag=Math.pow(10,Math.floor(Math.log10(x))), f=x/mag; return (f<1.5?1:f<3?2:f<7?5:10)*mag; }
+function getBin(def){ let v=parseFloat(document.getElementById('distBin').value); return (v>0)?v:def; }
+function validP(){ const v=P(); return !(isNaN(v)||v<=0||v>=1); }
+function ciContains(ph,n,p){ const se=Math.sqrt(ph*(1-ph)/n); return (ph-2*se<=p && p<=ph+2*se); }
+
+function addBatch(k){ const p=P(), n=Nsz(); let lastArr=null;
+  for(let t=0;t<k;t++){ const arr=new Array(n); let c=0;
+    for(let i=0;i<n;i++){ const b=Math.random()<p?1:0; arr[i]=b; c+=b; } const ph=c/n;
+    phats.push(ph); total++; if(ciContains(ph,n,p)) hit++; lastArr=arr; lastPhat=ph; }
+  const se=Math.sqrt(lastPhat*(1-lastPhat)/n); lastCI=[lastPhat-2*se, lastPhat+2*se];
+  document.getElementById('phat').value=lastPhat.toFixed(3);
+  document.getElementById('lastSample').value=lastArr.join(' ');
+}
+function run(times){
+  if(!validP()){ alert('모비율 p는 0과 1 사이로 입력하세요.'); return; }
+  cancelAnim();
+  let remaining=Math.min(times, MAXN-total);
+  if(remaining<=0){ render(); return; }
+  if(times===1){ addBatch(1); render(); return; }
+  const frames=Math.min(remaining,120), per=Math.ceil(remaining/frames);
+  (function step(){ const k=Math.min(per,remaining); addBatch(k); remaining-=k; render();
+    if(remaining>0) animId=requestAnimationFrame(step); else animId=null; })();
+}
+function resetSim(){ cancelAnim(); phats=[]; total=0; hit=0; lastPhat=null; lastCI=null;
+  document.getElementById('phat').value=''; document.getElementById('lastSample').value='';
+  document.getElementById('title').textContent='표본을 추출하세요'; render(); }
+
+function tri(c,x,y0,col){ c.fillStyle=col; c.beginPath(); c.moveTo(x,y0-1); c.lineTo(x-6,y0+10); c.lineTo(x+6,y0+10); c.closePath(); c.fill(); }
+
+function render(){
+  const cv=document.getElementById('cv'), dpr=window.devicePixelRatio||1;
+  const W=cv.clientWidth, H=cv.clientHeight; cv.width=W*dpr; cv.height=H*dpr;
+  const c=cv.getContext('2d'); c.scale(dpr,dpr); c.clearRect(0,0,W,H);
+  const padL=46,padR=14,padT=8,padB=78,pW=W-padL-padR,pH=H-padT-padB,x0=padL,y0=padT+pH;
+  const p=P(), n=Nsz();
+  if(lastPhat!=null){ document.getElementById('title').innerHTML=`<span class="mvar">p̂</span> = ${lastPhat.toFixed(3)}`; }
+  if(!phats.length){ c.strokeStyle='#cdd3da'; c.beginPath(); c.moveTo(x0,y0); c.lineTo(x0+pW,y0); c.stroke(); return; }
+  const binW=getBin(0.02);
+  let lo=minOf(phats), hi=maxOf(phats); if(validP()){ lo=Math.min(lo,p); hi=Math.max(hi,p); }
+  if(lastCI){ lo=Math.min(lo,lastCI[0]); hi=Math.max(hi,lastCI[1]); }
+  const d0=Math.floor(lo/binW)*binW, hiE=Math.ceil((hi+binW)/binW)*binW, bins=Math.max(1,Math.min(400,Math.round((hiE-d0)/binW))), dom=bins*binW;
+  const ct=new Array(bins).fill(0);
+  for(const x of phats){ let b=Math.floor((x-d0)/binW); if(b<0)b=0; if(b>=bins)b=bins-1; ct[b]++; }
+  const ymax=niceNum(maxOf(ct)||1)*1.05;
+  const X=v=>x0+(v-d0)/dom*pW, bw=pW/bins;
+  c.font='11px sans-serif'; c.lineWidth=1; c.textAlign='right';
+  for(let k=0;k<=5;k++){ const y=y0-pH*k/5; c.strokeStyle='#e7eee9'; c.beginPath(); c.moveTo(x0,y); c.lineTo(x0+pW,y); c.stroke();
+    c.fillStyle='#8a8f8a'; c.fillText(String(Math.round(ymax*k/5)), x0-6, y+4); }
+  c.save(); c.translate(14,padT+pH/2); c.rotate(-Math.PI/2); c.textAlign='center'; c.fillStyle='#666'; c.fillText('빈도',0,0); c.restore();
+  // 막대: 그 계급 중심 p̂의 신뢰구간이 모비율 p 포함 → 파랑, 미포함 → 빨강
+  for(let i=0;i<bins;i++){ if(!ct[i])continue; const center=d0+(i+0.5)*binW;
+    c.fillStyle = validP() && !ciContains(center,n,p) ? '#dc3545' : '#9cc3e8';
+    const h=ct[i]/ymax*pH, x=x0+i*bw; c.fillRect(x, y0-h, Math.max(1,bw-1), h); }
+  c.strokeStyle='#cdd3da'; c.lineWidth=1; c.beginPath(); c.moveTo(x0,y0); c.lineTo(x0+pW,y0); c.stroke();
+  c.fillStyle='#8a8f8a'; c.font='11px sans-serif'; c.textAlign='center';
+  { const ts=binW*Math.max(1,Math.round(bins/5)); for(let v=d0; v<=d0+dom+1e-9; v+=ts) c.fillText((+v.toFixed(2)).toString(), X(v), y0+15); }
+  // 세모: 모비율 p(빨강), 표본 비율 p̂(초록)
+  if(validP() && X(p)>=x0-2&&X(p)<=x0+pW+2) tri(c,X(p),y0,'#d9534f');
+  if(lastPhat!=null && X(lastPhat)>=x0-2&&X(lastPhat)<=x0+pW+2) tri(c,X(lastPhat),y0,'#3a8f3a');
+  // 현재 표본 신뢰구간 선(빨강) — x축 아래
+  if(lastCI){ const yc=y0+34; c.strokeStyle='#d9534f'; c.lineWidth=2;
+    c.beginPath(); c.moveTo(X(lastCI[0]),yc); c.lineTo(X(lastCI[1]),yc); c.stroke();
+    c.beginPath(); c.moveTo(X(lastPhat),yc-5); c.lineTo(X(lastPhat),yc+5); c.stroke(); }
+  // 모수 포함 비율
+  if(total){ c.fillStyle='#333'; c.font='700 14px sans-serif'; c.textAlign='center';
+    c.fillText(`모수 포함 비율 = ${hit} / ${total} = ${(hit/total).toFixed(2)}`, W/2, y0+66); }
+}
+resetSim();
+window.addEventListener('resize', render);
+</script>
+</body>
+</html>

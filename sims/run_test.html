@@ -1,0 +1,153 @@
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:sans-serif;padding:20px;color:var(--color-text-primary)}
+.btn{border:none;background:#185FA5;color:#fff;padding:10px 28px;border-radius:50px;cursor:pointer;font-size:15px;font-weight:600;margin-bottom:16px;box-shadow:0 2px 8px rgba(24,95,165,0.3)}
+.btn:hover{background:#0C447C}
+.btn-reset{border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);color:var(--color-text-primary);padding:10px 20px;border-radius:50px;cursor:pointer;font-size:14px;font-weight:500;margin-bottom:16px;margin-left:8px}
+.stat{font-size:13px;color:var(--color-text-secondary);margin-bottom:4px}
+.chart-wrap{position:relative;width:100%;height:240px;margin-bottom:20px}
+.legend{display:flex;gap:16px;font-size:12px;color:var(--color-text-secondary);margin-bottom:6px;justify-content:flex-end}
+.lb{width:10px;height:10px;border-radius:2px;display:inline-block;margin-right:4px}
+.dots{display:flex;flex-wrap:wrap;gap:2px;margin-bottom:10px}
+.dot{width:13px;height:13px;border-radius:50%;display:inline-block}
+.dot.H{background:#185FA5}
+.dot.T{background:#993C1D}
+.sim-title{font-size:13px;color:var(--color-text-secondary);text-align:center;margin-bottom:6px}
+</style>
+
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;align-items:center">
+  <button class="btn" style="margin-bottom:0" onclick="runSimN(1)">모의실험 x1</button>
+  <button class="btn" style="margin-bottom:0" onclick="runSimN(10)">x10</button>
+  <button class="btn" style="margin-bottom:0" onclick="runSimN(100)">x100</button>
+  <button class="btn" style="margin-bottom:0" onclick="runSimN(1000)">x1000</button>
+  <button class="btn-reset" style="margin-bottom:0" onclick="resetSim()">초기화</button>
+</div>
+<div id="out" style="display:none">
+  <div class="dots" id="dots"></div>
+  <div class="stat" id="stat1"></div>
+  <div class="stat" id="stat2"></div>
+  <br>
+  <div class="legend">
+    <span><span class="lb" style="background:#5DCAA5"></span>데이터</span>
+    <span><span class="lb" style="background:#534AB7"></span>이론</span>
+  </div>
+  <div class="chart-wrap"><canvas id="c1"></canvas></div>
+  <div class="sim-title" id="simTitle"></div>
+  <div class="chart-wrap"><canvas id="c2"></canvas></div>
+</div>
+
+<script src="chart.umd.js"></script>
+<script>
+var N = 200;
+var ch1 = null, ch2 = null;
+var allMaxRuns = [];
+
+function getRuns(a) {
+  if (!a.length) return [];
+  var r = [], cur = a[0], c = 1;
+  for (var i = 1; i < a.length; i++) {
+    if (a[i] === cur) { c++; } else { r.push(c); cur = a[i]; c = 1; }
+  }
+  r.push(c);
+  return r;
+}
+
+function theor(k, n) {
+  if (k < 6) return (n - k + 3) / Math.pow(2, k + 1);
+  var s = 0;
+  for (var j = 6; j <= 40; j++) s += Math.max(0, (n - j + 3) / Math.pow(2, j + 1));
+  return s;
+}
+
+function runSimN(n) {
+  for (var i = 0; i < n; i++) runSim();
+}
+
+function runSim() {
+  var seq = [];
+  for (var i = 0; i < N; i++) seq.push(Math.random() < 0.5 ? 'H' : 'T');
+
+  var runs = getRuns(seq);
+  var mx = Math.max.apply(null, runs);
+  var gte6 = runs.filter(function(r) { return r >= 6; }).length;
+
+  allMaxRuns.push(mx);
+
+  // 점 렌더링
+  var highlight = new Array(N).fill(false);
+  var pos = 0;
+  for (var i = 0; i < runs.length; i++) {
+    if (runs[i] >= 6) for (var k = pos; k < pos + runs[i]; k++) highlight[k] = true;
+    pos += runs[i];
+  }
+  var dotsEl = document.getElementById('dots');
+  dotsEl.innerHTML = '';
+  for (var i = 0; i < N; i++) {
+    var d = document.createElement('span');
+    d.className = 'dot ' + seq[i];
+    d.style.opacity = highlight[i] ? '1' : '0.2';
+    dotsEl.appendChild(d);
+  }
+
+  document.getElementById('stat1').textContent = '런의 최대 길이: ' + mx;
+  document.getElementById('stat2').textContent = '길이가 6 이상인 런의 개수: ' + gte6 + ' (기댓값: 3)';
+
+  // 첫 번째 차트
+  var act = {1:0,2:0,3:0,4:0,5:0,6:0};
+  runs.forEach(function(r) { act[Math.min(r, 6)]++; });
+  var aVals = [1,2,3,4,5,6].map(function(k) { return act[k]; });
+  var tVals = [1,2,3,4,5,6].map(function(k) { return +theor(k, N).toFixed(1); });
+
+  if (ch1) ch1.destroy();
+  ch1 = new Chart(document.getElementById('c1'), {
+    type: 'bar',
+    data: { labels: ['1','2','3','4','5','>=6'], datasets: [
+      { label: '데이터', data: aVals, backgroundColor: '#5DCAA5' },
+      { label: '이론',   data: tVals, backgroundColor: '#534AB7' }
+    ]},
+    options: { responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { title: { display: true, text: '런 길이' } },
+        y: { title: { display: true, text: '빈도' }, beginAtZero: true }
+      }
+    }
+  });
+
+  // 두 번째 차트: 누적 최대 런 분포
+  var total = allMaxRuns.length;
+  var maxVal = Math.max.apply(null, allMaxRuns);
+  var freq = {};
+  allMaxRuns.forEach(function(v) { freq[v] = (freq[v] || 0) + 1; });
+  var labels2 = [];
+  for (var k = 1; k <= maxVal; k++) labels2.push(String(k));
+  var freqData = labels2.map(function(_, i) { return freq[i+1] || 0; });
+  var colors = labels2.map(function(_, i) { return (i+1) <= 5 ? '#E24B4A' : '#378ADD'; });
+
+  var lte5 = allMaxRuns.filter(function(v) { return v <= 5; }).length;
+  document.getElementById('simTitle').textContent =
+    '5 이하 비율 = ' + (lte5/total).toFixed(3) + ' (' + lte5 + '/' + total + ')';
+
+  if (ch2) ch2.destroy();
+  ch2 = new Chart(document.getElementById('c2'), {
+    type: 'bar',
+    data: { labels: labels2, datasets: [{ data: freqData, backgroundColor: colors }] },
+    options: { responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { title: { display: true, text: '최대 런 길이' } },
+        y: { title: { display: true, text: '빈도' }, beginAtZero: true }
+      }
+    }
+  });
+
+  document.getElementById('out').style.display = 'block';
+}
+
+function resetSim() {
+  allMaxRuns = [];
+  document.getElementById('out').style.display = 'none';
+  if (ch1) { ch1.destroy(); ch1 = null; }
+  if (ch2) { ch2.destroy(); ch2 = null; }
+}
+</script>

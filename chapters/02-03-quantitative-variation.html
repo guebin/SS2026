@@ -1,0 +1,2231 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>2.3 양적 변수 한 개: 변동 – 통계적 사고와 사회</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/02-04-outliers-boxplot.html" rel="next">
+<link href="../chapters/02-02-quantitative-center.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-de63f62b328812d8e578a4d74e282472.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-3355e44214f8815af4d3cdb2eb254b3a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating fullcontent quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/02.html">2장. 데이터 기술하기</a></li><li class="breadcrumb-item"><a href="../chapters/02-03-quantitative-variation.html"><span class="chapter-title">2.3 양적 변수 한 개: 변동</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">통계적 사고와 사회</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">통계적 사고와 사회</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">강의 소개</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-01-intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.1. 강의 소개</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-02-thinking.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.2. 통계적 사고란 무엇인가?</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-03-examples.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.3. 통계적 사고 예제</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-04-montyhall.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.4. 몬티 홀 게임</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-05-ppdac.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.5. PPDAC 사이클</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-06-mortality.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.6. 산모 사망률</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-07-cholera.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">I.7. 콜레라와 존 스노우</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../chapters/01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1장. 데이터 수집</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-01-data-structure.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">1.1 데이터의 구조</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-02-sampling.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">1.2 모집단에서 표본 추출</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-03-causality.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">1.3 실험연구와 관측연구</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../chapters/02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2장. 데이터 기술하기</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-01-categorical.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.1 범주형 변수</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-02-quantitative-center.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.2 양적 변수 한 개: 모양과 중심</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-03-quantitative-variation.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">2.3 양적 변수 한 개: 변동</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-04-outliers-boxplot.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.4 이상값과 상자그림</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-05-scatterplot-correlation.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.5 양적 변수 두 개: 산점도와 상관관계</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-06-regression.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.6 양적 변수 두 개: 선형회귀</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-07-multivariate.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2.7 데이터 시각화와 다중 변수</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../chapters/03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3장. 신뢰구간</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-01-sampling-distribution.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3.1 표집 분포</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-02-confidence-intervals.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3.2 신뢰구간에 대한 이해</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-03-bootstrap.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3.3 부트스트랩 신뢰구간</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-04-percentile-bootstrap.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3.4 백분위수에 의한 부트스트랩 신뢰구간</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../chapters/04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4장. 가설검증</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-01-hypothesis-testing.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4.1 가설검증 소개</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-02-p-values.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4.2 p-값</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-03-significance.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4.3 통계적 유의성 판단</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-04-supplement.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4.4 가설검증의 오류</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-05-inference-summary.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4.5 통계적 추론 정리</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">참고자료</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-01-lotto.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">6/45 로또</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-02-numbergame.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">반응시간 게임</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">위젯</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../widgets/spreadsheet.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">스프레드시트</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../widgets/distribution-calculator.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">분포 계산기</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../widgets/r-calculator.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">R 계산기</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../widgets/jupyterlite.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">R/Python 실습</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">데이터</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/AllCountries.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">AllCountries.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/temp.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">April14Temps.csv (temp.csv)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/BaseballSalaries2015.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">BaseballSalaries2015.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/BodyFat.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">BodyFat.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/BodyTemp50.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">BodyTemp50.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/CarDepreciation.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">CarDepreciation.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/CommuteAtlanta.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">CommuteAtlanta.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/CommuteStLouis.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">CommuteStLouis.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/CricketChirps.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">CricketChirps.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/DDS.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">DDS.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/ElectionMargin.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">ElectionMargin.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/ExerciseHours.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">ExerciseHours.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/FloridaLakes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">FloridaLakes.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HappyPlanetIndex.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HappyPlanetIndex.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HeightData.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HeightData.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HollywoodMovies.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HollywoodMovies.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HollywoodMovies2011.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HollywoodMovies2011.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HoneybeeWaggle.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HoneybeeWaggle.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/HouseStarts.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HouseStarts.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/Life.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Life.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/LightatNight.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">LightatNight.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/MalevolentUniformsNFL.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">MalevolentUniformsNFL.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/Mammal2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Mammal2.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/MustangPrice.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">MustangPrice.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/NutritionStudy.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">NutritionStudy.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/RestaurantTips.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">RestaurantTips.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/RetailSales.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">RetailSales.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/StudentSurvey.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">StudentSurvey.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../datasets/USStates.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">USStates.csv</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+ <span class="menu-text">데이터 표(본문 임베드)</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/StudentSurvey.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">StudentSurvey.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/AllCountries.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">AllCountries.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/Life.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Life.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/Mammal2.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Mammal2.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/temp.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">temp.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/ElectionMargin.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">ElectionMargin.csv</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data-views/HoneybeeWaggle.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">HoneybeeWaggle.csv</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/02.html">2장. 데이터 기술하기</a></li><li class="breadcrumb-item"><a href="../chapters/02-03-quantitative-variation.html"><span class="chapter-title">2.3 양적 변수 한 개: 변동</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-2-3" class="quarto-section-identifier"><span class="chapter-title">2.3 양적 변수 한 개: 변동</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<!-- Page 51 -->
+<div class="card">
+<p>앞 절에서 양적 변수에 대한 두 개의 요약 통계량, 평균과 중앙값을 배웠다. 평균과 중앙값은 데이터의 중심이 어디에 있는지 알려준다. 데이터를 요약할 때 데이터의 중심도 중요하지만 데이터가 얼마나 퍼져 있는지도 그에 못지 않게 중요하다.</p>
+<iframe src="../data-views/temp.html" width="100%" height="900" loading="lazy" style="border:1px solid #e3e7ec;border-radius:10px;">
+</iframe>
+</div>
+<div class="card">
+<p><span id="ex-2-15" class="qlabel">예제 2.15.</span> <span class="math inline">\(1995\)</span> 년부터 <span class="math inline">\(21\)</span>년 동안 미국의 두 도시 디모인(Des Moines)과 샌프란시스코(San Francisco)의 <span class="math inline">\(4\)</span>월 <span class="math inline">\(14\)</span>일의 평균 기온 데이터가 위에 표로 주어져 있다. 구글의 스프레드시트를 이용하여 두 도시의 평균과 중앙값을 계산하라.</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p>구글 스프레드시트의 첫 행과 첫 열이 만나는 셀에 다음 수식을 입력한다.</p>
+<pre class="xlcode"><span class="op">=</span><span class="fn">IMPORTDATA</span><span class="pnb">(</span><span class="str">"</span><span class="url">http://www.lock5stat.com/datasets2e/April14Temps.csv</span><span class="str">"</span><span class="pnb">)</span></pre>
+<p>평균 계산은 셀 ‘<code class="inl"><span class="cell">B24</span></code>’에 <code class="inl"><span class="op">=</span><span class="fn">average</span><span class="pnb">(</span><span class="cell">B2:B22</span><span class="pnb">)</span></code>을 입력하고 ’ENTER’ 키를 누른다. 중앙값 계산은 셀 ‘<code class="inl"><span class="cell">B25</span></code>’에 <code class="inl"><span class="op">=</span><span class="fn">median</span><span class="pnb">(</span><span class="cell">B2:B22</span><span class="pnb">)</span></code>을 입력하고 ’ENTER’ 키를 누른다. 유사하게 다른 도시의 평균과 중앙값도 계산할 수 있다.</p>
+<ul>
+<li>디모인: 평균 = <span class="math inline">\(53.952\)</span>, 중앙값 = <span class="math inline">\(54.7\)</span></li>
+<li>샌프란시스코: 평균 = <span class="math inline">\(53.957\)</span>, 중앙값 = <span class="math inline">\(53.8\)</span></li>
+</ul>
+<p><img src="../images/img_49.PNG" class="img-fluid"></p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<section id="표준편차" class="level3">
+<h3 class="anchored" data-anchor-id="표준편차">표준편차</h3>
+<div class="card">
+<p><a href="#ex-2-15">예제 2.15</a>에서 계산한 두 도시의 기온에 대한 평균은 거의 같다고 할 수 있다. 하지만 아래 점도표를 보면 분포는 매우 다르다! 샌프란시스코의 기온은 중심 부근에 가까이 있지만 디모인의 기온은 넓게 퍼져 있다. 디모인의 기온이 샌프란시스코보다 더 큰 변동(variability)을 가진다고 말한다. 데이터에서 변동을 측정하는 통계량이 표준편차(standard deviation)이다. 표준편차는 어떻게 계산할까?</p>
+<p>편차(deviation)는 각 데이터 값 <span class="math inline">\(x\)</span>에서 평균 <span class="math inline">\(\bar{x}\)</span>를 뺀 값 <span class="math inline">\(x - \bar{x}\)</span>이다. 어떤 값은 평균보다 크고 어떤 값은 평균보다 작으므로 편차는 음수 또는 양수이다. 하지만 편차를 모두 더하면 항상 <span class="math inline">\(0\)</span>이 된다.</p>
+<p>표준편차는 모든 편차를 제곱하여 합한 후에 <span class="math inline">\(n-1\)</span>로 나누어 제곱근을 구한 값이다. 표준편차의 단위는 원 데이터의 단위와 같다.</p>
+<p><span class="math display">\[\text{표준편차} = \sqrt{\frac{\sum (x - \bar{x})^2}{n-1}}\]</span></p>
+</div>
+</section>
+<section id="표준편차의-기호" class="level3">
+<h3 class="anchored" data-anchor-id="표준편차의-기호">표준편차의 기호</h3>
+<div class="card">
+<ul>
+<li>표본에서 계산한 표준편차는 <span class="math inline">\(s\)</span>로 표기한다.</li>
+<li>모집단에서 계산한 표준편차는 <span class="math inline">\(\sigma\)</span>(시그마)로 표기한다.</li>
+</ul>
+</div>
+<div class="card">
+<p><img src="../images/img_49.PNG" class="img-fluid"></p>
+</div>
+</section>
+<section id="구글의-스프레드시트로-표준편차-계산" class="level3">
+<h3 class="anchored" data-anchor-id="구글의-스프레드시트로-표준편차-계산">구글의 스프레드시트로 표준편차 계산</h3>
+<div class="card">
+<ul>
+<li><code class="inl"><span class="cell">E</span></code> 열에 디모인 데이터를 복사한다.</li>
+<li><code class="inl"><span class="cell">F2</span></code> 셀에 평균 입력하고 이 셀의 오른쪽 하단의 작은 사각형을 마우스로 잡아 <code class="inl"><span class="cell">F22</span></code> 셀까지 끌어내린다.</li>
+<li><code class="inl"><span class="cell">G</span></code> 열의 <code class="inl"><span class="cell">G2</span></code> 셀에 <code class="inl"><span class="op">=</span><span class="cell">E2</span><span class="op">-</span><span class="cell">F2</span></code> 입력하고 이 셀의 오른쪽 하단의 작은 사각형을 마우스로 <code class="inl"><span class="cell">G22</span></code> 셀까지 끌어내린다.</li>
+<li><code class="inl"><span class="cell">H</span></code> 열의 <code class="inl"><span class="cell">H2</span></code> 셀에 <code class="inl"><span class="op">=</span><span class="cell">G2</span><span class="op">^</span>2</code> 을 입력하고 오른쪽 하단의 작은 사각형을 <code class="inl"><span class="cell">H22</span></code> 셀까지 끌어내린다.</li>
+<li><code class="inl"><span class="cell">G24</span></code> 셀에 <code class="inl"><span class="op">=</span><span class="fn">sum</span><span class="pnb">(</span><span class="cell">G2:G22</span><span class="pnb">)</span></code> 입력</li>
+<li><code class="inl"><span class="cell">G24</span></code> 셀의 오른쪽 하단의 작은 사각형을 <code class="inl"><span class="cell">H24</span></code> 셀까지 마우스로 끌어 당긴다.</li>
+<li><code class="inl"><span class="cell">H25</span></code> 셀에 <code class="inl"><span class="op">=</span><span class="fn">sqrt</span><span class="pnb">(</span><span class="cell">H24</span><span class="op">/</span>20<span class="pnb">)</span></code> 입력</li>
+<li><code class="inl"><span class="cell">H27</span></code> 셀에 <code class="inl"><span class="op">=</span><span class="fn">stdev</span><span class="pnb">(</span><span class="cell">E2:E22</span><span class="pnb">)</span></code> 입력</li>
+</ul>
+<p>간단히 표준편차만 계산하려면 위 모든 과정을 생략하고 마지막 단계만 하면 된다.</p>
+</div>
+<div class="card">
+<p><img src="../images/img_51.PNG" class="img-fluid"></p>
+</div>
+<div class="card">
+<div class="quiz" data-answer="3">
+<p><span class="qlabel">확인문제 1.</span> 다음 중 <strong>표준편차(standard deviation)</strong>에 대한 설명으로 가장 적절한 것은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 모든 데이터 값의 평균을 의미한다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 각 데이터 값과 평균의 차이를 절댓값으로 변환한 값이다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 각 데이터 값에서 평균을 뺀 값을 제곱하여 평균을 구한 후, 제곱근을 취한 값이다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 데이터 값 중에서 가장 큰 값과 가장 작은 값의 차이를 의미한다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="1">
+<p><span class="qlabel">확인문제 2.</span> 다음 중 <strong>표준편차가 작은 데이터</strong>의 특징으로 올바른 것은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 데이터 값들이 평균 주변에 밀집해 있다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 데이터 값들이 넓게 퍼져 있다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 데이터 값들의 변동이 크다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 이상점이 존재할 가능성이 높다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 3.</span> <strong>표본에서 계산한 표준편차</strong>를 나타내는 기호는 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(\sigma\)</span> (시그마)</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(s\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(\mu\)</span> (뮤)</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(\bar{x}\)</span> (엑스바)</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<!-- Page 52 -->
+<div class="card">
+<p><img src="../images/img_52.PNG" class="img-fluid"></p>
+</div>
+<div class="card">
+<p><span id="ex-2-16" class="qlabel">예제 2.16.</span> 디모인과 샌프란시스코의 점도표가 위에 있다.</p>
+<p><span class="qsub">(1)</span> 두 도시 중에 어느 도시의 표준편차가 더 클까? 왜 그렇게 생각하는가?</p>
+<p><span class="qsub">(2)</span> 표준편차를 계산하라.</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p><span class="qsub">(1)</span> 디모인의 데이터가 더 넓은 범위에 퍼져 있으므로 표준편차가 더 클 것이다.</p>
+<p><span class="qsub">(2)</span> 구글 스프레트시트를 사용한다. 반올림하여 소수점 둘째 자리까지 계산하면 디모인의 표준편차 = <span class="math inline">\(11.05\)</span>, 샌프란시스코의 표준편차 = <span class="math inline">\(3.15\)</span> 이다.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+</section>
+<section id="표준편차를-이용한-95-법칙" class="level3">
+<h3 class="anchored" data-anchor-id="표준편차를-이용한-95-법칙">표준편차를 이용한 95% 법칙</h3>
+<div class="card">
+<p>데이터의 분포가 대략 대칭이고 종모양이면 데이터의 약 <span class="math inline">\(95\%\)</span>는 평균에서 두 배의 표준편차 안에 있다. 대칭이고 종모양인 분포에서 뽑은 표본 중에서 약 <span class="math inline">\(95\%\)</span> 데이터는 구간 (<span class="math inline">\(\bar{x} - 2s\)</span>, <span class="math inline">\(\bar{x} + 2s\)</span>) 안에 있다. 아래 그림을 참조하라.</p>
+</div>
+<div class="card">
+<p><img src="../images/img_53.PNG" class="img-fluid"></p>
+</div>
+<div class="card">
+<p><span id="ex-2-17" class="qlabel">예제 2.17.</span> 대학생 설문조사에서 <span class="math inline">\(1\)</span>분당 맥박수의 히스토그램이 아래에 있다. 분포는 대략 좌우 대칭이고 종모양이다. 평균 <span class="math inline">\(\bar{x} = 69.6\)</span>이고 표준편차 <span class="math inline">\(s = 12.2\)</span>이다. 대략 <span class="math inline">\(95\%\)</span> 맥박수 데이터를 포함하는 구간은 무엇인가?</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p>분포가 대략 좌우 대칭이고 종모양이면 평균에서 두 배의 표준편차 안에 전체 데이터의 약 <span class="math inline">\(95\%\)</span>를 포함한다.</p>
+<p><span class="math display">\[\bar{x} \pm 2s\]</span></p>
+<p><span class="math display">\[69.6 \pm 2(12.2)\]</span></p>
+<p><span class="math display">\[69.6 \pm 24.4\]</span></p>
+<p><span class="math display">\[69.6 - 24.4 = 45.2 \quad \text{and} \quad 69.6 + 24.4 = 94.0\]</span></p>
+<p>약 <span class="math inline">\(95\%\)</span> 맥박수는 구간 (<span class="math inline">\(45.2\)</span>, <span class="math inline">\(94.0\)</span>) 안에 있다.</p>
+<p><img src="../images/img_54.PNG" class="img-fluid"></p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="1">
+<p><span class="qlabel">확인문제 1.</span> 데이터의 분포를 요약하는 데 사용되는 두 가지 주요 통계량은 무엇인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 평균과 표준편차</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 평균과 중앙값</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 중앙값과 최빈값</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 최빈값과 범위</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 2.</span> 다음 중 표준편차가 큰 데이터의 특징으로 올바른 것은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 데이터 값들이 평균 주변에 밀집해 있다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 데이터 값들이 넓은 범위에 걸쳐 퍼져 있다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 데이터 값들이 대부분 동일하다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 데이터 값들이 이상값 없이 정규분포를 따른다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="3">
+<p><span class="qlabel">확인문제 3.</span> 평균과 표준편차를 이용하여 <span class="math inline">\(95\%\)</span> 법칙을 적용할 수 있는 데이터 분포의 조건으로 적절한 것은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 오른쪽으로 긴 꼬리를 가진 분포</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 왼쪽으로 긴 꼬리를 가진 분포</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 좌우 대칭이며 종모양인 분포</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 이상값이 많은 분포</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<!-- Page 53 -->
+<div class="card">
+<p><span id="data-2-4" class="qlabel">데이터 2.4.</span> <strong>소매점 매출액</strong></p>
+<p><span class="math inline">\(2000\)</span>년 <span class="math inline">\(1\)</span>월부터 <span class="math inline">\(2011\)</span>년 <span class="math inline">\(4\)</span>월까지 소매점 매출액 데이터를 웹주소 <a href="http://www.lock5stat.com/datasets2e/RetailSales.csv">RetailSales</a>에서 얻을 수 있다. 단위는 <span class="math inline">\(10\)</span>억 달러이다</p>
+</div>
+<div class="card">
+<p><span id="ex-2-18" class="qlabel">예제 2.18.</span> 소매점 매출액 자료를 히스토그램으로 그린 것이 아래에 있다. 이 분포는 대략 대칭이고 종모양인가? 히스토그램을 이용하여 근사적인 평균과 표준편차를 계산하라.</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p>이 히스토그램은 대략 좌우 대칭이고 종모양이라고 할 수 있다. 평균은 <span class="math inline">\(300\)</span>으로 보인다. 표준편차를 추정하기 위하여 <span class="math inline">\(95\%\)</span>의 데이터를 포함하는 중심이 평균인 구간은 (<span class="math inline">\(225\)</span>, <span class="math inline">\(375\)</span>) 인것 같다. 구간의 양쪽 끝은 평균 <span class="math inline">\(300\)</span>에서 <span class="math inline">\(75\)</span> 단위만큼 떨어져 있다. <span class="math inline">\(95\%\)</span> 법칙에서 표준편차의 두 배가 <span class="math inline">\(75\)</span>이므로 표준편차는 대략 <span class="math inline">\(37.5\)</span>이다. 모든 데이터를 사용하여 구글 스프레드시트로 계산하면 평균=<span class="math inline">\(296.4\)</span>, 표준편차=<span class="math inline">\(38.0\)</span> 이다.</p>
+<p><img src="../images/img_55.PNG" class="img-fluid"></p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<p><span id="prob-2-1" class="qlabel">문제 2.1.</span> 아래에 <span class="math inline">\(3\)</span>개의 히스토그램이 있다. 표준편차가 가장 작은 히스토그램은?</p>
+<div class="choices">
+<p><span class="cnum">1</span> A</p>
+<p><span class="cnum">2</span> B</p>
+<p><span class="cnum">3</span> C</p>
+</div>
+<p><img src="../images/img_56.PNG" class="img-fluid"></p>
+</div>
+<div class="card">
+<p><span id="prob-2-2" class="qlabel">문제 2.2.</span> 당신의 데이터에 나머지보다 상당히 작은 값을 가진 데이터가 하나 있다. 이 값은 표준편차에 어떤 영향을 끼칠까?</p>
+<div class="choices">
+<p><span class="cnum">1</span> 표준편차를 크게 할 것이다.</p>
+<p><span class="cnum">2</span> 표준편차를 작게 할 것이다.</p>
+<p><span class="cnum">3</span> 표준편차는 거의 변하지 않을 것이다.</p>
+<p><span class="cnum">4</span> 표준편차는 커질 수도 있고 작아질 수도 있다.</p>
+</div>
+</div>
+<!-- Page 54 -->
+</section>
+<section id="z-점수" class="level3">
+<h3 class="anchored" data-anchor-id="z-점수"><span class="math inline">\(z\)</span>-점수</h3>
+<div class="card">
+<p>의사는 수축기 혈압이 <span class="math inline">\(200\)</span>인 환자를 보았다. 이 데이터는 얼마나 흔치 않은 값인가? 분포의 중심이나 변동을 모르면 데이터 하나의 값을 알아도 쓸모가 없는 경우가 있다. 데이터 하나의 값이 얼마나 흔치 않은 것인지를 결정할 때 자주 사용하는 방법은 평균으로부터 표준편차의 몇 배만큼 떨어져 있는가를 계산하는 것이다. 이 값을 <span class="math inline">\(z\)</span>-점수라고 부른다.</p>
+<p>표본에서 평균이 <span class="math inline">\(\bar{x}\)</span>, 표준편차가 <span class="math inline">\(s\)</span>일 때 <span class="math inline">\(z\)</span>-점수는 다음과 같이 계산한다.</p>
+<p><span class="math display">\[z = \frac{x - \bar{x}}{s}\]</span></p>
+<p>모집단인 경우에는 <span class="math inline">\(\bar{x}\)</span> 대신에 <span class="math inline">\(\mu\)</span>, <span class="math inline">\(s\)</span> 대신에 <span class="math inline">\(\sigma\)</span>를 사용하여 <span class="math inline">\(z\)</span>-점수를 계산한다. <span class="math inline">\(z\)</span>-점수는 평균으로부터 표준편차 단위로 얼마나 떨어져 있는지 측정하므로 데이터의 원 단위와 무관하다.</p>
+<p>데이터의 분포가 대칭이고 종모양이면 데이터의 약 <span class="math inline">\(95\%\)</span>는 평균으로부터 두 배의 표준편차 범위 안에 있다고 앞에서 배웠다. 이것은 데이터의 약 <span class="math inline">\(5\%\)</span>는 <span class="math inline">\(z\)</span>-점수가 <span class="math inline">\(\pm 2\)</span>를 벗어난다는 의미이다.</p>
+</div>
+<div class="card">
+<p><span id="ex-2-19" class="qlabel">예제 2.19.</span> 집중 치료실에 입원한 환자의 혈압은 <span class="math inline">\(204\)</span>로 높고, 분당 맥박수는 <span class="math inline">\(52\)</span>로 낮다. 이 값을 다른 환자와 비교할 때 얼마나 흔치 않은 값일까? 혈압의 요약 통계량은 평균이 <span class="math inline">\(132.2\)</span>, 표준편차는 <span class="math inline">\(32.95\)</span>이다. 맥박수는 평균이 <span class="math inline">\(98.9\)</span>, 표준편차는 <span class="math inline">\(26.83\)</span>이다.</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p>혈압과 맥박수의 <span class="math inline">\(z\)</span>-점수를 계산한다. 혈압의 <span class="math inline">\(z\)</span>-점수는</p>
+<p><span class="math display">\[z = \frac{x - \bar{x}}{s} = \frac{204 - 132.2}{32.95} = 2.18\]</span></p>
+<p>이다. 혈압은 표본의 평균 혈압에서 <span class="math inline">\(2\)</span>배의 표준편차보다 약간 높다.</p>
+<p>맥박수의 <span class="math inline">\(z\)</span>-점수는</p>
+<p><span class="math display">\[z = \frac{x - \bar{x}}{s} = \frac{52 - 98.9}{26.83} = -1.75\]</span></p>
+<p>이다.</p>
+<p>맥박수는 표본의 평균 맥박수에서 <span class="math inline">\(2\)</span>배의 표준편차보다 낮지 않다. 혈압 높은 것이 맥박수 낮은 것보다 더 흔치 않은 일이라고 말할 수 있다.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 1.</span> <span class="math inline">\(z\)</span>-점수의 의미를 가장 올바르게 설명한 것은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 특정 데이터 값이 평균과 얼마나 가까운지를 측정하는 값이다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 데이터 값이 평균에서 표준편차 단위로 얼마나 떨어져 있는지를 측정하는 값이다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 특정 데이터 값이 모집단 평균과 얼마나 차이가 나는지를 백분율로 나타낸 값이다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 특정 데이터 값이 표본 내에서 가장 빈번하게 나타나는지를 확인하는 값이다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 2.</span> 어떤 데이터 값의 <span class="math inline">\(z\)</span>-점수가 <strong>-<span class="math inline">\(2.5\)</span></strong>라면 이 값이 의미하는 것은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 평균보다 <span class="math inline">\(2.5\)</span>배 큰 값이다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 평균보다 <span class="math inline">\(2.5\)</span>개의 표준편차만큼 작은 값이다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 평균과 동일한 값이다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 데이터 값이 모집단의 중앙값과 동일한 값을 가진다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="3">
+<p><span class="qlabel">확인문제 3.</span> 평균이 <span class="math inline">\(50\)</span>이고 표준편차가 <span class="math inline">\(10\)</span>인 데이터 집합에서 <strong><span class="math inline">\(z\)</span>-점수가 <span class="math inline">\(1.5\)</span></strong>인 데이터 값은 얼마인가?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(35\)</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(50\)</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(65\)</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(75\)</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<!-- Page 55 -->
+</section>
+<section id="백분위수" class="level3">
+<h3 class="anchored" data-anchor-id="백분위수">백분위수</h3>
+<div class="card">
+<p>분포에 대한 정보를 다른 방식으로 만들어보자. 미국에서 SAT는 고등학교&nbsp; 학생이 몇 번이나 치를 수 있는 시험으로 대학 입학&nbsp;결정에 사용되기도 한다. SAT 시험 영역은 읽기, 수학, 작문이다. 각 영역의 점수는 <span class="math inline">\(200\)</span>~<span class="math inline">\(800\)</span>이고 평균은 <span class="math inline">\(500\)</span>점이 되도록 시험 문제를 출제한다. <span class="math inline">\(2010\)</span>년에 졸업한 학생의 경우 읽기&nbsp;평균은 <span class="math inline">\(501\)</span>점, 수학&nbsp;평균은 <span class="math inline">\(516\)</span>점, 작문의 평균은 <span class="math inline">\(492\)</span>점이었다.</p>
+<p>시험을 치른 학생은 백분위수(percentile)가 기재된 성적표를 받는다. <span class="math inline">\(2010\)</span>년의 경우 읽기 점수 <span class="math inline">\(620\)</span>점은 <span class="math inline">\(84\)</span>&nbsp;백분위수이다. 이것은 <span class="math inline">\(2010\)</span>년에 시험을 치른&nbsp;<span class="math inline">\(84\%\)</span> 학생의 읽기 점수는 <span class="math inline">\(620\)</span>점과 같거나 작다는 뜻이다. 수학의 <span class="math inline">\(20\)</span>&nbsp;백분위수는 <span class="math inline">\(420\)</span>점이다. <span class="math inline">\(20\%\)</span>의 학생의 수학 점수는&nbsp;<span class="math inline">\(420\)</span>점과 같거나 작다는 의미이다.</p>
+</div>
+<div class="card">
+<p><img src="../images/img_57.PNG" class="img-fluid"></p>
+</div>
+<div class="card">
+<p><span id="ex-2-20" class="qlabel">예제 2.20.</span> 미국에서 S&amp;P500 지수는 <span class="math inline">\(500\)</span>개 회사의 주식으로 만든 주가 지수이다. 위 그래프는 <span class="math inline">\(2010\)</span>년 S&amp;P500 지수를 히스토그램으로 그린 것이다. 이 그래프를 사용하여 대략적으로 <span class="math inline">\(25\)</span> 백분위수와 <span class="math inline">\(90\)</span> 백분위수를 추정하라.</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p><span class="math inline">\(25\)</span> 백분위수와 같거나 작은 값이 전체의 <span class="math inline">\(1/4\)</span>이어야 한다. 위 히스토그램에서 왼쪽의 면적이 전체의 <span class="math inline">\(1/4\)</span>이 되는 값을 찾으면 약 <span class="math inline">\(1100\)</span>이다. 정확한 값보다는 간단히 백분위수를 추정할 수 있는 능력이 중요하다. <span class="math inline">\(90\)</span> 백분위수는 히스토그램의 오른쪽 면적이 <span class="math inline">\(10\%\)</span> 되는 값이다. 이 값은 대략 <span class="math inline">\(1220\)</span>이다.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 1.</span> 백분위수(percentile)에 대한 설명으로 가장 적절한 것은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 백분위수는 평균과 중앙값을 더한 값의 절반을 의미한다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 특정 값이 데이터 집합 내에서 차지하는 상대적 위치를 나타내는 지표이다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 백분위수가 높을수록 반드시 평균보다 높은 값을 의미한다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 백분위수는 모든 데이터 값이 정규분포를 따를 때만 사용할 수 있다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 2.</span> SAT 시험에서 읽기 점수 <strong><span class="math inline">\(700\)</span>점</strong>이 <strong><span class="math inline">\(95\)</span> 백분위수</strong>라고 한다면, 이 값이 의미하는 것은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 시험을 본 학생 중 <span class="math inline">\(95\%\)</span>가 <span class="math inline">\(700\)</span>점보다 높은 점수를 받았다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 시험을 본 학생 중 <span class="math inline">\(95\%\)</span>가 <span class="math inline">\(700\)</span>점 이하의 점수를 받았다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 평균 점수가 <span class="math inline">\(700\)</span>점임을 의미한다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(700\)</span>점은 전체 데이터 중 중앙값과 같다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 3.</span> S&amp;P500 지수 데이터에서 <strong><span class="math inline">\(25\)</span> 백분위수가 <span class="math inline">\(1100\)</span></strong>이고 <strong><span class="math inline">\(90\)</span> 백분위수가 <span class="math inline">\(1220\)</span></strong>이라면, 다음 중 올바른 해석은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 전체 데이터 중 <span class="math inline">\(25\%\)</span>가 <span class="math inline">\(1100\)</span> 이상이다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(90\%\)</span>의 데이터 값이 <span class="math inline">\(1220\)</span>보다 작거나 같다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(25\%\)</span>의 데이터 값이 <span class="math inline">\(1100\)</span>보다 크다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(1220\)</span>은 중앙값을 의미한다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<!-- Page 56 -->
+</section>
+<section id="다섯-숫자-요약" class="level3">
+<h3 class="anchored" data-anchor-id="다섯-숫자-요약">다섯 숫자 요약</h3>
+<div class="card">
+<p>데이터 집합에서 최솟값(minimum)과 최댓값(maximum)은 분포의 양쪽 극단값이다. 중앙값은 <span class="math inline">\(50\)</span>&nbsp;백분위수인데 데이터를 <span class="math inline">\(2\)</span>등분하는 값이다. <span class="math inline">\(2\)</span>등분된 데이터를 다시 <span class="math inline">\(2\)</span>등분하는 값을 각각 제1사분위수(<span class="math inline">\(Q_1\)</span>),&nbsp;제3사분위수(<span class="math inline">\(Q_3\)</span>)라고 말한다.&nbsp;제1사분위수는 <span class="math inline">\(25\)</span>&nbsp;백분위수이고&nbsp;제3사분위수는 <span class="math inline">\(75\)</span>&nbsp;백분위수이다. <span class="math inline">\(5\)</span>개의 숫자(최솟값, 제1사분위수,&nbsp;중앙값, 제3사분위수,&nbsp;최댓값)는 분포의 중요한 특징을 요약한다.</p>
+</div>
+<div class="card">
+<p><span id="ex-2-21" class="qlabel">예제 2.21.</span> 학생 설문조사에서 <span class="math inline">\(1\)</span>주일의 운동 시간에 대한 다섯 숫자 요약은 (<span class="math inline">\(0\)</span>, <span class="math inline">\(5\)</span>, <span class="math inline">\(8\)</span>, <span class="math inline">\(12\)</span>, <span class="math inline">\(40\)</span>) 이다. 이것은 학생의 운동 시간 양에 대하여 무엇을 말하는지 설명하라.</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p>모든 학생의 운동 시간은 <span class="math inline">\(0\)</span>에서 <span class="math inline">\(40\)</span> 사이이다. 가장 적게 운동하는 <span class="math inline">\(25\%\)</span>의 학생은 <span class="math inline">\(1\)</span>주일에 <span class="math inline">\(0\)</span>에서 <span class="math inline">\(5\)</span>시간 사이 운동한다. 그리고 가장 많이 운동하는 <span class="math inline">\(25\%\)</span>의 학생은 <span class="math inline">\(1\)</span>주일에 <span class="math inline">\(12\)</span>시간에서 <span class="math inline">\(40\)</span>시간 사이 운동한다. 가운데 <span class="math inline">\(50\%\)</span> 학생은 <span class="math inline">\(5\)</span>에서 <span class="math inline">\(12\)</span>시간 사이 운동한다. 절반은 <span class="math inline">\(1\)</span>주일에 <span class="math inline">\(8\)</span>시간 이하 운동하고 나머지 절반은 <span class="math inline">\(8\)</span>시간 이상 운동한다.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+</section>
+<section id="범위와-사분위수범위" class="level3">
+<h3 class="anchored" data-anchor-id="범위와-사분위수범위">범위와 사분위수범위</h3>
+<div class="card">
+<p>다섯 숫자 요약은 데이터의 변동을 범위(range)와 사분위수범위(interquartile range, IQR)로 요약하게 해준다. 범위는 최댓값에서 최솟값을 뺀 값이다. 사분위수범위는&nbsp;제3사분위수(<span class="math inline">\(Q_3\)</span>)에서&nbsp;제1사분위수(<span class="math inline">\(Q_1\)</span>)를 뺀 값이다.</p>
+</div>
+<div class="card">
+<p><span id="ex-2-22" class="qlabel">예제 2.22.</span> 앞에서 소개한 포유동물의 수명 데이터의 다섯 숫자 요약은 (<span class="math inline">\(1\)</span>, <span class="math inline">\(8\)</span>, <span class="math inline">\(12\)</span>, <span class="math inline">\(16\)</span>, <span class="math inline">\(40\)</span>) 이다. 범위와 사분위수범위는 무엇인가?</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p>범위는 <span class="math inline">\(40 - 1 = 39\)</span> 이다. 사분위수범위는 <span class="math inline">\(16 - 8 = 8\)</span> 이다.</p>
+<p>위에서 계산한 범위와&nbsp;사분위수범위는 구간이 아니고 숫자 하나임에 주의하라. 또한 코끼리(수명 <span class="math inline">\(40\)</span>년) 데이터를 제외하면 범위는 <span class="math inline">\(25 - 1 = 24\)</span> 로 급격히 줄어든다. 하지만&nbsp;사분위수범위는 <span class="math inline">\(15 - 8 = 7\)</span> 이므로 <span class="math inline">\(1\)</span>년 밖에 줄어들지 않는다. 범위보다는&nbsp;사분위수범위가&nbsp;이상점의 영향을 덜 받는다.</p>
+<iframe src="../data-views/temp.html" width="100%" height="900" loading="lazy" style="border:1px solid #e3e7ec;border-radius:10px;">
+</iframe>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<p><span id="ex-2-23" class="qlabel">예제 2.23.</span> 위 테이블은 <a href="#ex-2-15">예제 2.15</a>에서 사용한 디모인 시와 샌프란시스코 시의 기온에 관한 데이터이다. 각 도시 기온의 범위와 사분위수범위를 계산하고 비교하라. 데이터 웹 주소는 <a href="http://www.lock5stat.com/datasets2e/April14Temps.csv">April14Temps</a> 이다.</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p>구글의 스프레드시트 앱을 시작한다. <code class="inl"><span class="cell">A1</span></code> 셀에 다음 수식을 입력한다.</p>
+<pre class="xlcode"><span class="op">=</span><span class="fn">importdata</span><span class="pnb">(</span><span class="str">"</span><span class="url">http://www.lock5stat.com/datasets2e/April14Temps.csv</span><span class="str">"</span><span class="pnb">)</span></pre>
+<ul>
+<li><p><code class="inl"><span class="cell">B24</span></code> 셀에 <code class="inl"><span class="op">=</span><span class="fn">min</span><span class="pnb">(</span><span class="cell">B2:B22</span><span class="pnb">)</span></code> 입력하여 최솟값&nbsp;계산</p></li>
+<li><p><code class="inl"><span class="cell">B25</span></code> 셀에 <code class="inl"><span class="op">=</span><span class="fn">percentile</span><span class="pnb">(</span><span class="cell">B2:B22</span>, 0.25<span class="pnb">)</span></code> 입력하여 제1사분위수&nbsp;계산</p></li>
+<li><p><code class="inl"><span class="cell">B26</span></code> 셀에&nbsp;<code class="inl"><span class="op">=</span><span class="fn">median</span><span class="pnb">(</span><span class="cell">B2:B22</span><span class="pnb">)</span></code> 또는&nbsp;<code class="inl"><span class="op">=</span><span class="fn">percentile</span><span class="pnb">(</span><span class="cell">B2:B22</span>, 0.5<span class="pnb">)</span></code> 입력하여 중앙값&nbsp;계산</p></li>
+<li><p><code class="inl"><span class="cell">B27</span></code> 셀에 <code class="inl"><span class="op">=</span><span class="fn">percentile</span><span class="pnb">(</span><span class="cell">B2:B22</span>, 0.75<span class="pnb">)</span></code> 입력하여 제3사분위수&nbsp;계산</p></li>
+<li><p><code class="inl"><span class="cell">B28</span></code> 셀에 <code class="inl"><span class="op">=</span><span class="fn">max</span><span class="pnb">(</span><span class="cell">B2:B22</span><span class="pnb">)</span></code> 입력하여 최댓값&nbsp;계산</p></li>
+<li><p><code class="inl"><span class="cell">B30</span></code> 셀에 <code class="inl"><span class="op">=</span><span class="cell">B28</span><span class="op">-</span><span class="cell">B24</span></code> 입력하여 범위&nbsp;계산</p></li>
+<li><p><code class="inl"><span class="cell">B31</span></code> 셀에 <code class="inl"><span class="op">=</span><span class="cell">B27</span><span class="op">-</span><span class="cell">B25</span></code> 입력하여 사분위수범위&nbsp;계산</p></li>
+<li><p>마우스로 <code class="inl"><span class="cell">B24</span></code> 셀부터 <code class="inl"><span class="cell">B31</span></code> 셀까지 선택하여 오른쪽&nbsp;하단 사각형을 <code class="inl"><span class="cell">C31</span></code> 셀까지 끌어당겨 샌프란시스코의 통계량 값을 모두 계산한다.</p></li>
+<li><p>디모인 시의 범위: <span class="math inline">\(74.9 - 35.7 = 39.2\)</span></p></li>
+<li><p>샌프란시스코의 범위: <span class="math inline">\(61 - 48.7 = 12.3\)</span></p></li>
+<li><p>디모인 시의 <span class="math inline">\(IQR\)</span>: <span class="math inline">\(59.2 - 44.4 = 14.8\)</span></p></li>
+<li><p>샌프란시스코의 <span class="math inline">\(IQR\)</span>: <span class="math inline">\(55.8 - 51.4 = 4.4\)</span></p></li>
+</ul>
+<p>범위와 사분위수범위는&nbsp;디모인이&nbsp;샌프란시스코보다 훨씬 더 크다. 이는 디모인의 기온이&nbsp;샌프란시스코보다&nbsp;변동이 더 크다는 것을 의미한다.</p>
+<p><img src="../images/img_58.PNG" class="img-fluid"></p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="3">
+<p><span class="qlabel">확인문제 1.</span> 다섯 숫자 요약(five-number summary)에 포함되지 않는 값은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 최솟값 (Minimum)</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 제1사분위수 (<code class="inl"><span class="cell">Q1</span></code>)</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 평균 (Mean)</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 제3사분위수 (<code class="inl"><span class="cell">Q3</span></code>)</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 2.</span> 다음 중 사분위수범위(IQR)를 올바르게 설명한 것은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 최댓값에서 최솟값을 뺀 값이다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 제3사분위수(<code class="inl"><span class="cell">Q3</span></code>)에서 제1사분위수(<code class="inl"><span class="cell">Q1</span></code>)를 뺀 값이다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 평균에서 중앙값을 뺀 값이다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 다섯 숫자 요약 값들의 평균을 의미한다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="3">
+<p><span class="qlabel">확인문제 3.</span> 범위(Range)와 사분위수범위(IQR)에 대한 설명으로 옳은 것은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 범위는 이상점(outlier)의 영향을 덜 받는다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> IQR은 데이터의 전체 변동성을 측정하는 가장 좋은 방법이다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> IQR은 이상점의 영향을 덜 받는 데이터 변동성 측도이다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 범위와 IQR은 항상 동일한 값을 가진다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<!-- Page 57 -->
+</section>
+<section id="중심과-변동에-대한-측도-선택" class="level3">
+<h3 class="anchored" data-anchor-id="중심과-변동에-대한-측도-선택">중심과 변동에 대한 측도 선택</h3>
+<div class="card">
+<p>표준편차는 데이터가 평균에서 얼마나 떨어져 있는가를 측정한다. 따라서 평균을 중심의 측도로 사용할 때는 표준편차를 변동의 측도로 사용하는 것이 타당하다. 평균과 표준편차는 모든 데이터를 사용한다는 장점이 있다. 하지만 이상점의 영향을 크게 받는다는 단점도 있다. 이에 비하면 중앙값과 사분위수범위는 이상점의 영향을 거의 받지 않는다.</p>
+<p>데이타에 이상점들이 있거나 분포가 비대칭이 심하여 한쪽 꼬리가 길 때는 다섯 숫자 요약이 평균과 표준편차보다 더 많은 정보를 준다.</p>
+</div>
+<div class="card">
+<p><span id="ex-2-24" class="qlabel">예제 2.24.</span> <a href="#ex-2-13">예제 2.13</a>은 미국의 미식 축구 연봉 데이터를 다루었다. 몇 명의 스타 플레이어는 다른 선수들과 비교할 때 아주 많은 연봉을 받는다.</p>
+<p><span class="qsub">(1)</span> 선수가 선호하는 중심의 측도는 이상점의 영향을 거의 받지 않는 중앙값(<span class="math inline">\(\$838,000\)</span>)이다. 선수가 선호하는 변동의 측도는 무엇인가?</p>
+<p><span class="qsub">(2)</span> 팀 구단주가 선호하는 중심의 측도는 모든 선수의 연봉에 기초한 평균(<span class="math inline">\(\$1,870,000\)</span>)이다. 구단주가 선호하는 변동의 측도는 무엇인가?</p>
+</div>
+<div class="card sol-card">
+<div class="sol-head">
+<p><span class="qsol">풀이</span> <span style="color:#6b7480;font-size:.85em;">(클릭하면 풀이가 보입니다)</span></p>
+</div>
+<div class="sol-body">
+<p><span class="qsub">(1)</span> 변동의 측도로 사분위수범위를 사용해야 한다. 중앙값과 사분위수범위는 이상점의 영향을 거의 받지 않는다.</p>
+<p><span class="qsub">(2)</span> 변동의 측도로 표준편차를 사용해야 한다. 평균과 표준편차는 모든 데이터를 사용하여 계산한다.</p>
+</div>
+<div class="sol-overlay">
+<p><span class="sol-btn">👁 풀이 보기</span></p>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 1.</span> 다음 중 평균과 표준편차를 중심과 변동의 측도로 사용하는 것이 적절한 경우는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 데이터에 이상점이 많고 한쪽 꼬리가 긴 분포일 때</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 데이터가 좌우 대칭이고 종모양 분포를 따를 때</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 데이터의 크기가 작고 변동이 거의 없을 때</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 데이터가 범주형 변수로 이루어져 있을 때</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="3">
+<p><span class="qlabel">확인문제 2.</span> 이상점의 영향을 적게 받는 중심과 변동의 측도 조합으로 적절한 것은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 평균과 표준편차</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 중앙값과 표준편차</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 중앙값과 사분위수범위(IQR)</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 최댓값과 최솟값</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="1">
+<p><span class="qlabel">확인문제 3.</span> 기업의 연봉 데이터를 분석할 때, 팀 구단주와 선수의 선호하는 통계량이 다른 이유는?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 팀 구단주는 모든 선수의 연봉을 고려하므로 평균을 선호하고, 선수는 전체 분포에서 자신의 위치를 고려하므로 중앙값을 선호한다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 선수는 연봉이 많을수록 유리하기 때문에 항상 평균을 선호한다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 구단주는 변동이 작은 연봉을 원하기 때문에 표준편차보다 사분위수범위를 선호한다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 중앙값과 평균은 항상 같은 값이므로 선택의 차이가 없다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<!-- Page 58 -->
+</section>
+<section id="학습-내용-정리" class="level3">
+<h3 class="anchored" data-anchor-id="학습-내용-정리">학습 내용 정리</h3>
+<div class="card">
+<p>다음 사항을 이해하거나 해결하는 능력이 있어야 한다.</p>
+<ul>
+<li>컴퓨터를 사용하여 양적 변수의 요약 통계량을 계산할 수 있다.</li>
+<li>표준편차가 무엇인지 알고 있다.</li>
+<li><span class="math inline">\(z\)</span>-점수의 의미를 이해하고 계산할 수 있다.</li>
+<li>다섯 숫자 요약과 백분위수를 이해한다.</li>
+<li>변동의 측도로 사용하는 통계량은 범위, 사분위수범위, 표준편차 등이다.</li>
+<li>중심과 변동의 측도로 사용되는 통계량의 장단점이 무엇인지 알고 있다.</li>
+</ul>
+</div>
+<section id="표준편차standard-deviation" class="level4">
+<h4 class="anchored" data-anchor-id="표준편차standard-deviation">표준편차(standard deviation)</h4>
+<div class="card">
+<p>표본에서 양적 변수의 변동을 측정하는 표준편차는 다음과 같이 계산한다.</p>
+<p><span class="math display">\[\text{표준편차} = \sqrt{\frac{\sum (x - \bar{x})^2}{n-1}}\]</span></p>
+<p>표준편차는 데이터와 평균과의 거리를 근사적으로 추정한 값이다. 표준편차가 클수록 데이터에는 더 많은 변동이 있고 데이터는 더 넓은 범위에 퍼져 있다는 것을 의미한다.</p>
+<p>표본에서 표준편차의 기호는 <span class="math inline">\(s\)</span>이고 데이터가 표본 평균 <span class="math inline">\(\bar{x}\)</span>에서 얼마나 퍼져 있는지 측정한다.</p>
+<p>모집단에서 표준편차의 기호는 <span class="math inline">\(\sigma\)</span>(시그마)이다. 데이터가 모집단 평균 <span class="math inline">\(\mu\)</span>에서 얼마나 퍼져 있는지 측정한다.</p>
+</div>
+</section>
+<section id="표준편차를-이용한-95-법칙-1" class="level4">
+<h4 class="anchored" data-anchor-id="표준편차를-이용한-95-법칙-1">표준편차를 이용한 95% 법칙</h4>
+<div class="card">
+<p>데이터의 분포가 대략 좌우 대칭이고 종모양이면 약 <span class="math inline">\(95\%\)</span>의 데이터는 평균에서 <span class="math inline">\(2\)</span>배의 표준편차 범위 안에 있다. 종모양 분포에서 얻은 표본인 경우에 약 <span class="math inline">\(95\%\)</span> 데이터는 구간 (<span class="math inline">\(\bar{x} - 2s\)</span>, <span class="math inline">\(\bar{x} + 2s\)</span>) 안에 있다.</p>
+</div>
+</section>
+<section id="z-점수-1" class="level4">
+<h4 class="anchored" data-anchor-id="z-점수-1"><span class="math inline">\(z\)</span>-점수</h4>
+<div class="card">
+<p>표본에서 <span class="math inline">\(z\)</span>-점수는 평균이 <span class="math inline">\(\bar{x}\)</span>, 표준편차가 <span class="math inline">\(s\)</span>일 때</p>
+<p><span class="math display">\[z = \frac{x - \bar{x}}{s}\]</span></p>
+<p>이다.</p>
+<p>모집단에서 <span class="math inline">\(z\)</span>-점수는 평균이 <span class="math inline">\(\mu\)</span>, 표준편차가 <span class="math inline">\(\sigma\)</span>일 때</p>
+<p><span class="math display">\[z = \frac{x - \mu}{\sigma}\]</span></p>
+<p>이다.</p>
+<p><span class="math inline">\(z\)</span>-점수는 데이터가 평균에서 얼마나 떨어져 있는가를 표준편차 단위로 알려주며 데이터의 원 단위와는 관계가 없다.</p>
+</div>
+</section>
+<section id="다섯-숫자-요약-1" class="level4">
+<h4 class="anchored" data-anchor-id="다섯-숫자-요약-1">다섯 숫자 요약</h4>
+<div class="card">
+<p>다섯 숫자 요약은 최솟값, 제1사분위수(<span class="math inline">\(25\)</span> 백분위수), 중앙값, 제3사분위수(<span class="math inline">\(75\)</span> 백분위수), 최댓값이다. 데이터를 크기 순으로 늘어 놓고 <span class="math inline">\(4\)</span>등분한 <span class="math inline">\(5\)</span>개의 숫자이다.</p>
+</div>
+</section>
+<section id="범위와-사분위수범위-1" class="level4">
+<h4 class="anchored" data-anchor-id="범위와-사분위수범위-1">범위와 사분위수범위</h4>
+<div class="card">
+<p>범위는 최댓값에서 최솟값을 뺀 값이다. 사분위수범위는 제3사분위수(<span class="math inline">\(75\)</span> 백분위수)에서 제1사분위수(<span class="math inline">\(25\)</span> 백분위수)를 뺀 값이다.</p>
+</div>
+<div class="card">
+<div class="quiz" data-answer="3">
+<p><span class="qlabel">확인문제 1.</span> 다음 중 <strong>표준편차</strong>에 대한 설명으로 올바른 것은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 표준편차가 크면 데이터가 평균 근처에 집중되어 있다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 표준편차는 이상점의 영향을 거의 받지 않는다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 표준편차는 데이터가 평균에서 얼마나 떨어져 있는지를 측정하는 값이다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 표준편차가 <span class="math inline">\(0\)</span>이면 데이터의 범위가 가장 크다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="2">
+<p><span class="qlabel">확인문제 2.</span> <span class="math inline">\(z\)</span>-점수의 의미를 가장 적절하게 설명한 것은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> <span class="math inline">\(z\)</span>-점수가 크면 데이터는 항상 평균보다 크다.</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> <span class="math inline">\(z\)</span>-점수는 데이터가 평균에서 표준편차 단위로 얼마나 떨어져 있는지를 나타낸다.</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> <span class="math inline">\(z\)</span>-점수는 원래 데이터의 단위를 유지하며 계산된다.</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> <span class="math inline">\(z\)</span>-점수가 <span class="math inline">\(0\)</span>이면 데이터 값은 최솟값을 의미한다.</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<div class="quiz" data-answer="3">
+<p><span class="qlabel">확인문제 3.</span> 다섯 숫자 요약(Five-number summary)에 포함되지 않는 값은?</p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 최솟값</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 제1사분위수(<code class="inl"><span class="cell">Q1</span></code>)</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 표준편차</p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span> 중앙값</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<!-- Page 59 -->
+<div class="card">
+<p><span id="hw-2-8" class="qlabel">과제 2.8.</span> 다음 각각의 표준편차와 적합한 히스토그램을 아래 그림(①~⑥)에서 고르시오.</p>
+<p><img src="../images/img_59.PNG" class="img-fluid"></p>
+<div class="quiz q qinline" data-answer="5">
+<p><span class="qsub">(1)</span> 표준편차 <span class="math inline">\(s = 0.5\)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span></p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q qinline" data-answer="3">
+<p><span class="qsub">(2)</span> 표준편차 <span class="math inline">\(s = 10\)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span></p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q qinline" data-answer="4">
+<p><span class="qsub">(3)</span> 표준편차 <span class="math inline">\(s = 50\)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span></p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q qinline" data-answer="1">
+<p><span class="qsub">(4)</span> 표준편차 <span class="math inline">\(s = 1\)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span></p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q qinline" data-answer="6">
+<p><span class="qsub">(5)</span> 표준편차 <span class="math inline">\(s = 1000\)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span></p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q qinline" data-answer="2">
+<p><span class="qsub">(6)</span> 표준편차 <span class="math inline">\(s = 0.3\)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span></p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span></p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span></p>
+</div>
+<div class="opt" data-v="4">
+<p><span class="circ">4</span></p>
+</div>
+<div class="opt" data-v="5">
+<p><span class="circ">5</span></p>
+</div>
+<div class="opt" data-v="6">
+<p><span class="circ">6</span></p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<p><span id="hw-2-9" class="qlabel">과제 2.9.</span> 다음 각각의 다섯 숫자 요약에 알맞은 분포의 모양을 다음에서 고르시오.</p>
+<div class="quiz q qinline" data-answer="3">
+<p><span class="qsub">(1)</span> <span class="math inline">\((15, 25, 30, 35, 45)\)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 왼쪽 꼬리가 긴 분포</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 오른쪽 꼬리가 긴 분포</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 대칭인 분포</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q qinline" data-answer="2">
+<p><span class="qsub">(2)</span> <span class="math inline">\((100, 110, 115, 160, 220)\)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 왼쪽 꼬리가 긴 분포</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 오른쪽 꼬리가 긴 분포</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 대칭인 분포</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q qinline" data-answer="1">
+<p><span class="qsub">(3)</span> <span class="math inline">\((0, 15, 22, 24, 27)\)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 왼쪽 꼬리가 긴 분포</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 오른쪽 꼬리가 긴 분포</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 대칭인 분포</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+<div class="quiz q qinline" data-answer="3">
+<p><span class="qsub">(4)</span> <span class="math inline">\((22.4, 30.1, 36.3, 42.5, 50.7)\)</span></p>
+<div class="opt" data-v="1">
+<p><span class="circ">1</span> 왼쪽 꼬리가 긴 분포</p>
+</div>
+<div class="opt" data-v="2">
+<p><span class="circ">2</span> 오른쪽 꼬리가 긴 분포</p>
+</div>
+<div class="opt" data-v="3">
+<p><span class="circ">3</span> 대칭인 분포</p>
+</div>
+<div class="quiz-feedback">
+
+</div>
+</div>
+</div>
+<div class="card">
+<p><span id="hw-2-10" class="qlabel">과제 2.10.</span> 하루에 얼마나 칼로리를 소비하는가에 대한 연구에 참가한 315명의 데이터는 웹주소 <a href="http://www.lock5stat.com/datasets2e/NutritionStudy.csv">NutritionStudy</a>에서 얻을 수 있다. 구글 스프레드시트 앱을 사용하여 Calories 변수에 대한 다음 질문에 답하라. 모든 계산은 소수점 이하를 버리고 정수로 답하시오.</p>
+<div class="directive">
+<p>중심·퍼짐 측도</p>
+</div>
+<div class="q">
+<p><span class="qsub">(1)-</span><span class="subb">a</span> 평균</p>
+<div class="blankrow">
+<p><input type="text" class="bk" placeholder="기입"></p>
+</div>
+<button class="ansbtn">
+정답 확인 ▾
+</button>
+<div class="ansbox">
+<p>정답: 1796</p>
+</div>
+</div>
+<div class="q">
+<p><span class="qsub">(1)-</span><span class="subb">b</span> 표준편차</p>
+<div class="blankrow">
+<p><input type="text" class="bk" placeholder="기입"></p>
+</div>
+<button class="ansbtn">
+정답 확인 ▾
+</button>
+<div class="ansbox">
+<p>정답: 680</p>
+</div>
+</div>
+<div class="directive">
+<p>위치 측도</p>
+</div>
+<div class="q">
+<p><span class="qsub">(2)-</span><span class="subb">a</span> 중앙값</p>
+<div class="blankrow">
+<p><input type="text" class="bk" placeholder="기입"></p>
+</div>
+<button class="ansbtn">
+정답 확인 ▾
+</button>
+<div class="ansbox">
+<p>정답: 1666</p>
+</div>
+</div>
+<div class="q">
+<p><span class="qsub">(2)-</span><span class="subb">b</span> 제1사분위수</p>
+<div class="blankrow">
+<p><input type="text" class="bk" placeholder="기입"></p>
+</div>
+<button class="ansbtn">
+정답 확인 ▾
+</button>
+<div class="ansbox">
+<p>정답: 1338</p>
+</div>
+</div>
+<div class="q">
+<p><span class="qsub">(2)-</span><span class="subb">c</span> 제3사분위수</p>
+<div class="blankrow">
+<p><input type="text" class="bk" placeholder="기입"></p>
+</div>
+<button class="ansbtn">
+정답 확인 ▾
+</button>
+<div class="ansbox">
+<p>정답: 2100</p>
+</div>
+</div>
+<div class="directive">
+<p>변동 측도</p>
+</div>
+<div class="q">
+<p><span class="qsub">(3)-</span><span class="subb">a</span> 범위</p>
+<div class="blankrow">
+<p><input type="text" class="bk" placeholder="기입"></p>
+</div>
+<button class="ansbtn">
+정답 확인 ▾
+</button>
+<div class="ansbox">
+<p>정답: 6217</p>
+</div>
+</div>
+<div class="q">
+<p><span class="qsub">(3)-</span><span class="subb">b</span> 사분위수범위</p>
+<div class="blankrow">
+<p><input type="text" class="bk" placeholder="기입"></p>
+</div>
+<button class="ansbtn">
+정답 확인 ▾
+</button>
+<div class="ansbox">
+<p>정답: 762</p>
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<!-- 소유권자: 프로브 (빌드팀) | 사용자: 프로브 / Date: 2026-06-23 -->
+<!-- 인터랙티브 퀴즈 채점 (self-host, 외부의존 0). 시안 넥서스-최종통합시안-★★★★★ 의 <script> 이식.
+     _quarto.yml format.html.include-after-body 로 전 페이지 주입. .quiz[data-answer][data-explain] 마크업과 짝. -->
+<script>
+document.querySelectorAll('.quiz').forEach(function(q){
+  var ans = q.getAttribute('data-answer'), fb = q.querySelector('.quiz-feedback');
+  q.querySelectorAll('.opt').forEach(function(opt){
+    opt.addEventListener('click', function(){
+      q.querySelectorAll('.opt').forEach(function(o){ o.classList.remove('correct','wrong'); });
+      if (opt.getAttribute('data-v') === ans) {
+        opt.classList.add('correct');
+        fb.className = 'quiz-feedback ok';
+        fb.textContent = '정답입니다! ' + (q.getAttribute('data-explain') || '');
+      } else {
+        opt.classList.add('wrong');
+        fb.className = 'quiz-feedback no';
+        fb.textContent = '다시 생각해 보세요.';
+      }
+    });
+  });
+});
+</script>
+<!-- 소유권자: 빌드팀 | 작성 대행: 넥서스(컨트롤타워) — 프로브 부재로 대표 지시 직접 진행 / Date: 2026-06-23 -->
+<!-- 예제 풀이 블러 리빌 (self-host, 외부의존 0). 시안 넥서스-예제블러리빌-★★★★★.
+     _quarto.yml format.html.include-after-body 로 전 페이지 주입. .card.sol-card 마크업과 짝.
+     풀이 카드 클릭 시 .on 추가 → 블러 해제. -->
+<script>
+document.querySelectorAll('.sol-card').forEach(function(c){
+  c.addEventListener('click', function(){ c.classList.add('on'); });
+});
+</script>
+<!-- 소유권자: 빌드팀 | 작성: 넥서스(컨트롤타워) / Date: 2026-06-23 -->
+<!-- 주관식 정답 확인 토글 (self-host, 외부의존 0). 옵저버 정석 .ansbtn/.ansbox 와 짝.
+     _quarto.yml include-after-body 로 전 페이지 주입. -->
+<script>
+document.querySelectorAll('.ansbtn').forEach(function(b){
+  b.addEventListener('click', function(){
+    var box = b.nextElementSibling;
+    if (!box || !box.classList.contains('ansbox')) return;
+    var on = box.classList.toggle('show');
+    b.textContent = on ? '정답 숨기기 ▴' : '정답 확인 ▾';
+  });
+});
+</script>
+<!-- 소유권자: 넥서스(컨트롤타워) | 사용자: 넥서스 / Date: 2026-06-25 -->
+<!-- 데이터뷰 iframe을 콘텐츠 높이에 자동 맞춤 → 표마다 정확한 높이(여백/스크롤 제거).
+     file:// 에선 contentDocument 접근이 차단되므로 자식이 자기 높이를 postMessage로 보내는 방식이 1순위.
+     http 에선 contentDocument 폴링도 병행. self-host, 외부의존 0. -->
+<script>
+(function(){
+  function setH(f, h){ if(h > 0){ f.scrolling = 'no'; f.style.height = (h + 4) + 'px'; } }
+  // 1순위: 자식이 postMessage 로 보낸 높이 (file:// 포함 동작)
+  window.addEventListener('message', function(e){
+    if(e.data && e.data.type === 'dvHeight' && e.data.h > 0){
+      document.querySelectorAll('iframe[src*="data-views/"]').forEach(function(f){
+        if(f.contentWindow === e.source) setH(f, e.data.h);
+      });
+    }
+  });
+  // 2순위: same-origin(http) 직접 읽기 (file:// 에선 catch 되어 무시)
+  function fit(f){
+    try{
+      var d = f.contentDocument || f.contentWindow.document;
+      if(d && d.body) setH(f, Math.max(d.documentElement.scrollHeight, d.body.scrollHeight, d.body.offsetHeight));
+    }catch(e){}
+  }
+  function init(){
+    document.querySelectorAll('iframe[src*="data-views/"]').forEach(function(f){
+      f.scrolling = 'no';
+      f.addEventListener('load', function(){ fit(f); [300,800].forEach(function(t){ setTimeout(function(){fit(f);}, t); }); });
+      [200,600,1200,2200].forEach(function(t){ setTimeout(function(){fit(f);}, t); });
+    });
+  }
+  if(document.readyState === 'complete') init();
+  else window.addEventListener('load', init);
+})();
+</script>
+<!-- 엑셀 코드블록(pre.xlcode) 복사버튼 — self-host, 외부의존 0 (질럿, 2026-06-23) -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('pre.xlcode').forEach(function (pre) {
+    if (pre.dataset.xlcopy) return;
+    pre.dataset.xlcopy = '1';
+    var code = pre.textContent;            // ★ 버튼 추가 전 캡처 = 태그 없는 순수 수식
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'xlcopy';
+    btn.textContent = '복사';
+    btn.addEventListener('click', function () {
+      navigator.clipboard.writeText(code).then(function () {
+        btn.textContent = '복사됨';
+        setTimeout(function () { btn.textContent = '복사'; }, 1500);
+      });
+    });
+    pre.appendChild(btn);
+  });
+});
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/02-02-quantitative-center.html" class="pagination-link" aria-label="2.2 양적 변수 한 개: 모양과 중심">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">2.2 양적 변수 한 개: 모양과 중심</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/02-04-outliers-boxplot.html" class="pagination-link" aria-label="2.4 이상값과 상자그림">
+        <span class="nav-page-text"><span class="chapter-title">2.4 이상값과 상자그림</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

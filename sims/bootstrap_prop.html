@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<!-- 소유권자: 질럿(복원팀) | 사용자: 질럿 -->
+<!-- Date: 2026-06-23 (원본 enook 107·109·113p 앱 충실 재구현, 통합 스타일) -->
+<!-- 통사사복원소 — 3.3절 부트스트랩(비율) 시뮬레이터.
+     표본 비율 p̂ / 표본 크기 / 표본 추출 / 붓스트랩 표본 비율 / 최근표본(0·1) /
+     붓스트랩 분포 차트 하나(파란 막대, 평균·표준편차, 빨강세모=표본비율 p̂·초록세모=붓스트랩 표본비율). self-host, 외부라이브러리 0. -->
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>부트스트랩 시뮬레이터 (비율)</title>
+<style>
+  :root { --green:#5cb85c; --line:#d9dcdf; --ink:#333; }
+  * { box-sizing:border-box; }
+  body { font-family:-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif; color:var(--ink); margin:0; padding:18px; background:#fff; }
+  .wrap { max-width:780px; margin:0 auto; }
+  .ctl { display:grid; grid-template-columns:auto 1fr; gap:8px 12px; align-items:center; margin-bottom:10px; }
+  .ctl > label { font-weight:700; font-size:.9rem; text-align:right; }
+  .mvar { font-family:'Cambria Math','Latin Modern Math',Georgia,serif; font-style:italic; }
+  input[type=text]{ width:72px; padding:5px 8px; border:1px solid var(--line); border-radius:5px; font-size:.9rem; font-weight:700; }
+  input[readonly]{ background:#f1f3f5; }
+  .btns { display:flex; gap:6px; flex-wrap:wrap; }
+  .btns button { background:var(--green); color:#fff; border:none; border-radius:5px; padding:6px 14px; cursor:pointer; font-size:.88rem; }
+  .btns button:hover { filter:brightness(1.06); }
+  .btns button.ghost { background:#f0ad4e; }
+  textarea { width:100%; height:64px; margin-top:6px; border:1px solid var(--line); border-radius:5px; padding:8px 10px; font-family:ui-monospace,monospace; font-size:.84rem; line-height:1.7; color:#444; resize:vertical; }
+  .chart { background:#f3f7f4; border:1px solid #e2e9e4; border-radius:10px; margin-top:10px; padding:12px 10px 8px; }
+  .htitle { text-align:center; font-size:1.12rem; font-weight:700; }
+  .hsub { text-align:center; font-size:.82rem; color:#777; }
+  canvas { width:100%; height:330px; display:block; }
+  .row { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin:8px 0; }
+  .lab { font-weight:700; font-size:.9rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="ctl">
+    <label>표본 비율 <span class="mvar">p̂</span>:</label>
+    <div><input type="text" id="ph" value="0.4" onchange="resetBoot()"></div>
+    <label>표본 크기 <span class="mvar">n</span>:</label>
+    <div><input type="text" id="n" value="100" onchange="resetBoot()"></div>
+    <label>표본 추출:</label>
+    <div class="btns">
+      <button onclick="boot(1)">1회</button><button onclick="boot(10)">10회</button>
+      <button onclick="boot(100)">100회</button><button onclick="boot(1000)">1000회</button>
+      <button class="ghost" onclick="resetBoot()">reset</button>
+    </div>
+    <label>붓스트랩 표본 비율:</label>
+    <div><input type="text" id="bphat" readonly></div>
+  </div>
+  <textarea id="lastSample" readonly placeholder="가장 최근에 뽑은 붓스트랩 표본(0/1)이 여기에 표시됩니다"></textarea>
+
+  <div class="chart">
+    <div class="htitle" id="title">붓스트랩 표본을 추출하세요</div>
+    <div class="hsub" id="sub">추출 횟수: 0</div>
+    <canvas id="cv"></canvas>
+  </div>
+  <div class="row"><span class="lab">붓스트랩 분포 계급 크기:</span><input type="text" id="distBin" value="0.02" onchange="render()"></div>
+</div>
+
+<script>
+const MAXN=100000;
+let SAMPLE=[], origPhat=0, boots=[], lastBoot=null, animId=null;
+function mean(a){ let s=0; for(const x of a) s+=x; return s/a.length; }
+function sdSample(a){ if(a.length<2) return 0; const m=mean(a); let s=0; for(const x of a) s+=(x-m)*(x-m); return Math.sqrt(s/(a.length-1)); }
+function minOf(a){ let m=a[0]; for(const x of a) if(x<m)m=x; return m; }
+function maxOf(a){ let m=a[0]; for(const x of a) if(x>m)m=x; return m; }
+function cancelAnim(){ if(animId){ cancelAnimationFrame(animId); animId=null; } }
+function fmt(x){ return (+x.toFixed(3)).toString(); }
+function niceNum(x){ if(!(x>0)) return 1; const mag=Math.pow(10,Math.floor(Math.log10(x))), f=x/mag; return (f<1.5?1:f<3?2:f<7?5:10)*mag; }
+function getBin(def){ let v=parseFloat(document.getElementById('distBin').value); return (v>0)?v:def; }
+function hist(arr,d0,binW,bins){ const c=new Array(bins).fill(0);
+  for(const x of arr){ let b=Math.floor((x-d0)/binW); if(b<0)b=0; if(b>=bins)b=bins-1; c[b]++; } return c; }
+function setup(id){ const cv=document.getElementById(id), dpr=window.devicePixelRatio||1;
+  const W=cv.clientWidth, H=cv.clientHeight; cv.width=W*dpr; cv.height=H*dpr;
+  const c=cv.getContext('2d'); c.scale(dpr,dpr); c.clearRect(0,0,W,H); return {c,W,H}; }
+function tri(c,x,y0,col){ c.fillStyle=col; c.beginPath(); c.moveTo(x,y0-1); c.lineTo(x-6,y0+10); c.lineTo(x+6,y0+10); c.closePath(); c.fill(); }
+
+function buildSample(){
+  const ph=parseFloat(document.getElementById('ph').value), n=parseInt(document.getElementById('n').value,10);
+  if(isNaN(ph)||ph<0||ph>1||isNaN(n)||n<2) return false;
+  const ones=Math.round(ph*n); SAMPLE=new Array(n);
+  for(let i=0;i<n;i++) SAMPLE[i]= i<ones?1:0;
+  origPhat=ones/n; return true;
+}
+function addBoot(k){ const n=SAMPLE.length; let lastArr=null;
+  for(let t=0;t<k;t++){ const arr=new Array(n); let c=0; for(let i=0;i<n;i++){ const v=SAMPLE[(Math.random()*n)|0]; arr[i]=v; c+=v; } boots.push(c/n); lastArr=arr; }
+  lastBoot=boots[boots.length-1]; document.getElementById('bphat').value=lastBoot.toFixed(3);
+  document.getElementById('lastSample').value=lastArr.join(' ');
+}
+function boot(times){
+  if(!buildSample()){ alert('표본 비율 p̂(0~1)과 표본 크기 n(2 이상)을 입력하세요.'); return; }
+  cancelAnim();
+  let remaining=Math.min(times, MAXN-boots.length);
+  if(remaining<=0){ document.getElementById('sub').textContent=`추출 횟수: ${boots.length.toLocaleString()} (상한 도달 — reset 후 진행)`; return; }
+  if(times===1){ addBoot(1); render(); return; }
+  const frames=Math.min(remaining,120), per=Math.ceil(remaining/frames);
+  (function step(){ const k=Math.min(per,remaining); addBoot(k); remaining-=k; render();
+    if(remaining>0) animId=requestAnimationFrame(step); else animId=null; })();
+}
+function resetBoot(){ cancelAnim(); boots=[]; lastBoot=null; buildSample();
+  document.getElementById('bphat').value=''; document.getElementById('lastSample').value='';
+  document.getElementById('title').textContent='붓스트랩 표본을 추출하세요';
+  document.getElementById('sub').textContent='추출 횟수: 0'; render(); }
+
+function render(){
+  const {c,W,H}=setup('cv');
+  const padL=46,padR=14,padT=8,padB=34,pW=W-padL-padR,pH=H-padT-padB,x0=padL,y0=padT+pH;
+  if(boots.length){ document.getElementById('title').innerHTML=`붓스트랩 분포 — 평균 = ${mean(boots).toFixed(3)}, 표준편차 = ${sdSample(boots).toFixed(3)}`;
+    document.getElementById('sub').textContent=`추출 횟수: ${boots.length.toLocaleString()}`; }
+  if(!boots.length){ c.strokeStyle='#cdd3da'; c.beginPath(); c.moveTo(x0,y0); c.lineTo(x0+pW,y0); c.stroke(); return; }
+  const binW=getBin(0.02);
+  let lo=minOf(boots), hi=maxOf(boots); lo=Math.min(lo,origPhat); hi=Math.max(hi,origPhat);
+  if(lastBoot!=null){ lo=Math.min(lo,lastBoot); hi=Math.max(hi,lastBoot); }
+  const d0=Math.floor(lo/binW)*binW, hiE=Math.ceil((hi+binW)/binW)*binW, bins=Math.max(1,Math.min(400,Math.round((hiE-d0)/binW))), dom=bins*binW;
+  const ct=hist(boots,d0,binW,bins), ymax=niceNum(maxOf(ct)||1)*1.05;
+  const X=v=>x0+(v-d0)/dom*pW, bw=pW/bins;
+  c.font='11px sans-serif'; c.lineWidth=1; c.textAlign='right';
+  for(let k=0;k<=5;k++){ const y=y0-pH*k/5; c.strokeStyle='#e7eee9'; c.beginPath(); c.moveTo(x0,y); c.lineTo(x0+pW,y); c.stroke();
+    c.fillStyle='#8a8f8a'; c.fillText(String(Math.round(ymax*k/5)), x0-6, y+4); }
+  c.save(); c.translate(14,padT+pH/2); c.rotate(-Math.PI/2); c.textAlign='center'; c.fillStyle='#666'; c.fillText('빈도',0,0); c.restore();
+  c.fillStyle='#9cc3e8';
+  for(let i=0;i<bins;i++){ if(!ct[i])continue; const h=ct[i]/ymax*pH, x=x0+i*bw; c.fillRect(x, y0-h, Math.max(1,bw-1), h); }
+  c.strokeStyle='#cdd3da'; c.lineWidth=1; c.beginPath(); c.moveTo(x0,y0); c.lineTo(x0+pW,y0); c.stroke();
+  c.fillStyle='#8a8f8a'; c.font='11px sans-serif'; c.textAlign='center';
+  { const ts=binW*Math.max(1,Math.round(bins/5)); for(let v=d0; v<=d0+dom+1e-9; v+=ts) c.fillText((+v.toFixed(2)).toString(), X(v), y0+15); }
+  if(X(origPhat)>=x0-2&&X(origPhat)<=x0+pW+2) tri(c,X(origPhat),y0,'#d9534f');         // 표본 비율 p̂(빨강)
+  if(lastBoot!=null && X(lastBoot)>=x0-2&&X(lastBoot)<=x0+pW+2) tri(c,X(lastBoot),y0,'#3a8f3a'); // 붓스트랩 표본 비율(초록)
+}
+resetBoot();
+window.addEventListener('resize', render);
+</script>
+</body>
+</html>
