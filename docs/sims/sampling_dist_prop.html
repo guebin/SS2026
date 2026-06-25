@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>표집분포 시뮬레이터 (비율)</title>
 <style>
-  :root { --green:#5cb85c; --line:#d9dcdf; --ink:#333; }
+  :root { --green:#dc3545; --line:#d9dcdf; --ink:#333; }
   * { box-sizing:border-box; }
   body { font-family:-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif; color:var(--ink); margin:0; padding:18px; background:#fff; }
   .wrap { max-width:780px; margin:0 auto; }
@@ -24,9 +24,9 @@
   .btns { display:flex; gap:6px; flex-wrap:wrap; }
   .btns button { background:var(--green); color:#fff; border:none; border-radius:5px; padding:6px 14px; cursor:pointer; font-size:.88rem; }
   .btns button:hover { filter:brightness(1.06); }
-  .btns button.ghost { background:#fff; color:#666; border:1px solid var(--line); }
+  .btns button.ghost { background:#fff; color:#dc3545; border:1px solid #e3b6bb; }
   textarea { width:100%; height:64px; margin-top:6px; border:1px solid var(--line); border-radius:5px; padding:8px 10px; font-family:ui-monospace,monospace; font-size:.84rem; line-height:1.7; color:#444; resize:vertical; }
-  .chart { background:#f3f7f4; border:1px solid #e2e9e4; border-radius:10px; margin-top:10px; padding:12px 10px 8px; }
+  .chart { background:#faf7f8; border:1px solid #efe2e4; border-radius:10px; margin-top:10px; padding:12px 10px 8px; }
   .htitle { text-align:center; font-size:1.12rem; font-weight:700; }
   .hsub { text-align:center; font-size:.82rem; color:#777; }
   canvas { width:100%; height:330px; display:block; }
@@ -59,7 +59,6 @@
     <div class="hsub" id="sub">실험 횟수: 0</div>
     <canvas id="cv"></canvas>
   </div>
-  <div class="row"><span class="lab">표집분포 계급 크기:</span><input type="text" id="distBin" value="0.02" onchange="render()"></div>
 </div>
 
 <script>
@@ -74,7 +73,16 @@ function maxOf(a){ let m=a[0]; for(const x of a) if(x>m)m=x; return m; }
 function cancelAnim(){ if(animId){ cancelAnimationFrame(animId); animId=null; } }
 function fmt(x){ return (+x.toFixed(3)).toString(); }
 function niceNum(x){ if(!(x>0)) return 1; const mag=Math.pow(10,Math.floor(Math.log10(x))), f=x/mag; return (f<1.5?1:f<3?2:f<7?5:10)*mag; }
-function getBin(def){ let v=parseFloat(document.getElementById('distBin').value); return (v>0)?v:def; }
+// numpy/matplotlib 'auto' = max(Sturges, Freedman-Diaconis). 반환값 = 계급너비의 1/n 배수 k (이산 c/n 정렬).
+function autoBinK(data, n){
+  const N=data.length; if(N<2) return 1;
+  const s=[...data].sort((a,b)=>a-b), rng=s[N-1]-s[0]; if(rng<=0) return 1;
+  const sturges=Math.ceil(Math.log2(N)+1);
+  const q1=s[Math.floor((N-1)*0.25)], q3=s[Math.floor((N-1)*0.75)], iqr=Math.max(0,q3-q1);
+  const fdBins=iqr>0 ? Math.ceil(rng/(2*iqr/Math.cbrt(N))) : sturges;
+  const bins=Math.max(sturges, fdBins);
+  return Math.max(1, Math.round(rng/bins*n));
+}
 function hist(arr, d0, binW, bins){ const c=new Array(bins).fill(0);
   for(const x of arr){ let b=Math.floor((x-d0)/binW); if(b<0)b=0; if(b>=bins)b=bins-1; c[b]++; } return c; }
 function validP(){ const v=P(); return !(isNaN(v)||v<=0||v>=1); }
@@ -114,10 +122,16 @@ function render(){
   if(phats.length){ document.getElementById('title').innerHTML=`표본 비율의 표집분포 — 평균 = ${mean(phats).toFixed(3)}, 표준편차 = ${sdSample(phats).toFixed(3)}`;
     document.getElementById('sub').textContent=`실험 횟수: ${phats.length.toLocaleString()}`; }
   if(!phats.length){ c.strokeStyle='#cdd3da'; c.beginPath(); c.moveTo(x0,y0); c.lineTo(x0+pW,y0); c.stroke(); return; }
-  const binW=getBin(0.02);
+  // ★ p̂=c/n 은 이산값(1/n 간격). 계급을 1/n 으로, 경계를 각 p̂값 중앙에 정렬해야
+  //    각 p̂값이 정확히 한 계급에 들어가 매끄러운 종모양이 나온다 (임의 계급 → aliasing으로 중심 움푹 파임).
+  const n=Nsz();
   let lo=minOf(phats), hi=maxOf(phats); if(validP()){ lo=Math.min(lo,P()); hi=Math.max(hi,P()); }
   if(lastPhat!=null){ lo=Math.min(lo,lastPhat); hi=Math.max(hi,lastPhat); }
-  const d0=Math.floor(lo/binW)*binW, hiE=Math.ceil((hi+binW)/binW)*binW, bins=Math.max(1,Math.min(400,Math.round((hiE-d0)/binW))), dom=bins*binW;
+  const cMin=Math.round(lo*n), cMax=Math.round(hi*n);
+  // 계급 수 = numpy/seaborn 'auto'(max(Sturges, Freedman-Diaconis)) 자동 결정.
+  //    이산 데이터(p̂=c/n)는 계급 너비를 1/n 배수로 snap(빈 계급 방지). 수동 조정 없음.
+  const k=autoBinK(phats, n);
+  const binW=k/n, d0=(cMin-0.5)/n, bins=Math.max(1, Math.ceil((cMax-cMin+1)/k)), dom=bins*binW;
   const ct=hist(phats,d0,binW,bins), ymax=niceNum(maxOf(ct)||1)*1.05;
   const X=v=>x0+(v-d0)/dom*pW, bw=pW/bins;
   c.font='11px sans-serif'; c.lineWidth=1; c.textAlign='right';
@@ -125,14 +139,14 @@ function render(){
     c.fillStyle='#8a8f8a'; c.fillText(String(Math.round(ymax*k/5)), x0-6, y+4); }
   c.save(); c.translate(14,padT+pH/2); c.rotate(-Math.PI/2); c.textAlign='center'; c.fillStyle='#666'; c.fillText('빈도',0,0); c.restore();
   // 파란 막대 (원본 89p)
-  c.fillStyle='#9cc3e8';
+  c.fillStyle='rgba(220,53,69,.45)';
   for(let i=0;i<bins;i++){ if(!ct[i])continue; const h=ct[i]/ymax*pH, x=x0+i*bw; c.fillRect(x, y0-h, Math.max(1,bw-1), h); }
   c.strokeStyle='#cdd3da'; c.lineWidth=1; c.beginPath(); c.moveTo(x0,y0); c.lineTo(x0+pW,y0); c.stroke();
   c.fillStyle='#8a8f8a'; c.font='11px sans-serif'; c.textAlign='center';
-  { const ts=binW*Math.max(1,Math.round(bins/5)); for(let v=d0; v<=d0+dom+1e-9; v+=ts) c.fillText((+v.toFixed(3)).toString(), X(v), y0+15); }
+  { const ts=niceNum(dom/5); for(let v=Math.ceil((d0-1e-9)/ts)*ts; v<=d0+dom+1e-9; v+=ts) c.fillText((+v.toFixed(3)).toString(), X(v), y0+15); }
   // 세모: 모비율 p(빨강), 표본 비율 p̂(초록) — 원본 89p
-  if(validP() && X(P())>=x0-2 && X(P())<=x0+pW+2) tri(c,X(P()),y0,'#d9534f');
-  if(lastPhat!=null && X(lastPhat)>=x0-2 && X(lastPhat)<=x0+pW+2) tri(c,X(lastPhat),y0,'#3a8f3a');
+  if(validP() && X(P())>=x0-2 && X(P())<=x0+pW+2) tri(c,X(P()),y0,'#dc3545');
+  if(lastPhat!=null && X(lastPhat)>=x0-2 && X(lastPhat)<=x0+pW+2) tri(c,X(lastPhat),y0,'rgba(220,53,69,.42)');
 }
 resetDist();
 window.addEventListener('resize', render);

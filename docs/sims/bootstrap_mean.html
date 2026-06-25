@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>부트스트랩 시뮬레이터 (평균)</title>
 <style>
-  :root { --green:#5cb85c; --line:#d9dcdf; --ink:#333; }
+  :root { --green:#dc3545; --line:#d9dcdf; --ink:#333; }
   * { box-sizing:border-box; }
   body { font-family:-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif; color:var(--ink); margin:0; padding:18px; background:#fff; }
   .wrap { max-width:820px; margin:0 auto; }
@@ -18,12 +18,12 @@
   .row { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin:8px 0; }
   button { background:var(--green); color:#fff; border:none; border-radius:5px; padding:6px 13px; cursor:pointer; font-size:.88rem; }
   button:hover { filter:brightness(1.06); }
-  button.ghost { background:#f0ad4e; }
+  button.ghost { background:#fff; color:#dc3545; border:1px solid #e3b6bb; }
   input[type=text]{ width:64px; padding:5px 8px; border:1px solid var(--line); border-radius:5px; font-size:.88rem; font-weight:700; text-align:center; }
   .mvar { font-family:'Cambria Math','Latin Modern Math',Georgia,serif; font-style:italic; }
   textarea { width:100%; border:1px solid var(--line); border-radius:5px; padding:8px 10px; font-family:ui-monospace,monospace; font-size:.82rem; line-height:1.7; color:#444; resize:vertical; }
   #sampleBox { height:124px; } #lastBoot { height:64px; margin-top:6px; }
-  .chart { background:#f3f7f4; border:1px solid #e2e9e4; border-radius:10px; margin-top:8px; padding:12px 10px 8px; }
+  .chart { background:#faf7f8; border:1px solid #efe2e4; border-radius:10px; margin-top:8px; padding:12px 10px 8px; }
   .htitle { text-align:center; font-size:1.12rem; font-weight:700; }
   .hsub { text-align:center; font-size:.82rem; color:#777; }
   canvas { width:100%; height:300px; display:block; }
@@ -45,7 +45,6 @@
 
   <div class="chart"><div class="htitle" id="botTitle">붓스트랩 표본을 추출하세요</div>
     <div class="hsub" id="botSub">추출 횟수: 0</div><canvas id="botCv"></canvas></div>
-  <div class="row"><span class="lab" style="margin:0">붓스트랩 분포 계급 크기:</span><input type="text" id="bw2" value="0.1" onchange="renderDist()"></div>
 </div>
 
 <script>
@@ -61,6 +60,16 @@ function cancelAnim(){ if(animId){ cancelAnimationFrame(animId); animId=null; } 
 function fmt(x){ return (+x.toFixed(3)).toString(); }
 function niceNum(x){ if(!(x>0)) return 1; const mag=Math.pow(10,Math.floor(Math.log10(x))), f=x/mag; return (f<1.5?1:f<3?2:f<7?5:10)*mag; }
 function getBin(id,def){ let v=parseFloat(document.getElementById(id).value); return (v>0)?v:def; }
+// numpy/seaborn 'auto' = max(Sturges, Freedman-Diaconis) 계급 수. 반환 = 계급너비의 1/n 배수 k (이산 s/n 정렬).
+function autoBinK(data, n){
+  const N=data.length; if(N<2) return 1;
+  const s=[...data].sort((a,b)=>a-b), rng=s[N-1]-s[0]; if(rng<=0) return 1;
+  const sturges=Math.ceil(Math.log2(N)+1);
+  const q1=s[Math.floor((N-1)*0.25)], q3=s[Math.floor((N-1)*0.75)], iqr=Math.max(0,q3-q1);
+  const fdBins=iqr>0 ? Math.ceil(rng/(2*iqr/Math.cbrt(N))) : sturges;
+  const bins=Math.max(sturges, fdBins);
+  return Math.max(1, Math.round(rng/bins*n));
+}
 function hist(arr,d0,binW,bins){ const c=new Array(bins).fill(0);
   for(const x of arr){ let b=Math.floor((x-d0)/binW); if(b<0)b=0; if(b>=bins)b=bins-1; c[b]++; } return c; }
 function setup(id){ const cv=document.getElementById(id), dpr=window.devicePixelRatio||1;
@@ -90,21 +99,21 @@ function renderTop(){
   const X=v=>x0+(v-d0)/dom*pW, bw=pW/bins;
   c.font='11px sans-serif'; c.lineWidth=1;
   for(let k=0;k<=5;k++){ const y=y0-pH*k/5; c.strokeStyle='#e7eee9'; c.beginPath(); c.moveTo(x0,y); c.lineTo(x0+pW,y); c.stroke();
-    c.fillStyle='#5b6f9c'; c.textAlign='right'; c.fillText(String(Math.round(sYmax*k/5)), x0-6, y+4);
-    if(bCt){ c.fillStyle='#b06f8f'; c.textAlign='left'; c.fillText(String(Math.round(bYmax*k/5)), x0+pW+6, y+4); } }
+    c.fillStyle='rgba(220,53,69,.7)'; c.textAlign='right'; c.fillText(String(Math.round(sYmax*k/5)), x0-6, y+4);
+    if(bCt){ c.fillStyle='#dc3545'; c.textAlign='left'; c.fillText(String(Math.round(bYmax*k/5)), x0+pW+6, y+4); } }
   // 표본 막대(전폭 반투명 파랑)
-  c.fillStyle='rgba(120,140,225,.45)';
+  c.fillStyle='rgba(220,53,69,.22)';
   for(let i=0;i<bins;i++){ if(!sCt[i])continue; const h=sCt[i]/sYmax*pH, x=x0+i*bw; c.fillRect(x, y0-h, bw, h); }
   // 붓스트랩 표본 막대(같은 전폭 반투명 자홍 → 보라). 품지 않음
-  if(bCt){ c.fillStyle='rgba(225,90,140,.42)';
+  if(bCt){ c.fillStyle='rgba(220,53,69,.5)';
     for(let i=0;i<bins;i++){ if(!bCt[i])continue; const h=bCt[i]/bYmax*pH, x=x0+i*bw; c.fillRect(x, y0-h, bw, h); } }
-  c.save(); c.translate(13,padT+pH/2); c.rotate(-Math.PI/2); c.textAlign='center'; c.fillStyle='#5b6f9c'; c.font='11px sans-serif'; c.fillText('빈도 (표본)',0,0); c.restore();
-  if(bCt){ c.save(); c.translate(W-13,padT+pH/2); c.rotate(Math.PI/2); c.textAlign='center'; c.fillStyle='#b06f8f'; c.fillText('빈도 (붓스트랩 표본)',0,0); c.restore(); }
+  c.save(); c.translate(13,padT+pH/2); c.rotate(-Math.PI/2); c.textAlign='center'; c.fillStyle='rgba(220,53,69,.7)'; c.font='11px sans-serif'; c.fillText('빈도 (표본)',0,0); c.restore();
+  if(bCt){ c.save(); c.translate(W-13,padT+pH/2); c.rotate(Math.PI/2); c.textAlign='center'; c.fillStyle='#dc3545'; c.fillText('빈도 (붓스트랩 표본)',0,0); c.restore(); }
   c.strokeStyle='#cdd3da'; c.lineWidth=1; c.beginPath(); c.moveTo(x0,y0); c.lineTo(x0+pW,y0); c.stroke();
   const dec=(hi-lo)>=5?0:1; c.fillStyle='#8a8f8a'; c.textAlign='center';
-  { const ts=binW*Math.max(1,Math.round(bins/5)); for(let v=d0; v<=d0+dom+1e-9; v+=ts) c.fillText(String(Math.round(v)), X(v), y0+15); }
-  if(X(sMean)>=x0-2&&X(sMean)<=x0+pW+2) tri(c,X(sMean),y0,'#2f6fd0');             // 표본 평균(파랑)
-  if(lastBootMean!=null && X(lastBootMean)>=x0-2&&X(lastBootMean)<=x0+pW+2) tri(c,X(lastBootMean),y0,'#d9534f'); // 붓스트랩 평균(빨강)
+  { const ts=niceNum(dom/5); for(let v=Math.ceil((d0-1e-9)/ts)*ts; v<=d0+dom+1e-9; v+=ts) c.fillText(String(Math.round(v)), X(v), y0+15); }
+  if(X(sMean)>=x0-2&&X(sMean)<=x0+pW+2) tri(c,X(sMean),y0,'#dc3545');             // 표본 평균(파랑)
+  if(lastBootMean!=null && X(lastBootMean)>=x0-2&&X(lastBootMean)<=x0+pW+2) tri(c,X(lastBootMean),y0,'rgba(220,53,69,.42)'); // 붓스트랩 평균(빨강)
 }
 
 function addBoot(k){ const n=SAMPLE.length; let arr=null;
@@ -133,23 +142,25 @@ function renderDist(){
   if(bootMeans.length){ document.getElementById('botTitle').innerHTML=`붓스트랩 분포 — 평균 = ${mean(bootMeans).toFixed(3)}, 표준편차 = ${sdSample(bootMeans).toFixed(3)}`;
     document.getElementById('botSub').textContent=`추출 횟수: ${bootMeans.length.toLocaleString()}`; }
   if(!bootMeans.length){ c.strokeStyle='#cdd3da'; c.beginPath(); c.moveTo(x0,y0); c.lineTo(x0+pW,y0); c.stroke(); return; }
-  const binW=getBin('bw2',0.1);
+  const n=SAMPLE.length;
   let lo=minOf(bootMeans), hi=maxOf(bootMeans); lo=Math.min(lo,sMean); hi=Math.max(hi,sMean);
   if(lastBootMean!=null){ lo=Math.min(lo,lastBootMean); hi=Math.max(hi,lastBootMean); }
-  const d0=Math.floor(lo/binW)*binW, hiE=Math.ceil((hi+binW)/binW)*binW, bins=Math.max(1,Math.min(600,Math.round((hiE-d0)/binW))), dom=bins*binW;
+  // 붓스트랩 평균 s/n (정수 데이터면 1/n 간격). 계급 수 = numpy/seaborn 'auto'(Sturges/FD) 자동, 1/n 배수 snap.
+  const cMin=Math.round(lo*n), cMax=Math.round(hi*n), k=autoBinK(bootMeans, n);
+  const binW=k/n, d0=(cMin-0.5)/n, bins=Math.max(1,Math.ceil((cMax-cMin+1)/k)), dom=bins*binW;
   const ct=hist(bootMeans,d0,binW,bins), ymax=niceNum(maxOf(ct)||1)*1.05;
   const X=v=>x0+(v-d0)/dom*pW, bw=pW/bins;
   c.font='11px sans-serif'; c.lineWidth=1; c.textAlign='right';
   for(let k=0;k<=5;k++){ const y=y0-pH*k/5; c.strokeStyle='#e7eee9'; c.beginPath(); c.moveTo(x0,y); c.lineTo(x0+pW,y); c.stroke();
     c.fillStyle='#8a8f8a'; c.fillText(String(Math.round(ymax*k/5)), x0-6, y+4); }
   c.save(); c.translate(14,padT+pH/2); c.rotate(-Math.PI/2); c.textAlign='center'; c.fillStyle='#666'; c.fillText('빈도',0,0); c.restore();
-  c.fillStyle='#f2a6a0';
+  c.fillStyle='rgba(220,53,69,.45)';
   for(let i=0;i<bins;i++){ if(!ct[i])continue; const h=ct[i]/ymax*pH, x=x0+i*bw; c.fillRect(x, y0-h, Math.max(1,bw-1), h); }
   c.strokeStyle='#cdd3da'; c.lineWidth=1; c.beginPath(); c.moveTo(x0,y0); c.lineTo(x0+pW,y0); c.stroke();
   const dec=(hi-lo)>=5?0:(hi-lo)>=0.5?1:2; c.fillStyle='#8a8f8a'; c.textAlign='center';
-  { const ts=binW*Math.max(1,Math.round(bins/5)); for(let v=d0; v<=d0+dom+1e-9; v+=ts) c.fillText((+v.toFixed(dec)).toString(), X(v), y0+15); }
-  if(X(sMean)>=x0-2&&X(sMean)<=x0+pW+2) tri(c,X(sMean),y0,'#3a8f3a');                 // 표본 평균(초록)
-  if(lastBootMean!=null && X(lastBootMean)>=x0-2&&X(lastBootMean)<=x0+pW+2) tri(c,X(lastBootMean),y0,'#d9534f'); // 붓스트랩 평균(빨강)
+  { const ts=niceNum(dom/5); for(let v=Math.ceil((d0-1e-9)/ts)*ts; v<=d0+dom+1e-9; v+=ts) c.fillText((+v.toFixed(dec)).toString(), X(v), y0+15); }
+  if(X(sMean)>=x0-2&&X(sMean)<=x0+pW+2) tri(c,X(sMean),y0,'#dc3545');                 // 표본 평균(초록)
+  if(lastBootMean!=null && X(lastBootMean)>=x0-2&&X(lastBootMean)<=x0+pW+2) tri(c,X(lastBootMean),y0,'rgba(220,53,69,.42)'); // 붓스트랩 평균(빨강)
 }
 
 // 기본 빈칸 시작. URL에 ?prefill 있을 때만 통근 데이터(page 110 원본 자동입력) 채움.
