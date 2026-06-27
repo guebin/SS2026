@@ -58,8 +58,8 @@ function minOf(a){ let m=a[0]; for(const x of a) if(x<m)m=x; return m; }
 function maxOf(a){ let m=a[0]; for(const x of a) if(x>m)m=x; return m; }
 function cancelAnim(){ if(animId){ cancelAnimationFrame(animId); animId=null; } }
 function fmt(x){ return (+x.toFixed(3)).toString(); }
-// y축 최대용: 항상 데이터 이상으로 올림(nice ceiling). niceNum(반올림)은 값보다 작아질 수 있어 막대가 천장에 잘림.
-function niceCeil(x){ if(!(x>0)) return 1; const e=Math.pow(10,Math.floor(Math.log10(x))), f=x/e; for(const v of [1,1.2,1.5,2,2.5,3,4,5,6,8,10]) if(f<=v) return v*e; return 10*e; }
+// y축 최대 = (최대빈도/5)의 nice 눈금 × 5. 막대 안 잘림(>=데이터) + 여백 최소 + 라벨이 눈금 정수배라 깔끔.
+function niceTop(maxv){ if(!(maxv>0)) return 1; const t=maxv/5, e=Math.pow(10,Math.floor(Math.log10(t))), f=t/e; let s=10*e; for(const v of [1,1.2,1.5,2,2.5,3,3.5,4,5,6,8,10]){ if(f<=v){ s=v*e; break; } } return s*5; }
 function niceNum(x){ if(!(x>0)) return 1; const mag=Math.pow(10,Math.floor(Math.log10(x))), f=x/mag; return (f<1.5?1:f<3?2:f<7?5:10)*mag; }
 function getBin(id,def){ let v=parseFloat(document.getElementById(id).value); return (v>0)?v:def; }
 // numpy/seaborn 'auto' = max(Sturges, Freedman-Diaconis) 계급 수. 반환 = 계급너비의 1/n 배수 k (이산 s/n 정렬).
@@ -69,7 +69,7 @@ function autoBinK(data, n){
   const sturges=Math.ceil(Math.log2(N)+1);
   const q1=s[Math.floor((N-1)*0.25)], q3=s[Math.floor((N-1)*0.75)], iqr=Math.max(0,q3-q1);
   const fdBins=iqr>0 ? Math.ceil(rng/(2*iqr/Math.cbrt(N))) : sturges;
-  const bins=Math.max(sturges, fdBins);
+  const bins=Math.min(Math.max(sturges, fdBins), 30); // ★상한 30: 대량 실험서 막대 폭증→들쭉거림 방지(종모양 유지)
   return Math.max(1, Math.round(rng/bins*n));
 }
 function hist(arr,d0,binW,bins){ const c=new Array(bins).fill(0);
@@ -97,7 +97,7 @@ function renderTop(){
   if(lastBootArr){ lo=Math.min(lo,minOf(lastBootArr)); hi=Math.max(hi,maxOf(lastBootArr)); }
   const d0=Math.floor(lo/binW)*binW, hiE=Math.ceil((hi+binW)/binW)*binW, bins=Math.max(1,Math.min(400,Math.round((hiE-d0)/binW))), dom=bins*binW;
   const sCt=hist(SAMPLE,d0,binW,bins), bCt=lastBootArr?hist(lastBootArr,d0,binW,bins):null;
-  const sYmax=niceCeil((maxOf(sCt)||1)*1.02), bYmax=bCt?niceCeil((maxOf(bCt)||1)*1.02):1;
+  const sYmax=niceTop(maxOf(sCt)||1), bYmax=bCt?niceTop(maxOf(bCt)||1):1;
   const X=v=>x0+(v-d0)/dom*pW, bw=pW/bins;
   c.font='11px sans-serif'; c.lineWidth=1;
   for(let k=0;k<=5;k++){ const y=y0-pH*k/5; c.strokeStyle='#e7eee9'; c.beginPath(); c.moveTo(x0,y); c.lineTo(x0+pW,y); c.stroke();
@@ -150,7 +150,7 @@ function renderDist(){
   // 붓스트랩 평균 s/n (정수 데이터면 1/n 간격). 계급 수 = numpy/seaborn 'auto'(Sturges/FD) 자동, 1/n 배수 snap.
   const cMin=Math.round(lo*n), cMax=Math.round(hi*n), k=autoBinK(bootMeans, n);
   const binW=k/n, d0=(cMin-0.5)/n, bins=Math.max(1,Math.ceil((cMax-cMin+1)/k)), dom=bins*binW;
-  const ct=hist(bootMeans,d0,binW,bins), ymax=niceCeil((maxOf(ct)||1)*1.02);
+  const ct=hist(bootMeans,d0,binW,bins), ymax=niceTop(maxOf(ct)||1);
   const X=v=>x0+(v-d0)/dom*pW, bw=pW/bins;
   c.font='11px sans-serif'; c.lineWidth=1; c.textAlign='right';
   for(let k=0;k<=5;k++){ const y=y0-pH*k/5; c.strokeStyle='#e7eee9'; c.beginPath(); c.moveTo(x0,y); c.lineTo(x0+pW,y); c.stroke();
