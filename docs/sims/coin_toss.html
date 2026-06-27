@@ -55,8 +55,8 @@ li{margin-bottom:4px}
 <div id="testSection" style="display:none">
   <div class="card">
     <div class="legend">
-      <span><span class="lb" style="background:#3a3f47"></span>데이터</span>
-      <span><span class="lb" style="background:#a7adb5"></span>이론</span>
+      <span><span class="lb" style="background:#F8766D"></span>데이터</span>
+      <span><span class="lb" style="background:#00BFC4"></span>이론</span>
     </div>
     <div class="chart-wrap"><canvas id="chart1"></canvas></div>
   </div>
@@ -217,8 +217,8 @@ function showAnalysis() {
   ch1 = new Chart(document.getElementById('chart1'), {
     type: 'bar',
     data: { labels: ['1','2','3','4','5','≥6'], datasets: [
-      { label: '데이터', data: aVals, backgroundColor: '#3a3f47' },
-      { label: '이론', data: tVals, backgroundColor: '#a7adb5' }
+      { label: '데이터', data: aVals, backgroundColor: '#F8766D' },
+      { label: '이론', data: tVals, backgroundColor: '#00BFC4' }
     ]},
     options: { responsive: true, maintainAspectRatio: false,
       plugins: { legend: { display: false } },
