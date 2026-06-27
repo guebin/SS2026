@@ -77,6 +77,8 @@ function maxOf(a){ let m=a[0]; for(const x of a) if(x>m)m=x; return m; }
 function Nsz(){ return parseInt(document.getElementById('n').value,10); }
 function cancelAnim(){ if(animId){ cancelAnimationFrame(animId); animId=null; } }
 function fmt(x){ return (+x.toFixed(3)).toString(); }
+// y축 최대용: 항상 데이터 이상으로 올림(nice ceiling). niceNum(반올림)은 값보다 작아질 수 있어 막대가 천장에 잘림.
+function niceCeil(x){ if(!(x>0)) return 1; const e=Math.pow(10,Math.floor(Math.log10(x))), f=x/e; for(const v of [1,1.2,1.5,2,2.5,3,4,5,6,8,10]) if(f<=v) return v*e; return 10*e; }
 function niceNum(x){ if(!(x>0)) return 1; const mag=Math.pow(10,Math.floor(Math.log10(x))), f=x/mag;
   return (f<1.5?1:f<3?2:f<7?5:10)*mag; }
 function getBin(id,def){ let v=parseFloat(document.getElementById(id).value); return (v>0)?v:def; }
@@ -145,7 +147,7 @@ function renderPop(){
   if(lastSampleArr){ lo=Math.min(lo,minOf(lastSampleArr)); hi=Math.max(hi,maxOf(lastSampleArr)); }
   const d0=Math.floor(lo/binW)*binW, hiE=Math.ceil((hi+binW)/binW)*binW, bins=Math.max(1,Math.min(400,Math.round((hiE-d0)/binW))), dom=bins*binW;
   const popCt=hist(POP,d0,binW,bins), sampCt=lastSampleArr?hist(lastSampleArr,d0,binW,bins):null;
-  const popYmax=niceNum(maxOf(popCt)||1)*1.05, sampYmax=sampCt?niceNum(maxOf(sampCt)||1)*1.05:1;
+  const popYmax=niceCeil((maxOf(popCt)||1)*1.02), sampYmax=sampCt?niceCeil((maxOf(sampCt)||1)*1.02):1;
   const X=v=>x0+(v-d0)/dom*pW, bw=pW/bins;
   // 격자 + 왼축(모집단)·오른축(표본) 눈금
   c.font='11px sans-serif'; c.lineWidth=1;
@@ -188,7 +190,7 @@ function renderDist(){
   // 표본평균 x̄=s/n (정수 데이터면 1/n 간격). 계급 수 = numpy/seaborn 'auto'(Sturges/FD) 자동, 1/n 배수 snap.
   const cMin=Math.round(lo*n), cMax=Math.round(hi*n), k=autoBinK(means, n);
   const binW=k/n, d0=(cMin-0.5)/n, bins=Math.max(1,Math.ceil((cMax-cMin+1)/k)), dom=bins*binW;
-  const ct=hist(means,d0,binW,bins), ymax=niceNum(maxOf(ct)||1)*1.05;
+  const ct=hist(means,d0,binW,bins), ymax=niceCeil((maxOf(ct)||1)*1.02);
   const X=v=>x0+(v-d0)/dom*pW, bw=pW/bins;
   c.font='11px sans-serif'; c.lineWidth=1; c.textAlign='right';
   for(let k=0;k<=5;k++){ const y=y0-pH*k/5; c.strokeStyle='#e7eee9'; c.beginPath(); c.moveTo(x0,y); c.lineTo(x0+pW,y); c.stroke();

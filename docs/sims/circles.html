@@ -9,15 +9,15 @@ h3{margin:0 0 5px 0;font-weight:normal;}
 .box{border:1px solid #d0d0d0;border-radius:6px;padding:16px 16px 16px 16px;margin-bottom:16px;position:relative;}
 .icons{position:absolute;top:10px;right:10px;display:flex;gap:4px;}
 .icon{width:30px;height:26px;border:1px solid #d0d0d0;border-radius:4px;background:#f5f5f5;display:flex;align-items:center;justify-content:center;font-size:13px;color:#555;}
-.icon.active{background:#8fc9e4;border-color:#6fb5d4;color:#fff;}
+.icon.active{background:#dc3545;border-color:#b02a37;color:#fff;}
 .description p{margin:0;line-height:1.75;padding-right:110px;}
 .example{background:#f7f7f7;padding:10px 14px;border-radius:4px;margin-top:12px;line-height:2;}
-.example-tag{background:#5bab4a;color:white;padding:3px 9px;border-radius:3px;font-weight:bold;font-size:13px;margin-right:6px;}
+.example-tag{background:#dc3545;color:white;padding:3px 9px;border-radius:3px;font-weight:bold;font-size:13px;margin-right:6px;}
 .blank{display:inline-block;border-bottom:1px solid #333;min-width:55px;padding:0 6px;text-align:center;height:20px;vertical-align:middle;}
 .prediction p{margin:0 0 10px 0;font-weight:bold;line-height:1.6;}
 .prediction label{display:block;margin:5px 0;cursor:pointer;user-select:none;}
 .prediction input{margin-right:6px;}
-.canvas-wrap{background:#e9f0e4;border-radius:4px;padding:14px;margin-bottom:20px;}
+.canvas-wrap{background:#f4f5f7;border-radius:4px;padding:14px;margin-bottom:20px;}
 #canvas{width:100%;height:auto;display:block;}
 .circle-g{cursor:pointer;}
 .circle-shape{transition:filter 0.1s;}
@@ -32,10 +32,10 @@ table td:first-child{background:#f0f0f0;}
 .sample-mean-display{font-size:16px;font-weight:bold;margin:4px 0 16px;}
 button{padding:7px 16px;font-size:14px;border:1px solid #999;border-radius:4px;background:white;cursor:pointer;margin-right:6px;font-family:inherit;}
 button:hover:not(:disabled){background:#f0f0f0;}
-button.primary{background:#4a90d9;color:white;border-color:#4a90d9;}
-button.primary:hover:not(:disabled){background:#3a7eb8;}
+button.primary{background:#dc3545;color:white;border-color:#dc3545;}
+button.primary:hover:not(:disabled){background:#b02a37;}
 button:disabled{opacity:0.45;cursor:not-allowed;}
-.status-msg{margin-top:10px;font-size:13px;color:#2d7a2d;min-height:18px;}
+.status-msg{margin-top:10px;font-size:13px;color:#6b7480;min-height:18px;}
 .histogram-section{text-align:center;margin-top:28px;}
 .histogram-section h3{font-size:18px;}
 .histogram-section .subtitle{font-size:13px;color:#666;margin-bottom:6px;}
@@ -84,7 +84,8 @@ const bigPool=ALL_AREAS.filter(a=>a>=7).sort((a,b)=>b-a);
 const smallPool=ALL_AREAS.filter(a=>a<7);
 for(let i=smallPool.length-1;i>0;i--){const j=Math.floor(rng()*(i+1));[smallPool[i],smallPool[j]]=[smallPool[j],smallPool[i]];}
 
-const clusterColors=['#F2A868','#74B256','#D06C68','#B39DD1','#947267','#E29CBD','#A0A0A0','#BFC25A','#7CC5D2','#5F91BE'];
+// 클러스터 색: ggplot2 hue_pal(c=58,l=74) 톤다운 파스텔 10색 (알록달록하되 채도 낮춰 본문과 조화·숫자 가독성 확보).
+const clusterColors=['#F3A09C','#DEAD72','#B9BB61','#86C679','#42CBA4','#14CACD','#6BC0EB','#B1AFF5','#E19FE8','#F69AC8'];
 const clusterCenters=[
   {x:540,y:570},{x:170,y:335},{x:385,y:305},{x:595,y:420},{x:465,y:155},
   {x:600,y:265},{x:500,y:400},{x:380,y:555},{x:290,y:175},{x:260,y:465}
@@ -304,7 +305,7 @@ function renderHistogram(){
     const w=pw/binCount,h=pad.t+ph-y;
     const rect=document.createElementNS(svgNS,'rect');
     rect.setAttribute('x',x);rect.setAttribute('y',y);rect.setAttribute('width',w);rect.setAttribute('height',h);
-    rect.setAttribute('fill','#A5C9E2');rect.setAttribute('stroke','white');rect.setAttribute('stroke-width',1);
+    rect.setAttribute('fill','#c8ccd2');rect.setAttribute('stroke','white');rect.setAttribute('stroke-width',1);
     svg.appendChild(rect);
   }
 
@@ -312,14 +313,14 @@ function renderHistogram(){
   const px=xScale(popMean),py=pad.t+ph;
   const redTri=document.createElementNS(svgNS,'polygon');
   redTri.setAttribute('points',`${px},${py+1} ${px-7},${py+12} ${px+7},${py+12}`);
-  redTri.setAttribute('fill','#E74C3C');svg.appendChild(redTri);
+  redTri.setAttribute('fill','#dc3545');svg.appendChild(redTri);
 
   // 내 표본 평균: 파란 삼각형
   if(mySampleMean!=null){
     const mx=xScale(mySampleMean),my=pad.t+ph;
     const blueTri=document.createElementNS(svgNS,'polygon');
     blueTri.setAttribute('points',`${mx},${my+1} ${mx-7},${my+12} ${mx+7},${my+12}`);
-    blueTri.setAttribute('fill','#3498DB');svg.appendChild(blueTri);
+    blueTri.setAttribute('fill','#222');svg.appendChild(blueTri);
   }
 }
 
