@@ -22,8 +22,8 @@ li{margin-bottom:4px}
 .bar-fill{height:100%;background:#dc3545;border-radius:3px;transition:width 0.1s}
 .dots{display:flex;flex-wrap:wrap;gap:2px;margin-bottom:8px}
 .dot{width:13px;height:13px;border-radius:50%;background:var(--color-background-tertiary)}
-.dot.H{background:#185FA5}
-.dot.T{background:#E24B4A}
+.dot.H{background:#0000FF}
+.dot.T{background:#FF0000}
 .dot.cur{outline:2px solid #6b7480;outline-offset:1px}
 .legend{display:flex;gap:16px;margin-bottom:6px;font-size:12px;color:var(--color-text-secondary);justify-content:flex-end}
 .lb{width:10px;height:10px;border-radius:2px;display:inline-block;margin-right:4px}
@@ -55,8 +55,8 @@ li{margin-bottom:4px}
 <div id="testSection" style="display:none">
   <div class="card">
     <div class="legend">
-      <span><span class="lb" style="background:#dc3545"></span>데이터</span>
-      <span><span class="lb" style="background:#6b7480"></span>이론</span>
+      <span><span class="lb" style="background:#3a3f47"></span>데이터</span>
+      <span><span class="lb" style="background:#a7adb5"></span>이론</span>
     </div>
     <div class="chart-wrap"><canvas id="chart1"></canvas></div>
   </div>
@@ -217,8 +217,8 @@ function showAnalysis() {
   ch1 = new Chart(document.getElementById('chart1'), {
     type: 'bar',
     data: { labels: ['1','2','3','4','5','≥6'], datasets: [
-      { label: '데이터', data: aVals, backgroundColor: '#dc3545' },
-      { label: '이론', data: tVals, backgroundColor: '#6b7480' }
+      { label: '데이터', data: aVals, backgroundColor: '#3a3f47' },
+      { label: '이론', data: tVals, backgroundColor: '#a7adb5' }
     ]},
     options: { responsive: true, maintainAspectRatio: false,
       plugins: { legend: { display: false } },
