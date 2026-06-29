@@ -11,5 +11,18 @@
 <body>
 <div id="root"></div>
 <script src="montyhall.bundle.js"></script>
+<script>
+(function(){
+  function report(){
+    var h = Math.ceil(document.body.scrollHeight);
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({ type:"montyhall-height", height:h }, "*");
+    }
+  }
+  window.addEventListener("load", report);
+  if (window.ResizeObserver){ new ResizeObserver(report).observe(document.body); }
+  setTimeout(report, 300); setTimeout(report, 1200);
+})();
+</script>
 </body>
 </html>

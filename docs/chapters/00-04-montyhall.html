@@ -615,8 +615,16 @@ window.Quarto = {
 <div class="card">
 <p>아래 게임에서 플레이어는 자동차가 뒤에 있을 것이라고 생각되는 문을 하나 선택한다. 게임 진행자는 결과를 바로 보여주지 않고 염소가 있는 다른 문 하나를 보여준다. 자동차는 자신이 처음&nbsp;선택한 문 뒤에 있거나 아니면 다른&nbsp;문 뒤에 있다. 처음에 선택한 문을 계속 고집하겠는가? 아니면 처음 선택한 문을 취소하고 다른 문을 선택하겠는가?</p>
 <p>처음에 선택한 문을 바꾸는 전략이 자동차를 선물로 받을 확률을 <span class="math inline">\(1/3\)</span>보다 높아지게 만들까? 아니면 확률은 <span class="math inline">\(1\)</span>/ <span class="math inline">\(3\)</span>에서&nbsp;변하지&nbsp;않을까?</p>
-<iframe src="../sims/montyhall.html" width="100%" height="760" style="border:1px solid #e7ebf2; border-radius:10px;" loading="lazy">
+<iframe id="montyhall-frame" src="../sims/montyhall.html" width="100%" height="760" style="border:1px solid #e7ebf2; border-radius:10px;" loading="lazy" scrolling="no">
 </iframe>
+<script>
+window.addEventListener("message", function(e){
+  if (e.data && e.data.type === "montyhall-height") {
+    var f = document.getElementById("montyhall-frame");
+    if (f) f.style.height = e.data.height + "px";
+  }
+});
+</script>
 </div>
 <div class="card">
 <div class="quiz qinline" data-answer="1">
