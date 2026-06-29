@@ -29,24 +29,29 @@ export default function MontyHall() {
   const pickDoor = (door) => {
     if (phase !== "select") return;
     setSelected(door);
+    setPhase("reveal");
     const opts = [0,1,2].filter(d => d !== door && d !== carRef.current);
-    setRevealed(opts[Math.floor(Math.random() * opts.length)]);
-    setPhase("decide");
+    const rev = opts[Math.floor(Math.random() * opts.length)];
+    setTimeout(() => setRevealed(rev), 12000);
+    setTimeout(() => setPhase("decide"), 19000);
   };
 
   const decide = (doSwitch) => {
     if (phase !== "decide") return;
     const fd = doSwitch ? [0,1,2].find(d => d !== selected && d !== revealed) : selected;
-    const won = fd === carRef.current;
-    setFinalDoor(fd); setStrategy(doSwitch ? "switch" : "stay"); setPhase("result");
-    const nSw = doSwitch ? { wins: sw.wins+(won?1:0), total: sw.total+1 } : sw;
-    const nSt = !doSwitch ? { wins: st.wins+(won?1:0), total: st.total+1 } : st;
-    setSw(nSw); setSt(nSt);
-    setChartData(prev => [...prev, {
-      n: nSw.total + nSt.total,
-      "바꿀 경우": nSw.total > 0 ? +(nSw.wins/nSw.total*100).toFixed(1) : undefined,
-      "유지할 경우": nSt.total > 0 ? +(nSt.wins/nSt.total*100).toFixed(1) : undefined,
-    }]);
+    setFinalDoor(fd); setStrategy(doSwitch ? "switch" : "stay"); setPhase("deciding");
+    setTimeout(() => {
+      const won = fd === carRef.current;
+      setPhase("result");
+      const nSw = doSwitch ? { wins: sw.wins+(won?1:0), total: sw.total+1 } : sw;
+      const nSt = !doSwitch ? { wins: st.wins+(won?1:0), total: st.total+1 } : st;
+      setSw(nSw); setSt(nSt);
+      setChartData(prev => [...prev, {
+        n: nSw.total + nSt.total,
+        "바꿀 경우": nSw.total > 0 ? +(nSw.wins/nSw.total*100).toFixed(1) : undefined,
+        "유지할 경우": nSt.total > 0 ? +(nSt.wins/nSt.total*100).toFixed(1) : undefined,
+      }]);
+    }, 8000);
   };
 
   const autoSim = (count) => {
@@ -98,7 +103,7 @@ export default function MontyHall() {
 
         {/* Header */}
         <div style={{ textAlign:"center", marginBottom:20 }}>
-          <h1 style={{ fontSize:26, fontWeight:800, color:"#dc3545", margin:0 }}>🎯 몬티 홀 문제</h1>
+          <h1 style={{ fontSize:26, fontWeight:800, color:"#dc3545", margin:0 }}>몬티 홀 문제</h1>
           <p style={{ color:"#555555", fontSize:12, marginTop:4 }}>Monty Hall Problem Simulator</p>
         </div>
 
@@ -132,8 +137,8 @@ export default function MontyHall() {
         <div style={{ textAlign:"center", marginBottom:20, fontSize:12,
           color: xrayMode ? "#222222" : "#6b7480" }}>
           {xrayMode
-            ? "👁 문 뒤의 내용이 반투명하게 보입니다 — 확률의 흐름을 직관적으로 파악하세요"
-            : "🙈 문 뒤가 가려져 있습니다 — 실제 게임과 동일한 상황입니다"}
+            ? "문 뒤의 내용이 반투명하게 보입니다 — 확률의 흐름을 직관적으로 파악하세요"
+            : "문 뒤가 가려져 있습니다 — 실제 게임과 동일한 상황입니다"}
         </div>
 
         <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:20 }}>
@@ -142,14 +147,16 @@ export default function MontyHall() {
           <div style={{ background:"#ffffff", borderRadius:20, padding:24, display:"flex", flexDirection:"column", gap:18 }}>
 
             {/* Status */}
-            <div style={{ background:"#f4f5f7", borderRadius:12, padding:"14px 16px", fontSize:13, minHeight:52, display:"flex", alignItems:"center" }}>
-              {phase === "select" && <span style={{color:"#6b7480"}}>🚪 <strong style={{color:"#222222"}}>문을 하나 클릭</strong>해서 선택하세요.</span>}
-              {phase === "decide" && <span style={{color:"#6b7480"}}>👀 진행자가 <strong style={{color:"#dc3545"}}>문 {(revealed??0)+1}번</strong>(🐐)을 열었습니다. 선택을 <strong style={{color:"#222222"}}>바꾸시겠습니까?</strong></span>}
+            <div style={{ background:"#f4f5f7", borderRadius:12, padding:"14px 16px", fontSize:13, minHeight:64, display:"flex", alignItems:"center" }}>
+              {phase === "select" && <span style={{color:"#6b7480"}}>게임을 시작하겠습니다. 세 개의 문 가운데 하나 뒤에는 <strong style={{color:"#dc3545"}}>자동차</strong>가, 나머지 두 문 뒤에는 염소가 숨어 있습니다. 자동차가 있을 것 같은 <strong style={{color:"#222222"}}>문 하나를 골라</strong> 주시겠어요?</span>}
+              {phase === "reveal" && <span style={{color:"#6b7480"}}>{revealed==null ? "저는 자동차가 어느 문 뒤에 있는지 알고 있습니다. 이제 당신이 고르지 않은 문 중에서 염소가 있는 문 하나를 열어 보여 드리겠습니다." : <>문 <strong style={{color:"#dc3545"}}>{revealed+1}번</strong> 뒤에는 염소가 있었습니다. 이제 닫혀 있는 문은 두 개가 남았습니다.</>}</span>}
+              {phase === "decide" && <span style={{color:"#6b7480"}}>이제 결정하실 차례입니다. 처음 고른 문을 <strong style={{color:"#222222"}}>그대로 두시겠습니까</strong>, 아니면 남은 문으로 <strong style={{color:"#dc3545"}}>바꾸시겠습니까?</strong></span>}
+              {phase === "deciding" && <span style={{color:"#6b7480"}}>{strategy==="switch" ? <>선택을 <strong style={{color:"#dc3545"}}>문 {(finalDoor??0)+1}번</strong>으로 바꾸겠습니다.</> : <>처음 선택하신 <strong style={{color:"#222222"}}>문 {(finalDoor??0)+1}번</strong>을 그대로 두겠습니다.</>}</span>}
               {phase === "result" && (
                 <span style={{color: won?"#dc3545":"#6b7480"}}>
-                  {won ? "🎉 당첨! 자동차!" : "😢 꽝! 염소..."}
+                  {won ? "축하합니다. 문 뒤에서 자동차가 나왔습니다." : "아쉽습니다. 문 뒤에는 염소가 있었습니다."}
                   <span style={{color:"#6b7480", fontSize:11, display:"block", marginTop:3}}>
-                    전략: {strategy==="switch" ? "🔄 선택 변경" : "🙅 선택 유지"}
+                    전략: {strategy==="switch" ? "선택 변경" : "선택 유지"}
                   </span>
                 </span>
               )}
@@ -163,7 +170,8 @@ export default function MontyHall() {
                 // Border/bg color
                 let borderColor = "#e3e7ec", bgColor = "#f4f5f7";
                 if (phase === "select") { borderColor = "#555555"; bgColor = "#ffffff"; }
-                if (isSelected && phase === "decide") { borderColor = "#dc3545"; bgColor = "rgba(220,53,69,.07)"; }
+                if (isSelected && (phase === "decide" || phase === "reveal")) { borderColor = "#dc3545"; bgColor = "rgba(220,53,69,.07)"; }
+                if (isFinal && phase === "deciding") { borderColor = "#dc3545"; bgColor = "rgba(220,53,69,.10)"; }
                 if (isRevealed) { borderColor = "#e3e7ec"; bgColor = "#f4f5f7"; }
                 if (phase === "result") {
                   if (isFinal && isCar) { borderColor = "#dc3545"; bgColor = "rgba(220,53,69,.10)"; }
@@ -220,8 +228,11 @@ export default function MontyHall() {
                     )}
 
                     {/* Badges */}
-                    {isSelected && phase === "decide" && (
+                    {isSelected && (phase === "decide" || phase === "reveal") && (
                       <div style={{ position:"absolute", top:-1, right:-1, background:"#dc3545", color:"#fff", fontSize:9, padding:"2px 7px", borderRadius:"0 14px 0 10px", fontWeight:700 }}>선택</div>
+                    )}
+                    {phase === "deciding" && isFinal && (
+                      <div style={{ position:"absolute", top:-1, right:-1, background:"#dc3545", color:"#fff", fontSize:9, padding:"2px 7px", borderRadius:"0 14px 0 10px", fontWeight:700 }}>{strategy==="switch" ? "바꿈" : "유지"}</div>
                     )}
                     {phase === "result" && isFinal && (
                       <div style={{ position:"absolute", top:-1, right:-1, background: isCar?"#dc3545":"#6b7480", color:"#fff", fontSize:9, padding:"2px 7px", borderRadius:"0 14px 0 10px", fontWeight:700 }}>최종</div>
@@ -234,30 +245,26 @@ export default function MontyHall() {
               })}
             </div>
 
-            {/* Decide buttons */}
-            {phase === "decide" && (
-              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10 }}>
-                <button onClick={() => decide(false)}
-                  style={{ background:"#e3e7ec", border:"none", color:"#222222", borderRadius:12, padding:12, fontSize:14, fontWeight:600, cursor:"pointer" }}>
-                  🙅 유지하기
-                </button>
-                <button onClick={() => decide(true)}
-                  style={{ background:"#dc3545", border:"none", color:"#fff", borderRadius:12, padding:12, fontSize:14, fontWeight:600, cursor:"pointer" }}>
-                  🔄 바꾸기
-                </button>
-              </div>
-            )}
-
-            {phase === "result" && (
-              <button onClick={newGame}
-                style={{ background:"#dc3545", border:"none", color:"#fff", borderRadius:12, padding:12, fontSize:14, fontWeight:600, cursor:"pointer" }}>
-                다음 게임 ▶
+            {/* Decide buttons — 항상 표시, decide 단계에만 활성 */}
+            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10 }}>
+              <button onClick={() => decide(false)} disabled={phase !== "decide"}
+                style={{ background:"#e3e7ec", border:"none", color:"#222222", borderRadius:12, padding:12, fontSize:14, fontWeight:600, cursor: phase==="decide"?"pointer":"not-allowed", opacity: phase==="decide"?1:0.4, transition:"opacity .2s" }}>
+                유지하기
               </button>
-            )}
+              <button onClick={() => decide(true)} disabled={phase !== "decide"}
+                style={{ background:"#dc3545", border:"none", color:"#fff", borderRadius:12, padding:12, fontSize:14, fontWeight:600, cursor: phase==="decide"?"pointer":"not-allowed", opacity: phase==="decide"?1:0.4, transition:"opacity .2s" }}>
+                바꾸기
+              </button>
+            </div>
+
+            <button onClick={newGame} disabled={phase !== "result"}
+              style={{ background:"#dc3545", border:"none", color:"#fff", borderRadius:12, padding:12, fontSize:14, fontWeight:600, cursor: phase==="result"?"pointer":"not-allowed", opacity: phase==="result"?1:0.4, transition:"opacity .2s" }}>
+              다음 게임
+            </button>
 
             {/* Auto sim */}
             <div style={{ borderTop:"1px solid #e3e7ec", paddingTop:14 }}>
-              <div style={{ color:"#6b7480", fontSize:11, marginBottom:8 }}>⚡ 자동 시뮬레이션 (각 전략 50:50)</div>
+              <div style={{ color:"#6b7480", fontSize:11, marginBottom:8 }}>자동 시뮬레이션 (각 전략 50:50)</div>
               <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:8 }}>
                 {[10,100,1000,10000].map(n => (
                   <button key={n} onClick={() => autoSim(n)}
@@ -285,7 +292,7 @@ export default function MontyHall() {
 
           {/* === RIGHT: Chart === */}
           <div style={{ background:"#ffffff", borderRadius:20, padding:24, display:"flex", flexDirection:"column", gap:16 }}>
-            <h2 style={{ margin:0, fontSize:15, fontWeight:700, color:"#222222" }}>📈 승률 수렴 그래프</h2>
+            <h2 style={{ margin:0, fontSize:15, fontWeight:700, color:"#222222" }}>승률 수렴 그래프</h2>
 
             {chartData.length < 2 ? (
               <div style={{ flex:1, display:"flex", alignItems:"center", justifyContent:"center", color:"#555555", fontSize:13, textAlign:"center" }}>
