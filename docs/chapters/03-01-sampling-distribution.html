@@ -44,7 +44,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-de63f62b328812d8e578a4d74e282472.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-2a873bc1d9e04dc810eac5ae5401e5b6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-3355e44214f8815af4d3cdb2eb254b3a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -854,7 +854,7 @@ window.Quarto = {
 <p>물론 표본 평균 두 개만 비교해서 변동을 정확하게 평가할 수는 없다. 표본 평균의 변동을 좀 더 정확하게 추정하려면 훨씬 더 많은 표본이 필요하다. 이것을 이해하는 가장 좋은 방법은 아래 예제와 같이 알고 있는 모집단에서 표본을 뽑는 컴퓨터 모의실험(computer simulation)을 하는 것이다.</p>
 </div>
 <div class="card">
-<p><span id="ex-3-4" class="qlabel">예제 3.4.</span> <span class="math inline">\(2015\)</span>년 미국 프로 야구 메이저 리그에 소속된 모든 야구 선수 <span class="math inline">\(868\)</span>명의 연봉(단위: 백만 달러) 자료는 <a href="https://www.lock5stat.com/datasets2e/BaseballSalaries2015.csv">BaseballSalaries2015</a>에서 얻을 수 있다. 모든 야구 선수의 평균 연봉은 얼마인가? 올바른 기호를 사용하여 답하라.</p>
+<p><span id="ex-3-4" class="qlabel">예제 3.4.</span> <span class="math inline">\(2015\)</span>년 미국 프로 야구 메이저 리그에 소속된 모든 야구 선수 <span class="math inline">\(868\)</span>명의 연봉(단위: 백만 달러) 자료는 <a href="https://www.lock5stat.com/datasets2e/BaseballSalaries2015.txt">BaseballSalaries2015</a>에서 얻을 수 있다. 모든 야구 선수의 평균 연봉은 얼마인가? 올바른 기호를 사용하여 답하라.</p>
 </div>
 <div class="card sol-card">
 <div class="sol-head">
@@ -1208,7 +1208,7 @@ window.Quarto = {
 </div>
 <div class="card">
 <p><span id="ex-3-7" class="qlabel">예제 3.7.</span> 앞에서 사용했던 앱으로 다음 표집분포의 표준오차를 추정하라.</p>
-<p><span class="qsub">(1)</span> 표본 크기가 <span class="math inline">\(30\)</span>인 표본에서 야구 선수의 평균&nbsp;연봉 (<a href="https://www.lock5stat.com/datasets2e/BaseballSalaries2015.csv">BaseballSalaries2015</a>)</p>
+<p><span class="qsub">(1)</span> 표본 크기가 <span class="math inline">\(30\)</span>인 표본에서 야구 선수의 평균&nbsp;연봉 (<a href="https://www.lock5stat.com/datasets2e/BaseballSalaries2015.txt">BaseballSalaries2015</a>)</p>
 <p><span class="qsub">(2)</span> 표본 크기가 <span class="math inline">\(200\)</span>인 표본에서 학사 학위 이상 소지자의 비율</p>
 </div>
 <div class="card sol-card">
@@ -2688,32 +2688,6 @@ document.addEventListener('DOMContentLoaded', function () {
     pre.appendChild(btn);
   });
 });
-</script>
-<!-- 데이터셋 링크 팝업 뷰어 — a.dspop 클릭 시 내부 데이터셋 페이지를 별도 팝업 창으로.
-     팝업 URL엔 ?popup=1 을 붙여 사이드바/헤더 없는 클린 뷰로 연다(custom.scss .popup-mode).
-     self-host, 외부의존 0. 넥서스(컨트롤타워) 2026-07-01 (시험 적용: 03-03 CommuteAtlanta) -->
-<script>
-(function(){
-  // (A) 이 페이지 자체가 팝업으로 열렸으면 크롬 제거
-  if (location.search.indexOf('popup') !== -1) {
-    document.documentElement.classList.add('popup-mode');
-  }
-  // (B) a.dspop 클릭 → 내부 뷰어를 팝업 창으로
-  document.addEventListener('click', function(e){
-    var a = e.target.closest && e.target.closest('a.dspop');
-    if(!a) return;
-    e.preventDefault();
-    var url = a.href + (a.href.indexOf('?') === -1 ? '?' : '&') + 'popup=1';
-    var w = Math.min(1200, Math.round(screen.availWidth  * 0.9));
-    var h = Math.min(900,  Math.round(screen.availHeight * 0.9));
-    var left = Math.max(0, Math.round((screen.availWidth  - w) / 2));
-    var top  = Math.max(0, Math.round((screen.availHeight - h) / 2));
-    var feat = 'popup=yes,width='+w+',height='+h+',left='+left+',top='+top+',scrollbars=yes,resizable=yes';
-    var win = window.open(url, 'dsviewer', feat);
-    if(win) win.focus();
-    else window.open(url, '_blank');   // 팝업 차단 시 새 탭 폴백
-  });
-})();
 </script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
