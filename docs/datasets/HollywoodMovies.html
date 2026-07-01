@@ -1555,7 +1555,7 @@ The English Teacher,Cinedigm Entertainment,42,,,,2,0.01,3001,0.1,0.06,0.1,,,,201
 John Dies at the End,Magnolia,61,53,,,1,0.01,12467,0.14,,0.14,1,14.2,1,2013
 Lovelace,Radius-TWC,55,37,,Biography,118,0.18,1564,0.36,1.17,1.52,10,15.25,1.8,2013
 </script>
-<iframe id="ssframe" src="../sims/spreadsheet.html" width="100%" style="height:calc(100vh - 120px); min-height:480px; border:1px solid #e3e7ec; border-radius:10px;" loading="lazy"></iframe>
+<iframe id="ssframe" src="../sims/spreadsheet.html" width="100%" style="height:calc(100vh - 120px); min-height:480px; border:1px solid #e3e7ec; border-radius:10px;"></iframe>
 <script>
 (function(){
   var csv = document.getElementById('csvdata').textContent.replace(/^\n/, '');
@@ -1566,7 +1566,7 @@ Lovelace,Radius-TWC,55,37,,Biography,118,0.18,1564,0.36,1.17,1.52,10,15.25,1.8,2
     if(e.data==='sheetLoaded') done=true; else if(e.data==='sheetReady') send();
   });
   ifr.addEventListener('load', send);
-  var t = setInterval(function(){ send(); if(done || ++n>30) clearInterval(t); }, 400);
+  var t = setInterval(function(){ send(); if(done || ++n>150) clearInterval(t); }, 400);
 })();
 </script>
 

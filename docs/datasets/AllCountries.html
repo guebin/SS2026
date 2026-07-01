@@ -798,7 +798,7 @@ West Bank and Gaza,PLE,6020,3.937,,28.1,,,,9,,35.5,2.9,73.5,0.521554188,,,
 Zambia,ZAM,743390,12.62,7355,64.6,,15.3,13.6,5.5,1,42.9,3,45.4,0.152549611,1252.695718,38.2697159,635.0331105
 Zimbabwe,ZIM,386850,12.463,9506,62.7,,,15.1,11.4,1,29.9,4,44.2,0.728891592,594.5215247,59.65897024,1026.215184
 </script>
-<iframe id="ssframe" src="../sims/spreadsheet.html" width="100%" style="height:calc(100vh - 120px); min-height:480px; border:1px solid #e3e7ec; border-radius:10px;" loading="lazy"></iframe>
+<iframe id="ssframe" src="../sims/spreadsheet.html" width="100%" style="height:calc(100vh - 120px); min-height:480px; border:1px solid #e3e7ec; border-radius:10px;"></iframe>
 <script>
 (function(){
   var csv = document.getElementById('csvdata').textContent.replace(/^\n/, '');
@@ -809,7 +809,7 @@ Zimbabwe,ZIM,386850,12.463,9506,62.7,,,15.1,11.4,1,29.9,4,44.2,0.728891592,594.5
     if(e.data==='sheetLoaded') done=true; else if(e.data==='sheetReady') send();
   });
   ifr.addEventListener('load', send);
-  var t = setInterval(function(){ send(); if(done || ++n>30) clearInterval(t); }, 400);
+  var t = setInterval(function(){ send(); if(done || ++n>150) clearInterval(t); }, 400);
 })();
 </script>
 

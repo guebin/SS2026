@@ -603,7 +603,7 @@ Dark,4.6
 Dark,5.95
 Dark,6.52
 </script>
-<iframe id="ssframe" src="../sims/spreadsheet.html" width="100%" style="height:calc(100vh - 120px); min-height:480px; border:1px solid #e3e7ec; border-radius:10px;" loading="lazy"></iframe>
+<iframe id="ssframe" src="../sims/spreadsheet.html" width="100%" style="height:calc(100vh - 120px); min-height:480px; border:1px solid #e3e7ec; border-radius:10px;"></iframe>
 <script>
 (function(){
   var csv = document.getElementById('csvdata').textContent.replace(/^\n/, '');
@@ -614,7 +614,7 @@ Dark,6.52
     if(e.data==='sheetLoaded') done=true; else if(e.data==='sheetReady') send();
   });
   ifr.addEventListener('load', send);
-  var t = setInterval(function(){ send(); if(done || ++n>30) clearInterval(t); }, 400);
+  var t = setInterval(function(){ send(); if(done || ++n>150) clearInterval(t); }, 400);
 })();
 </script>
 

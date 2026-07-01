@@ -722,7 +722,7 @@ Hugo,Paramount,93,84,,Adventure,1277,8899,,,,,,11.36
 Jane Eyre,Universal,85,77,Love,Romance,,,11.24,18.91,30.147,,,0.18
 Never Back Down 2: The Beatdown,Sony,,44,Rivalry,Action,,,,,,3,0,8.60
 </script>
-<iframe id="ssframe" src="../sims/spreadsheet.html" width="100%" style="height:calc(100vh - 120px); min-height:480px; border:1px solid #e3e7ec; border-radius:10px;" loading="lazy"></iframe>
+<iframe id="ssframe" src="../sims/spreadsheet.html" width="100%" style="height:calc(100vh - 120px); min-height:480px; border:1px solid #e3e7ec; border-radius:10px;"></iframe>
 <script>
 (function(){
   var csv = document.getElementById('csvdata').textContent.replace(/^\n/, '');
@@ -733,7 +733,7 @@ Never Back Down 2: The Beatdown,Sony,,44,Rivalry,Action,,,,,,3,0,8.60
     if(e.data==='sheetLoaded') done=true; else if(e.data==='sheetReady') send();
   });
   ifr.addEventListener('load', send);
-  var t = setInterval(function(){ send(); if(done || ++n>30) clearInterval(t); }, 400);
+  var t = setInterval(function(){ send(); if(done || ++n>150) clearInterval(t); }, 400);
 })();
 </script>
 

@@ -685,7 +685,7 @@ Bodyfat,Age,Weight,Height,Neck,Chest,Abdomen,Ankle,Biceps,Wrist
 25.2,26,223,70.25,40.6,114.1,106.8,24.7,36,18.4
 4,47,127.5,66.75,34,83.4,70.4,21.9,26.8,16.8
 </script>
-<iframe id="ssframe" src="../sims/spreadsheet.html" width="100%" style="height:calc(100vh - 120px); min-height:480px; border:1px solid #e3e7ec; border-radius:10px;" loading="lazy"></iframe>
+<iframe id="ssframe" src="../sims/spreadsheet.html" width="100%" style="height:calc(100vh - 120px); min-height:480px; border:1px solid #e3e7ec; border-radius:10px;"></iframe>
 <script>
 (function(){
   var csv = document.getElementById('csvdata').textContent.replace(/^\n/, '');
@@ -696,7 +696,7 @@ Bodyfat,Age,Weight,Height,Neck,Chest,Abdomen,Ankle,Biceps,Wrist
     if(e.data==='sheetLoaded') done=true; else if(e.data==='sheetReady') send();
   });
   ifr.addEventListener('load', send);
-  var t = setInterval(function(){ send(); if(done || ++n>30) clearInterval(t); }, 400);
+  var t = setInterval(function(){ send(); if(done || ++n>150) clearInterval(t); }, 400);
 })();
 </script>
 

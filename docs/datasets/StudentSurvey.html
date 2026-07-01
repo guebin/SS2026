@@ -947,7 +947,7 @@ Sophomore,F,Yes,Nobel,Verbal,1,1,65,150,2,2,540,450,990,3.27,78,2
 FirstYear,M,Yes,Olympic,Verbal,14,5,77,205,2,2,550,550,1100,2.3,72,0
 Sophomore,F,Yes,Olympic,Math,12,5,60,115,0,1,500,510,1010,2.6,91,5
 </script>
-<iframe id="ssframe" src="../sims/spreadsheet.html" width="100%" style="height:calc(100vh - 120px); min-height:480px; border:1px solid #e3e7ec; border-radius:10px;" loading="lazy"></iframe>
+<iframe id="ssframe" src="../sims/spreadsheet.html" width="100%" style="height:calc(100vh - 120px); min-height:480px; border:1px solid #e3e7ec; border-radius:10px;"></iframe>
 <script>
 (function(){
   var csv = document.getElementById('csvdata').textContent.replace(/^\n/, '');
@@ -958,7 +958,7 @@ Sophomore,F,Yes,Olympic,Math,12,5,60,115,0,1,500,510,1010,2.6,91,5
     if(e.data==='sheetLoaded') done=true; else if(e.data==='sheetReady') send();
   });
   ifr.addEventListener('load', send);
-  var t = setInterval(function(){ send(); if(done || ++n>30) clearInterval(t); }, 400);
+  var t = setInterval(function(){ send(); if(done || ++n>150) clearInterval(t); }, 400);
 })();
 </script>
 

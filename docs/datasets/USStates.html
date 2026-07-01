@@ -635,7 +635,7 @@ West Virginia,38029,98.7,0.426,S,M,1.812548,269.1,80.9,29199,20,26.7,75.4,30.6,2
 Wisconsin,48903,102.9,0.424,MW,O,5.503533,284.54,88.8,39074,22.2,20.7,81.5,24.4,29.8,9.1,7.5
 Wyoming,46613,102.4,0.652,W,M,0.505887,282.1,91.9,53543,21.8,21.3,79.8,24.2,29.6,9.6,4.4
 </script>
-<iframe id="ssframe" src="../sims/spreadsheet.html" width="100%" style="height:calc(100vh - 120px); min-height:480px; border:1px solid #e3e7ec; border-radius:10px;" loading="lazy"></iframe>
+<iframe id="ssframe" src="../sims/spreadsheet.html" width="100%" style="height:calc(100vh - 120px); min-height:480px; border:1px solid #e3e7ec; border-radius:10px;"></iframe>
 <script>
 (function(){
   var csv = document.getElementById('csvdata').textContent.replace(/^\n/, '');
@@ -646,7 +646,7 @@ Wyoming,46613,102.4,0.652,W,M,0.505887,282.1,91.9,53543,21.8,21.3,79.8,24.2,29.6
     if(e.data==='sheetLoaded') done=true; else if(e.data==='sheetReady') send();
   });
   ifr.addEventListener('load', send);
-  var t = setInterval(function(){ send(); if(done || ++n>30) clearInterval(t); }, 400);
+  var t = setInterval(function(){ send(); if(done || ++n>150) clearInterval(t); }, 400);
 })();
 </script>
 

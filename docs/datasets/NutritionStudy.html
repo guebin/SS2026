@@ -900,7 +900,7 @@ ID,Age,Smoke,Quetelet,Vitamin,Calories,Fat,Fiber,Alcohol,Cholesterol,BetaDiet,Re
 314,31,No,23.4525,1,2729.6,144.4,13.2,2.2,381.8,741,644,121,684,Female,Regular,2
 315,45,No,26.5081,1,1627,77.4,9.9,0.2,195.6,1242,554,233,826,Female,Regular,1
 </script>
-<iframe id="ssframe" src="../sims/spreadsheet.html" width="100%" style="height:calc(100vh - 120px); min-height:480px; border:1px solid #e3e7ec; border-radius:10px;" loading="lazy"></iframe>
+<iframe id="ssframe" src="../sims/spreadsheet.html" width="100%" style="height:calc(100vh - 120px); min-height:480px; border:1px solid #e3e7ec; border-radius:10px;"></iframe>
 <script>
 (function(){
   var csv = document.getElementById('csvdata').textContent.replace(/^\n/, '');
@@ -911,7 +911,7 @@ ID,Age,Smoke,Quetelet,Vitamin,Calories,Fat,Fiber,Alcohol,Cholesterol,BetaDiet,Re
     if(e.data==='sheetLoaded') done=true; else if(e.data==='sheetReady') send();
   });
   ifr.addEventListener('load', send);
-  var t = setInterval(function(){ send(); if(done || ++n>30) clearInterval(t); }, 400);
+  var t = setInterval(function(){ send(); if(done || ++n>150) clearInterval(t); }, 400);
 })();
 </script>
 
