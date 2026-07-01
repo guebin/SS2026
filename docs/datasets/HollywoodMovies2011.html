@@ -838,6 +838,25 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 </script>
+<!-- 데이터셋 링크 팝업 뷰어 — a.dspop 클릭 시 내부 데이터셋 페이지를 별도 팝업 창으로.
+     self-host, 외부의존 0. 넥서스(컨트롤타워) 2026-07-01 (시험 적용: 03-03 CommuteAtlanta) -->
+<script>
+(function(){
+  document.addEventListener('click', function(e){
+    var a = e.target.closest && e.target.closest('a.dspop');
+    if(!a) return;
+    e.preventDefault();
+    var w = Math.min(1200, Math.round(screen.availWidth  * 0.9));
+    var h = Math.min(900,  Math.round(screen.availHeight * 0.9));
+    var left = Math.max(0, Math.round((screen.availWidth  - w) / 2));
+    var top  = Math.max(0, Math.round((screen.availHeight - h) / 2));
+    var feat = 'popup=yes,width='+w+',height='+h+',left='+left+',top='+top+',scrollbars=yes,resizable=yes';
+    var win = window.open(a.href, 'dsviewer', feat);
+    if(win) win.focus();
+    else window.open(a.href, '_blank');   // 팝업 차단 시 새 탭 폴백
+  });
+})();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

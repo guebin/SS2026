@@ -108,7 +108,7 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div id="4b225a20" class="cell" data-execution_count="1">
+<div id="341e7d4c" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <script type="module">
     const { set_or_remove_dark_class } = await import(window._itables_2_7_3);
@@ -208,7 +208,7 @@ This is the <code>init_notebook_mode</code> cell from ITables v2.7.3<br>
 </div>
 <div class="cell-output cell-output-display">
 <!--| quarto-html-table-processing: none -->
-<table id="itables_e361b404_d24b_40a0_a280_9e68ceb48b3e">
+<table id="itables_c624020f_8735_4ba0_8638_a0acf0b4b159">
   <tbody>
     <tr>
       <td style="vertical-align:middle; text-align:left"><a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
@@ -279,7 +279,7 @@ This is the <code>init_notebook_mode</code> cell from ITables v2.7.3<br>
         async function init() {
             const { ITable, jQuery: $ } = await window._itables_2_7_3;
 
-            document.querySelectorAll("#itables_e361b404_d24b_40a0_a280_9e68ceb48b3e:not(.dataTable)").forEach(table => {
+            document.querySelectorAll("#itables_c624020f_8735_4ba0_8638_a0acf0b4b159:not(.dataTable)").forEach(table => {
                 if (!(table instanceof HTMLTableElement))
                     return;
 
@@ -432,6 +432,25 @@ document.addEventListener('DOMContentLoaded', function () {
     pre.appendChild(btn);
   });
 });
+</script>
+<!-- 데이터셋 링크 팝업 뷰어 — a.dspop 클릭 시 내부 데이터셋 페이지를 별도 팝업 창으로.
+     self-host, 외부의존 0. 넥서스(컨트롤타워) 2026-07-01 (시험 적용: 03-03 CommuteAtlanta) -->
+<script>
+(function(){
+  document.addEventListener('click', function(e){
+    var a = e.target.closest && e.target.closest('a.dspop');
+    if(!a) return;
+    e.preventDefault();
+    var w = Math.min(1200, Math.round(screen.availWidth  * 0.9));
+    var h = Math.min(900,  Math.round(screen.availHeight * 0.9));
+    var left = Math.max(0, Math.round((screen.availWidth  - w) / 2));
+    var top  = Math.max(0, Math.round((screen.availHeight - h) / 2));
+    var feat = 'popup=yes,width='+w+',height='+h+',left='+left+',top='+top+',scrollbars=yes,resizable=yes';
+    var win = window.open(a.href, 'dsviewer', feat);
+    if(win) win.focus();
+    else window.open(a.href, '_blank');   // 팝업 차단 시 새 탭 폴백
+  });
+})();
 </script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {

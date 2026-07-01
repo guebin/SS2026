@@ -786,7 +786,7 @@ window.Quarto = {
 <section id="표본-평균의-부트스트랩-분포" class="level3">
 <h3 class="anchored" data-anchor-id="표본-평균의-부트스트랩-분포">표본 평균의 부트스트랩 분포</h3>
 <div class="card">
-<p>아틀란타 도시에 사는 근로자 <span class="math inline">\(500\)</span>명의 통근 시간 데이터는 <a href="https://www.lock5stat.com/datasets2e/CommuteAtlanta.csv">CommuteAtlanta</a>에서 얻을 수 있다. 부트스트랩 표본 평균의 변동이 어느 정도인지 모의실험으로 알아보자.</p>
+<p>아틀란타 도시에 사는 근로자 <span class="math inline">\(500\)</span>명의 통근 시간 데이터는 <a href="../datasets/CommuteAtlanta.html" class="dspop">CommuteAtlanta</a>에서 얻을 수 있다. 부트스트랩 표본 평균의 변동이 어느 정도인지 모의실험으로 알아보자.</p>
 <ul>
 <li>구글 스프레드시트 앱에 데이터를 다운받는다.</li>
 <li>Time 변수의 데이터를 복사하여 텍스트 상자에 붙여넣는다.</li>
@@ -2814,6 +2814,25 @@ document.addEventListener('DOMContentLoaded', function () {
     pre.appendChild(btn);
   });
 });
+</script>
+<!-- 데이터셋 링크 팝업 뷰어 — a.dspop 클릭 시 내부 데이터셋 페이지를 별도 팝업 창으로.
+     self-host, 외부의존 0. 넥서스(컨트롤타워) 2026-07-01 (시험 적용: 03-03 CommuteAtlanta) -->
+<script>
+(function(){
+  document.addEventListener('click', function(e){
+    var a = e.target.closest && e.target.closest('a.dspop');
+    if(!a) return;
+    e.preventDefault();
+    var w = Math.min(1200, Math.round(screen.availWidth  * 0.9));
+    var h = Math.min(900,  Math.round(screen.availHeight * 0.9));
+    var left = Math.max(0, Math.round((screen.availWidth  - w) / 2));
+    var top  = Math.max(0, Math.round((screen.availHeight - h) / 2));
+    var feat = 'popup=yes,width='+w+',height='+h+',left='+left+',top='+top+',scrollbars=yes,resizable=yes';
+    var win = window.open(a.href, 'dsviewer', feat);
+    if(win) win.focus();
+    else window.open(a.href, '_blank');   // 팝업 차단 시 새 탭 폴백
+  });
+})();
 </script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
