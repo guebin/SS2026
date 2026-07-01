@@ -32,8 +32,8 @@ export default function MontyHall() {
     setPhase("reveal");
     const opts = [0,1,2].filter(d => d !== door && d !== carRef.current);
     const rev = opts[Math.floor(Math.random() * opts.length)];
-    setTimeout(() => setRevealed(rev), 12000);
-    setTimeout(() => setPhase("decide"), 19000);
+    setTimeout(() => setRevealed(rev), 3000);
+    setTimeout(() => setPhase("decide"), 6000);
   };
 
   const decide = (doSwitch) => {
@@ -51,7 +51,7 @@ export default function MontyHall() {
         "바꿀 경우": nSw.total > 0 ? +(nSw.wins/nSw.total*100).toFixed(1) : undefined,
         "유지할 경우": nSt.total > 0 ? +(nSt.wins/nSt.total*100).toFixed(1) : undefined,
       }]);
-    }, 8000);
+    }, 1000);
   };
 
   const autoSim = (count) => {
